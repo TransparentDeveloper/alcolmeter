@@ -14,6 +14,9 @@
 		const grams = value * 1000;
 		return Number.isInteger(grams) ? grams.toString() : grams.toFixed(0);
 	}
+
+	/** 예상 술 생산량 = 총 물의 1.3배 */
+	let estimatedVolume = $derived(result.totalWater * 1.3);
 </script>
 
 <div class="result-table">
@@ -21,7 +24,6 @@
 		<thead>
 			<tr>
 				<th class="col-stage">단계</th>
-				<th class="col-form">쌀 형태</th>
 				<th class="col-num">쌀 (kg)</th>
 				<th class="col-num">물 (L)</th>
 				<th class="col-num">누룩 (g)</th>
@@ -30,8 +32,7 @@
 		<tbody>
 			{#each result.stages as stage}
 				<tr>
-					<td class="stage-name">{stage.name}</td>
-					<td class="rice-form">{stage.riceFormLabel}</td>
+					<td class="stage-name">{stage.name}({stage.riceFormLabel})</td>
 					<td>{fmt(stage.rice)}</td>
 					<td>{fmt(stage.water)}</td>
 					<td>{fmtNuruk(stage.nuruk)}</td>
@@ -41,7 +42,6 @@
 		<tfoot>
 			<tr>
 				<td class="stage-name">합계</td>
-				<td></td>
 				<td>{fmt(result.totalRice)}</td>
 				<td>{fmt(result.totalWater)}</td>
 				<td>{fmtNuruk(result.totalNuruk)}</td>
@@ -50,7 +50,7 @@
 	</table>
 
 	<div class="estimated-volume">
-		예상 총량: <strong>{fmt(result.totalRice + result.totalWater)} L</strong>
+		예상 술 생산량: <strong>{fmt(estimatedVolume)} L</strong>
 	</div>
 
 	<div class="info">
@@ -97,11 +97,10 @@
 		font-weight: 600;
 	}
 
-	.col-stage { width: 20%; }
-	.col-form { width: 20%; }
-	.col-num { width: 20%; }
+	.col-stage { width: 30%; }
+	.col-num { width: 23.3%; }
 
-	th:first-child, td.stage-name, td.rice-form {
+	th:first-child, td.stage-name {
 		text-align: left;
 	}
 
@@ -109,15 +108,10 @@
 		font-weight: 600;
 	}
 
-	td.rice-form {
-		font-size: 0.85rem;
-		color: var(--color-muted);
-	}
-
 	tfoot td {
 		font-weight: 700;
 		border-top: 2px solid var(--color-primary);
-		background: rgba(74, 103, 65, 0.05);
+		background: rgba(37, 99, 235, 0.05);
 	}
 
 	.estimated-volume {
