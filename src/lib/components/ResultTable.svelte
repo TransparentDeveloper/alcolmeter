@@ -7,17 +7,24 @@
 		if (value === 0) return '-';
 		return Number.isInteger(value) ? value.toString() : value.toFixed(2);
 	}
+
+	/** 누룩은 내부 kg → 표시 g 변환 */
+	function fmtNuruk(value: number): string {
+		if (value === 0) return '-';
+		const grams = value * 1000;
+		return Number.isInteger(grams) ? grams.toString() : grams.toFixed(0);
+	}
 </script>
 
 <div class="result-table">
 	<table>
 		<thead>
 			<tr>
-				<th>단계</th>
-				<th>쌀 형태</th>
-				<th>쌀 (ℓ)</th>
-				<th>물 (ℓ)</th>
-				<th>누룩 (ℓ)</th>
+				<th class="col-stage">단계</th>
+				<th class="col-form">쌀 형태</th>
+				<th class="col-num">쌀 (kg)</th>
+				<th class="col-num">물 (L)</th>
+				<th class="col-num">누룩 (g)</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -27,7 +34,7 @@
 					<td class="rice-form">{stage.riceFormLabel}</td>
 					<td>{fmt(stage.rice)}</td>
 					<td>{fmt(stage.water)}</td>
-					<td>{fmt(stage.nuruk)}</td>
+					<td>{fmtNuruk(stage.nuruk)}</td>
 				</tr>
 			{/each}
 		</tbody>
@@ -37,10 +44,14 @@
 				<td></td>
 				<td>{fmt(result.totalRice)}</td>
 				<td>{fmt(result.totalWater)}</td>
-				<td>{fmt(result.totalNuruk)}</td>
+				<td>{fmtNuruk(result.totalNuruk)}</td>
 			</tr>
 		</tfoot>
 	</table>
+
+	<div class="estimated-volume">
+		예상 총량: <strong>{fmt(result.totalRice + result.totalWater)} L</strong>
+	</div>
 
 	<div class="info">
 		<p class="nuruk-note">
@@ -70,6 +81,7 @@
 	table {
 		width: 100%;
 		border-collapse: collapse;
+		table-layout: fixed;
 	}
 
 	th, td {
@@ -85,7 +97,11 @@
 		font-weight: 600;
 	}
 
-	th:first-child, td.stage-name {
+	.col-stage { width: 20%; }
+	.col-form { width: 20%; }
+	.col-num { width: 20%; }
+
+	th:first-child, td.stage-name, td.rice-form {
 		text-align: left;
 	}
 
@@ -93,10 +109,25 @@
 		font-weight: 600;
 	}
 
+	td.rice-form {
+		font-size: 0.85rem;
+		color: var(--color-muted);
+	}
+
 	tfoot td {
 		font-weight: 700;
 		border-top: 2px solid var(--color-primary);
 		background: rgba(74, 103, 65, 0.05);
+	}
+
+	.estimated-volume {
+		margin-top: 1rem;
+		padding: 0.75rem;
+		background: rgba(37, 99, 235, 0.05);
+		border-radius: 6px;
+		font-size: 0.9rem;
+		text-align: center;
+		color: var(--color-primary);
 	}
 
 	.info {

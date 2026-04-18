@@ -16,7 +16,7 @@
 
 <section class="input-section">
 	<div class="field">
-		<label for="total-rice">쌀 총량 (ℓ)</label>
+		<label for="total-rice">쌀 총량 (kg)</label>
 		<input
 			id="total-rice"
 			type="number"
