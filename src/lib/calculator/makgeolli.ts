@@ -1,5 +1,7 @@
-import { RICE_WATER_RATIO, type RiceForm, type BrewResult, type BrewStage } from '$lib/types';
+import { RICE_WATER_RATIO, RICE_FORM_LABELS, type RiceForm, type BrewResult, type BrewStage } from '$lib/types';
 import { DEFAULT_NURUK } from '$lib/data/nuruk';
+
+const GODUBAP = '고두밥';
 
 function waterForRice(rice: number, form: RiceForm): number {
 	return rice * RICE_WATER_RATIO[form];
@@ -24,6 +26,7 @@ export function calculateDanyang(totalRice: number, riceForm: RiceForm): BrewRes
 	const stages: BrewStage[] = [
 		{
 			name: '전량 투입',
+			riceFormLabel: RICE_FORM_LABELS[riceForm],
 			rice: totalRice,
 			water: waterForRice(totalRice, riceForm),
 			nuruk: nurukForRice(totalRice)
@@ -45,12 +48,14 @@ export function calculateIyang(totalRice: number, riceForm: RiceForm): BrewResul
 	const stages: BrewStage[] = [
 		{
 			name: '밑술',
+			riceFormLabel: RICE_FORM_LABELS[riceForm],
 			rice: milsulRice,
 			water: waterForRice(milsulRice, riceForm),
 			nuruk: nurukForRice(milsulRice)
 		},
 		{
 			name: '덧술',
+			riceFormLabel: GODUBAP,
 			rice: deotsulRice,
 			water: 0,
 			nuruk: 0
@@ -73,18 +78,21 @@ export function calculateSamyang(totalRice: number, riceForm: RiceForm): BrewRes
 	const stages: BrewStage[] = [
 		{
 			name: '밑술',
+			riceFormLabel: RICE_FORM_LABELS[riceForm],
 			rice: milsulRice,
 			water: waterForRice(milsulRice, riceForm),
 			nuruk: nurukForRice(milsulRice)
 		},
 		{
 			name: '덧술',
+			riceFormLabel: RICE_FORM_LABELS[riceForm],
 			rice: deotsul1Rice,
 			water: waterForRice(deotsul1Rice, riceForm),
 			nuruk: 0
 		},
 		{
 			name: '덧술2',
+			riceFormLabel: GODUBAP,
 			rice: deotsul2Rice,
 			water: 0,
 			nuruk: 0

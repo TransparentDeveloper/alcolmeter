@@ -11,6 +11,7 @@ describe('calculateDanyang', () => {
 
 		const stage = result.stages[0];
 		expect(stage.name).toBe('전량 투입');
+		expect(stage.riceFormLabel).toBe('떡 (설기)');
 		expect(stage.rice).toBe(6);
 		expect(stage.water).toBe(6);     // 떡 1:1, 쌀 6 * 1 = 6
 		expect(stage.nuruk).toBeCloseTo(0.6); // 쌀 6의 10% = 0.6
@@ -41,8 +42,9 @@ describe('calculateIyang', () => {
 		expect(milsul.water).toBe(2);
 		expect(milsul.nuruk).toBeCloseTo(0.2); // 밑술 쌀 2의 10%
 
-		// 덧술: 쌀 2/3 = 4, 물 없음, 누룩 없음
+		// 덧술: 쌀 2/3 = 4, 물 없음, 누룩 없음, 고두밥
 		expect(deotsul.name).toBe('덧술');
+		expect(deotsul.riceFormLabel).toBe('고두밥');
 		expect(deotsul.rice).toBe(4);
 		expect(deotsul.water).toBe(0);
 		expect(deotsul.nuruk).toBe(0);
@@ -85,8 +87,9 @@ describe('calculateSamyang', () => {
 		expect(deotsul1.water).toBe(1);
 		expect(deotsul1.nuruk).toBe(0);
 
-		// 덧술2: 쌀 4/6 = 4, 물 없음, 누룩 없음
+		// 덧술2: 쌀 4/6 = 4, 물 없음, 누룩 없음, 고두밥 (최종 덧술)
 		expect(deotsul2.name).toBe('덧술2');
+		expect(deotsul2.riceFormLabel).toBe('고두밥');
 		expect(deotsul2.rice).toBe(4);
 		expect(deotsul2.water).toBe(0);
 		expect(deotsul2.nuruk).toBe(0);

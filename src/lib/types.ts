@@ -18,6 +18,7 @@ export const RICE_WATER_RATIO: Record<RiceForm, number> = {
 /** 양조 단계 */
 export interface BrewStage {
 	name: string;
+	riceFormLabel: string;
 	rice: number;
 	water: number;
 	nuruk: number;

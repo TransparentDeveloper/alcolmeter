@@ -14,6 +14,7 @@
 		<thead>
 			<tr>
 				<th>단계</th>
+				<th>쌀 형태</th>
 				<th>쌀 (ℓ)</th>
 				<th>물 (ℓ)</th>
 				<th>누룩 (ℓ)</th>
@@ -23,6 +24,7 @@
 			{#each result.stages as stage}
 				<tr>
 					<td class="stage-name">{stage.name}</td>
+					<td class="rice-form">{stage.riceFormLabel}</td>
 					<td>{fmt(stage.rice)}</td>
 					<td>{fmt(stage.water)}</td>
 					<td>{fmt(stage.nuruk)}</td>
@@ -32,6 +34,7 @@
 		<tfoot>
 			<tr>
 				<td class="stage-name">합계</td>
+				<td></td>
 				<td>{fmt(result.totalRice)}</td>
 				<td>{fmt(result.totalWater)}</td>
 				<td>{fmt(result.totalNuruk)}</td>
