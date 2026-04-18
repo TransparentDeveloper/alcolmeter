@@ -141,13 +141,13 @@ Create `src/app.css`:
 
 ```css
 :root {
-	--color-primary: #4a6741;
-	--color-bg: #faf8f5;
-	--color-text: #2d2d2d;
-	--color-muted: #6b7280;
-	--color-border: #e5e2dd;
+	--color-primary: #2563eb;
+	--color-bg: #f8fafc;
+	--color-text: #1e293b;
+	--color-muted: #64748b;
+	--color-border: #e2e8f0;
 	--color-card: #ffffff;
-	--color-accent: #d4a574;
+	--color-accent: #eab308;
 	--max-width: 960px;
 }
 
@@ -806,7 +806,7 @@ Create `src/lib/components/ResultTable.svelte`:
 		font-size: 0.8rem;
 		color: var(--color-muted);
 		padding: 0.75rem;
-		background: rgba(212, 165, 116, 0.1);
+		background: rgba(234, 179, 8, 0.1);
 		border-radius: 6px;
 		border-left: 3px solid var(--color-accent);
 	}
