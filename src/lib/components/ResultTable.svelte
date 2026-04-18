@@ -50,7 +50,7 @@
 	</table>
 
 	<div class="estimated-volume">
-		예상 술 생산량: <strong>{fmt(estimatedVolume)} L</strong>
+		예상 술 생산량 <strong>{fmt(estimatedVolume)} L</strong>
 	</div>
 
 	<div class="info">
@@ -85,67 +85,78 @@
 	}
 
 	th, td {
-		padding: 0.75rem;
+		padding: 0.85rem 0.75rem;
 		text-align: center;
-		border-bottom: 1px solid var(--color-border);
+		border-bottom: 2px solid #e5e7eb;
+		font-weight: 700;
+		font-size: 0.9rem;
 	}
 
 	th {
 		background: var(--color-primary);
 		color: white;
-		font-size: 0.875rem;
-		font-weight: 600;
+		font-size: 0.8rem;
+		font-weight: 800;
+		letter-spacing: 0.02em;
 	}
 
-	.col-stage { width: 30%; }
-	.col-num { width: 23.3%; }
+	.col-stage { width: 35%; }
+	.col-num { width: 21.6%; }
 
 	th:first-child, td.stage-name {
 		text-align: left;
 	}
 
 	td.stage-name {
-		font-weight: 600;
+		font-weight: 800;
+		color: var(--color-text);
 	}
 
 	tfoot td {
-		font-weight: 700;
-		border-top: 2px solid var(--color-primary);
-		background: rgba(37, 99, 235, 0.05);
+		font-weight: 800;
+		border-top: 3px solid var(--color-primary);
+		background: rgba(37, 99, 235, 0.06);
 	}
 
 	.estimated-volume {
-		margin-top: 1rem;
-		padding: 0.75rem;
-		background: rgba(37, 99, 235, 0.05);
-		border-radius: 6px;
-		font-size: 0.9rem;
+		margin-top: 1.25rem;
+		padding: 1rem;
+		background: var(--color-primary);
+		border-radius: 10px;
+		font-size: 0.95rem;
+		font-weight: 800;
 		text-align: center;
-		color: var(--color-primary);
+		color: #ffffff;
+	}
+
+	.estimated-volume strong {
+		font-size: 1.2rem;
+		margin-left: 0.5rem;
 	}
 
 	.info {
-		margin-top: 1rem;
+		margin-top: 1.25rem;
 	}
 
 	.nuruk-note {
 		font-size: 0.8rem;
-		color: var(--color-muted);
-		padding: 0.75rem;
-		background: rgba(234, 179, 8, 0.1);
-		border-radius: 6px;
-		border-left: 3px solid var(--color-accent);
+		font-weight: 700;
+		color: #6b7280;
+		padding: 0.85rem;
+		background: #fffbeb;
+		border-radius: 8px;
+		border-left: 4px solid var(--color-accent);
 	}
 
 	.taste-ref {
 		margin-top: 0.75rem;
 		font-size: 0.8rem;
-		color: var(--color-muted);
+		color: #6b7280;
 	}
 
 	.taste-ref summary {
 		cursor: pointer;
-		font-weight: 600;
+		font-weight: 800;
 	}
 
 	.taste-table {

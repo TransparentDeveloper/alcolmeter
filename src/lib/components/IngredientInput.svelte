@@ -39,7 +39,7 @@
 <style>
 	.input-section {
 		display: flex;
-		gap: 1.5rem;
+		gap: 1rem;
 		flex-wrap: wrap;
 	}
 
@@ -48,26 +48,28 @@
 		flex-direction: column;
 		gap: 0.5rem;
 		flex: 1;
-		min-width: 180px;
+		min-width: 160px;
 	}
 
 	label {
-		font-size: 0.875rem;
-		font-weight: 600;
-		color: var(--color-muted);
+		font-size: 0.8rem;
+		font-weight: 700;
+		color: var(--color-text);
 	}
 
 	input, select {
 		padding: 0.75rem;
-		border: 1px solid var(--color-border);
-		border-radius: 8px;
+		border: 2px solid #d1d5db;
+		border-radius: 10px;
 		font-size: 1rem;
-		background: var(--color-card);
+		font-weight: 700;
+		font-family: inherit;
+		background: #ffffff;
 		color: var(--color-text);
 	}
 
 	input:focus, select:focus {
-		outline: 2px solid var(--color-primary);
-		outline-offset: -1px;
+		outline: none;
+		border-color: var(--color-primary);
 	}
 </style>

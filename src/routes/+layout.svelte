@@ -17,27 +17,29 @@
 	.app {
 		max-width: var(--max-width);
 		margin: 0 auto;
-		padding: 1rem;
+		padding: 1.5rem;
+		min-height: 100vh;
 	}
 
 	header {
 		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-		padding: 1rem 0;
-		border-bottom: 1px solid var(--color-border);
-		margin-bottom: 2rem;
+		align-items: baseline;
+		gap: 0.75rem;
+		padding-bottom: 1.5rem;
+		margin-bottom: 2.5rem;
 	}
 
 	.logo {
-		font-size: 1.5rem;
-		font-weight: 700;
-		color: var(--color-primary);
+		font-size: 1.25rem;
+		font-weight: 800;
+		color: var(--color-text);
 		text-decoration: none;
+		letter-spacing: -0.02em;
 	}
 
 	.version {
-		font-size: 0.75rem;
+		font-size: 0.7rem;
 		color: var(--color-muted);
+		font-weight: 400;
 	}
 </style>

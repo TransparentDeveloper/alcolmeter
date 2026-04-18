@@ -1,12 +1,13 @@
 :root {
 	--color-primary: #2563eb;
-	--color-bg: #f8fafc;
-	--color-text: #1e293b;
-	--color-muted: #64748b;
-	--color-border: #e2e8f0;
-	--color-card: #ffffff;
-	--color-accent: #eab308;
-	--max-width: 960px;
+	--color-bg: #ffffff;
+	--color-text: #111827;
+	--color-muted: #9ca3af;
+	--color-border: #f3f4f6;
+	--color-card: #fafafa;
+	--color-accent: #facc15;
+	--max-width: 640px;
+	--radius: 16px;
 }
 
 * {
@@ -16,8 +17,9 @@
 }
 
 body {
-	font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+	font-family: 'Nanum Gothic', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 	background: var(--color-bg);
 	color: var(--color-text);
-	line-height: 1.6;
+	line-height: 1.7;
+	-webkit-font-smoothing: antialiased;
 }
