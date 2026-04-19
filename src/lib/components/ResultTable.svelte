@@ -55,9 +55,10 @@
 					<tr><th>쌀</th><th>물</th><th>맛</th><th>설명</th></tr>
 				</thead>
 				<tbody>
-					<tr><td>1</td><td>1</td><td>기본</td><td>평균적인 맛</td></tr>
+					<tr><td>1</td><td>1</td><td>기본</td><td>쌀과 물이 동일하여 평균적인 맛</td></tr>
 					<tr><td>1</td><td>0.8</td><td>단맛</td><td>전분이 많아 당이 많이 생성</td></tr>
 					<tr><td>1</td><td>1.2</td><td>쓴맛/신맛</td><td>당도 낮고 알코올도수 낮아짐</td></tr>
+					<tr><td>떡</td><td>-</td><td>극단적 단맛</td><td>고두밥 투입 시 가수 없음. 동양주·동정춘 등 극단적 단맛을 의도할 때 사용</td></tr>
 				</tbody>
 			</table>
 		</details>
