@@ -50,11 +50,16 @@
 	<div class="info">
 		<details class="taste-ref">
 			<summary>쌀:물 비율에 따른 맛 변화 참고</summary>
-			<ul class="taste-list">
-				<li><strong>1 : 1</strong> 기본 — 평균적인 맛</li>
-				<li><strong>1 : 0.8</strong> 단맛 — 전분이 많아 당이 많이 생성</li>
-				<li><strong>1 : 1.2</strong> 쓴맛/신맛 — 당도 낮고 알코올도수 낮아짐</li>
-			</ul>
+			<table class="taste-table">
+				<thead>
+					<tr><th>쌀</th><th>물</th><th>맛</th><th>설명</th></tr>
+				</thead>
+				<tbody>
+					<tr><td>1</td><td>1</td><td>기본</td><td>평균적인 맛</td></tr>
+					<tr><td>1</td><td>0.8</td><td>단맛</td><td>전분이 많아 당이 많이 생성</td></tr>
+					<tr><td>1</td><td>1.2</td><td>쓴맛/신맛</td><td>당도 낮고 알코올도수 낮아짐</td></tr>
+				</tbody>
+			</table>
 			<div class="taste-special">
 				<strong>떡(설기) 사용 시</strong>
 				고두밥 투입 단계에서 가수하지 않습니다.<br/>
@@ -148,24 +153,26 @@
 		font-weight: 800;
 	}
 
-	.taste-list {
-		margin: 0.75rem 0 0;
-		padding: 0;
-		list-style: none;
-		display: flex;
-		flex-direction: column;
-		gap: 0.4rem;
+	.taste-table {
+		margin-top: 0.75rem;
+		width: 100%;
+		font-size: 0.8rem;
+		table-layout: auto;
+		border-collapse: collapse;
 	}
 
-	.taste-list li {
-		font-size: 0.8rem;
+	.taste-table th, .taste-table td {
+		padding: 0.5rem 0.75rem;
+		font-weight: 400;
+		border-bottom: 1px solid #e5e7eb;
+		text-align: left;
+	}
+
+	.taste-table th {
+		font-size: 0.7rem;
+		font-weight: 700;
+		background: #f3f4f6;
 		color: #6b7280;
-	}
-
-	.taste-list strong {
-		color: var(--color-text);
-		margin-right: 0.35rem;
-		font-size: 0.8rem;
 	}
 
 	.taste-special {
