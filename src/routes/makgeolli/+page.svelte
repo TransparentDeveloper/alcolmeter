@@ -6,10 +6,18 @@
 
 	let totalRice = $state(6);
 	let riceForm: RiceForm = $state('tteok');
-	let nurukRatio = $state(10);
+	let nurukRatio = $state(15);
 
 	type BrewTab = 'danyang' | 'iyang' | 'samyang';
 	let activeTab: BrewTab = $state('iyang');
+
+	const NURUK_CONFIG: Record<BrewTab, { default: number; min: number; max: number; hint: string }> = {
+		danyang: { default: 20, min: 20, max: 25, hint: '표준 20~25%' },
+		iyang:   { default: 15, min: 15, max: 20, hint: '표준 15~20%' },
+		samyang: { default: 10, min: 10, max: 15, hint: '표준 10~15%' }
+	};
+
+	let nurukHint = $derived(NURUK_CONFIG[activeTab].hint);
 
 	const tabs: { id: BrewTab; label: string }[] = [
 		{ id: 'danyang', label: '단양주' },
@@ -17,9 +25,14 @@
 		{ id: 'samyang', label: '삼양주' }
 	];
 
+	function switchTab(tabId: BrewTab) {
+		activeTab = tabId;
+		nurukRatio = NURUK_CONFIG[tabId].default;
+	}
+
 	let result = $derived.by(() => {
 		const rice = Math.max(0, totalRice || 0);
-		const ratio = Math.max(0, nurukRatio || 10);
+		const ratio = Math.max(0, nurukRatio || NURUK_CONFIG[activeTab].default);
 		switch (activeTab) {
 			case 'danyang':
 				return calculateDanyang(rice, riceForm, ratio);
@@ -42,7 +55,7 @@
 
 	<section class="card">
 		<h2 class="section-label">재료 입력</h2>
-		<IngredientInput bind:totalRice bind:riceForm bind:nurukRatio />
+		<IngredientInput bind:totalRice bind:riceForm bind:nurukRatio {nurukHint} />
 	</section>
 
 	{#if riceForm === 'tteok'}
@@ -56,7 +69,7 @@
 				<button
 					class="tab"
 					class:active={activeTab === tab.id}
-					onclick={() => activeTab = tab.id}
+					onclick={() => switchTab(tab.id)}
 				>
 					{tab.label}
 				</button>

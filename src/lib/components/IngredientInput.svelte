@@ -4,11 +4,13 @@
 	let {
 		totalRice = $bindable(6),
 		riceForm = $bindable('tteok' as RiceForm),
-		nurukRatio = $bindable(10)
+		nurukRatio = $bindable(10),
+		nurukHint = '표준 10%'
 	}: {
 		totalRice: number;
 		riceForm: RiceForm;
 		nurukRatio: number;
+		nurukHint?: string;
 	} = $props();
 
 	const riceFormOptions: { value: RiceForm; label: string }[] = Object.entries(RICE_FORM_LABELS).map(
@@ -48,7 +50,7 @@
 				step="1"
 				bind:value={nurukRatio}
 			/>
-			<span class="ratio-hint">표준 10%</span>
+			<span class="ratio-hint">{nurukHint}</span>
 		</div>
 	</div>
 </section>
