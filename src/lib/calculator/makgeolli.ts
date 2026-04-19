@@ -18,49 +18,25 @@ function sumStages(stages: BrewStage[]): { totalRice: number; totalWater: number
 }
 
 /**
- * 밑술/덧술 단계의 쌀 배분량을 계산.
- * 형태 비율을 지키면서 물 예산 안에 들도록 조정하고,
- * 남는 쌀은 최종 덧술(고두밥)에 전량 투입.
+ * 물 예산 = 가용쌀 × waterRatio (고정)
  *
- * @param totalRice 가용 쌀 전량 (전부 사용)
- * @param preFinalCount 최종 덧술 이전 단계 수 (이양주=1, 삼양주=2)
- * @param defaultFractions 기본 비율 (이양주: [0.2], 삼양주: [0.15, 0.15])
- * @param formRatio 쌀 형태별 물 비율
- * @param waterBudget 물 예산
- * @returns [각 단계별 쌀량 배열, 각 단계별 물량 배열]
+ * 1. 밑술/덧술 단계의 쌀은 물 예산에 맞춰 결정 (형태 비율 정확히 유지)
+ * 2. 최종 덧술(고두밥)에 남은 가용쌀 전부 투입 (물 없이)
+ * 3. 결과: 가용쌀 전량 사용, 형태 비율 유지, 총 쌀:물 비율 유지
  */
-function distribute(
-	totalRice: number,
-	defaultFractions: number[],
+function calcPreFinalRicePerStage(
+	availableRice: number,
+	defaultFraction: number,
 	formRatio: number,
 	waterBudget: number,
-	noFinalWater: boolean
-): { rices: number[]; waters: number[] } {
-	const preFinalCount = defaultFractions.length;
-
-	// 기본 비율로 밑술/덧술 쌀량 계산
-	let preFinalRices = defaultFractions.map(f => totalRice * f);
-	let preFinalWaters = preFinalRices.map(r => r * formRatio);
-	let preFinalWaterSum = preFinalWaters.reduce((a, b) => a + b, 0);
-
-	// 물 예산 초과 시: 예산에 맞게 밑술/덧술 쌀을 균등 축소
-	if (preFinalWaterSum > waterBudget && formRatio > 0) {
-		// 각 단계 동일 비율이라 가정 → 단계당 최대 쌀 = waterBudget / (preFinalCount * formRatio)
-		const maxPerStage = waterBudget / (preFinalCount * formRatio);
-		preFinalRices = preFinalRices.map(() => maxPerStage);
-		preFinalWaters = preFinalRices.map(r => r * formRatio);
-		preFinalWaterSum = preFinalWaters.reduce((a, b) => a + b, 0);
-	}
-
-	// 나머지 쌀 → 최종 덧술(고두밥)
-	const preFinalRiceSum = preFinalRices.reduce((a, b) => a + b, 0);
-	const finalRice = totalRice - preFinalRiceSum;
-	const finalWater = noFinalWater ? 0 : Math.max(0, waterBudget - preFinalWaterSum);
-
-	return {
-		rices: [...preFinalRices, finalRice],
-		waters: [...preFinalWaters, finalWater]
-	};
+	preFinalCount: number
+): number {
+	if (formRatio === 0) return availableRice * defaultFraction;
+	const defaultRice = availableRice * defaultFraction;
+	const defaultTotalWater = defaultRice * preFinalCount * formRatio;
+	if (defaultTotalWater <= waterBudget) return defaultRice;
+	// 축소: 물 예산에 맞는 단계당 최대 쌀
+	return waterBudget / (preFinalCount * formRatio);
 }
 
 export function calculateDanyang(availableRice: number, riceForm: RiceForm, waterRatio: number = 1, nurukRatio: number = 10): BrewResult {
@@ -87,21 +63,26 @@ export function calculateIyang(availableRice: number, riceForm: RiceForm, waterR
 	const formRatio = RICE_WATER_RATIO[riceForm];
 	const waterBudget = availableRice * waterRatio;
 	const noFinalWater = riceForm === 'tteok' || riceForm === 'godubap';
-	const { rices, waters } = distribute(availableRice, [0.2], formRatio, waterBudget, noFinalWater);
+
+	const milsulRice = calcPreFinalRicePerStage(availableRice, 0.2, formRatio, waterBudget, 1);
+	const milsulWater = milsulRice * formRatio;
+	// 남은 가용쌀 전부 → 덧술(고두밥)
+	const deotsulRice = availableRice - milsulRice;
+	const deotsulWater = noFinalWater ? 0 : Math.max(0, waterBudget - milsulWater);
 
 	const stages: BrewStage[] = [
 		{
 			name: '밑술',
 			riceFormLabel: RICE_FORM_LABELS[riceForm],
-			rice: rices[0],
-			water: waters[0],
+			rice: milsulRice,
+			water: milsulWater,
 			nuruk: nurukForRice(availableRice, nurukRatio)
 		},
 		{
 			name: '덧술',
 			riceFormLabel: GODUBAP,
-			rice: rices[1],
-			water: waters[1],
+			rice: deotsulRice,
+			water: deotsulWater,
 			nuruk: 0
 		}
 	];
@@ -118,28 +99,35 @@ export function calculateSamyang(availableRice: number, riceForm: RiceForm, wate
 	const formRatio = RICE_WATER_RATIO[riceForm];
 	const waterBudget = availableRice * waterRatio;
 	const noFinalWater = riceForm === 'tteok' || riceForm === 'godubap';
-	const { rices, waters } = distribute(availableRice, [0.15, 0.15], formRatio, waterBudget, noFinalWater);
+
+	const milsulRice = calcPreFinalRicePerStage(availableRice, 0.15, formRatio, waterBudget, 2);
+	const deotsul1Rice = milsulRice; // 밑술과 동일
+	const milsulWater = milsulRice * formRatio;
+	const deotsul1Water = deotsul1Rice * formRatio;
+	// 남은 가용쌀 전부 → 덧술2(고두밥)
+	const deotsul2Rice = availableRice - milsulRice - deotsul1Rice;
+	const deotsul2Water = noFinalWater ? 0 : Math.max(0, waterBudget - milsulWater - deotsul1Water);
 
 	const stages: BrewStage[] = [
 		{
 			name: '밑술',
 			riceFormLabel: RICE_FORM_LABELS[riceForm],
-			rice: rices[0],
-			water: waters[0],
+			rice: milsulRice,
+			water: milsulWater,
 			nuruk: nurukForRice(availableRice, nurukRatio)
 		},
 		{
 			name: '덧술',
 			riceFormLabel: RICE_FORM_LABELS[riceForm],
-			rice: rices[1],
-			water: waters[1],
+			rice: deotsul1Rice,
+			water: deotsul1Water,
 			nuruk: 0
 		},
 		{
 			name: '덧술2',
 			riceFormLabel: GODUBAP,
-			rice: rices[2],
-			water: waters[2],
+			rice: deotsul2Rice,
+			water: deotsul2Water,
 			nuruk: 0
 		}
 	];
