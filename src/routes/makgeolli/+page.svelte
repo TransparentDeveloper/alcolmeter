@@ -98,11 +98,10 @@
 	}
 
 .section-label {
-		font-size: 0.75rem;
-		font-weight: 700;
-		color: var(--color-muted);
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
+		font-size: 0.95rem;
+		font-weight: 800;
+		color: var(--color-text);
+		letter-spacing: -0.01em;
 		margin-bottom: 1rem;
 	}
 
