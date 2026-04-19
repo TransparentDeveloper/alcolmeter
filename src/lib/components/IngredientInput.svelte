@@ -7,6 +7,7 @@
 		waterRatio = $bindable(100),
 		nurukRatio = $bindable(10),
 		nurukHint = '표준 10%',
+		nurukDefault = 10,
 		showGodubap = false
 	}: {
 		totalRice: number;
@@ -14,6 +15,7 @@
 		waterRatio: number;
 		nurukRatio: number;
 		nurukHint?: string;
+		nurukDefault?: number;
 		showGodubap?: boolean;
 	} = $props();
 
@@ -87,6 +89,7 @@
 				min="1"
 				max="50"
 				step="1"
+				placeholder={nurukDefault.toString()}
 				bind:value={nurukRatio}
 			/>
 			<span class="ratio-hint">{nurukHint}</span>

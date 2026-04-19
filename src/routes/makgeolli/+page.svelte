@@ -19,6 +19,7 @@
 	};
 
 	let nurukHint = $derived(NURUK_CONFIG[activeTab].hint);
+	let nurukDefault = $derived(NURUK_CONFIG[activeTab].default);
 
 	const tabs: { id: BrewTab; label: string }[] = [
 		{ id: 'danyang', label: '단양주' },
@@ -60,7 +61,7 @@
 <div class="calculator">
 	<section class="card">
 		<h2 class="section-label">재료 입력</h2>
-		<IngredientInput bind:totalRice bind:riceForm bind:waterRatio={waterRatioPercent} bind:nurukRatio {nurukHint} {showGodubap} />
+		<IngredientInput bind:totalRice bind:riceForm bind:waterRatio={waterRatioPercent} bind:nurukRatio {nurukHint} {nurukDefault} {showGodubap} />
 	</section>
 
 	{#if riceForm === 'tteok'}
