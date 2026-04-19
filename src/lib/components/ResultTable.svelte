@@ -47,25 +47,6 @@
 		예상 술 생산량 <strong>{fmt(estimatedVolume)} L</strong>
 	</div>
 
-	<div class="info">
-		<details class="taste-ref">
-			<summary>쌀:물 비율에 따른 맛 변화 참고</summary>
-			{#if riceForm === 'tteok'}
-				<p class="taste-note"><strong>고두밥 투입 단계</strong>에서 <strong>가수하지 않습니다.</strong><br/><strong>동양주·동정춘</strong> 등 극단적으로 달게 만들 때 사용하는 방식입니다.</p>
-			{:else}
-				<table class="taste-table">
-					<thead>
-						<tr><th>쌀</th><th>물</th><th>맛</th><th>설명</th></tr>
-					</thead>
-					<tbody>
-						<tr><td>1</td><td>1</td><td>기본</td><td>평균적인 맛</td></tr>
-						<tr><td>1</td><td>0.8</td><td>단맛</td><td>전분이 많아 당이 많이 생성</td></tr>
-						<tr><td>1</td><td>1.2</td><td>쓴맛/신맛</td><td>당도 낮고 알코올도수 낮아짐</td></tr>
-					</tbody>
-				</table>
-			{/if}
-		</details>
-	</div>
 </div>
 
 <style>
@@ -137,52 +118,4 @@
 		color: var(--color-primary);
 	}
 
-	.info {
-		margin-top: 1.25rem;
-	}
-
-	.taste-ref {
-		margin-top: 0.75rem;
-		font-size: 0.8rem;
-		color: #6b7280;
-	}
-
-	.taste-ref summary {
-		cursor: pointer;
-		font-weight: 800;
-	}
-
-	.taste-table {
-		margin-top: 0.75rem;
-		width: 100%;
-		font-size: 0.8rem;
-		table-layout: auto;
-		border-collapse: collapse;
-	}
-
-	.taste-table th, .taste-table td {
-		padding: 0.5rem 0.75rem;
-		font-weight: 400;
-		border-bottom: 1px solid #e5e7eb;
-		text-align: left;
-	}
-
-	.taste-table th {
-		font-size: 0.7rem;
-		font-weight: 700;
-		background: #f3f4f6;
-		color: #6b7280;
-	}
-
-	.taste-note {
-		margin-top: 0.75rem;
-		font-size: 0.8rem;
-		color: #6b7280;
-		line-height: 1.8;
-	}
-
-	.taste-note :global(strong) {
-		color: #92400e;
-		font-weight: 800;
-	}
 </style>
