@@ -1,8 +1,9 @@
 /** 쌀 가공 형태 */
-export type RiceForm = 'tteok' | 'beombuk' | 'juk';
+export type RiceForm = 'godubap' | 'tteok' | 'beombuk' | 'juk';
 
 /** 쌀 형태 한글 라벨 */
 export const RICE_FORM_LABELS: Record<RiceForm, string> = {
+	godubap: '고두밥',
 	tteok: '떡 (설기)',
 	beombuk: '범벅',
 	juk: '죽'
@@ -10,6 +11,7 @@ export const RICE_FORM_LABELS: Record<RiceForm, string> = {
 
 /** 쌀 형태별 쌀:물 비율 (쌀 1 기준 물의 비율) */
 export const RICE_WATER_RATIO: Record<RiceForm, number> = {
+	godubap: 0,
 	tteok: 1,
 	beombuk: 3,
 	juk: 5
