@@ -23,21 +23,40 @@
 	<!-- Features -->
 	<section class="features">
 		<div class="feature">
-			<span class="feature-icon">⚖️</span>
+			<span class="feature-icon">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M12 3v18"/>
+					<path d="M3 12h18"/>
+					<circle cx="7" cy="7" r="2"/>
+					<circle cx="17" cy="17" r="2"/>
+				</svg>
+			</span>
 			<div>
 				<strong>정확한 배합 비율</strong>
 				<p>단양주, 이양주, 삼양주 각각의 이상적인 재료 분배를 자동 계산합니다.</p>
 			</div>
 		</div>
 		<div class="feature">
-			<span class="feature-icon">🍶</span>
+			<span class="feature-icon">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M8 2h8l-1 7H9L8 2z"/>
+					<path d="M7 9h10l-2 13H9L7 9z"/>
+					<path d="M5 9h14"/>
+				</svg>
+			</span>
 			<div>
 				<strong>쌀 형태별 물 비율</strong>
 				<p>떡, 범벅, 죽 등 쌀 가공 형태에 따른 물 비율을 반영합니다.</p>
 			</div>
 		</div>
 		<div class="feature">
-			<span class="feature-icon">📊</span>
+			<span class="feature-icon">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<rect x="3" y="12" width="4" height="9" rx="1"/>
+					<rect x="10" y="7" width="4" height="14" rx="1"/>
+					<rect x="17" y="3" width="4" height="18" rx="1"/>
+				</svg>
+			</span>
 			<div>
 				<strong>예상 생산량</strong>
 				<p>입력한 재료로 만들어지는 술의 양을 미리 확인할 수 있습니다.</p>
@@ -154,15 +173,21 @@
 	}
 
 	.feature-icon {
-		font-size: 1.5rem;
 		flex-shrink: 0;
 		width: 2.5rem;
 		height: 2.5rem;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		background: var(--color-border);
+		background: var(--color-primary);
+		color: #ffffff;
 		border-radius: 10px;
+		padding: 0.5rem;
+	}
+
+	.feature-icon :global(svg) {
+		width: 100%;
+		height: 100%;
 	}
 
 	.feature strong {
