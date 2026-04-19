@@ -40,7 +40,7 @@ describe('calculateIyang', () => {
 		expect(milsul.name).toBe('밑술');
 		expect(milsul.rice).toBe(2);
 		expect(milsul.water).toBe(2);
-		expect(milsul.nuruk).toBeCloseTo(0.2); // 밑술 쌀 2의 10%
+		expect(milsul.nuruk).toBeCloseTo(0.6); // 총 쌀 6의 10%
 
 		// 덧술: 쌀 2/3 = 4, 물 없음, 누룩 없음, 고두밥
 		expect(deotsul.name).toBe('덧술');
@@ -58,7 +58,7 @@ describe('calculateIyang', () => {
 		// 밑술: 쌀 1/3 = 1, 물 = 1*3 = 3
 		expect(milsul.rice).toBe(1);
 		expect(milsul.water).toBe(3);
-		expect(milsul.nuruk).toBeCloseTo(0.1);
+		expect(milsul.nuruk).toBeCloseTo(0.3); // 총 쌀 3의 10%
 
 		// 덧술: 쌀 2/3 = 2, 물 없음
 		expect(deotsul.rice).toBe(2);
@@ -79,7 +79,7 @@ describe('calculateSamyang', () => {
 		expect(milsul.name).toBe('밑술');
 		expect(milsul.rice).toBe(1);
 		expect(milsul.water).toBe(1);
-		expect(milsul.nuruk).toBeCloseTo(0.1); // 밑술 쌀 1의 10%
+		expect(milsul.nuruk).toBeCloseTo(0.6); // 총 쌀 6의 10%
 
 		// 덧술: 쌀 1/6 = 1, 물 = 1*1 = 1 (밑술과 동일 형태), 누룩 없음
 		expect(deotsul1.name).toBe('덧술');
@@ -115,7 +115,7 @@ describe('totals', () => {
 
 		expect(result.totalRice).toBe(6);
 		expect(result.totalWater).toBe(2); // 밑술 물만
-		expect(result.totalNuruk).toBeCloseTo(0.2);
+		expect(result.totalNuruk).toBeCloseTo(0.6); // 총 쌀 6의 10%
 	});
 
 	it('삼양주 총합이 정확함', () => {
@@ -123,7 +123,7 @@ describe('totals', () => {
 
 		expect(result.totalRice).toBe(6);
 		expect(result.totalWater).toBe(2); // 밑술 1 + 덧술 1
-		expect(result.totalNuruk).toBeCloseTo(0.1);
+		expect(result.totalNuruk).toBeCloseTo(0.6); // 총 쌀 6의 10%
 	});
 });
 
@@ -132,9 +132,9 @@ describe('custom nuruk ratio', () => {
 		const result = calculateIyang(6, 'tteok', 15);
 
 		const [milsul] = result.stages;
-		// 밑술 쌀 2의 15% = 0.3
-		expect(milsul.nuruk).toBeCloseTo(0.3);
-		expect(result.totalNuruk).toBeCloseTo(0.3);
+		// 총 쌀 6의 15% = 0.9
+		expect(milsul.nuruk).toBeCloseTo(0.9);
+		expect(result.totalNuruk).toBeCloseTo(0.9);
 	});
 
 	it('기본값은 10%', () => {

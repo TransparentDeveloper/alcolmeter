@@ -50,7 +50,7 @@ export function calculateIyang(totalRice: number, riceForm: RiceForm, nurukRatio
 			riceFormLabel: RICE_FORM_LABELS[riceForm],
 			rice: milsulRice,
 			water: waterForRice(milsulRice, riceForm),
-			nuruk: nurukForRice(milsulRice, nurukRatio)
+			nuruk: nurukForRice(totalRice, nurukRatio)
 		},
 		{
 			name: '덧술',
@@ -80,7 +80,7 @@ export function calculateSamyang(totalRice: number, riceForm: RiceForm, nurukRat
 			riceFormLabel: RICE_FORM_LABELS[riceForm],
 			rice: milsulRice,
 			water: waterForRice(milsulRice, riceForm),
-			nuruk: nurukForRice(milsulRice, nurukRatio)
+			nuruk: nurukForRice(totalRice, nurukRatio)
 		},
 		{
 			name: '덧술',
