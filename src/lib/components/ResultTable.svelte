@@ -1,9 +1,7 @@
 <script lang="ts">
 	import type { BrewResult, RiceForm } from '$lib/types';
 
-	let { result, riceForm = 'tteok' as RiceForm, availableRice = 0 }: { result: BrewResult; riceForm?: RiceForm; availableRice?: number } = $props();
-
-	let isReduced = $derived(availableRice > 0 && result.totalRice < availableRice - 0.01);
+	let { result, riceForm = 'tteok' as RiceForm }: { result: BrewResult; riceForm?: RiceForm } = $props();
 
 	function fmt(value: number): string {
 		if (value <= 0) return '-';
@@ -44,12 +42,6 @@
 			</tr>
 		</tfoot>
 	</table>
-
-	{#if isReduced}
-		<div class="optimal-rice">
-			쌀 적정 사용량 <strong>{fmt(result.totalRice)} kg</strong> <span class="of-available">/ {fmt(availableRice)} kg</span>
-		</div>
-	{/if}
 
 	<div class="estimated-volume">
 		예상 술 생산량 <strong>{fmt(estimatedVolume)} L</strong>
@@ -107,29 +99,6 @@
 		font-weight: 800;
 		border-top: 3px solid var(--color-primary);
 		background: rgba(37, 99, 235, 0.06);
-	}
-
-	.optimal-rice {
-		margin-top: 1.25rem;
-		padding: 0.85rem 1rem;
-		border-top: 2px solid #e5e7eb;
-		font-size: 0.9rem;
-		font-weight: 700;
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-		color: var(--color-text);
-	}
-
-	.optimal-rice strong {
-		font-size: 1.1rem;
-		color: var(--color-primary);
-	}
-
-	.of-available {
-		font-size: 0.75rem;
-		font-weight: 400;
-		color: var(--color-muted);
 	}
 
 	.estimated-volume {
