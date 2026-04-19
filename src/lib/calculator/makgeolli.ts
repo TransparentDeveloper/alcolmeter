@@ -2,6 +2,10 @@ import { RICE_WATER_RATIO, RICE_FORM_LABELS, type RiceForm, type BrewResult, typ
 
 const GODUBAP = '고두밥';
 
+function waterForRice(rice: number, form: RiceForm): number {
+	return rice * RICE_WATER_RATIO[form];
+}
+
 function nurukForRice(rice: number, ratioPercent: number): number {
 	return rice * (ratioPercent / 100);
 }
@@ -18,14 +22,12 @@ function sumStages(stages: BrewStage[]): { totalRice: number; totalWater: number
 }
 
 export function calculateDanyang(totalRice: number, riceForm: RiceForm, nurukRatio: number = 10): BrewResult {
-	const totalWater = totalRice * RICE_WATER_RATIO[riceForm];
-
 	const stages: BrewStage[] = [
 		{
 			name: '전량 투입',
 			riceFormLabel: RICE_FORM_LABELS[riceForm],
 			rice: totalRice,
-			water: totalWater,
+			water: waterForRice(totalRice, riceForm),
 			nuruk: nurukForRice(totalRice, nurukRatio)
 		}
 	];
@@ -41,14 +43,13 @@ export function calculateDanyang(totalRice: number, riceForm: RiceForm, nurukRat
 export function calculateIyang(totalRice: number, riceForm: RiceForm, nurukRatio: number = 10): BrewResult {
 	const milsulRice = totalRice * 0.2;
 	const deotsulRice = totalRice * 0.8;
-	const totalWater = totalRice * RICE_WATER_RATIO[riceForm];
 
 	const stages: BrewStage[] = [
 		{
 			name: '밑술',
 			riceFormLabel: RICE_FORM_LABELS[riceForm],
 			rice: milsulRice,
-			water: totalWater,
+			water: waterForRice(milsulRice, riceForm),
 			nuruk: nurukForRice(totalRice, nurukRatio)
 		},
 		{
@@ -72,22 +73,20 @@ export function calculateSamyang(totalRice: number, riceForm: RiceForm, nurukRat
 	const milsulRice = totalRice * 0.15;
 	const deotsul1Rice = totalRice * 0.15;
 	const deotsul2Rice = totalRice * 0.7;
-	const totalWater = totalRice * RICE_WATER_RATIO[riceForm];
-	const halfWater = totalWater / 2;
 
 	const stages: BrewStage[] = [
 		{
 			name: '밑술',
 			riceFormLabel: RICE_FORM_LABELS[riceForm],
 			rice: milsulRice,
-			water: halfWater,
+			water: waterForRice(milsulRice, riceForm),
 			nuruk: nurukForRice(totalRice, nurukRatio)
 		},
 		{
 			name: '덧술',
 			riceFormLabel: RICE_FORM_LABELS[riceForm],
 			rice: deotsul1Rice,
-			water: halfWater,
+			water: waterForRice(deotsul1Rice, riceForm),
 			nuruk: 0
 		},
 		{
