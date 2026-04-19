@@ -60,9 +60,9 @@
 			/>
 			<span class="ratio-hint">표준 100%</span>
 		</div>
-		{#if waterRatio < 100}
+		{#if waterRatio < 95}
 			<span class="water-note sweet">전분이 많아 당이 많이 생성됩니다</span>
-		{:else if waterRatio > 100}
+		{:else if waterRatio > 105}
 			<span class="water-note dry">당도 낮고 알코올도수가 낮아집니다</span>
 		{/if}
 	</div>
