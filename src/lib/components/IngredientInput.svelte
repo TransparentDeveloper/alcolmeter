@@ -19,7 +19,8 @@
 		showGodubap?: boolean;
 	} = $props();
 
-	let showTooltip = $state(false);
+	let showNurukTooltip = $state(false);
+	let showWaterTooltip = $state(false);
 
 	let riceFormOptions = $derived(
 		Object.entries(RICE_FORM_LABELS)
@@ -51,7 +52,15 @@
 	</div>
 
 	<div class="field">
-		<label for="water-ratio">물 비율 (쌀 총량 대비 %)</label>
+		<label for="water-ratio">
+			물 비율 (쌀 총량 대비 %)
+			<span class="info-wrap">
+				<button class="info-btn" onclick={() => showWaterTooltip = !showWaterTooltip}>ℹ</button>
+				{#if showWaterTooltip}
+					<span class="tooltip">1:0.9 → 90% · 1:1 → 100% · 1:1.1 → 110%</span>
+				{/if}
+			</span>
+		</label>
 		{#if waterRatio < 95 || waterRatio > 105 || (riceForm === 'tteok' && !showGodubap)}
 			<div class="water-notes">
 				{#if waterRatio < 95}<span class="water-note sweet">전분이 많아 당이 많이 생성됩니다.</span>{/if}
@@ -77,8 +86,8 @@
 		<label for="nuruk-ratio">
 			누룩 비율 (쌀 총량 대비 %)
 			<span class="info-wrap">
-				<button class="info-btn" onclick={() => showTooltip = !showTooltip}>ℹ</button>
-				{#if showTooltip}
+				<button class="info-btn" onclick={() => showNurukTooltip = !showNurukTooltip}>ℹ</button>
+				{#if showNurukTooltip}
 					<span class="tooltip">송학곡자 기준 권장 비율입니다</span>
 				{/if}
 			</span>
