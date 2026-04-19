@@ -22,12 +22,13 @@ function sumStages(stages: BrewStage[]): { totalRice: number; totalWater: number
 }
 
 export function calculateDanyang(totalRice: number, riceForm: RiceForm, nurukRatio: number = 10): BrewResult {
+	const totalWater = totalRice; // 총 쌀:물 = 1:1
 	const stages: BrewStage[] = [
 		{
 			name: '전량 투입',
 			riceFormLabel: RICE_FORM_LABELS[riceForm],
 			rice: totalRice,
-			water: waterForRice(totalRice, riceForm),
+			water: totalWater,
 			nuruk: nurukForRice(totalRice, nurukRatio)
 		}
 	];
@@ -43,7 +44,7 @@ export function calculateDanyang(totalRice: number, riceForm: RiceForm, nurukRat
 export function calculateIyang(totalRice: number, riceForm: RiceForm, nurukRatio: number = 10): BrewResult {
 	const milsulRice = totalRice * 0.2;
 	const deotsulRice = totalRice * 0.8;
-	const totalWater = waterForRice(totalRice, riceForm);
+	const totalWater = totalRice; // 총 쌀:물 = 1:1
 	const milsulWater = waterForRice(milsulRice, riceForm);
 	const deotsulWater = totalWater - milsulWater;
 
@@ -76,7 +77,7 @@ export function calculateSamyang(totalRice: number, riceForm: RiceForm, nurukRat
 	const milsulRice = totalRice * 0.15;
 	const deotsul1Rice = totalRice * 0.15;
 	const deotsul2Rice = totalRice * 0.7;
-	const totalWater = waterForRice(totalRice, riceForm);
+	const totalWater = totalRice; // 총 쌀:물 = 1:1
 	const milsulWater = waterForRice(milsulRice, riceForm);
 	const deotsul1Water = waterForRice(deotsul1Rice, riceForm);
 	const deotsul2Water = totalWater - milsulWater - deotsul1Water;
