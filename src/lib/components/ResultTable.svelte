@@ -48,15 +48,15 @@
 	</div>
 
 	<div class="info">
-		{#if riceForm === 'tteok'}
-			<div class="taste-special">
-				<strong>떡(설기) 사용 시</strong>
-				고두밥 투입 단계에서 가수하지 않습니다.<br/>
-				동양주·동정춘 등 극단적으로 달게 만들 때 사용하는 방식입니다.
-			</div>
-		{/if}
 		<details class="taste-ref">
 			<summary>쌀:물 비율에 따른 맛 변화 참고</summary>
+			{#if riceForm === 'tteok'}
+				<div class="taste-special">
+					<strong>떡(설기) 사용 시</strong>
+					고두밥 투입 단계에서 가수하지 않습니다.<br/>
+					동양주·동정춘 등 극단적으로 달게 만들 때 사용하는 방식입니다.
+				</div>
+			{/if}
 			<table class="taste-table">
 				<thead>
 					<tr><th>쌀</th><th>물</th><th>맛</th><th>설명</th></tr>
