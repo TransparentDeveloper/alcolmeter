@@ -2,12 +2,43 @@ import { RICE_WATER_RATIO, RICE_FORM_LABELS, type RiceForm, type BrewResult, typ
 
 const GODUBAP = '고두밥';
 
-function waterForRice(rice: number, form: RiceForm): number {
-	return rice * RICE_WATER_RATIO[form];
-}
-
 function nurukForRice(rice: number, ratioPercent: number): number {
 	return rice * (ratioPercent / 100);
+}
+
+/**
+ * 밑술/덧술 단계에 형태 비율대로 물을 배분하되,
+ * 총 물 예산(totalWater)을 초과하지 않도록 비례 축소.
+ * 최종 덧술(고두밥)에 나머지 물 배분.
+ * 떡/고두밥은 최종 덧술 가수 없음.
+ */
+function distributeWater(
+	stageRices: number[],
+	riceForm: RiceForm,
+	totalWater: number,
+	noFinalWater: boolean
+): number[] {
+	const formRatio = RICE_WATER_RATIO[riceForm];
+
+	// 최종 덧술 제외 단계들의 이상적 물량
+	const preFinalStages = stageRices.slice(0, -1);
+	const idealWaters = preFinalStages.map(r => r * formRatio);
+	const idealSum = idealWaters.reduce((a, b) => a + b, 0);
+
+	let preWaters: number[];
+	if (idealSum <= totalWater) {
+		// 예산 내: 이상적 비율 그대로
+		preWaters = idealWaters;
+	} else {
+		// 예산 초과: 비례 축소
+		const scale = totalWater / idealSum;
+		preWaters = idealWaters.map(w => w * scale);
+	}
+
+	const usedWater = preWaters.reduce((a, b) => a + b, 0);
+	const finalWater = noFinalWater ? 0 : Math.max(0, totalWater - usedWater);
+
+	return [...preWaters, finalWater];
 }
 
 function sumStages(stages: BrewStage[]): { totalRice: number; totalWater: number; totalNuruk: number } {
@@ -21,15 +52,15 @@ function sumStages(stages: BrewStage[]): { totalRice: number; totalWater: number
 	);
 }
 
-export function calculateDanyang(totalRice: number, riceForm: RiceForm, waterRatio: number = 1, nurukRatio: number = 10): BrewResult {
-	const totalWater = totalRice * waterRatio;
+export function calculateDanyang(availableRice: number, riceForm: RiceForm, waterRatio: number = 1, nurukRatio: number = 10): BrewResult {
+	const totalWater = availableRice * waterRatio;
 	const stages: BrewStage[] = [
 		{
 			name: '전량 투입',
 			riceFormLabel: RICE_FORM_LABELS[riceForm],
-			rice: totalRice,
+			rice: availableRice,
 			water: totalWater,
-			nuruk: nurukForRice(totalRice, nurukRatio)
+			nuruk: nurukForRice(availableRice, nurukRatio)
 		}
 	];
 
@@ -41,14 +72,14 @@ export function calculateDanyang(totalRice: number, riceForm: RiceForm, waterRat
 	};
 }
 
-export function calculateIyang(totalRice: number, riceForm: RiceForm, waterRatio: number = 1, nurukRatio: number = 10): BrewResult {
-	const milsulRice = totalRice * 0.2;
-	const deotsulRice = totalRice * 0.8;
-	const totalWater = totalRice * waterRatio;
-	const milsulWater = waterForRice(milsulRice, riceForm);
-	// 떡/고두밥: 최종 덧술 가수 없음 (극단적 단맛 의도)
+export function calculateIyang(availableRice: number, riceForm: RiceForm, waterRatio: number = 1, nurukRatio: number = 10): BrewResult {
+	const milsulRice = availableRice * 0.2;
+	const deotsulRice = availableRice * 0.8;
+	const totalWater = availableRice * waterRatio;
 	const noFinalWater = riceForm === 'tteok' || riceForm === 'godubap';
-	const deotsulWater = noFinalWater ? 0 : Math.max(0, totalWater - milsulWater);
+	const [milsulWater, deotsulWater] = distributeWater(
+		[milsulRice, deotsulRice], riceForm, totalWater, noFinalWater
+	);
 
 	const stages: BrewStage[] = [
 		{
@@ -56,7 +87,7 @@ export function calculateIyang(totalRice: number, riceForm: RiceForm, waterRatio
 			riceFormLabel: RICE_FORM_LABELS[riceForm],
 			rice: milsulRice,
 			water: milsulWater,
-			nuruk: nurukForRice(totalRice, nurukRatio)
+			nuruk: nurukForRice(availableRice, nurukRatio)
 		},
 		{
 			name: '덧술',
@@ -75,16 +106,15 @@ export function calculateIyang(totalRice: number, riceForm: RiceForm, waterRatio
 	};
 }
 
-export function calculateSamyang(totalRice: number, riceForm: RiceForm, waterRatio: number = 1, nurukRatio: number = 10): BrewResult {
-	const milsulRice = totalRice * 0.15;
-	const deotsul1Rice = totalRice * 0.15;
-	const deotsul2Rice = totalRice * 0.7;
-	const totalWater = totalRice * waterRatio;
-	const milsulWater = waterForRice(milsulRice, riceForm);
-	const deotsul1Water = waterForRice(deotsul1Rice, riceForm);
-	// 떡/고두밥: 최종 덧술 가수 없음 (극단적 단맛 의도)
+export function calculateSamyang(availableRice: number, riceForm: RiceForm, waterRatio: number = 1, nurukRatio: number = 10): BrewResult {
+	const milsulRice = availableRice * 0.15;
+	const deotsul1Rice = availableRice * 0.15;
+	const deotsul2Rice = availableRice * 0.7;
+	const totalWater = availableRice * waterRatio;
 	const noFinalWater = riceForm === 'tteok' || riceForm === 'godubap';
-	const deotsul2Water = noFinalWater ? 0 : Math.max(0, totalWater - milsulWater - deotsul1Water);
+	const [milsulWater, deotsul1Water, deotsul2Water] = distributeWater(
+		[milsulRice, deotsul1Rice, deotsul2Rice], riceForm, totalWater, noFinalWater
+	);
 
 	const stages: BrewStage[] = [
 		{
@@ -92,7 +122,7 @@ export function calculateSamyang(totalRice: number, riceForm: RiceForm, waterRat
 			riceFormLabel: RICE_FORM_LABELS[riceForm],
 			rice: milsulRice,
 			water: milsulWater,
-			nuruk: nurukForRice(totalRice, nurukRatio)
+			nuruk: nurukForRice(availableRice, nurukRatio)
 		},
 		{
 			name: '덧술',

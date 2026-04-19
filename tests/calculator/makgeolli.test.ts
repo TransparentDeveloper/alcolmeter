@@ -1,64 +1,49 @@
 import { describe, it, expect } from 'vitest';
 import { calculateDanyang, calculateIyang, calculateSamyang } from '$lib/calculator/makgeolli';
 
-describe('이양주 (기본 물비율 1:1)', () => {
-	it('떡 10kg: 밑술 가수만, 덧술 가수 없음', () => {
-		const [milsul, deotsul] = calculateIyang(10, 'tteok').stages;
+describe('총 물 = 가용쌀 × waterRatio (항상 일치)', () => {
+	it('이양주 범벅 100kg, 100%: 총 물 100', () => {
+		const r = calculateIyang(100, 'beombuk', 1);
+		expect(r.totalWater).toBeCloseTo(100);
+	});
 
+	it('삼양주 죽 100kg, 100%: 총 물 100 (비례 축소)', () => {
+		const r = calculateSamyang(100, 'juk', 1);
+		// 이상적: 밑술 75 + 덧술 75 = 150 > 100 → 비례 축소
+		expect(r.totalWater).toBeCloseTo(100);
+	});
+
+	it('이양주 떡 100kg, 100%: 떡은 최종 가수 없음', () => {
+		const r = calculateIyang(100, 'tteok', 1);
+		// 밑술 물만: 20 * 1 = 20, 덧술 가수 없음
+		expect(r.totalWater).toBeCloseTo(20);
+	});
+});
+
+describe('밑술 형태 비율 유지 (예산 내)', () => {
+	it('이양주 범벅 10kg: 밑술 쌀:물 = 1:3', () => {
+		const [milsul] = calculateIyang(10, 'beombuk', 1).stages;
 		expect(milsul.rice).toBe(2);
-		expect(milsul.water).toBe(2);
-
-		expect(deotsul.rice).toBe(8);
-		expect(deotsul.water).toBe(0);
-	});
-
-	it('범벅 10kg: 밑술 1:3, 덧술에 부족분 보충', () => {
-		const r = calculateIyang(10, 'beombuk');
-		const [milsul, deotsul] = r.stages;
-
-		expect(milsul.water).toBe(6);
-		expect(deotsul.water).toBe(4);
-		expect(r.totalWater).toBe(10);
+		expect(milsul.water).toBe(6); // 2 * 3
 	});
 });
 
-describe('삼양주 (기본 물비율 1:1)', () => {
-	it('떡 10kg: 덧술2 가수 없음', () => {
-		const [milsul, deotsul1, deotsul2] = calculateSamyang(10, 'tteok').stages;
+describe('예산 초과 시 비례 축소', () => {
+	it('삼양주 죽 10kg, 100%: 밑술/덧술 물 비례 축소', () => {
+		const r = calculateSamyang(10, 'juk', 1);
+		const [milsul, deotsul1, deotsul2] = r.stages;
 
-		expect(milsul.water).toBe(1.5);
-		expect(deotsul1.water).toBe(1.5);
-		expect(deotsul2.water).toBe(0);
-	});
-
-	it('범벅 10kg: 덧술2에 부족분 보충', () => {
-		const r = calculateSamyang(10, 'beombuk');
-		const [,, deotsul2] = r.stages;
-
-		expect(deotsul2.water).toBe(1);
-		expect(r.totalWater).toBe(10);
+		// 이상적: 1.5*5=7.5 + 1.5*5=7.5 = 15 > 10
+		// 축소 비율: 10/15 = 2/3
+		expect(milsul.water).toBeCloseTo(5);
+		expect(deotsul1.water).toBeCloseTo(5);
+		expect(deotsul2.water).toBeCloseTo(0); // 남은 물 없음
+		expect(r.totalWater).toBeCloseTo(10);
 	});
 });
 
-describe('커스텀 물 비율', () => {
-	it('이양주 범벅 10kg, 물비율 1.5: 총 물 15L', () => {
-		const r = calculateIyang(10, 'beombuk', 1.5);
-		const [milsul, deotsul] = r.stages;
-
-		expect(milsul.water).toBe(6);    // 2 * 3
-		expect(deotsul.water).toBe(9);   // 15 - 6
-		expect(r.totalWater).toBe(15);
-	});
-
-	it('단양주 고두밥 10kg, 물비율 0.8: 총 물 8L', () => {
-		const r = calculateDanyang(10, 'godubap', 0.8);
-		expect(r.totalWater).toBe(8);
-	});
-});
-
-describe('누룩', () => {
-	it('총 쌀량 기준 비율', () => {
-		// waterRatio=1, nurukRatio=15
+describe('누룩: 가용쌀 기준', () => {
+	it('이양주 15%', () => {
 		expect(calculateIyang(10, 'tteok', 1, 15).totalNuruk).toBeCloseTo(1.5);
 	});
 
