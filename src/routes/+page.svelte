@@ -20,22 +20,6 @@
 		</div>
 	</section>
 
-	<!-- Features -->
-	<section class="features">
-		<div class="feature">
-			<strong>정확한 배합 비율</strong>
-			<p>단양주, 이양주, 삼양주 각각의 이상적인 재료 분배를 자동 계산합니다.</p>
-		</div>
-		<div class="feature">
-			<strong>쌀 형태별 물 비율</strong>
-			<p>떡, 범벅, 죽 등 쌀 가공 형태에 따른 물 비율을 반영합니다.</p>
-		</div>
-		<div class="feature">
-			<strong>예상 생산량</strong>
-			<p>입력한 재료로 만들어지는 술의 양을 미리 확인할 수 있습니다.</p>
-		</div>
-	</section>
-
 	<!-- Drink Selection -->
 	<section class="selection">
 		<h2>어떤 술을 빚으시나요?</h2>
@@ -132,41 +116,6 @@
 	}
 
 	/* Features */
-	.features {
-		display: flex;
-		flex-direction: column;
-		gap: 1.25rem;
-		padding: 1.5rem;
-		background: var(--color-card);
-		border: 2.5px solid #e5e7eb;
-		border-radius: var(--radius);
-	}
-
-	.feature {
-		padding-bottom: 1.25rem;
-		border-bottom: 1px solid #f3f4f6;
-	}
-
-	.feature:last-child {
-		padding-bottom: 0;
-		border-bottom: none;
-	}
-
-	.feature strong {
-		font-size: 0.95rem;
-		font-weight: 800;
-		display: block;
-		margin-bottom: 0.3rem;
-		color: var(--color-text);
-	}
-
-	.feature p {
-		font-size: 0.82rem;
-		color: var(--color-muted);
-		font-weight: 400;
-		line-height: 1.6;
-	}
-
 	/* Selection */
 	.selection h2 {
 		font-size: 1.1rem;
