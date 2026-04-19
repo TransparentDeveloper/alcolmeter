@@ -64,6 +64,9 @@
 
 		{#if totalRice > 0}
 			<ResultTable {result} />
+			{#if riceForm === 'tteok'}
+				<p class="tteok-warning">떡(설기)을 사용하면 발효가 더디거나 맛이 극단적으로 달아질 수 있습니다. 초보자에게는 죽이나 범벅을 권장합니다.</p>
+			{/if}
 		{:else}
 			<p class="empty">쌀 총량을 입력해주세요.</p>
 		{/if}
@@ -153,6 +156,17 @@
 	.tab:hover:not(.active) {
 		border-color: #9ca3af;
 		color: var(--color-text);
+	}
+
+	.tteok-warning {
+		margin-top: 1rem;
+		padding: 0.85rem;
+		background: #fef3c7;
+		border: 2px solid #f59e0b;
+		border-radius: 8px;
+		font-size: 0.8rem;
+		font-weight: 700;
+		color: #92400e;
 	}
 
 	.empty {
