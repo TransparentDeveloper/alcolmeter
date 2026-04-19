@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { BrewResult } from '$lib/types';
+	import type { BrewResult, RiceForm } from '$lib/types';
 
-	let { result }: { result: BrewResult } = $props();
+	let { result, riceForm = 'tteok' as RiceForm }: { result: BrewResult; riceForm?: RiceForm } = $props();
 
 	function fmt(value: number): string {
 		if (value <= 0) return '-';
@@ -48,6 +48,13 @@
 	</div>
 
 	<div class="info">
+		{#if riceForm === 'tteok'}
+			<div class="taste-special">
+				<strong>떡(설기) 사용 시</strong>
+				고두밥 투입 단계에서 가수하지 않습니다.<br/>
+				동양주·동정춘 등 극단적으로 달게 만들 때 사용하는 방식입니다.
+			</div>
+		{/if}
 		<details class="taste-ref">
 			<summary>쌀:물 비율에 따른 맛 변화 참고</summary>
 			<table class="taste-table">
@@ -60,11 +67,6 @@
 					<tr><td>1</td><td>1.2</td><td>쓴맛/신맛</td><td>당도 낮고 알코올도수 낮아짐</td></tr>
 				</tbody>
 			</table>
-			<div class="taste-special">
-				<strong>떡(설기) 사용 시</strong>
-				고두밥 투입 단계에서 가수하지 않습니다.<br/>
-				동양주·동정춘 등 극단적으로 달게 만들 때 사용하는 방식입니다.
-			</div>
 		</details>
 	</div>
 </div>
