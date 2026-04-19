@@ -108,10 +108,10 @@
 	}
 
 	.rice-form {
-		font-size: 0.75rem;
+		font-size: 0.6rem;
 		font-weight: 400;
 		color: var(--color-muted);
-		margin-left: 0.25rem;
+		margin-left: 0.1rem;
 	}
 
 	tfoot td {
