@@ -120,18 +120,19 @@
 
 	.estimated-volume {
 		margin-top: 1.25rem;
-		padding: 1rem;
-		background: var(--color-primary);
-		border-radius: 10px;
-		font-size: 0.95rem;
-		font-weight: 800;
-		text-align: center;
-		color: #ffffff;
+		padding: 0.85rem 1rem;
+		border-top: 2px solid #e5e7eb;
+		font-size: 0.9rem;
+		font-weight: 700;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		color: var(--color-text);
 	}
 
 	.estimated-volume strong {
-		font-size: 1.2rem;
-		margin-left: 0.5rem;
+		font-size: 1.1rem;
+		color: var(--color-primary);
 	}
 
 	.info {
