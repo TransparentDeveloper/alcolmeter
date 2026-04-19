@@ -39,8 +39,8 @@ export function calculateDanyang(totalRice: number, riceForm: RiceForm, nurukRat
 }
 
 export function calculateIyang(totalRice: number, riceForm: RiceForm, nurukRatio: number = 10): BrewResult {
-	const milsulRice = totalRice / 3;
-	const deotsulRice = (totalRice * 2) / 3;
+	const milsulRice = totalRice * 0.2;
+	const deotsulRice = totalRice * 0.8;
 	const totalWater = totalRice * RICE_WATER_RATIO[riceForm];
 
 	const stages: BrewStage[] = [
@@ -69,9 +69,9 @@ export function calculateIyang(totalRice: number, riceForm: RiceForm, nurukRatio
 }
 
 export function calculateSamyang(totalRice: number, riceForm: RiceForm, nurukRatio: number = 10): BrewResult {
-	const milsulRice = totalRice / 6;
-	const deotsul1Rice = totalRice / 6;
-	const deotsul2Rice = (totalRice * 4) / 6;
+	const milsulRice = totalRice * 0.15;
+	const deotsul1Rice = totalRice * 0.15;
+	const deotsul2Rice = totalRice * 0.7;
 	const totalWater = totalRice * RICE_WATER_RATIO[riceForm];
 	const halfWater = totalWater / 2;
 
