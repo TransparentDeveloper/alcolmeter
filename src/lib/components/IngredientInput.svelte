@@ -4,19 +4,25 @@
 	let {
 		totalRice = $bindable(6),
 		riceForm = $bindable('tteok' as RiceForm),
+		waterRatio = $bindable(100),
 		nurukRatio = $bindable(10),
-		nurukHint = '표준 10%'
+		nurukHint = '표준 10%',
+		showGodubap = false
 	}: {
 		totalRice: number;
 		riceForm: RiceForm;
+		waterRatio: number;
 		nurukRatio: number;
 		nurukHint?: string;
+		showGodubap?: boolean;
 	} = $props();
 
 	let showTooltip = $state(false);
 
-	const riceFormOptions: { value: RiceForm; label: string }[] = Object.entries(RICE_FORM_LABELS).map(
-		([value, label]) => ({ value: value as RiceForm, label })
+	let riceFormOptions = $derived(
+		Object.entries(RICE_FORM_LABELS)
+			.filter(([value]) => showGodubap || value !== 'godubap')
+			.map(([value, label]) => ({ value: value as RiceForm, label }))
 	);
 </script>
 
@@ -39,6 +45,21 @@
 				<option value={option.value}>{option.label}</option>
 			{/each}
 		</select>
+	</div>
+
+	<div class="field">
+		<label for="water-ratio">물 비율 (쌀 총량 대비 %)</label>
+		<div class="input-with-hint">
+			<input
+				id="water-ratio"
+				type="number"
+				min="0"
+				max="500"
+				step="10"
+				bind:value={waterRatio}
+			/>
+			<span class="ratio-hint">표준 100%</span>
+		</div>
 	</div>
 
 	<div class="field">

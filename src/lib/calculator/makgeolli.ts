@@ -21,8 +21,8 @@ function sumStages(stages: BrewStage[]): { totalRice: number; totalWater: number
 	);
 }
 
-export function calculateDanyang(totalRice: number, riceForm: RiceForm, nurukRatio: number = 10): BrewResult {
-	const totalWater = totalRice; // 총 쌀:물 = 1:1
+export function calculateDanyang(totalRice: number, riceForm: RiceForm, waterRatio: number = 1, nurukRatio: number = 10): BrewResult {
+	const totalWater = totalRice * waterRatio;
 	const stages: BrewStage[] = [
 		{
 			name: '전량 투입',
@@ -41,12 +41,14 @@ export function calculateDanyang(totalRice: number, riceForm: RiceForm, nurukRat
 	};
 }
 
-export function calculateIyang(totalRice: number, riceForm: RiceForm, nurukRatio: number = 10): BrewResult {
+export function calculateIyang(totalRice: number, riceForm: RiceForm, waterRatio: number = 1, nurukRatio: number = 10): BrewResult {
 	const milsulRice = totalRice * 0.2;
 	const deotsulRice = totalRice * 0.8;
+	const totalWater = totalRice * waterRatio;
 	const milsulWater = waterForRice(milsulRice, riceForm);
-	// 떡: 고두밥 투입 시 가수하지 않음 (극단적 단맛 의도)
-	const deotsulWater = riceForm === 'tteok' ? 0 : totalRice - milsulWater;
+	// 떡/고두밥: 최종 덧술 가수 없음 (극단적 단맛 의도)
+	const noFinalWater = riceForm === 'tteok' || riceForm === 'godubap';
+	const deotsulWater = noFinalWater ? 0 : Math.max(0, totalWater - milsulWater);
 
 	const stages: BrewStage[] = [
 		{
@@ -73,14 +75,16 @@ export function calculateIyang(totalRice: number, riceForm: RiceForm, nurukRatio
 	};
 }
 
-export function calculateSamyang(totalRice: number, riceForm: RiceForm, nurukRatio: number = 10): BrewResult {
+export function calculateSamyang(totalRice: number, riceForm: RiceForm, waterRatio: number = 1, nurukRatio: number = 10): BrewResult {
 	const milsulRice = totalRice * 0.15;
 	const deotsul1Rice = totalRice * 0.15;
 	const deotsul2Rice = totalRice * 0.7;
+	const totalWater = totalRice * waterRatio;
 	const milsulWater = waterForRice(milsulRice, riceForm);
 	const deotsul1Water = waterForRice(deotsul1Rice, riceForm);
-	// 떡: 고두밥 투입 시 가수하지 않음 (극단적 단맛 의도)
-	const deotsul2Water = riceForm === 'tteok' ? 0 : totalRice - milsulWater - deotsul1Water;
+	// 떡/고두밥: 최종 덧술 가수 없음 (극단적 단맛 의도)
+	const noFinalWater = riceForm === 'tteok' || riceForm === 'godubap';
+	const deotsul2Water = noFinalWater ? 0 : Math.max(0, totalWater - milsulWater - deotsul1Water);
 
 	const stages: BrewStage[] = [
 		{
