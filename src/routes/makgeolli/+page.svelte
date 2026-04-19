@@ -39,7 +39,7 @@
 	}
 
 	let result = $derived.by(() => {
-		const rice = Math.max(0, totalRice || 0);
+		const rice = Math.max(0, totalRice || 6);
 		const water = Math.max(0, (waterRatioPercent || 100)) / 100;
 		const nuruk = Math.max(0, nurukRatio || NURUK_CONFIG[activeTab].default);
 		switch (activeTab) {

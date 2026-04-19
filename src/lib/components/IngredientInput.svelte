@@ -36,6 +36,7 @@
 			type="number"
 			min="0.1"
 			step="0.1"
+			placeholder="6"
 			bind:value={totalRice}
 		/>
 	</div>
