@@ -137,12 +137,12 @@
 	.tteok-warning {
 		margin-top: 1rem;
 		padding: 0.85rem;
-		background: #fef3c7;
-		border: 2px solid #f59e0b;
+		background: rgba(37, 99, 235, 0.06);
+		border: 2px solid var(--color-primary);
 		border-radius: 8px;
 		font-size: 0.8rem;
 		font-weight: 700;
-		color: #92400e;
+		color: var(--color-primary);
 	}
 
 	.empty {
