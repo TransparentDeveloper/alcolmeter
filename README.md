@@ -1,42 +1,39 @@
-# sv
+# 알콜미터 (Alcolmeter)
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+전통주 양조를 위한 정밀 배합 계산기.
 
-## Creating a project
+가용 쌀의 양과 형태를 입력하면 단양주, 이양주, 삼양주별 최적의 쌀/물/누룩 배합 비율을 자동으로 계산합니다.
 
-If you're seeing this, you've probably already done this step. Congrats!
+## 주요 기능
 
-```sh
-# create a new project
-npx sv create my-app
-```
+- **단양주 / 이양주 / 삼양주** 단계별 배합표 자동 계산
+- **쌀 형태별 물 비율** 반영 (고두밥, 떡, 범벅, 죽)
+- **물/누룩 비율** 사용자 입력 가능 (표준값 제공)
+- 형태 비율과 총 비율 충돌 시 자동 최적화
+- 예상 술 생산량 표시
 
-To recreate this project with the same configuration:
+## 기술 스택
 
-```sh
-# recreate this project
-npx sv@0.15.1 create --template minimal --types ts --no-install .
-```
+- SvelteKit 2 + Svelte 5
+- TypeScript
+- Vitest
+- adapter-static (Vercel 배포)
 
-## Developing
+## 로컬 실행
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```sh
+```bash
+npm install
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
+## 테스트
 
-To create a production version of your app:
-
-```sh
-npm run build
+```bash
+npm run test
 ```
 
-You can preview the production build with `npm run preview`.
+## 배포
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+Vercel에 자동 배포됩니다.
+
+- Production: https://alcolmeter.vercel.app

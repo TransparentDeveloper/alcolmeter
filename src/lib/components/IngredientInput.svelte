@@ -51,39 +51,43 @@
 		</select>
 	</div>
 
-	<div class="field">
-		<label for="water-ratio">
-			물 비율 (쌀 총량 대비 %)
-			<span class="info-wrap">
-				<button class="info-btn" onclick={() => showWaterTooltip = !showWaterTooltip}>ℹ</button>
-				{#if showWaterTooltip}
-					<span class="tooltip">ex)
+	{#if riceForm !== 'tteok' && riceForm !== 'godubap'}
+		<div class="field">
+			<label for="water-ratio">
+				물 비율 (쌀 총량 대비 %)
+				<span class="info-wrap">
+					<button class="info-btn" onclick={() => showWaterTooltip = !showWaterTooltip}>ℹ</button>
+					{#if showWaterTooltip}
+						<span class="tooltip">ex)
 1:0.9 → 90%
 1:1 → 100%
 1:1.1 → 110%</span>
-				{/if}
-			</span>
-		</label>
-		{#if waterRatio < 95 || waterRatio > 105 || (riceForm === 'tteok' && !showGodubap)}
-			<div class="water-notes">
-				{#if waterRatio < 95}<span class="water-note sweet">전분이 많아 당이 많이 생성됩니다.</span>{/if}
-				{#if waterRatio > 105}<span class="water-note dry">당도 낮고 알코올도수가 낮아집니다.</span>{/if}
-				{#if riceForm === 'tteok' && !showGodubap}<span class="water-note sweet">고두밥 투입 단계에서 가수하지 않습니다.</span>{/if}
+					{/if}
+				</span>
+			</label>
+			{#if waterRatio < 95}
+				<div class="water-notes">
+					<span class="water-note sweet">전분이 많아 당이 많이 생성됩니다.</span>
+				</div>
+			{:else if waterRatio > 105}
+				<div class="water-notes">
+					<span class="water-note dry">당도 낮고 알코올도수가 낮아집니다.</span>
+				</div>
+			{/if}
+			<div class="input-with-hint">
+				<input
+					id="water-ratio"
+					type="number"
+					min="0"
+					max="500"
+					step="10"
+					placeholder="100"
+					bind:value={waterRatio}
+				/>
+				<span class="ratio-hint">표준 100%</span>
 			</div>
-		{/if}
-		<div class="input-with-hint">
-			<input
-				id="water-ratio"
-				type="number"
-				min="0"
-				max="500"
-				step="10"
-				placeholder="100"
-				bind:value={waterRatio}
-			/>
-			<span class="ratio-hint">표준 100%</span>
 		</div>
-	</div>
+	{/if}
 
 	<div class="field">
 		<label for="nuruk-ratio">
