@@ -68,16 +68,15 @@
 <style>
 	.input-section {
 		display: flex;
+		flex-direction: column;
 		gap: 1rem;
-		flex-wrap: wrap;
 	}
 
 	.field {
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem;
-		flex: 1;
-		min-width: 160px;
+		width: 100%;
 	}
 
 	label {
