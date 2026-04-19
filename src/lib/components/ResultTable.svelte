@@ -162,9 +162,21 @@
 	.taste-table {
 		margin-top: 0.5rem;
 		font-size: 0.8rem;
+		table-layout: auto;
+		border-collapse: collapse;
+	}
+
+	.taste-table th, .taste-table td {
+		padding: 0.5rem 0.75rem;
+		font-weight: 400;
+		border-bottom: 1px solid #e5e7eb;
+		text-align: left;
 	}
 
 	.taste-table th {
-		font-size: 0.75rem;
+		font-size: 0.7rem;
+		font-weight: 700;
+		background: #f3f4f6;
+		color: #6b7280;
 	}
 </style>
