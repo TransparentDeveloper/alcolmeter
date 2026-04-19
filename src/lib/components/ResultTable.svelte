@@ -26,7 +26,7 @@
 		<tbody>
 			{#each result.stages as stage}
 				<tr>
-					<td class="stage-name">{stage.name}({stage.riceFormLabel})</td>
+					<td class="stage-name">{stage.name} <span class="rice-form">{stage.riceFormLabel}</span></td>
 					<td>{fmt(stage.rice)}</td>
 					<td>{fmt(stage.water)}</td>
 					<td>{fmt(stage.nuruk)}</td>
@@ -101,6 +101,13 @@
 	td.stage-name {
 		font-weight: 800;
 		color: var(--color-text);
+	}
+
+	.rice-form {
+		font-size: 0.75rem;
+		font-weight: 400;
+		color: var(--color-muted);
+		margin-left: 0.25rem;
 	}
 
 	tfoot td {
