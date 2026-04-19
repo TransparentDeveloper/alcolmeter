@@ -40,7 +40,7 @@
 	</div>
 
 	<div class="field">
-		<label for="nuruk-ratio">누룩 비율 (쌀 대비 %)</label>
+		<label for="nuruk-ratio">누룩 비율 (쌀 총량 대비 %)</label>
 		<div class="ratio-input">
 			<input
 				id="nuruk-ratio"
