@@ -49,14 +49,12 @@
 
 	<div class="field">
 		<label for="water-ratio">물 비율 (쌀 총량 대비 %)</label>
-		{#if waterRatio < 95}
-			<span class="water-note sweet">전분이 많아 당이 많이 생성됩니다.</span>
-		{/if}
-		{#if waterRatio > 105}
-			<span class="water-note dry">당도 낮고 알코올도수가 낮아집니다.</span>
-		{/if}
-		{#if riceForm === 'tteok'}
-			<span class="water-note sweet">고두밥 투입 단계에서 가수하지 않습니다.</span>
+		{#if waterRatio < 95 || waterRatio > 105 || riceForm === 'tteok'}
+			<div class="water-notes">
+				{#if waterRatio < 95}<span class="water-note sweet">전분이 많아 당이 많이 생성됩니다.</span>{/if}
+				{#if waterRatio > 105}<span class="water-note dry">당도 낮고 알코올도수가 낮아집니다.</span>{/if}
+				{#if riceForm === 'tteok'}<span class="water-note sweet">고두밥 투입 단계에서 가수하지 않습니다.</span>{/if}
+			</div>
 		{/if}
 		<div class="input-with-hint">
 			<input
@@ -139,8 +137,13 @@
 		color: var(--color-text);
 	}
 
+	.water-notes {
+		display: flex;
+		flex-direction: column;
+		margin: -0.25rem 0 0;
+	}
+
 	.water-note {
-		display: block;
 		font-size: 0.72rem;
 		font-weight: 700;
 		line-height: 1.3;
