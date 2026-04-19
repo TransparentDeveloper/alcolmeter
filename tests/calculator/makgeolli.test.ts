@@ -126,3 +126,21 @@ describe('totals', () => {
 		expect(result.totalNuruk).toBeCloseTo(0.1);
 	});
 });
+
+describe('custom nuruk ratio', () => {
+	it('누룩 비율 15%로 이양주 계산', () => {
+		const result = calculateIyang(6, 'tteok', 15);
+
+		const [milsul] = result.stages;
+		// 밑술 쌀 2의 15% = 0.3
+		expect(milsul.nuruk).toBeCloseTo(0.3);
+		expect(result.totalNuruk).toBeCloseTo(0.3);
+	});
+
+	it('기본값은 10%', () => {
+		const withDefault = calculateDanyang(6, 'tteok');
+		const withExplicit = calculateDanyang(6, 'tteok', 10);
+
+		expect(withDefault.totalNuruk).toBe(withExplicit.totalNuruk);
+	});
+});

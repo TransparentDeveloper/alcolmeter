@@ -3,10 +3,12 @@
 
 	let {
 		totalRice = $bindable(6),
-		riceForm = $bindable('tteok' as RiceForm)
+		riceForm = $bindable('tteok' as RiceForm),
+		nurukRatio = $bindable(10)
 	}: {
 		totalRice: number;
 		riceForm: RiceForm;
+		nurukRatio: number;
 	} = $props();
 
 	const riceFormOptions: { value: RiceForm; label: string }[] = Object.entries(RICE_FORM_LABELS).map(
@@ -33,6 +35,21 @@
 				<option value={option.value}>{option.label}</option>
 			{/each}
 		</select>
+	</div>
+
+	<div class="field">
+		<label for="nuruk-ratio">누룩 비율 (쌀 대비 %)</label>
+		<div class="ratio-input">
+			<input
+				id="nuruk-ratio"
+				type="number"
+				min="1"
+				max="50"
+				step="1"
+				bind:value={nurukRatio}
+			/>
+			<span class="ratio-hint">표준 10%</span>
+		</div>
 	</div>
 </section>
 
@@ -71,5 +88,22 @@
 	input:focus, select:focus {
 		outline: none;
 		border-color: var(--color-primary);
+	}
+
+	.ratio-input {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.ratio-input input {
+		flex: 1;
+	}
+
+	.ratio-hint {
+		font-size: 0.7rem;
+		font-weight: 700;
+		color: var(--color-primary);
+		white-space: nowrap;
 	}
 </style>

@@ -6,6 +6,7 @@
 
 	let totalRice = $state(6);
 	let riceForm: RiceForm = $state('tteok');
+	let nurukRatio = $state(10);
 
 	type BrewTab = 'danyang' | 'iyang' | 'samyang';
 	let activeTab: BrewTab = $state('iyang');
@@ -18,13 +19,14 @@
 
 	let result = $derived.by(() => {
 		const rice = Math.max(0, totalRice || 0);
+		const ratio = Math.max(0, nurukRatio || 10);
 		switch (activeTab) {
 			case 'danyang':
-				return calculateDanyang(rice, riceForm);
+				return calculateDanyang(rice, riceForm, ratio);
 			case 'iyang':
-				return calculateIyang(rice, riceForm);
+				return calculateIyang(rice, riceForm, ratio);
 			case 'samyang':
-				return calculateSamyang(rice, riceForm);
+				return calculateSamyang(rice, riceForm, ratio);
 		}
 	});
 </script>
@@ -35,12 +37,12 @@
 
 <div class="calculator">
 	<div class="hero-banner">
-		<span>송학곡자 기준</span> · 누룩 투입 비율 10%
+		<span>송학곡자 기준</span> · 누룩 투입 비율 {nurukRatio}%
 	</div>
 
 	<section class="card">
 		<h2 class="section-label">재료 입력</h2>
-		<IngredientInput bind:totalRice bind:riceForm />
+		<IngredientInput bind:totalRice bind:riceForm bind:nurukRatio />
 	</section>
 
 	{#if riceForm === 'tteok'}
