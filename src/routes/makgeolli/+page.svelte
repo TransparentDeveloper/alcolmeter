@@ -48,6 +48,10 @@
 		<IngredientInput bind:totalRice bind:riceForm />
 	</section>
 
+	{#if riceForm === 'tteok'}
+		<p class="tteok-warning">떡(설기)을 사용하면 발효가 더디거나 맛이 극단적으로 달아질 수 있습니다. 초보자에게는 죽이나 범벅을 권장합니다.</p>
+	{/if}
+
 	<section class="card">
 		<h2 class="section-label">배합 결과</h2>
 		<nav class="tabs">
@@ -64,9 +68,6 @@
 
 		{#if totalRice > 0}
 			<ResultTable {result} />
-			{#if riceForm === 'tteok'}
-				<p class="tteok-warning">떡(설기)을 사용하면 발효가 더디거나 맛이 극단적으로 달아질 수 있습니다. 초보자에게는 죽이나 범벅을 권장합니다.</p>
-			{/if}
 		{:else}
 			<p class="empty">쌀 총량을 입력해주세요.</p>
 		{/if}
