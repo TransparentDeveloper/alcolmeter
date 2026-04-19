@@ -60,6 +60,11 @@
 			/>
 			<span class="ratio-hint">표준 100%</span>
 		</div>
+		{#if waterRatio < 100}
+			<span class="water-note sweet">전분이 많아 당이 많이 생성됩니다</span>
+		{:else if waterRatio > 100}
+			<span class="water-note dry">당도 낮고 알코올도수가 낮아집니다</span>
+		{/if}
 	</div>
 
 	<div class="field">
@@ -128,6 +133,20 @@
 		font-family: inherit;
 		background: #ffffff;
 		color: var(--color-text);
+	}
+
+	.water-note {
+		font-size: 0.72rem;
+		font-weight: 700;
+		margin-top: 0.25rem;
+	}
+
+	.water-note.sweet {
+		color: #92400e;
+	}
+
+	.water-note.dry {
+		color: var(--color-primary);
 	}
 
 	input:focus, select:focus {
