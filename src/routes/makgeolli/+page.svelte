@@ -83,7 +83,7 @@
 		</nav>
 
 		{#if totalRice > 0}
-			<ResultTable {result} {riceForm} />
+			<ResultTable {result} {riceForm} availableRice={totalRice || 0} />
 		{:else}
 			<p class="empty">쌀 총량을 입력해주세요.</p>
 		{/if}
