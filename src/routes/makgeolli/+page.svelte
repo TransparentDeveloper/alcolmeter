@@ -49,10 +49,6 @@
 </svelte:head>
 
 <div class="calculator">
-	<div class="hero-banner">
-		<span>송학곡자 기준</span> · 누룩 투입 비율 {nurukRatio}%
-	</div>
-
 	<section class="card">
 		<h2 class="section-label">재료 입력</h2>
 		<IngredientInput bind:totalRice bind:riceForm bind:nurukRatio {nurukHint} />
@@ -91,21 +87,7 @@
 		gap: 1.5rem;
 	}
 
-.hero-banner {
-		background: var(--color-primary);
-		color: #ffffff;
-		padding: 0.85rem 1.25rem;
-		border-radius: var(--radius);
-		font-size: 0.85rem;
-		font-weight: 700;
-		text-align: center;
-	}
-
-	.hero-banner span {
-		font-weight: 800;
-	}
-
-	.section-label {
+.section-label {
 		font-size: 0.75rem;
 		font-weight: 700;
 		color: var(--color-muted);

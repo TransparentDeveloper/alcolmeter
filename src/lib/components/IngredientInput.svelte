@@ -13,6 +13,8 @@
 		nurukHint?: string;
 	} = $props();
 
+	let showTooltip = $state(false);
+
 	const riceFormOptions: { value: RiceForm; label: string }[] = Object.entries(RICE_FORM_LABELS).map(
 		([value, label]) => ({ value: value as RiceForm, label })
 	);
@@ -40,7 +42,15 @@
 	</div>
 
 	<div class="field">
-		<label for="nuruk-ratio">누룩 비율 (쌀 총량 대비 %)</label>
+		<label for="nuruk-ratio">
+			누룩 비율 (쌀 총량 대비 %)
+			<span class="info-wrap">
+				<button class="info-btn" onclick={() => showTooltip = !showTooltip}>ℹ</button>
+				{#if showTooltip}
+					<span class="tooltip">송학곡자 기준 권장 비율입니다</span>
+				{/if}
+			</span>
+		</label>
 		<div class="ratio-input">
 			<input
 				id="nuruk-ratio"
@@ -74,6 +84,9 @@
 		font-size: 0.8rem;
 		font-weight: 700;
 		color: var(--color-text);
+		display: flex;
+		align-items: center;
+		gap: 0.25rem;
 	}
 
 	input, select {
@@ -106,6 +119,47 @@
 		font-size: 0.7rem;
 		font-weight: 700;
 		color: var(--color-primary);
+		white-space: nowrap;
+	}
+
+	.info-wrap {
+		position: relative;
+		display: inline-flex;
+	}
+
+	.info-btn {
+		width: 1.1rem;
+		height: 1.1rem;
+		border-radius: 50%;
+		border: 1.5px solid #d1d5db;
+		background: none;
+		font-size: 0.6rem;
+		color: var(--color-muted);
+		cursor: pointer;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		font-family: inherit;
+		font-weight: 800;
+		line-height: 1;
+	}
+
+	.info-btn:hover {
+		border-color: var(--color-primary);
+		color: var(--color-primary);
+	}
+
+	.tooltip {
+		position: absolute;
+		bottom: calc(100% + 6px);
+		left: 50%;
+		transform: translateX(-50%);
+		background: var(--color-text);
+		color: #ffffff;
+		font-size: 0.7rem;
+		font-weight: 700;
+		padding: 0.4rem 0.6rem;
+		border-radius: 6px;
 		white-space: nowrap;
 	}
 </style>
