@@ -8,12 +8,6 @@
 		return Number.isInteger(value) ? value.toString() : value.toFixed(2);
 	}
 
-	/** 누룩은 내부 kg → 표시 g 변환 */
-	function fmtNuruk(value: number): string {
-		if (value === 0) return '-';
-		const grams = value * 1000;
-		return Number.isInteger(grams) ? grams.toString() : grams.toFixed(0);
-	}
 
 	/** 예상 술 생산량 = 총 쌀의 30% + 총 물 */
 	let estimatedVolume = $derived(result.totalRice * 0.3 + result.totalWater);
@@ -26,7 +20,7 @@
 				<th class="col-stage">단계</th>
 				<th class="col-num">쌀 (kg)</th>
 				<th class="col-num">물 (L)</th>
-				<th class="col-num">누룩 (g)</th>
+				<th class="col-num">누룩 (kg)</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -35,7 +29,7 @@
 					<td class="stage-name">{stage.name}({stage.riceFormLabel})</td>
 					<td>{fmt(stage.rice)}</td>
 					<td>{fmt(stage.water)}</td>
-					<td>{fmtNuruk(stage.nuruk)}</td>
+					<td>{fmt(stage.nuruk)}</td>
 				</tr>
 			{/each}
 		</tbody>
@@ -44,7 +38,7 @@
 				<td class="stage-name">합계</td>
 				<td>{fmt(result.totalRice)}</td>
 				<td>{fmt(result.totalWater)}</td>
-				<td>{fmtNuruk(result.totalNuruk)}</td>
+				<td>{fmt(result.totalNuruk)}</td>
 			</tr>
 		</tfoot>
 	</table>
