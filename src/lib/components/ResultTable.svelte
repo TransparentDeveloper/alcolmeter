@@ -51,22 +51,19 @@
 		<details class="taste-ref">
 			<summary>쌀:물 비율에 따른 맛 변화 참고</summary>
 			{#if riceForm === 'tteok'}
-				<div class="taste-special">
-					<strong>떡(설기) 사용 시</strong>
-					고두밥 투입 단계에서 가수하지 않습니다.<br/>
-					동양주·동정춘 등 극단적으로 달게 만들 때 사용하는 방식입니다.
-				</div>
+				<p class="taste-note">고두밥 투입 단계에서 가수하지 않습니다. 동양주·동정춘 등 극단적으로 달게 만들 때 사용하는 방식입니다.</p>
+			{:else}
+				<table class="taste-table">
+					<thead>
+						<tr><th>쌀</th><th>물</th><th>맛</th><th>설명</th></tr>
+					</thead>
+					<tbody>
+						<tr><td>1</td><td>1</td><td>기본</td><td>평균적인 맛</td></tr>
+						<tr><td>1</td><td>0.8</td><td>단맛</td><td>전분이 많아 당이 많이 생성</td></tr>
+						<tr><td>1</td><td>1.2</td><td>쓴맛/신맛</td><td>당도 낮고 알코올도수 낮아짐</td></tr>
+					</tbody>
+				</table>
 			{/if}
-			<table class="taste-table">
-				<thead>
-					<tr><th>쌀</th><th>물</th><th>맛</th><th>설명</th></tr>
-				</thead>
-				<tbody>
-					<tr><td>1</td><td>1</td><td>기본</td><td>평균적인 맛</td></tr>
-					<tr><td>1</td><td>0.8</td><td>단맛</td><td>전분이 많아 당이 많이 생성</td></tr>
-					<tr><td>1</td><td>1.2</td><td>쓴맛/신맛</td><td>당도 낮고 알코올도수 낮아짐</td></tr>
-				</tbody>
-			</table>
 		</details>
 	</div>
 </div>
@@ -177,20 +174,10 @@
 		color: #6b7280;
 	}
 
-	.taste-special {
+	.taste-note {
 		margin-top: 0.75rem;
-		padding: 0.75rem;
-		background: #fef3c7;
-		border: 2px solid #f59e0b;
-		border-radius: 8px;
-		font-size: 0.78rem;
-		color: #92400e;
-		line-height: 1.5;
-	}
-
-	.taste-special strong {
-		display: block;
-		margin-bottom: 0.25rem;
-		font-size: 0.82rem;
+		font-size: 0.8rem;
+		color: #6b7280;
+		line-height: 1.6;
 	}
 </style>
