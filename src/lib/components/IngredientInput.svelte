@@ -51,15 +51,17 @@
 				{/if}
 			</span>
 		</label>
-		<input
-			id="nuruk-ratio"
-			type="number"
-			min="1"
-			max="50"
-			step="1"
-			bind:value={nurukRatio}
-		/>
-		<span class="ratio-hint">{nurukHint}</span>
+		<div class="input-with-hint">
+			<input
+				id="nuruk-ratio"
+				type="number"
+				min="1"
+				max="50"
+				step="1"
+				bind:value={nurukRatio}
+			/>
+			<span class="ratio-hint">{nurukHint}</span>
+		</div>
 	</div>
 </section>
 
@@ -102,11 +104,24 @@
 		border-color: var(--color-primary);
 	}
 
+	.input-with-hint {
+		position: relative;
+	}
+
+	.input-with-hint input {
+		width: 100%;
+		padding-right: 7rem;
+	}
+
 	.ratio-hint {
+		position: absolute;
+		right: 0.75rem;
+		top: 50%;
+		transform: translateY(-50%);
 		font-size: 0.7rem;
 		font-weight: 700;
-		color: var(--color-primary);
-		margin-top: 0.25rem;
+		color: var(--color-muted);
+		pointer-events: none;
 	}
 
 	.info-wrap {
