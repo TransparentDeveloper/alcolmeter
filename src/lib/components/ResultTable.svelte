@@ -5,7 +5,7 @@
 
 	function fmt(value: number): string {
 		if (value <= 0) return '-';
-		return Number.isInteger(value) ? value.toString() : value.toFixed(2);
+		return value.toFixed(2);
 	}
 
 
