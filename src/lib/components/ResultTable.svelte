@@ -15,8 +15,8 @@
 		return Number.isInteger(grams) ? grams.toString() : grams.toFixed(0);
 	}
 
-	/** 예상 술 생산량 = 총 물의 1.3배 */
-	let estimatedVolume = $derived(result.totalWater * 1.3);
+	/** 예상 술 생산량 = 총 쌀의 30% + 총 물 */
+	let estimatedVolume = $derived(result.totalRice * 0.3 + result.totalWater);
 </script>
 
 <div class="result-table">
