@@ -128,13 +128,13 @@
 	}
 
 	.info-btn {
-		width: 1.1rem;
-		height: 1.1rem;
+		width: 1.3rem;
+		height: 1.3rem;
 		border-radius: 50%;
-		border: 1.5px solid #d1d5db;
-		background: none;
-		font-size: 0.6rem;
-		color: var(--color-muted);
+		border: 2px solid var(--color-primary);
+		background: var(--color-primary);
+		font-size: 0.65rem;
+		color: #ffffff;
 		cursor: pointer;
 		display: inline-flex;
 		align-items: center;
@@ -142,11 +142,11 @@
 		font-family: inherit;
 		font-weight: 800;
 		line-height: 1;
+		padding: 0;
 	}
 
 	.info-btn:hover {
-		border-color: var(--color-primary);
-		color: var(--color-primary);
+		opacity: 0.8;
 	}
 
 	.tooltip {
