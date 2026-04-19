@@ -34,11 +34,6 @@
 </svelte:head>
 
 <div class="calculator">
-	<div class="page-header">
-		<h1>막걸리 계산기</h1>
-		<p class="subtitle">쌀의 양과 형태를 입력하면 이상적인 배합 비율을 계산합니다</p>
-	</div>
-
 	<div class="hero-banner">
 		<span>송학곡자 기준</span> · 누룩 투입 비율 10%
 	</div>
@@ -81,24 +76,7 @@
 		gap: 1.5rem;
 	}
 
-	.page-header {
-		margin-bottom: 0.5rem;
-	}
-
-	h1 {
-		font-size: 1.35rem;
-		font-weight: 800;
-		color: var(--color-text);
-		letter-spacing: -0.02em;
-	}
-
-	.subtitle {
-		font-size: 0.85rem;
-		color: var(--color-muted);
-		margin-top: 0.25rem;
-	}
-
-	.hero-banner {
+.hero-banner {
 		background: var(--color-primary);
 		color: #ffffff;
 		padding: 0.85rem 1.25rem;
