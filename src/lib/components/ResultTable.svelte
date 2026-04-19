@@ -182,7 +182,7 @@
 	}
 
 	.taste-note :global(strong) {
-		color: var(--color-text);
+		color: var(--color-primary);
 		font-weight: 800;
 	}
 </style>
