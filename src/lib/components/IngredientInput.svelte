@@ -63,6 +63,7 @@
 				min="0"
 				max="500"
 				step="10"
+				placeholder="100"
 				bind:value={waterRatio}
 			/>
 			<span class="ratio-hint">표준 100%</span>
