@@ -54,9 +54,6 @@
 	</div>
 
 	<div class="info">
-		<p class="nuruk-note">
-			누룩은 밑술에만 넣습니다. 덧술에 누룩을 추가하면 과발효가 일어나 맛과 향이 변질될 수 있습니다.
-		</p>
 		<details class="taste-ref">
 			<summary>쌀:물 비율에 따른 맛 변화 참고</summary>
 			<table class="taste-table">
@@ -137,16 +134,6 @@
 
 	.info {
 		margin-top: 1.25rem;
-	}
-
-	.nuruk-note {
-		font-size: 0.8rem;
-		font-weight: 700;
-		color: #6b7280;
-		padding: 0.85rem;
-		background: #fffbeb;
-		border-radius: 8px;
-		border-left: 4px solid var(--color-accent);
 	}
 
 	.taste-ref {
