@@ -51,7 +51,7 @@
 		<details class="taste-ref">
 			<summary>쌀:물 비율에 따른 맛 변화 참고</summary>
 			{#if riceForm === 'tteok'}
-				<p class="taste-note"><mark>고두밥 투입 단계</mark>에서 <mark>가수하지 않습니다.</mark><br/><mark>동양주·동정춘</mark> 등 극단적으로 달게 만들 때 사용하는 방식입니다.</p>
+				<p class="taste-note"><strong>고두밥 투입 단계</strong>에서 <strong>가수하지 않습니다.</strong><br/><strong>동양주·동정춘</strong> 등 극단적으로 달게 만들 때 사용하는 방식입니다.</p>
 			{:else}
 				<table class="taste-table">
 					<thead>
@@ -181,11 +181,8 @@
 		line-height: 1.8;
 	}
 
-	.taste-note :global(mark) {
-		background: #fef08a;
+	.taste-note :global(strong) {
 		color: var(--color-text);
-		font-weight: 700;
-		padding: 0.1rem 0.25rem;
-		border-radius: 3px;
+		font-weight: 800;
 	}
 </style>
