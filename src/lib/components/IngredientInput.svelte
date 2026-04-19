@@ -57,7 +57,10 @@
 			<span class="info-wrap">
 				<button class="info-btn" onclick={() => showWaterTooltip = !showWaterTooltip}>ℹ</button>
 				{#if showWaterTooltip}
-					<span class="tooltip">ex)<br/>1:0.9 → 90%<br/>1:1 → 100%<br/>1:1.1 → 110%</span>
+					<span class="tooltip">ex)
+1:0.9 → 90%
+1:1 → 100%
+1:1.1 → 110%</span>
 				{/if}
 			</span>
 		</label>
@@ -226,14 +229,15 @@
 	.tooltip {
 		position: absolute;
 		bottom: calc(100% + 6px);
-		left: 50%;
-		transform: translateX(-50%);
+		left: 0;
 		background: var(--color-text);
 		color: #ffffff;
 		font-size: 0.7rem;
 		font-weight: 700;
 		padding: 0.5rem 0.75rem;
 		border-radius: 6px;
+		white-space: pre-line;
 		line-height: 1.6;
+		min-width: max-content;
 	}
 </style>
