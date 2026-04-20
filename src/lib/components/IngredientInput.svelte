@@ -150,7 +150,7 @@
 	input, select {
 		padding: 0.75rem;
 		border: 2px solid #d1d5db;
-		border-radius: 10px;
+		border-radius: var(--radius);
 		font-size: 1rem;
 		font-weight: 700;
 		font-family: inherit;
@@ -239,7 +239,7 @@
 		font-size: 0.7rem;
 		font-weight: 700;
 		padding: 0.5rem 0.75rem;
-		border-radius: 6px;
+		border-radius: var(--radius-sm);
 		white-space: pre-line;
 		line-height: 1.6;
 		min-width: max-content;

@@ -22,33 +22,48 @@
 	</section>
 
 	<!-- Drink Selection -->
-	<section class="selection">
-		<h2>어떤 술을 빚으시나요?</h2>
-		<div class="drink-grid">
-			<a href="/makgeolli" class="drink-card">
-				<div class="drink-info">
-					<span class="drink-name">막걸리</span>
-					<span class="drink-desc">쌀 + 누룩 + 물</span>
+	<section class="section">
+		<h2 class="section-title">어떤 술을 빚으시나요?</h2>
+		<div class="card-grid">
+			<a href="/makgeolli" class="card card--active">
+				<div class="card-icon">🍶</div>
+				<div class="card-body">
+					<span class="card-name">막걸리</span>
+					<span class="card-desc">쌀 + 누룩 + 물</span>
 				</div>
-				<span class="arrow">→</span>
+				<span class="card-arrow">→</span>
 			</a>
 
-			<div class="drink-card disabled">
-				<div class="drink-info">
-					<span class="drink-name">사이다</span>
-					<span class="drink-desc">사과 + 효모 + 설탕</span>
+			<div class="card card--disabled">
+				<div class="card-icon">🍺</div>
+				<div class="card-body">
+					<span class="card-name">사이다</span>
+					<span class="card-desc">사과 + 효모 + 설탕</span>
 				</div>
-				<span class="badge">준비 중</span>
+				<span class="card-badge">준비 중</span>
 			</div>
 
-			<div class="drink-card disabled">
-				<div class="drink-info">
-					<span class="drink-name">와인</span>
-					<span class="drink-desc">포도 + 효모</span>
+			<div class="card card--disabled">
+				<div class="card-icon">🍷</div>
+				<div class="card-body">
+					<span class="card-name">와인</span>
+					<span class="card-desc">포도 + 효모</span>
 				</div>
-				<span class="badge">준비 중</span>
+				<span class="card-badge">준비 중</span>
 			</div>
 		</div>
+	</section>
+
+	<!-- FAQ -->
+	<section class="section">
+		<h2 class="section-title">양조가 처음이신가요?</h2>
+		<a href="/faq" class="banner">
+			<div class="banner-content">
+				<span class="banner-title">자주 묻는 질문</span>
+				<span class="banner-desc">쌀 형태, 양조 방식, 비율 원리, 주의사항까지</span>
+			</div>
+			<span class="card-arrow">→</span>
+		</a>
 	</section>
 </div>
 
@@ -56,14 +71,14 @@
 	.landing {
 		display: flex;
 		flex-direction: column;
-		gap: 3rem;
+		gap: 2.5rem;
 		padding-bottom: 3rem;
 	}
 
 	/* Hero */
 	.hero {
 		position: relative;
-		border-radius: var(--radius);
+		border-radius: var(--radius-lg);
 		overflow: hidden;
 		min-height: 240px;
 		display: flex;
@@ -116,73 +131,146 @@
 		font-weight: 400;
 	}
 
-	/* Features */
-	/* Selection */
-	.selection h2 {
+	/* Section */
+	.section-title {
 		font-size: 1.1rem;
 		font-weight: 800;
-		margin-bottom: 1rem;
+		margin-bottom: 0.75rem;
 		letter-spacing: -0.02em;
 	}
 
-	.drink-grid {
+	/* Card Grid */
+	.card-grid {
 		display: flex;
 		flex-direction: column;
-		gap: 0.5rem;
+		gap: 0.625rem;
 	}
 
-	.drink-card {
+	.card {
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
-		padding: 1.1rem 1.25rem;
-		border-radius: 12px;
-		border: 2.5px solid #d1d5db;
-		background: #ffffff;
+		gap: 1rem;
+		padding: 1rem 1.25rem;
+		border-radius: var(--radius-lg);
+		background: var(--color-card);
 		text-decoration: none;
 		color: var(--color-text);
-		transition: all 0.15s ease;
+		transition: all 0.2s ease;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 	}
 
-	.drink-card:not(.disabled):hover {
+	.card--active {
+		background: #ffffff;
+		box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+		border: 1.5px solid #e5e7eb;
+	}
+
+	.card--active:hover {
 		border-color: var(--color-primary);
-		background: rgba(37, 99, 235, 0.03);
+		box-shadow: 0 4px 12px rgba(37, 99, 235, 0.12), 0 1px 3px rgba(0, 0, 0, 0.04);
+		transform: translateY(-1px);
 	}
 
-	.drink-card:not(.disabled):active {
-		transform: scale(0.99);
+	.card--active:active {
+		transform: translateY(0);
 	}
 
-	.drink-card.disabled {
-		opacity: 0.35;
+	.card--disabled {
+		opacity: 0.4;
 		cursor: not-allowed;
+		border: 1.5px solid transparent;
 	}
 
-	.drink-info {
+	.card-icon {
+		font-size: 1.5rem;
+		flex-shrink: 0;
+		width: 2.5rem;
+		height: 2.5rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: var(--color-border);
+		border-radius: var(--radius-sm);
+	}
+
+	.card-body {
+		flex: 1;
 		display: flex;
 		flex-direction: column;
-		gap: 0.15rem;
+		gap: 0.125rem;
 	}
 
-	.drink-name {
+	.card-name {
 		font-size: 0.95rem;
 		font-weight: 800;
 	}
 
-	.drink-desc {
+	.card-desc {
 		font-size: 0.75rem;
 		color: var(--color-muted);
-		font-weight: 400;
 	}
 
-	.arrow {
-		font-size: 1.1rem;
+	.card-arrow {
+		font-size: 1rem;
 		color: var(--color-muted);
+		flex-shrink: 0;
+		transition: transform 0.15s ease;
 	}
 
-	.badge {
+	.card--active:hover .card-arrow {
+		transform: translateX(2px);
+		color: var(--color-primary);
+	}
+
+	.card-badge {
 		font-size: 0.7rem;
 		color: var(--color-muted);
-		font-weight: 400;
+		flex-shrink: 0;
+	}
+
+	/* FAQ Banner */
+	.banner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 1.25rem 1.5rem;
+		border-radius: var(--radius-lg);
+		background: linear-gradient(135deg, #eff6ff 0%, #f0f4ff 100%);
+		border: 1.5px solid #dbeafe;
+		text-decoration: none;
+		color: var(--color-text);
+		transition: all 0.2s ease;
+	}
+
+	.banner:hover {
+		border-color: var(--color-primary);
+		box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+		transform: translateY(-1px);
+	}
+
+	.banner:active {
+		transform: translateY(0);
+	}
+
+	.banner-content {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+	}
+
+	.banner-title {
+		font-size: 0.95rem;
+		font-weight: 800;
+		color: var(--color-primary);
+	}
+
+	.banner-desc {
+		font-size: 0.75rem;
+		color: #6b7280;
+	}
+
+	.banner:hover .card-arrow {
+		transform: translateX(2px);
+		color: var(--color-primary);
 	}
 </style>

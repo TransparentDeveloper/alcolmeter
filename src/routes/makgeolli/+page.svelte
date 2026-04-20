@@ -107,7 +107,7 @@
 
 	.card {
 		background: var(--color-bg);
-		border-radius: var(--radius);
+		border-radius: var(--radius-lg);
 		padding: 1.5rem;
 		border: 2.5px solid #d1d5db;
 	}
@@ -123,7 +123,7 @@
 		padding: 0.6rem 1rem;
 		background: var(--color-card);
 		border: 2.5px solid #d1d5db;
-		border-radius: 8px;
+		border-radius: var(--radius);
 		font-size: 0.85rem;
 		font-weight: 700;
 		font-family: inherit;
@@ -148,7 +148,7 @@
 		padding: 0.85rem;
 		background: #fef3c7;
 		border: 2px solid #f59e0b;
-		border-radius: 8px;
+		border-radius: var(--radius);
 		font-size: 0.8rem;
 		font-weight: 700;
 		color: #92400e;
