@@ -1,8 +1,9 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { page } from '$app/state';
 	import { tick } from 'svelte';
 
-	const activeQ = $derived(page.url.searchParams.get('q'));
+	const activeQ = $derived(browser ? page.url.searchParams.get('q') : null);
 
 	$effect(() => {
 		if (!activeQ) return;
