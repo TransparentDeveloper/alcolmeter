@@ -2,6 +2,8 @@
   "buildCommand": "npm run build",
   "outputDirectory": "build",
   "rewrites": [
+    { "source": "/faq", "destination": "/faq.html" },
+    { "source": "/makgeolli", "destination": "/makgeolli.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
