@@ -7,6 +7,7 @@
 		"dev": "pnpm --filter @alcolmeter/web dev",
 		"build": "pnpm --filter @alcolmeter/web build",
 		"preview": "pnpm --filter @alcolmeter/web preview",
-		"check": "pnpm --filter @alcolmeter/web check"
+		"check": "pnpm --filter @alcolmeter/web check",
+		"test:domain": "pnpm --filter @alcolmeter/domain test"
 	}
 }
