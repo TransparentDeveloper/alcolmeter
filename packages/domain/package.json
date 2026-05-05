@@ -1,0 +1,22 @@
+{
+	"name": "@alcolmeter/domain",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"exports": {
+		".": "./src/index.ts",
+		"./brewing": "./src/brewing/index.ts",
+		"./building-blocks": "./src/building-blocks/index.ts"
+	},
+	"scripts": {
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"capture-golden": "tsx --tsconfig tsconfig.capture.json test/capture-golden.ts",
+		"check": "tsc --noEmit"
+	},
+	"devDependencies": {
+		"tsx": "^4.19.0",
+		"typescript": "^6.0.2",
+		"vitest": "^4.1.4"
+	}
+}
