@@ -27,7 +27,7 @@ export class BrewingCalculator {
 	}
 
 	private newId(): BrewRecipeId {
-		return crypto.randomUUID();
+		return crypto.randomUUID() as BrewRecipeId;
 	}
 
 	private nurukForRice(rice: Mass, nurukRatio: Ratio): Mass {

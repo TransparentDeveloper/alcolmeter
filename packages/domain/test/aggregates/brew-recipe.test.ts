@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { BrewRecipe } from '../../src/brewing/aggregates/brew-recipe';
+import { BrewRecipe, type BrewRecipeId } from '../../src/brewing/aggregates/brew-recipe';
 import { BrewStage } from '../../src/brewing/value-objects/brew-stage';
 import { BrewingStyle } from '../../src/brewing/value-objects/brewing-style';
 import { Mass } from '../../src/brewing/value-objects/mass';
@@ -12,7 +12,7 @@ const makeStage = (name: string, riceForm: RiceForm, rice: number, water: number
 describe('BrewRecipe', () => {
 	it('정상 생성 시 totals를 계산', () => {
 		const recipe = BrewRecipe.create({
-			id: 'r-1',
+			id: 'r-1' as BrewRecipeId,
 			style: BrewingStyle.iyang(),
 			totalRice: Mass.of(1000),
 			riceForm: RiceForm.tteok(),
@@ -32,7 +32,7 @@ describe('BrewRecipe', () => {
 	it('단계 수가 style.stageCount와 다르면 에러', () => {
 		expect(() =>
 			BrewRecipe.create({
-				id: 'r-1',
+				id: 'r-1' as BrewRecipeId,
 				style: BrewingStyle.iyang(),
 				totalRice: Mass.of(1000),
 				riceForm: RiceForm.tteok(),
@@ -46,7 +46,7 @@ describe('BrewRecipe', () => {
 	it('단계 쌀 합 ≠ totalRice이면 에러', () => {
 		expect(() =>
 			BrewRecipe.create({
-				id: 'r-1',
+				id: 'r-1' as BrewRecipeId,
 				style: BrewingStyle.iyang(),
 				totalRice: Mass.of(1000),
 				riceForm: RiceForm.tteok(),
@@ -62,7 +62,7 @@ describe('BrewRecipe', () => {
 
 	it('id가 같으면 equals true', () => {
 		const a = BrewRecipe.create({
-			id: 'r-1',
+			id: 'r-1' as BrewRecipeId,
 			style: BrewingStyle.danyang(),
 			totalRice: Mass.of(1000),
 			riceForm: RiceForm.tteok(),
@@ -71,7 +71,7 @@ describe('BrewRecipe', () => {
 			stages: [makeStage('전량 투입', RiceForm.tteok(), 1000, 1000, 100)]
 		});
 		const b = BrewRecipe.create({
-			id: 'r-1',
+			id: 'r-1' as BrewRecipeId,
 			style: BrewingStyle.iyang(),
 			totalRice: Mass.of(2000),
 			riceForm: RiceForm.juk(),
