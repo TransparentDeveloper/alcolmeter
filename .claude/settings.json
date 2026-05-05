@@ -1,0 +1,25 @@
+{
+	"$schema": "https://json.schemastore.org/claude-code-settings.json",
+	"hooks": {
+		"Notification": [
+			{
+				"hooks": [
+					{
+						"type": "command",
+						"command": "osascript -e 'display notification \"답변이 필요합니다\" with title \"Claude Code\" sound name \"Glass\"'"
+					}
+				]
+			}
+		],
+		"SessionEnd": [
+			{
+				"hooks": [
+					{
+						"type": "command",
+						"command": "COUNT=$(git status --porcelain 2>/dev/null | wc -l | tr -d ' '); [ \"$COUNT\" -gt 0 ] && osascript -e \"display notification \\\"미커밋 변경사항 ${COUNT}건이 남아있습니다\\\" with title \\\"Claude Code\\\" sound name \\\"Funk\\\"\" || true"
+					}
+				]
+			}
+		]
+	}
+}
