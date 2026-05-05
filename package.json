@@ -1,26 +1,12 @@
 {
 	"name": "alcolmeter",
-	"private": true,
 	"version": "0.2.3",
-	"type": "module",
+	"private": true,
 	"packageManager": "pnpm@10.24.0",
 	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build",
-		"preview": "vite preview",
-		"prepare": "svelte-kit sync || echo ''",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
-	},
-	"devDependencies": {
-		"@sveltejs/adapter-auto": "^7.0.1",
-		"@sveltejs/adapter-static": "^3.0.10",
-		"@sveltejs/kit": "^2.57.0",
-		"@sveltejs/vite-plugin-svelte": "^7.0.0",
-		"svelte": "^5.55.2",
-		"svelte-check": "^4.4.6",
-		"typescript": "^6.0.2",
-		"vite": "^8.0.7",
-		"vitest": "^4.1.4"
+		"dev": "pnpm --filter @alcolmeter/web dev",
+		"build": "pnpm --filter @alcolmeter/web build",
+		"preview": "pnpm --filter @alcolmeter/web preview",
+		"check": "pnpm --filter @alcolmeter/web check"
 	}
 }

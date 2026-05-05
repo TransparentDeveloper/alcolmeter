@@ -6,7 +6,9 @@ settings:
 
 importers:
 
-  .:
+  .: {}
+
+  apps/web:
     devDependencies:
       '@sveltejs/adapter-auto':
         specifier: ^7.0.1

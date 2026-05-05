@@ -10,6 +10,6 @@ export default defineConfig({
 		__APP_VERSION__: JSON.stringify(pkg.version)
 	},
 	test: {
-		include: ['tests/**/*.test.ts']
+		include: ['../../tests/**/*.test.ts']
 	}
 });

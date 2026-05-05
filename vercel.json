@@ -1,6 +1,6 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": "build",
+  "buildCommand": "pnpm --filter @alcolmeter/web build",
+  "outputDirectory": "apps/web/build",
   "rewrites": [
     { "source": "/faq", "destination": "/faq.html" },
     { "source": "/makgeolli", "destination": "/makgeolli.html" },
