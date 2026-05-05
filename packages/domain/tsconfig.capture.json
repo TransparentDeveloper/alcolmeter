@@ -1,0 +1,10 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"baseUrl": "../..",
+		"paths": {
+			"$lib/*": ["apps/web/src/lib/*"]
+		}
+	},
+	"include": ["test/capture-golden.ts"]
+}

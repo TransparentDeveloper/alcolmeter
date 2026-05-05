@@ -1,0 +1,1490 @@
+[
+  {
+    "input": {
+      "totalRice": 1000,
+      "waterRatio": 1,
+      "nurukRatio": 0.1,
+      "riceForm": "godubap",
+      "style": "danyang"
+    },
+    "expected": {
+      "type": "danyang",
+      "stages": [
+        {
+          "name": "전량 투입",
+          "riceForm": "godubap",
+          "rice": 1000,
+          "water": 1000,
+          "nuruk": 100
+        }
+      ],
+      "totalRice": 1000,
+      "totalWater": 1000,
+      "totalNuruk": 100
+    }
+  },
+  {
+    "input": {
+      "totalRice": 1500,
+      "waterRatio": 1.2,
+      "nurukRatio": 0.15,
+      "riceForm": "godubap",
+      "style": "danyang"
+    },
+    "expected": {
+      "type": "danyang",
+      "stages": [
+        {
+          "name": "전량 투입",
+          "riceForm": "godubap",
+          "rice": 1500,
+          "water": 1800,
+          "nuruk": 225
+        }
+      ],
+      "totalRice": 1500,
+      "totalWater": 1800,
+      "totalNuruk": 225
+    }
+  },
+  {
+    "input": {
+      "totalRice": 800,
+      "waterRatio": 0.8,
+      "nurukRatio": 0.08,
+      "riceForm": "godubap",
+      "style": "danyang"
+    },
+    "expected": {
+      "type": "danyang",
+      "stages": [
+        {
+          "name": "전량 투입",
+          "riceForm": "godubap",
+          "rice": 800,
+          "water": 640,
+          "nuruk": 64
+        }
+      ],
+      "totalRice": 800,
+      "totalWater": 640,
+      "totalNuruk": 64
+    }
+  },
+  {
+    "input": {
+      "totalRice": 2000,
+      "waterRatio": 1,
+      "nurukRatio": 0.1,
+      "riceForm": "godubap",
+      "style": "danyang"
+    },
+    "expected": {
+      "type": "danyang",
+      "stages": [
+        {
+          "name": "전량 투입",
+          "riceForm": "godubap",
+          "rice": 2000,
+          "water": 2000,
+          "nuruk": 200
+        }
+      ],
+      "totalRice": 2000,
+      "totalWater": 2000,
+      "totalNuruk": 200
+    }
+  },
+  {
+    "input": {
+      "totalRice": 1000,
+      "waterRatio": 1,
+      "nurukRatio": 0.1,
+      "riceForm": "godubap",
+      "style": "iyang"
+    },
+    "expected": {
+      "type": "iyang",
+      "stages": [
+        {
+          "name": "밑술",
+          "riceForm": "godubap",
+          "rice": 200,
+          "water": 0,
+          "nuruk": 100
+        },
+        {
+          "name": "덧술",
+          "riceForm": "godubap",
+          "rice": 800,
+          "water": 0,
+          "nuruk": 0
+        }
+      ],
+      "totalRice": 1000,
+      "totalWater": 0,
+      "totalNuruk": 100
+    }
+  },
+  {
+    "input": {
+      "totalRice": 1500,
+      "waterRatio": 1.2,
+      "nurukRatio": 0.15,
+      "riceForm": "godubap",
+      "style": "iyang"
+    },
+    "expected": {
+      "type": "iyang",
+      "stages": [
+        {
+          "name": "밑술",
+          "riceForm": "godubap",
+          "rice": 300,
+          "water": 0,
+          "nuruk": 225
+        },
+        {
+          "name": "덧술",
+          "riceForm": "godubap",
+          "rice": 1200,
+          "water": 0,
+          "nuruk": 0
+        }
+      ],
+      "totalRice": 1500,
+      "totalWater": 0,
+      "totalNuruk": 225
+    }
+  },
+  {
+    "input": {
+      "totalRice": 800,
+      "waterRatio": 0.8,
+      "nurukRatio": 0.08,
+      "riceForm": "godubap",
+      "style": "iyang"
+    },
+    "expected": {
+      "type": "iyang",
+      "stages": [
+        {
+          "name": "밑술",
+          "riceForm": "godubap",
+          "rice": 160,
+          "water": 0,
+          "nuruk": 64
+        },
+        {
+          "name": "덧술",
+          "riceForm": "godubap",
+          "rice": 640,
+          "water": 0,
+          "nuruk": 0
+        }
+      ],
+      "totalRice": 800,
+      "totalWater": 0,
+      "totalNuruk": 64
+    }
+  },
+  {
+    "input": {
+      "totalRice": 2000,
+      "waterRatio": 1,
+      "nurukRatio": 0.1,
+      "riceForm": "godubap",
+      "style": "iyang"
+    },
+    "expected": {
+      "type": "iyang",
+      "stages": [
+        {
+          "name": "밑술",
+          "riceForm": "godubap",
+          "rice": 400,
+          "water": 0,
+          "nuruk": 200
+        },
+        {
+          "name": "덧술",
+          "riceForm": "godubap",
+          "rice": 1600,
+          "water": 0,
+          "nuruk": 0
+        }
+      ],
+      "totalRice": 2000,
+      "totalWater": 0,
+      "totalNuruk": 200
+    }
+  },
+  {
+    "input": {
+      "totalRice": 1000,
+      "waterRatio": 1,
+      "nurukRatio": 0.1,
+      "riceForm": "godubap",
+      "style": "samyang"
+    },
+    "expected": {
+      "type": "samyang",
+      "stages": [
+        {
+          "name": "밑술",
+          "riceForm": "godubap",
+          "rice": 150,
+          "water": 0,
+          "nuruk": 100
+        },
+        {
+          "name": "덧술",
+          "riceForm": "godubap",
+          "rice": 150,
+          "water": 0,
+          "nuruk": 0
+        },
+        {
+          "name": "덧술2",
+          "riceForm": "godubap",
+          "rice": 700,
+          "water": 0,
+          "nuruk": 0
+        }
+      ],
+      "totalRice": 1000,
+      "totalWater": 0,
+      "totalNuruk": 100
+    }
+  },
+  {
+    "input": {
+      "totalRice": 1500,
+      "waterRatio": 1.2,
+      "nurukRatio": 0.15,
+      "riceForm": "godubap",
+      "style": "samyang"
+    },
+    "expected": {
+      "type": "samyang",
+      "stages": [
+        {
+          "name": "밑술",
+          "riceForm": "godubap",
+          "rice": 225,
+          "water": 0,
+          "nuruk": 225
+        },
+        {
+          "name": "덧술",
+          "riceForm": "godubap",
+          "rice": 225,
+          "water": 0,
+          "nuruk": 0
+        },
+        {
+          "name": "덧술2",
+          "riceForm": "godubap",
+          "rice": 1050,
+          "water": 0,
+          "nuruk": 0
+        }
+      ],
+      "totalRice": 1500,
+      "totalWater": 0,
+      "totalNuruk": 225
+    }
+  },
+  {
+    "input": {
+      "totalRice": 800,
+      "waterRatio": 0.8,
+      "nurukRatio": 0.08,
+      "riceForm": "godubap",
+      "style": "samyang"
+    },
+    "expected": {
+      "type": "samyang",
+      "stages": [
+        {
+          "name": "밑술",
+          "riceForm": "godubap",
+          "rice": 120,
+          "water": 0,
+          "nuruk": 64
+        },
+        {
+          "name": "덧술",
+          "riceForm": "godubap",
+          "rice": 120,
+          "water": 0,
+          "nuruk": 0
+        },
+        {
+          "name": "덧술2",
+          "riceForm": "godubap",
+          "rice": 560,
+          "water": 0,
+          "nuruk": 0
+        }
+      ],
+      "totalRice": 800,
+      "totalWater": 0,
+      "totalNuruk": 64
+    }
+  },
+  {
+    "input": {
+      "totalRice": 2000,
+      "waterRatio": 1,
+      "nurukRatio": 0.1,
+      "riceForm": "godubap",
+      "style": "samyang"
+    },
+    "expected": {
+      "type": "samyang",
+      "stages": [
+        {
+          "name": "밑술",
+          "riceForm": "godubap",
+          "rice": 300,
+          "water": 0,
+          "nuruk": 200
+        },
+        {
+          "name": "덧술",
+          "riceForm": "godubap",
+          "rice": 300,
+          "water": 0,
+          "nuruk": 0
+        },
+        {
+          "name": "덧술2",
+          "riceForm": "godubap",
+          "rice": 1400,
+          "water": 0,
+          "nuruk": 0
+        }
+      ],
+      "totalRice": 2000,
+      "totalWater": 0,
+      "totalNuruk": 200
+    }
+  },
+  {
+    "input": {
+      "totalRice": 1000,
+      "waterRatio": 1,
+      "nurukRatio": 0.1,
+      "riceForm": "tteok",
+      "style": "danyang"
+    },
+    "expected": {
+      "type": "danyang",
+      "stages": [
+        {
+          "name": "전량 투입",
+          "riceForm": "tteok",
+          "rice": 1000,
+          "water": 1000,
+          "nuruk": 100
+        }
+      ],
+      "totalRice": 1000,
+      "totalWater": 1000,
+      "totalNuruk": 100
+    }
+  },
+  {
+    "input": {
+      "totalRice": 1500,
+      "waterRatio": 1.2,
+      "nurukRatio": 0.15,
+      "riceForm": "tteok",
+      "style": "danyang"
+    },
+    "expected": {
+      "type": "danyang",
+      "stages": [
+        {
+          "name": "전량 투입",
+          "riceForm": "tteok",
+          "rice": 1500,
+          "water": 1800,
+          "nuruk": 225
+        }
+      ],
+      "totalRice": 1500,
+      "totalWater": 1800,
+      "totalNuruk": 225
+    }
+  },
+  {
+    "input": {
+      "totalRice": 800,
+      "waterRatio": 0.8,
+      "nurukRatio": 0.08,
+      "riceForm": "tteok",
+      "style": "danyang"
+    },
+    "expected": {
+      "type": "danyang",
+      "stages": [
+        {
+          "name": "전량 투입",
+          "riceForm": "tteok",
+          "rice": 800,
+          "water": 640,
+          "nuruk": 64
+        }
+      ],
+      "totalRice": 800,
+      "totalWater": 640,
+      "totalNuruk": 64
+    }
+  },
+  {
+    "input": {
+      "totalRice": 2000,
+      "waterRatio": 1,
+      "nurukRatio": 0.1,
+      "riceForm": "tteok",
+      "style": "danyang"
+    },
+    "expected": {
+      "type": "danyang",
+      "stages": [
+        {
+          "name": "전량 투입",
+          "riceForm": "tteok",
+          "rice": 2000,
+          "water": 2000,
+          "nuruk": 200
+        }
+      ],
+      "totalRice": 2000,
+      "totalWater": 2000,
+      "totalNuruk": 200
+    }
+  },
+  {
+    "input": {
+      "totalRice": 1000,
+      "waterRatio": 1,
+      "nurukRatio": 0.1,
+      "riceForm": "tteok",
+      "style": "iyang"
+    },
+    "expected": {
+      "type": "iyang",
+      "stages": [
+        {
+          "name": "밑술",
+          "riceForm": "tteok",
+          "rice": 200,
+          "water": 200,
+          "nuruk": 100
+        },
+        {
+          "name": "덧술",
+          "riceForm": "godubap",
+          "rice": 800,
+          "water": 0,
+          "nuruk": 0
+        }
+      ],
+      "totalRice": 1000,
+      "totalWater": 200,
+      "totalNuruk": 100
+    }
+  },
+  {
+    "input": {
+      "totalRice": 1500,
+      "waterRatio": 1.2,
+      "nurukRatio": 0.15,
+      "riceForm": "tteok",
+      "style": "iyang"
+    },
+    "expected": {
+      "type": "iyang",
+      "stages": [
+        {
+          "name": "밑술",
+          "riceForm": "tteok",
+          "rice": 300,
+          "water": 300,
+          "nuruk": 225
+        },
+        {
+          "name": "덧술",
+          "riceForm": "godubap",
+          "rice": 1200,
+          "water": 0,
+          "nuruk": 0
+        }
+      ],
+      "totalRice": 1500,
+      "totalWater": 300,
+      "totalNuruk": 225
+    }
+  },
+  {
+    "input": {
+      "totalRice": 800,
+      "waterRatio": 0.8,
+      "nurukRatio": 0.08,
+      "riceForm": "tteok",
+      "style": "iyang"
+    },
+    "expected": {
+      "type": "iyang",
+      "stages": [
+        {
+          "name": "밑술",
+          "riceForm": "tteok",
+          "rice": 160,
+          "water": 160,
+          "nuruk": 64
+        },
+        {
+          "name": "덧술",
+          "riceForm": "godubap",
+          "rice": 640,
+          "water": 0,
+          "nuruk": 0
+        }
+      ],
+      "totalRice": 800,
+      "totalWater": 160,
+      "totalNuruk": 64
+    }
+  },
+  {
+    "input": {
+      "totalRice": 2000,
+      "waterRatio": 1,
+      "nurukRatio": 0.1,
+      "riceForm": "tteok",
+      "style": "iyang"
+    },
+    "expected": {
+      "type": "iyang",
+      "stages": [
+        {
+          "name": "밑술",
+          "riceForm": "tteok",
+          "rice": 400,
+          "water": 400,
+          "nuruk": 200
+        },
+        {
+          "name": "덧술",
+          "riceForm": "godubap",
+          "rice": 1600,
+          "water": 0,
+          "nuruk": 0
+        }
+      ],
+      "totalRice": 2000,
+      "totalWater": 400,
+      "totalNuruk": 200
+    }
+  },
+  {
+    "input": {
+      "totalRice": 1000,
+      "waterRatio": 1,
+      "nurukRatio": 0.1,
+      "riceForm": "tteok",
+      "style": "samyang"
+    },
+    "expected": {
+      "type": "samyang",
+      "stages": [
+        {
+          "name": "밑술",
+          "riceForm": "tteok",
+          "rice": 150,
+          "water": 150,
+          "nuruk": 100
+        },
+        {
+          "name": "덧술",
+          "riceForm": "tteok",
+          "rice": 150,
+          "water": 150,
+          "nuruk": 0
+        },
+        {
+          "name": "덧술2",
+          "riceForm": "godubap",
+          "rice": 700,
+          "water": 0,
+          "nuruk": 0
+        }
+      ],
+      "totalRice": 1000,
+      "totalWater": 300,
+      "totalNuruk": 100
+    }
+  },
+  {
+    "input": {
+      "totalRice": 1500,
+      "waterRatio": 1.2,
+      "nurukRatio": 0.15,
+      "riceForm": "tteok",
+      "style": "samyang"
+    },
+    "expected": {
+      "type": "samyang",
+      "stages": [
+        {
+          "name": "밑술",
+          "riceForm": "tteok",
+          "rice": 225,
+          "water": 225,
+          "nuruk": 225
+        },
+        {
+          "name": "덧술",
+          "riceForm": "tteok",
+          "rice": 225,
+          "water": 225,
+          "nuruk": 0
+        },
+        {
+          "name": "덧술2",
+          "riceForm": "godubap",
+          "rice": 1050,
+          "water": 0,
+          "nuruk": 0
+        }
+      ],
+      "totalRice": 1500,
+      "totalWater": 450,
+      "totalNuruk": 225
+    }
+  },
+  {
+    "input": {
+      "totalRice": 800,
+      "waterRatio": 0.8,
+      "nurukRatio": 0.08,
+      "riceForm": "tteok",
+      "style": "samyang"
+    },
+    "expected": {
+      "type": "samyang",
+      "stages": [
+        {
+          "name": "밑술",
+          "riceForm": "tteok",
+          "rice": 120,
+          "water": 120,
+          "nuruk": 64
+        },
+        {
+          "name": "덧술",
+          "riceForm": "tteok",
+          "rice": 120,
+          "water": 120,
+          "nuruk": 0
+        },
+        {
+          "name": "덧술2",
+          "riceForm": "godubap",
+          "rice": 560,
+          "water": 0,
+          "nuruk": 0
+        }
+      ],
+      "totalRice": 800,
+      "totalWater": 240,
+      "totalNuruk": 64
+    }
+  },
+  {
+    "input": {
+      "totalRice": 2000,
+      "waterRatio": 1,
+      "nurukRatio": 0.1,
+      "riceForm": "tteok",
+      "style": "samyang"
+    },
+    "expected": {
+      "type": "samyang",
+      "stages": [
+        {
+          "name": "밑술",
+          "riceForm": "tteok",
+          "rice": 300,
+          "water": 300,
+          "nuruk": 200
+        },
+        {
+          "name": "덧술",
+          "riceForm": "tteok",
+          "rice": 300,
+          "water": 300,
+          "nuruk": 0
+        },
+        {
+          "name": "덧술2",
+          "riceForm": "godubap",
+          "rice": 1400,
+          "water": 0,
+          "nuruk": 0
+        }
+      ],
+      "totalRice": 2000,
+      "totalWater": 600,
+      "totalNuruk": 200
+    }
+  },
+  {
+    "input": {
+      "totalRice": 1000,
+      "waterRatio": 1,
+      "nurukRatio": 0.1,
+      "riceForm": "beombuk",
+      "style": "danyang"
+    },
+    "expected": {
+      "type": "danyang",
+      "stages": [
+        {
+          "name": "전량 투입",
+          "riceForm": "beombuk",
+          "rice": 1000,
+          "water": 1000,
+          "nuruk": 100
+        }
+      ],
+      "totalRice": 1000,
+      "totalWater": 1000,
+      "totalNuruk": 100
+    }
+  },
+  {
+    "input": {
+      "totalRice": 1500,
+      "waterRatio": 1.2,
+      "nurukRatio": 0.15,
+      "riceForm": "beombuk",
+      "style": "danyang"
+    },
+    "expected": {
+      "type": "danyang",
+      "stages": [
+        {
+          "name": "전량 투입",
+          "riceForm": "beombuk",
+          "rice": 1500,
+          "water": 1800,
+          "nuruk": 225
+        }
+      ],
+      "totalRice": 1500,
+      "totalWater": 1800,
+      "totalNuruk": 225
+    }
+  },
+  {
+    "input": {
+      "totalRice": 800,
+      "waterRatio": 0.8,
+      "nurukRatio": 0.08,
+      "riceForm": "beombuk",
+      "style": "danyang"
+    },
+    "expected": {
+      "type": "danyang",
+      "stages": [
+        {
+          "name": "전량 투입",
+          "riceForm": "beombuk",
+          "rice": 800,
+          "water": 640,
+          "nuruk": 64
+        }
+      ],
+      "totalRice": 800,
+      "totalWater": 640,
+      "totalNuruk": 64
+    }
+  },
+  {
+    "input": {
+      "totalRice": 2000,
+      "waterRatio": 1,
+      "nurukRatio": 0.1,
+      "riceForm": "beombuk",
+      "style": "danyang"
+    },
+    "expected": {
+      "type": "danyang",
+      "stages": [
+        {
+          "name": "전량 투입",
+          "riceForm": "beombuk",
+          "rice": 2000,
+          "water": 2000,
+          "nuruk": 200
+        }
+      ],
+      "totalRice": 2000,
+      "totalWater": 2000,
+      "totalNuruk": 200
+    }
+  },
+  {
+    "input": {
+      "totalRice": 1000,
+      "waterRatio": 1,
+      "nurukRatio": 0.1,
+      "riceForm": "beombuk",
+      "style": "iyang"
+    },
+    "expected": {
+      "type": "iyang",
+      "stages": [
+        {
+          "name": "밑술",
+          "riceForm": "beombuk",
+          "rice": 200,
+          "water": 600,
+          "nuruk": 100
+        },
+        {
+          "name": "덧술",
+          "riceForm": "godubap",
+          "rice": 800,
+          "water": 400,
+          "nuruk": 0
+        }
+      ],
+      "totalRice": 1000,
+      "totalWater": 1000,
+      "totalNuruk": 100
+    }
+  },
+  {
+    "input": {
+      "totalRice": 1500,
+      "waterRatio": 1.2,
+      "nurukRatio": 0.15,
+      "riceForm": "beombuk",
+      "style": "iyang"
+    },
+    "expected": {
+      "type": "iyang",
+      "stages": [
+        {
+          "name": "밑술",
+          "riceForm": "beombuk",
+          "rice": 300,
+          "water": 900,
+          "nuruk": 225
+        },
+        {
+          "name": "덧술",
+          "riceForm": "godubap",
+          "rice": 1200,
+          "water": 900,
+          "nuruk": 0
+        }
+      ],
+      "totalRice": 1500,
+      "totalWater": 1800,
+      "totalNuruk": 225
+    }
+  },
+  {
+    "input": {
+      "totalRice": 800,
+      "waterRatio": 0.8,
+      "nurukRatio": 0.08,
+      "riceForm": "beombuk",
+      "style": "iyang"
+    },
+    "expected": {
+      "type": "iyang",
+      "stages": [
+        {
+          "name": "밑술",
+          "riceForm": "beombuk",
+          "rice": 160,
+          "water": 480,
+          "nuruk": 64
+        },
+        {
+          "name": "덧술",
+          "riceForm": "godubap",
+          "rice": 640,
+          "water": 160,
+          "nuruk": 0
+        }
+      ],
+      "totalRice": 800,
+      "totalWater": 640,
+      "totalNuruk": 64
+    }
+  },
+  {
+    "input": {
+      "totalRice": 2000,
+      "waterRatio": 1,
+      "nurukRatio": 0.1,
+      "riceForm": "beombuk",
+      "style": "iyang"
+    },
+    "expected": {
+      "type": "iyang",
+      "stages": [
+        {
+          "name": "밑술",
+          "riceForm": "beombuk",
+          "rice": 400,
+          "water": 1200,
+          "nuruk": 200
+        },
+        {
+          "name": "덧술",
+          "riceForm": "godubap",
+          "rice": 1600,
+          "water": 800,
+          "nuruk": 0
+        }
+      ],
+      "totalRice": 2000,
+      "totalWater": 2000,
+      "totalNuruk": 200
+    }
+  },
+  {
+    "input": {
+      "totalRice": 1000,
+      "waterRatio": 1,
+      "nurukRatio": 0.1,
+      "riceForm": "beombuk",
+      "style": "samyang"
+    },
+    "expected": {
+      "type": "samyang",
+      "stages": [
+        {
+          "name": "밑술",
+          "riceForm": "beombuk",
+          "rice": 150,
+          "water": 450,
+          "nuruk": 100
+        },
+        {
+          "name": "덧술",
+          "riceForm": "beombuk",
+          "rice": 150,
+          "water": 450,
+          "nuruk": 0
+        },
+        {
+          "name": "덧술2",
+          "riceForm": "godubap",
+          "rice": 700,
+          "water": 100,
+          "nuruk": 0
+        }
+      ],
+      "totalRice": 1000,
+      "totalWater": 1000,
+      "totalNuruk": 100
+    }
+  },
+  {
+    "input": {
+      "totalRice": 1500,
+      "waterRatio": 1.2,
+      "nurukRatio": 0.15,
+      "riceForm": "beombuk",
+      "style": "samyang"
+    },
+    "expected": {
+      "type": "samyang",
+      "stages": [
+        {
+          "name": "밑술",
+          "riceForm": "beombuk",
+          "rice": 225,
+          "water": 675,
+          "nuruk": 225
+        },
+        {
+          "name": "덧술",
+          "riceForm": "beombuk",
+          "rice": 225,
+          "water": 675,
+          "nuruk": 0
+        },
+        {
+          "name": "덧술2",
+          "riceForm": "godubap",
+          "rice": 1050,
+          "water": 450,
+          "nuruk": 0
+        }
+      ],
+      "totalRice": 1500,
+      "totalWater": 1800,
+      "totalNuruk": 225
+    }
+  },
+  {
+    "input": {
+      "totalRice": 800,
+      "waterRatio": 0.8,
+      "nurukRatio": 0.08,
+      "riceForm": "beombuk",
+      "style": "samyang"
+    },
+    "expected": {
+      "type": "samyang",
+      "stages": [
+        {
+          "name": "밑술",
+          "riceForm": "beombuk",
+          "rice": 106.66666666666667,
+          "water": 320,
+          "nuruk": 64
+        },
+        {
+          "name": "덧술",
+          "riceForm": "beombuk",
+          "rice": 106.66666666666667,
+          "water": 320,
+          "nuruk": 0
+        },
+        {
+          "name": "덧술2",
+          "riceForm": "godubap",
+          "rice": 586.6666666666667,
+          "water": 0,
+          "nuruk": 0
+        }
+      ],
+      "totalRice": 800.0000000000001,
+      "totalWater": 640,
+      "totalNuruk": 64
+    }
+  },
+  {
+    "input": {
+      "totalRice": 2000,
+      "waterRatio": 1,
+      "nurukRatio": 0.1,
+      "riceForm": "beombuk",
+      "style": "samyang"
+    },
+    "expected": {
+      "type": "samyang",
+      "stages": [
+        {
+          "name": "밑술",
+          "riceForm": "beombuk",
+          "rice": 300,
+          "water": 900,
+          "nuruk": 200
+        },
+        {
+          "name": "덧술",
+          "riceForm": "beombuk",
+          "rice": 300,
+          "water": 900,
+          "nuruk": 0
+        },
+        {
+          "name": "덧술2",
+          "riceForm": "godubap",
+          "rice": 1400,
+          "water": 200,
+          "nuruk": 0
+        }
+      ],
+      "totalRice": 2000,
+      "totalWater": 2000,
+      "totalNuruk": 200
+    }
+  },
+  {
+    "input": {
+      "totalRice": 1000,
+      "waterRatio": 1,
+      "nurukRatio": 0.1,
+      "riceForm": "juk",
+      "style": "danyang"
+    },
+    "expected": {
+      "type": "danyang",
+      "stages": [
+        {
+          "name": "전량 투입",
+          "riceForm": "juk",
+          "rice": 1000,
+          "water": 1000,
+          "nuruk": 100
+        }
+      ],
+      "totalRice": 1000,
+      "totalWater": 1000,
+      "totalNuruk": 100
+    }
+  },
+  {
+    "input": {
+      "totalRice": 1500,
+      "waterRatio": 1.2,
+      "nurukRatio": 0.15,
+      "riceForm": "juk",
+      "style": "danyang"
+    },
+    "expected": {
+      "type": "danyang",
+      "stages": [
+        {
+          "name": "전량 투입",
+          "riceForm": "juk",
+          "rice": 1500,
+          "water": 1800,
+          "nuruk": 225
+        }
+      ],
+      "totalRice": 1500,
+      "totalWater": 1800,
+      "totalNuruk": 225
+    }
+  },
+  {
+    "input": {
+      "totalRice": 800,
+      "waterRatio": 0.8,
+      "nurukRatio": 0.08,
+      "riceForm": "juk",
+      "style": "danyang"
+    },
+    "expected": {
+      "type": "danyang",
+      "stages": [
+        {
+          "name": "전량 투입",
+          "riceForm": "juk",
+          "rice": 800,
+          "water": 640,
+          "nuruk": 64
+        }
+      ],
+      "totalRice": 800,
+      "totalWater": 640,
+      "totalNuruk": 64
+    }
+  },
+  {
+    "input": {
+      "totalRice": 2000,
+      "waterRatio": 1,
+      "nurukRatio": 0.1,
+      "riceForm": "juk",
+      "style": "danyang"
+    },
+    "expected": {
+      "type": "danyang",
+      "stages": [
+        {
+          "name": "전량 투입",
+          "riceForm": "juk",
+          "rice": 2000,
+          "water": 2000,
+          "nuruk": 200
+        }
+      ],
+      "totalRice": 2000,
+      "totalWater": 2000,
+      "totalNuruk": 200
+    }
+  },
+  {
+    "input": {
+      "totalRice": 1000,
+      "waterRatio": 1,
+      "nurukRatio": 0.1,
+      "riceForm": "juk",
+      "style": "iyang"
+    },
+    "expected": {
+      "type": "iyang",
+      "stages": [
+        {
+          "name": "밑술",
+          "riceForm": "juk",
+          "rice": 200,
+          "water": 1000,
+          "nuruk": 100
+        },
+        {
+          "name": "덧술",
+          "riceForm": "godubap",
+          "rice": 800,
+          "water": 0,
+          "nuruk": 0
+        }
+      ],
+      "totalRice": 1000,
+      "totalWater": 1000,
+      "totalNuruk": 100
+    }
+  },
+  {
+    "input": {
+      "totalRice": 1500,
+      "waterRatio": 1.2,
+      "nurukRatio": 0.15,
+      "riceForm": "juk",
+      "style": "iyang"
+    },
+    "expected": {
+      "type": "iyang",
+      "stages": [
+        {
+          "name": "밑술",
+          "riceForm": "juk",
+          "rice": 300,
+          "water": 1500,
+          "nuruk": 225
+        },
+        {
+          "name": "덧술",
+          "riceForm": "godubap",
+          "rice": 1200,
+          "water": 300,
+          "nuruk": 0
+        }
+      ],
+      "totalRice": 1500,
+      "totalWater": 1800,
+      "totalNuruk": 225
+    }
+  },
+  {
+    "input": {
+      "totalRice": 800,
+      "waterRatio": 0.8,
+      "nurukRatio": 0.08,
+      "riceForm": "juk",
+      "style": "iyang"
+    },
+    "expected": {
+      "type": "iyang",
+      "stages": [
+        {
+          "name": "밑술",
+          "riceForm": "juk",
+          "rice": 128,
+          "water": 640,
+          "nuruk": 64
+        },
+        {
+          "name": "덧술",
+          "riceForm": "godubap",
+          "rice": 672,
+          "water": 0,
+          "nuruk": 0
+        }
+      ],
+      "totalRice": 800,
+      "totalWater": 640,
+      "totalNuruk": 64
+    }
+  },
+  {
+    "input": {
+      "totalRice": 2000,
+      "waterRatio": 1,
+      "nurukRatio": 0.1,
+      "riceForm": "juk",
+      "style": "iyang"
+    },
+    "expected": {
+      "type": "iyang",
+      "stages": [
+        {
+          "name": "밑술",
+          "riceForm": "juk",
+          "rice": 400,
+          "water": 2000,
+          "nuruk": 200
+        },
+        {
+          "name": "덧술",
+          "riceForm": "godubap",
+          "rice": 1600,
+          "water": 0,
+          "nuruk": 0
+        }
+      ],
+      "totalRice": 2000,
+      "totalWater": 2000,
+      "totalNuruk": 200
+    }
+  },
+  {
+    "input": {
+      "totalRice": 1000,
+      "waterRatio": 1,
+      "nurukRatio": 0.1,
+      "riceForm": "juk",
+      "style": "samyang"
+    },
+    "expected": {
+      "type": "samyang",
+      "stages": [
+        {
+          "name": "밑술",
+          "riceForm": "juk",
+          "rice": 100,
+          "water": 500,
+          "nuruk": 100
+        },
+        {
+          "name": "덧술",
+          "riceForm": "juk",
+          "rice": 100,
+          "water": 500,
+          "nuruk": 0
+        },
+        {
+          "name": "덧술2",
+          "riceForm": "godubap",
+          "rice": 800,
+          "water": 0,
+          "nuruk": 0
+        }
+      ],
+      "totalRice": 1000,
+      "totalWater": 1000,
+      "totalNuruk": 100
+    }
+  },
+  {
+    "input": {
+      "totalRice": 1500,
+      "waterRatio": 1.2,
+      "nurukRatio": 0.15,
+      "riceForm": "juk",
+      "style": "samyang"
+    },
+    "expected": {
+      "type": "samyang",
+      "stages": [
+        {
+          "name": "밑술",
+          "riceForm": "juk",
+          "rice": 180,
+          "water": 900,
+          "nuruk": 225
+        },
+        {
+          "name": "덧술",
+          "riceForm": "juk",
+          "rice": 180,
+          "water": 900,
+          "nuruk": 0
+        },
+        {
+          "name": "덧술2",
+          "riceForm": "godubap",
+          "rice": 1140,
+          "water": 0,
+          "nuruk": 0
+        }
+      ],
+      "totalRice": 1500,
+      "totalWater": 1800,
+      "totalNuruk": 225
+    }
+  },
+  {
+    "input": {
+      "totalRice": 800,
+      "waterRatio": 0.8,
+      "nurukRatio": 0.08,
+      "riceForm": "juk",
+      "style": "samyang"
+    },
+    "expected": {
+      "type": "samyang",
+      "stages": [
+        {
+          "name": "밑술",
+          "riceForm": "juk",
+          "rice": 64,
+          "water": 320,
+          "nuruk": 64
+        },
+        {
+          "name": "덧술",
+          "riceForm": "juk",
+          "rice": 64,
+          "water": 320,
+          "nuruk": 0
+        },
+        {
+          "name": "덧술2",
+          "riceForm": "godubap",
+          "rice": 672,
+          "water": 0,
+          "nuruk": 0
+        }
+      ],
+      "totalRice": 800,
+      "totalWater": 640,
+      "totalNuruk": 64
+    }
+  },
+  {
+    "input": {
+      "totalRice": 2000,
+      "waterRatio": 1,
+      "nurukRatio": 0.1,
+      "riceForm": "juk",
+      "style": "samyang"
+    },
+    "expected": {
+      "type": "samyang",
+      "stages": [
+        {
+          "name": "밑술",
+          "riceForm": "juk",
+          "rice": 200,
+          "water": 1000,
+          "nuruk": 200
+        },
+        {
+          "name": "덧술",
+          "riceForm": "juk",
+          "rice": 200,
+          "water": 1000,
+          "nuruk": 0
+        },
+        {
+          "name": "덧술2",
+          "riceForm": "godubap",
+          "rice": 1600,
+          "water": 0,
+          "nuruk": 0
+        }
+      ],
+      "totalRice": 2000,
+      "totalWater": 2000,
+      "totalNuruk": 200
+    }
+  }
+]
