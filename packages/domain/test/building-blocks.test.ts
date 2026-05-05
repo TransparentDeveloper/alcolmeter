@@ -9,11 +9,11 @@ describe('AggregateRoot', () => {
 	}
 
 	it('같은 id면 equals true', () => {
-		expect(new TestAggregate('a').equals(new TestAggregate('a'))).toBe(true);
+		expect(new TestAggregate('a' as Identity).equals(new TestAggregate('a' as Identity))).toBe(true);
 	});
 
 	it('다른 id면 equals false', () => {
-		expect(new TestAggregate('a').equals(new TestAggregate('b'))).toBe(false);
+		expect(new TestAggregate('a' as Identity).equals(new TestAggregate('b' as Identity))).toBe(false);
 	});
 });
 
@@ -25,11 +25,11 @@ describe('Entity', () => {
 	}
 
 	it('같은 id면 equals true', () => {
-		expect(new TestEntity('x').equals(new TestEntity('x'))).toBe(true);
+		expect(new TestEntity('x' as Identity).equals(new TestEntity('x' as Identity))).toBe(true);
 	});
 
 	it('다른 id면 equals false', () => {
-		expect(new TestEntity('x').equals(new TestEntity('y'))).toBe(false);
+		expect(new TestEntity('x' as Identity).equals(new TestEntity('y' as Identity))).toBe(false);
 	});
 });
 
@@ -60,7 +60,7 @@ describe('Association', () => {
 	}
 
 	it('id를 그대로 보유한다', () => {
-		const ref = new Association<TestAggregate, Identity>('agg-1');
+		const ref = new Association<TestAggregate, Identity>('agg-1' as Identity);
 		expect(ref.id).toBe('agg-1');
 	});
 });

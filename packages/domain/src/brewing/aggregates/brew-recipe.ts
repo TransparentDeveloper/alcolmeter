@@ -1,11 +1,11 @@
-import { AggregateRoot, type Brand } from '../../building-blocks';
+import { AggregateRoot, type Identity } from '../../building-blocks';
 import { BrewStage } from '../value-objects/brew-stage';
 import { BrewingStyle } from '../value-objects/brewing-style';
 import { Mass } from '../value-objects/mass';
 import { Ratio } from '../value-objects/ratio';
 import { RiceForm } from '../value-objects/rice-form';
 
-export type BrewRecipeId = Brand<'BrewRecipeId'>;
+export type BrewRecipeId = Identity<'BrewRecipeId'>;
 
 export interface BrewRecipeProps {
 	id: BrewRecipeId;

@@ -1,7 +1,4 @@
-type Identity = string;
-
-/** ID에 명목적 종류를 부여하는 brand 타입 유틸. 예: `type BrewRecipeId = Brand<'BrewRecipeId'>` */
-type Brand<B extends string> = Identity & { readonly __brand: B };
+type Identity<B extends string = string> = string & { readonly __brand: B };
 
 abstract class AggregateRoot<Self extends AggregateRoot<Self, ID>, ID extends Identity> {
 	abstract readonly id: ID;
@@ -29,4 +26,4 @@ class Association<T extends AggregateRoot<T, ID>, ID extends Identity> {
 }
 
 export { AggregateRoot, Association, Entity, ValueObject };
-export type { Brand, Identity };
+export type { Identity };
