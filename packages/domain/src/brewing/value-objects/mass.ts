@@ -1,4 +1,5 @@
 import { ValueObject } from '../../building-blocks';
+import { Ratio } from './ratio';
 
 export class Mass extends ValueObject<Mass> {
 	private constructor(public readonly grams: number) {
@@ -25,6 +26,10 @@ export class Mass extends ValueObject<Mass> {
 
 	minus(other: Mass): Mass {
 		return Mass.of(this.grams - other.grams);
+	}
+
+	times(ratio: Ratio): Mass {
+		return Mass.of(this.grams * ratio.value);
 	}
 
 	equals(other: Mass): boolean {

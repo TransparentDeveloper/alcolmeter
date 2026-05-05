@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { Mass } from '../../src/brewing/value-objects/mass';
+import { Ratio } from '../../src/brewing/value-objects/ratio';
 
 describe('Mass', () => {
 	it('of()로 생성하고 grams를 반환', () => {
@@ -37,5 +38,13 @@ describe('Mass', () => {
 	it('equals는 grams 비교', () => {
 		expect(Mass.of(100).equals(Mass.of(100))).toBe(true);
 		expect(Mass.of(100).equals(Mass.of(99))).toBe(false);
+	});
+
+	it('times(Ratio)는 비율 곱', () => {
+		expect(Mass.of(100).times(Ratio.ofFraction(0.1)).grams).toBe(10);
+	});
+
+	it('times(Ratio.zero)는 0g', () => {
+		expect(Mass.of(100).times(Ratio.ofFraction(0)).grams).toBe(0);
 	});
 });
