@@ -33,6 +33,6 @@ export class Mass extends ValueObject<Mass> {
 	}
 
 	equals(other: Mass): boolean {
-		return this.grams === other.grams;
+		return other instanceof Mass && this.grams === other.grams;
 	}
 }

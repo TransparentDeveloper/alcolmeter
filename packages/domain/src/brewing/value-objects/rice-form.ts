@@ -43,6 +43,6 @@ export class RiceForm extends ValueObject<RiceForm> {
 	}
 
 	equals(other: RiceForm): boolean {
-		return this.code === other.code;
+		return other instanceof RiceForm && this.code === other.code;
 	}
 }

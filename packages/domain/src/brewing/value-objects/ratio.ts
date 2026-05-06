@@ -16,6 +16,6 @@ export class Ratio extends ValueObject<Ratio> {
 	}
 
 	equals(other: Ratio): boolean {
-		return this.value === other.value;
+		return other instanceof Ratio && this.value === other.value;
 	}
 }

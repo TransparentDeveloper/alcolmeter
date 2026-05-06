@@ -3,17 +3,13 @@ type Identity<B extends string = string> = string & { readonly __brand: B };
 abstract class AggregateRoot<Self extends AggregateRoot<Self, ID>, ID extends Identity> {
 	abstract readonly id: ID;
 
-	equals(other: Self): boolean {
-		return other.id === this.id;
-	}
+	abstract equals(other: Self): boolean;
 }
 
 abstract class Entity<ID extends Identity> {
 	abstract readonly id: ID;
 
-	equals(other: Entity<ID>): boolean {
-		return other.id === this.id;
-	}
+	abstract equals(other: Entity<ID>): boolean;
 }
 
 abstract class ValueObject<Self> {

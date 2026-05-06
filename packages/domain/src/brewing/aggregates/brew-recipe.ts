@@ -47,6 +47,10 @@ export class BrewRecipe extends AggregateRoot<BrewRecipe, BrewRecipeId> {
 		this.totals = totals;
 	}
 
+	equals(other: BrewRecipe): boolean {
+		return other instanceof BrewRecipe && this.id === other.id;
+	}
+
 	static create(props: BrewRecipeProps): BrewRecipe {
 		if (props.stages.length !== props.style.stageCount) {
 			throw new Error(

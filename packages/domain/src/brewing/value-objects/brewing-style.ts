@@ -41,6 +41,6 @@ export class BrewingStyle extends ValueObject<BrewingStyle> {
 	}
 
 	equals(other: BrewingStyle): boolean {
-		return this.code === other.code;
+		return other instanceof BrewingStyle && this.code === other.code;
 	}
 }

@@ -15,6 +15,7 @@ export class BrewStage extends ValueObject<BrewStage> {
 
 	equals(other: BrewStage): boolean {
 		return (
+			other instanceof BrewStage &&
 			this.name === other.name &&
 			this.riceForm.equals(other.riceForm) &&
 			this.rice.equals(other.rice) &&
