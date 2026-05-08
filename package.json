@@ -8,6 +8,8 @@
 		"build": "pnpm --filter @alcolmeter/web build",
 		"preview": "pnpm --filter @alcolmeter/web preview",
 		"check": "pnpm --filter @alcolmeter/web check",
-		"test:domain": "pnpm --filter @alcolmeter/domain test"
+		"test:domain": "pnpm --filter @alcolmeter/domain test",
+		"dev:extension": "pnpm --filter @alcolmeter/extension dev",
+		"build:extension": "pnpm --filter @alcolmeter/extension build"
 	}
 }
