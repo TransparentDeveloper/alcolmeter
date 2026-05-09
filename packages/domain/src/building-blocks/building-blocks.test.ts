@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { AggregateRoot, Association, Entity, ValueObject, type Identity } from '../src/building-blocks';
+import { AggregateRoot, Association, Entity, ValueObject, type Identity } from '.';
 
 describe('AggregateRoot', () => {
 	class TestAggregate extends AggregateRoot<TestAggregate, Identity> {
