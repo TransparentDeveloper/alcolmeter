@@ -1,5 +1,24 @@
 # apps/web
 
+## 페이지 구조 규칙
+
+로직이 있는 페이지는 라우트 디렉토리 안에 다음 세 파일로 구성한다:
+
+```
+src/routes/{page}/
+  types.ts               ← 이 페이지에서만 쓰는 타입 (export만, 로직 없음)
+  use{Page}.svelte.ts    ← $state/$derived + 도메인 호출 (한글 문자열 없음)
+  +page.svelte           ← 텍스트 데이터(라벨·힌트 등) + 템플릿
+```
+
+### 역할 분리 원칙
+
+- **`types.ts`**: 타입만 export. 구현 없음.
+- **`use{Page}.svelte.ts`**: 상태·파생값·도메인 호출. 한글 문자열을 두지 않는다. 표시용 텍스트는 파라미터로 주입받는다.
+- **`+page.svelte`**: 텍스트 데이터(탭 라벨, 단계 이름, 힌트 등)를 스크립트에서 정의하고 hook에 주입한다. 템플릿과 스타일만 나머지에 둔다.
+
+### 참고: `src/routes/makgeolli/`
+
 ## 사이트맵 동기화 규칙
 
 `src/routes/` 아래에서 다음 작업이 발생하면 반드시 `static/sitemap.xml`도 함께 수정한다:

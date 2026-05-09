@@ -1,56 +1,34 @@
 <script lang="ts">
-	import type { RiceForm } from '$lib/types';
-	import { calculateDanyang, calculateIyang, calculateSamyang } from '$lib/calculator/makgeolli';
+	import { useMakgeolli } from './useMakgeolli.svelte';
+	import type { BrewTab, BrewMeta, StageNames, NurukHints } from './types';
 	import IngredientInput from '$lib/components/IngredientInput.svelte';
 	import ResultTable from '$lib/components/ResultTable.svelte';
 
-	let totalRice = $state(6);
-	let riceForm: RiceForm = $state('tteok');
-	let waterRatioPercent = $state(100);
-	let nurukRatio = $state(15);
-
-	type BrewTab = 'danyang' | 'iyang' | 'samyang';
-	let activeTab: BrewTab = $state('iyang');
-
-	const NURUK_CONFIG: Record<BrewTab, { default: number; min: number; max: number; hint: string }> = {
-		danyang: { default: 20, min: 20, max: 25, hint: '표준 20~25%' },
-		iyang:   { default: 15, min: 15, max: 20, hint: '표준 15~20%' },
-		samyang: { default: 10, min: 10, max: 15, hint: '표준 10~15%' }
-	};
-
-	let nurukHint = $derived(NURUK_CONFIG[activeTab].hint);
-	let nurukDefault = $derived(NURUK_CONFIG[activeTab].default);
-
 	const tabs: { id: BrewTab; label: string }[] = [
-		{ id: 'danyang', label: '단양주' },
-		{ id: 'iyang', label: '이양주' },
-		{ id: 'samyang', label: '삼양주' }
+		{ id: 'DANYANG', label: '단양주' },
+		{ id: 'IYANG',   label: '이양주' },
+		{ id: 'SAMYANG', label: '삼양주' }
 	];
 
-	let showGodubap = $derived(activeTab === 'danyang');
+	const brewMeta: BrewMeta = {
+		DANYANG: { type: 'danyang', label: '단양주' },
+		IYANG:   { type: 'iyang',   label: '이양주' },
+		SAMYANG: { type: 'samyang', label: '삼양주' }
+	};
 
-	function switchTab(tabId: BrewTab) {
-		activeTab = tabId;
-		nurukRatio = NURUK_CONFIG[tabId].default;
-		// 이양주/삼양주로 전환 시 고두밥이면 떡으로 변경
-		if (tabId !== 'danyang' && riceForm === 'godubap') {
-			riceForm = 'tteok';
-		}
-	}
+	const stageNames: StageNames = {
+		1: ['전량 투입'],
+		2: ['밑술', '덧술'],
+		3: ['밑술', '덧술', '덧술2']
+	};
 
-	let result = $derived.by(() => {
-		const rice = Math.max(0, totalRice || 0);
-		const water = Math.max(0, (waterRatioPercent || 100)) / 100;
-		const nuruk = Math.max(0, nurukRatio || NURUK_CONFIG[activeTab].default);
-		switch (activeTab) {
-			case 'danyang':
-				return calculateDanyang(rice, riceForm, water, nuruk);
-			case 'iyang':
-				return calculateIyang(rice, riceForm, water, nuruk);
-			case 'samyang':
-				return calculateSamyang(rice, riceForm, water, nuruk);
-		}
-	});
+	const nurukHints: NurukHints = {
+		DANYANG: '표준 20~25%',
+		IYANG:   '표준 15~20%',
+		SAMYANG: '표준 10~15%'
+	};
+
+	const m = useMakgeolli(brewMeta, stageNames, nurukHints);
 </script>
 
 <svelte:head>
@@ -61,10 +39,18 @@
 <div class="calculator">
 	<section class="card">
 		<h2 class="section-label">재료 입력</h2>
-		<IngredientInput bind:totalRice bind:riceForm bind:waterRatio={waterRatioPercent} bind:nurukRatio {nurukHint} {nurukDefault} {showGodubap} />
+		<IngredientInput
+			bind:totalRice={m.totalRice}
+			bind:riceForm={m.riceForm}
+			bind:waterRatio={m.waterRatioPercent}
+			bind:nurukRatio={m.nurukRatio}
+			nurukHint={m.nurukHint}
+			nurukDefault={m.nurukDefault}
+			showGodubap={m.showGodubap}
+		/>
 	</section>
 
-	{#if riceForm === 'tteok'}
+	{#if m.riceForm === 'tteok'}
 		<p class="tteok-warning">떡(설기)을 사용하면 발효가 더디거나 맛이 극단적으로 달아질 수 있습니다.<br/>초보자에게는 죽이나 범벅을 권장합니다.</p>
 	{/if}
 
@@ -74,16 +60,16 @@
 			{#each tabs as tab}
 				<button
 					class="tab"
-					class:active={activeTab === tab.id}
-					onclick={() => switchTab(tab.id)}
+					class:active={m.activeTab === tab.id}
+					onclick={() => m.switchTab(tab.id)}
 				>
 					{tab.label}
 				</button>
 			{/each}
 		</nav>
 
-		{#if totalRice > 0}
-			<ResultTable {result} {riceForm} availableRice={totalRice || 0} />
+		{#if m.totalRice > 0}
+			<ResultTable result={m.result} riceForm={m.riceForm} availableRice={m.totalRice} />
 		{:else}
 			<p class="empty">쌀 총량을 입력해주세요.</p>
 		{/if}
@@ -97,7 +83,7 @@
 		gap: 1.5rem;
 	}
 
-.section-label {
+	.section-label {
 		font-size: 0.95rem;
 		font-weight: 800;
 		color: var(--color-text);

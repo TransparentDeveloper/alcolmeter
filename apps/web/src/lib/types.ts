@@ -9,14 +9,6 @@ export const RICE_FORM_LABELS: Record<RiceForm, string> = {
 	juk: '죽'
 };
 
-/** 쌀 형태별 쌀:물 비율 (쌀 1 기준 물의 비율) */
-export const RICE_WATER_RATIO: Record<RiceForm, number> = {
-	godubap: 0,
-	tteok: 1,
-	beombuk: 3,
-	juk: 5
-};
-
 /** 양조 단계 */
 export interface BrewStage {
 	name: string;
