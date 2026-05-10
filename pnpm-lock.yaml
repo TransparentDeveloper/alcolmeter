@@ -9,7 +9,17 @@ importers:
   .: {}
 
   apps/extension:
+    dependencies:
+      '@alcolmeter/domain':
+        specifier: workspace:*
+        version: link:../../packages/domain
     devDependencies:
+      '@sveltejs/vite-plugin-svelte':
+        specifier: ^7.0.0
+        version: 7.0.0(svelte@5.55.5)(vite@8.0.10(@types/node@22.19.17)(esbuild@0.27.7)(jiti@2.7.0)(tsx@4.21.0))
+      svelte:
+        specifier: ^5.0.0
+        version: 5.55.5
       typescript:
         specifier: ^5.8.3
         version: 5.9.3

@@ -6,5 +6,10 @@
 		"strict": true,
 		"lib": ["ESNext", "DOM"]
 	},
-	"include": [".wxt/wxt.d.ts", "entrypoints/**/*.ts", "wxt.config.ts"]
+	"include": [
+		".wxt/wxt.d.ts",
+		"entrypoints/**/*.ts",
+		"entrypoints/**/*.svelte",
+		"wxt.config.ts"
+	]
 }
