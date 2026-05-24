@@ -22,6 +22,7 @@
 <svelte:head>
 	<title>자주 묻는 질문 - 알콜미터</title>
 	<meta name="description" content="막걸리 양조에 대한 자주 묻는 질문. 쌀 형태, 양조 방식, 누룩·물 비율, 알콜미터 계산 원리를 설명합니다." />
+	<link rel="canonical" href="https://alcolmeter.vercel.app/faq" />
 	{@html `<script type="application/ld+json">${JSON.stringify({
 		"@context": "https://schema.org",
 		"@type": "FAQPage",
