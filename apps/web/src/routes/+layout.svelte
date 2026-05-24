@@ -4,8 +4,8 @@
 	let { children } = $props();
 	const version = __APP_VERSION__;
 
-	afterNavigate(({ to }) => {
-		if (typeof gtag !== 'undefined' && to) {
+	afterNavigate(({ from, to }) => {
+		if (from && typeof gtag !== 'undefined' && to) {
 			gtag('event', 'page_view', {
 				page_path: to.url.pathname
 			});
