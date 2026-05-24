@@ -26,4 +26,6 @@ body {
 	color: var(--color-text);
 	line-height: 1.7;
 	-webkit-font-smoothing: antialiased;
+	word-break: keep-all;
+	overflow-wrap: break-word;
 }
