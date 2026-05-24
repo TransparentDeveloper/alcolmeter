@@ -1,6 +1,7 @@
 <svelte:head>
 	<title>개인정보처리방침 - 알콜미터</title>
 	<meta name="description" content="알콜미터 개인정보처리방침. 사용자 데이터를 수집하지 않습니다." />
+	<link rel="canonical" href="https://alcolmeter.vercel.app/privacy" />
 </svelte:head>
 
 <article>
