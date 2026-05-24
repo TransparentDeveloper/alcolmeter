@@ -4,3 +4,5 @@ build
 .vercel
 .playwright-mcp
 .gstack/
+.env
+.env.local
