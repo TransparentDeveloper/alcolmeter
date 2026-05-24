@@ -29,7 +29,7 @@ src/routes/{page}/
 
 ### sitemap.xml 작성 기준
 
-- `<loc>`: `https://alcolmeter.vercel.app/{경로}`
+- `<loc>`: `https://alcolmeter.kr/{경로}`
 - `<lastmod>`: 작업일 (YYYY-MM-DD)
 - `<changefreq>`: 페이지 성격에 맞게 선택
   - 자주 바뀌는 콘텐츠: `weekly`

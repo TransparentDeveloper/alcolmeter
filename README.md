@@ -36,4 +36,4 @@ npm run test
 
 Vercel에 자동 배포됩니다.
 
-- Production: https://alcolmeter.vercel.app
+- Production: https://alcolmeter.kr
