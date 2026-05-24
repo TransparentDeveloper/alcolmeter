@@ -1,7 +1,16 @@
 <script>
 	import '../app.css';
+	import { afterNavigate } from '$app/navigation';
 	let { children } = $props();
 	const version = __APP_VERSION__;
+
+	afterNavigate(({ to }) => {
+		if (typeof gtag !== 'undefined' && to) {
+			gtag('event', 'page_view', {
+				page_path: to.url.pathname
+			});
+		}
+	});
 </script>
 
 <div class="app">
