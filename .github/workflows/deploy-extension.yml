@@ -1,0 +1,41 @@
+name: Deploy extension
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/extension/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build & zip extension
+        run: pnpm --filter @alcolmeter/extension zip
+
+      - name: Upload & publish to Chrome Web Store
+        run: |
+          ZIP=$(find apps/extension/.output -name '*-chrome.zip' | head -1)
+          npx chrome-webstore-upload-cli@latest upload \
+            --extension-id "$CHROME_EXTENSION_ID" \
+            --source "$ZIP" \
+            --auto-publish
+        env:
+          CHROME_EXTENSION_ID: ${{ secrets.CHROME_EXTENSION_ID }}
+          CLIENT_ID: ${{ secrets.CHROME_CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CHROME_CLIENT_SECRET }}
+          REFRESH_TOKEN: ${{ secrets.CHROME_REFRESH_TOKEN }}
