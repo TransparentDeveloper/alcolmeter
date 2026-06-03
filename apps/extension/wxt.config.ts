@@ -6,6 +6,6 @@ export default defineConfig({
 	manifest: {
 		name: 'Alcolmeter',
 		description: '막걸리 배합 계산기',
-		version: '0.1.0'
+		version: '0.1.1'
 	}
 });
