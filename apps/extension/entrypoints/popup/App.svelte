@@ -1,4 +1,6 @@
 <script lang="ts">
+	declare const __APP_VERSION__: string;
+
 	import {
 		BrewingCalculator,
 		BrewingStyle,
@@ -196,6 +198,10 @@
 			<div class="empty">쌀 총량을 입력해주세요.</div>
 		{/if}
 	</div>
+
+	<footer>
+		<span class="version">v{__APP_VERSION__}</span>
+	</footer>
 </div>
 
 <style>
@@ -446,5 +452,16 @@
 		color: #6b7280;
 		padding: 20px 0;
 		font-size: 13px;
+	}
+
+	footer {
+		text-align: center;
+		padding: 4px 0 2px;
+	}
+
+	.version {
+		font-size: 10px;
+		color: #9ca3af;
+		opacity: 0.5;
 	}
 </style>
