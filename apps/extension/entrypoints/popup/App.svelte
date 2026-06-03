@@ -10,7 +10,7 @@
 		type RiceFormCode,
 		type BrewingStyleCode,
 		type BrewRecipe
-	} from '@alcolmeter/domain/brewing';
+	} from '@alcolmeter/domain';
 
 	const RICE_FORM_LABELS: Record<RiceFormCode, string> = {
 		godubap: '고두밥',
