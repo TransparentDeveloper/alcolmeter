@@ -1,60 +1,71 @@
 <script lang="ts">
 	declare const __APP_VERSION__: string;
 
-	import {
-		BrewingCalculator,
-		BrewingStyle,
-		RiceForm,
-		Mass,
-		Ratio,
-		type RiceFormCode,
-		type BrewingStyleCode,
-		type BrewRecipe
-	} from '@alcolmeter/domain';
+	import { MakgeolliController } from '@alcolmeter/domain/makgeolli';
+	import type { MakgeolliResult } from '@alcolmeter/domain/makgeolli';
 
-	const RICE_FORM_LABELS: Record<RiceFormCode, string> = {
+	type RiceForm = 'godubap' | 'tteok' | 'beombuk' | 'juk';
+	type BrewTab = 'DANYANG' | 'IYANG' | 'SAMYANG';
+
+	const RICE_FORM_LABELS: Record<RiceForm, string> = {
 		godubap: '고두밥',
 		tteok: '떡(설기)',
 		beombuk: '범벅',
 		juk: '죽'
 	};
 
-	const NURUK_CONFIG = {
-		danyang: { default: 20, hint: '표준 20~25%' },
-		iyang: { default: 15, hint: '표준 15~20%' },
-		samyang: { default: 10, hint: '표준 10~15%' }
+	const TO_DOMAIN_RICE_FORM = {
+		godubap: 'GODUBAP', tteok: 'TTEOK', beombuk: 'BEOMBUK', juk: 'JUK'
+	} as const;
+
+	const FROM_DOMAIN_RICE_FORM = {
+		GODUBAP: 'godubap', TTEOK: 'tteok', BEOMBUK: 'beombuk', JUK: 'juk'
+	} as const satisfies Record<'GODUBAP' | 'TTEOK' | 'BEOMBUK' | 'JUK', RiceForm>;
+
+	const BREW_COUNT = { DANYANG: 1, IYANG: 2, SAMYANG: 3 } as const satisfies Record<BrewTab, 1 | 2 | 3>;
+
+	const STAGE_NAMES: Record<1 | 2 | 3, string[]> = {
+		1: ['전량 투입'],
+		2: ['밑술', '덧술'],
+		3: ['밑술', '덧술', '덧술2']
 	};
 
-	const calculator = new BrewingCalculator();
+	const NURUK_CONFIG: Record<BrewTab, { default: number; hint: string }> = {
+		DANYANG: { default: 20, hint: '표준 20~25%' },
+		IYANG:   { default: 15, hint: '표준 15~20%' },
+		SAMYANG: { default: 10, hint: '표준 10~15%' }
+	};
+
+	const controller = new MakgeolliController();
 
 	let totalRice = $state(1000);
-	let riceForm = $state<RiceFormCode>('juk');
+	let riceForm = $state<RiceForm>('juk');
 	let waterRatioPercent = $state(100);
 	let nurukPercent = $state(15);
-	let activeStyle = $state<BrewingStyleCode>('iyang');
+	let activeTab = $state<BrewTab>('IYANG');
 
 	const showWaterRatio = $derived(riceForm !== 'tteok' && riceForm !== 'godubap');
-	const showGodubap = $derived(activeStyle === 'danyang');
+	const showGodubap = $derived(activeTab === 'DANYANG');
 
-	const result = $derived.by<BrewRecipe | null>(() => {
+	const result = $derived.by<MakgeolliResult | null>(() => {
 		if (totalRice <= 0) return null;
 		try {
-			return calculator.calculate({
-				totalRice: Mass.of(totalRice),
-				riceForm: RiceForm.fromCode(riceForm),
-				waterRatio: Ratio.ofFraction((waterRatioPercent || 100) / 100),
-				nurukRatio: Ratio.ofFraction(nurukPercent / 100),
-				style: BrewingStyle.fromCode(activeStyle)
+			return controller.calculate({
+				totalRiceGrams: totalRice,
+				riceForm: TO_DOMAIN_RICE_FORM[riceForm],
+				waterRatio: (waterRatioPercent || 100) / 100,
+				nurukRatio: nurukPercent / 100,
+				brewCount: BREW_COUNT[activeTab]
 			});
 		} catch {
 			return null;
 		}
 	});
 
-	function switchTab(style: BrewingStyleCode) {
-		activeStyle = style;
-		nurukPercent = NURUK_CONFIG[style].default;
-		if (style !== 'danyang' && riceForm === 'godubap') {
+	function switchTab(tab: BrewTab) {
+		activeTab = tab;
+		nurukPercent = NURUK_CONFIG[tab].default;
+		if (tab !== 'DANYANG' && riceForm === 'godubap') {
 			riceForm = 'juk';
 		}
 	}
@@ -122,7 +133,7 @@
 				step="1"
 				bind:value={nurukPercent}
 			/>
-			<div class="hint">{NURUK_CONFIG[activeStyle].hint}</div>
+			<div class="hint">{NURUK_CONFIG[activeTab].hint}</div>
 		</div>
 	</div>
 
@@ -138,18 +149,18 @@
 		<div class="tabs">
 			<button
 				class="tab"
-				class:active={activeStyle === 'danyang'}
-				onclick={() => switchTab('danyang')}
+				class:active={activeTab === 'DANYANG'}
+				onclick={() => switchTab('DANYANG')}
 			>단양주</button>
 			<button
 				class="tab"
-				class:active={activeStyle === 'iyang'}
-				onclick={() => switchTab('iyang')}
+				class:active={activeTab === 'IYANG'}
+				onclick={() => switchTab('IYANG')}
 			>이양주</button>
 			<button
 				class="tab"
-				class:active={activeStyle === 'samyang'}
-				onclick={() => switchTab('samyang')}
+				class:active={activeTab === 'SAMYANG'}
+				onclick={() => switchTab('SAMYANG')}
 			>삼양주</button>
 		</div>
 
@@ -165,24 +176,24 @@
 						</tr>
 					</thead>
 					<tbody>
-						{#each result.stages as stage}
+						{#each result.stages as stage, i}
 							<tr>
 								<td>
-									{stage.name}
-									<span class="badge">{RICE_FORM_LABELS[stage.riceForm.code]}</span>
+									{STAGE_NAMES[result.brewCount][i]}
+									<span class="badge">{RICE_FORM_LABELS[FROM_DOMAIN_RICE_FORM[stage.riceForm]]}</span>
 								</td>
-								<td>{Math.round(stage.rice.grams)}</td>
-								<td>{stage.water.grams === 0 ? '-' : Math.round(stage.water.grams)}</td>
-								<td>{stage.nuruk.grams === 0 ? '-' : Math.round(stage.nuruk.grams)}</td>
+								<td>{Math.round(stage.riceGrams)}</td>
+								<td>{stage.waterGrams === 0 ? '-' : Math.round(stage.waterGrams)}</td>
+								<td>{stage.nurukGrams === 0 ? '-' : Math.round(stage.nurukGrams)}</td>
 							</tr>
 						{/each}
 					</tbody>
 					<tfoot>
 						<tr>
 							<td>합계</td>
-							<td>{Math.round(result.totals.rice.grams)}</td>
-							<td>{Math.round(result.totals.water.grams)}</td>
-							<td>{Math.round(result.totals.nuruk.grams)}</td>
+							<td>{Math.round(result.totalRiceGrams)}</td>
+							<td>{Math.round(result.totalWaterGrams)}</td>
+							<td>{Math.round(result.totalNurukGrams)}</td>
 						</tr>
 					</tfoot>
 				</table>
@@ -191,7 +202,7 @@
 			<div class="volume-line">
 				<span class="volume-label">예상 생산량</span>
 				<strong>
-					{Math.round(result.totals.rice.grams * 0.3 + result.totals.water.grams).toLocaleString()}g
+					{Math.round(result.totalRiceGrams * 0.3 + result.totalWaterGrams).toLocaleString()}g
 				</strong>
 			</div>
 		{:else}
