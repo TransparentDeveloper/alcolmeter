@@ -1,5 +1,13 @@
 # packages/domain CLAUDE.md
 
+## 커맨드
+
+```bash
+pnpm test          # 유닛 테스트 1회 실행
+pnpm test:watch    # 감시 모드
+pnpm check         # 타입 체크
+```
+
 ## 컨벤션
 
 코드 작성 전 반드시 `packages/domain/CONVENTIONS.md`를 확인하고 따른다.
