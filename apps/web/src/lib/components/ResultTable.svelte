@@ -9,10 +9,6 @@
 		if (value <= 0) return '-';
 		return value.toFixed(2);
 	}
-
-
-	/** 예상 술 생산량 = 총 쌀의 30% + 총 물 */
-	let estimatedVolume = $derived(result.totalRice * 0.3 + result.totalWater);
 </script>
 
 <div class="result-table">
@@ -51,8 +47,13 @@
 		</div>
 	{/if}
 
-	<div class="estimated-volume">
-		예상 술 생산량 <strong>{fmt(estimatedVolume)} L</strong>
+	<div class="estimates">
+		<div class="estimate-item">
+			예상 도수 <strong>{result.estimates.alcoholPercent.toFixed(1)} %</strong>
+		</div>
+		<div class="estimate-item">
+			예상 생산량 <strong>{fmt(result.estimates.volumeLiters)} L</strong>
+		</div>
 	</div>
 
 </div>
@@ -132,10 +133,15 @@
 		color: var(--color-muted);
 	}
 
-	.estimated-volume {
+	.estimates {
 		margin-top: 1.25rem;
-		padding: 0.85rem 1rem;
 		border-top: 2px solid #e5e7eb;
+		display: flex;
+	}
+
+	.estimate-item {
+		flex: 1;
+		padding: 0.85rem 1rem;
 		font-size: 0.9rem;
 		font-weight: 700;
 		display: flex;
@@ -144,9 +150,14 @@
 		color: var(--color-text);
 	}
 
-	.estimated-volume strong {
+	.estimate-item + .estimate-item {
+		border-left: 2px solid #e5e7eb;
+	}
+
+	.estimate-item strong {
 		font-size: 1.1rem;
 		color: var(--color-primary);
+		white-space: nowrap;
 	}
 
 </style>

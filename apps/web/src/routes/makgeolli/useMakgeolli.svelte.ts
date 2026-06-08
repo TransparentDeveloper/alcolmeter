@@ -56,7 +56,8 @@ export function useMakgeolli(brewMeta: BrewMeta, stageNames: StageNames, nurukHi
 			})),
 			totalRice: domainResult.totalRiceGrams / 1000,
 			totalWater: domainResult.totalWaterGrams / 1000,
-			totalNuruk: domainResult.totalNurukGrams / 1000
+			totalNuruk: domainResult.totalNurukGrams / 1000,
+			estimates: domainResult.estimates
 		};
 	});
 

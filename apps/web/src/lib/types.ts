@@ -26,6 +26,10 @@ export interface BrewResult {
 	totalRice: number;
 	totalWater: number;
 	totalNuruk: number;
+	estimates: {
+		volumeLiters: number;
+		alcoholPercent: number;
+	};
 }
 
 /** 누룩 종류 */
