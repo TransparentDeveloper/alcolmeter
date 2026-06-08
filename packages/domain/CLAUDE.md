@@ -1,5 +1,11 @@
 # packages/domain CLAUDE.md
 
+## 컨벤션
+
+코드 작성 전 반드시 `packages/domain/CONVENTIONS.md`를 확인하고 따른다.
+
+---
+
 ## 테스트 코드
 
 ### 위치

@@ -123,5 +123,41 @@ describe('MakgeolliController', () => {
 				expect(typeof stage.nurukGrams).toBe('number');
 			}
 		});
+
+		it('단양주(GODUBAP) 쌀 1kg · 물 1L 기준 생산량 1.3L, 도수 약 30.5%다', () => {
+			const result = controller.calculate({
+				totalRiceGrams: 1000,
+				riceForm: 'GODUBAP',
+				waterRatio: 1.0,
+				nurukRatio: 0.1,
+				brewCount: 1
+			});
+			expect(result.estimates.volumeLiters).toBeCloseTo(1.3, 1);
+			expect(result.estimates.alcoholPercent).toBeCloseTo(30.54, 1);
+		});
+
+		it('이양주(JUK) 쌀 1kg · 물 2L 기준 생산량 2.3L, 도수 약 17.3%다', () => {
+			const result = controller.calculate({
+				totalRiceGrams: 1000,
+				riceForm: 'JUK',
+				waterRatio: 2.0,
+				nurukRatio: 0.1,
+				brewCount: 2
+			});
+			expect(result.estimates.volumeLiters).toBeCloseTo(2.3, 1);
+			expect(result.estimates.alcoholPercent).toBeCloseTo(17.26, 1);
+		});
+
+		it('삼양주(JUK) 쌀 1kg · 물 3L 기준 생산량 3.3L, 도수 약 12.0%다', () => {
+			const result = controller.calculate({
+				totalRiceGrams: 1000,
+				riceForm: 'JUK',
+				waterRatio: 3.0,
+				nurukRatio: 0.1,
+				brewCount: 3
+			});
+			expect(result.estimates.volumeLiters).toBeCloseTo(3.3, 1);
+			expect(result.estimates.alcoholPercent).toBeCloseTo(12.03, 1);
+		});
 	});
 });

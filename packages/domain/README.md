@@ -69,6 +69,16 @@ classDiagram
         +times(factor) Mass
     }
 
+    class MakgeolliEstimator {
+        +estimate(recipe) MakgeolliProductionEstimates
+    }
+
+    class MakgeolliProductionEstimates {
+        <<interface>>
+        +volumeLiters : number
+        +alcoholPercent : number
+    }
+
     MakgeolliCalculator ..> MakgeolliInput : input
     MakgeolliCalculator ..> MakgeolliRecipe : creates
     MakgeolliInput --> Mass
@@ -81,23 +91,9 @@ classDiagram
     MakgeolliTotals --> Mass
     MakgeolliStage --> RiceForm
     MakgeolliStage --> Mass
+    MakgeolliEstimator ..> MakgeolliRecipe : input
+    MakgeolliEstimator ..> MakgeolliProductionEstimates : creates
 ```
-
-## 단위 체계
-
-모든 양(量)은 **그램(g)** 또는 **리터(L)** 를 사용한다.
-
-| 팩토리             | 설명                                  |
-| ------------------ | ------------------------------------- |
-| `Mass.ofGrams(n)`  | n 그램으로 생성                       |
-| `Mass.ofLiters(n)` | n 리터로 생성 (내부 저장: n × 1000 g) |
-
-환산 기준: **1 L = 1000 g**
-
-게터:
-
-- `.grams` — 그램 단위 수치
-- `.liters` — 리터 단위 수치 (= grams / 1000)
 
 ## 정밀도
 
