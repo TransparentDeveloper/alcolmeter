@@ -20,7 +20,7 @@
 
 	<section>
 		<h2>문의</h2>
-		<p>개인정보 관련 문의는 <a href="mailto:jeff@teamo2.kr">jeff@teamo2.kr</a>로 연락해 주세요.</p>
+		<p>개인정보 관련 문의는 <a href="mailto:indigonet78@gmail.com">indigonet78@gmail.com</a>로 연락해 주세요.</p>
 	</section>
 </article>
 
