@@ -1,3 +1,3 @@
 {
-  "buildCommand": "pnpm --filter @alcolmeter/web build"
+  "buildCommand": "pnpm --filter @alcolmeter/web build && mkdir -p .vercel && cp -r apps/web/.vercel/output .vercel/output"
 }
