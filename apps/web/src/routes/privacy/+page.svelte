@@ -20,7 +20,8 @@
 
 	<section>
 		<h2>문의</h2>
-		<p>개인정보 관련 문의는 <a href="mailto:indigonet78@gmail.com">indigonet78@gmail.com</a>로 연락해 주세요.</p>
+		<p>개인정보 관련 문의는 아래 이메일로 연락해 주세요.</p>
+		<img src="/email-contact.png" alt="문의 이메일 주소" class="email-img" />
 	</section>
 </article>
 
@@ -60,5 +61,11 @@
 
 	a {
 		color: var(--color-primary);
+	}
+
+	.email-img {
+		display: block;
+		margin-top: 0.5rem;
+		height: 1rem;
 	}
 </style>
