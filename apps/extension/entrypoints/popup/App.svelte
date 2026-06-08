@@ -199,11 +199,15 @@
 				</table>
 			</div>
 
-			<div class="volume-line">
-				<span class="volume-label">예상 생산량</span>
-				<strong>
-					{Math.round(result.totalRiceGrams * 0.3 + result.totalWaterGrams).toLocaleString()}g
-				</strong>
+			<div class="estimates">
+				<div class="estimate-item">
+					<span class="estimate-label">예상 도수</span>
+					<strong>{result.estimates.alcoholPercent.toFixed(1)}%</strong>
+				</div>
+				<div class="estimate-item">
+					<span class="estimate-label">예상 생산량</span>
+					<strong>{Math.round(result.estimates.volumeLiters * 1000).toLocaleString()}g</strong>
+				</div>
 			</div>
 		{:else}
 			<div class="empty">쌀 총량을 입력해주세요.</div>
@@ -439,23 +443,34 @@
 		text-align: left;
 	}
 
-	.volume-line {
+	.estimates {
+		display: flex;
+		border-top: 1px solid #e5e7eb;
+	}
+
+	.estimate-item {
+		flex: 1;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 		padding: 8px 4px 0;
 		font-size: 13px;
 		color: #374151;
-		border-top: 1px solid #e5e7eb;
 	}
 
-	.volume-label {
+	.estimate-item + .estimate-item {
+		border-left: 1px solid #e5e7eb;
+		padding-left: 8px;
+	}
+
+	.estimate-label {
 		color: #6b7280;
 	}
 
-	.volume-line strong {
+	.estimate-item strong {
 		font-size: 15px;
 		color: #2563eb;
+		white-space: nowrap;
 	}
 
 	.empty {
