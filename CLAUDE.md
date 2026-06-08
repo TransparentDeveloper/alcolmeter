@@ -47,6 +47,11 @@ pnpm check            # web 타입 체크
 - 한 브랜치 = 한 논리적 작업 단위
 - `main`에 직접 작업하지 않는다 (force-push/삭제/머지 커밋 금지)
 
+## 배포
+
+- **web**: main push 시 Vercel 자동 배포
+- **extension**: main push 시 `apps/extension/**` 변경 감지 → Chrome Web Store 자동 빌드·배포 (`.github/workflows/deploy-extension.yml`)
+
 ## 플랜 문서
 
 - `docs/superpowers/` 하위의 스펙·플랜 문서는 커밋하지 않는다 (`.gitignore` 처리)
