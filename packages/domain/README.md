@@ -6,8 +6,8 @@
 
 ```mermaid
 classDiagram
-    class MakgeolliCalculator {
-        +calculate(id, input) MakgeolliRecipe
+    class MakgeolliRecipePlanner {
+        +plan(id, input) MakgeolliRecipe
     }
 
     class MakgeolliInput {
@@ -79,8 +79,8 @@ classDiagram
         +alcoholPercent : number
     }
 
-    MakgeolliCalculator ..> MakgeolliInput : input
-    MakgeolliCalculator ..> MakgeolliRecipe : creates
+    MakgeolliRecipePlanner ..> MakgeolliInput : input
+    MakgeolliRecipePlanner ..> MakgeolliRecipe : creates
     MakgeolliInput --> Mass
     MakgeolliInput --> RiceForm
     MakgeolliInput --> MakgeolliStyle
