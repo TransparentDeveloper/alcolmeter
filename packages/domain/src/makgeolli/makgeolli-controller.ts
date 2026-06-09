@@ -46,7 +46,7 @@ export class MakgeolliController {
       style: MakgeolliStyle.of(request.brewCount)
     };
 
-    const recipe = this.recipePlanner.calculate(id, input);
+    const recipe = this.recipePlanner.plan(id, input);
     const estimates = this.estimator.estimate(recipe);
 
     return {
