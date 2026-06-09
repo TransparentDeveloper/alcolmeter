@@ -15,7 +15,7 @@ export interface MakgeolliInput {
 	style: MakgeolliStyle;
 }
 
-export class MakgeolliCalculator {
+export class MakgeolliRecipePlanner {
 	calculate(id: MakgeolliRecipeId, input: MakgeolliInput): MakgeolliRecipe {
 		switch (input.style.brewCount) {
 			case 1: return this.singleBrew(id, input);

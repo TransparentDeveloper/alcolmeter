@@ -1,5 +1,5 @@
 import { type MakgeolliRecipeId } from './aggregates/makgeolli-recipe';
-import { MakgeolliCalculator, type MakgeolliInput } from './services/makgeolli-calculator';
+import { MakgeolliRecipePlanner, type MakgeolliInput } from './services/makgeolli-recipe-planner';
 import { MakgeolliEstimator } from './services/makgeolli-estimator';
 import { MakgeolliStyle } from './value-objects/makgeolli-style';
 import { Mass } from './value-objects/mass';
@@ -33,7 +33,7 @@ export interface MakgeolliResult {
 }
 
 export class MakgeolliController {
-  private readonly calculator = new MakgeolliCalculator();
+  private readonly recipePlanner = new MakgeolliRecipePlanner();
   private readonly estimator = new MakgeolliEstimator();
 
   calculate(request: MakgeolliRequest): MakgeolliResult {
@@ -46,7 +46,7 @@ export class MakgeolliController {
       style: MakgeolliStyle.of(request.brewCount)
     };
 
-    const recipe = this.calculator.calculate(id, input);
+    const recipe = this.recipePlanner.calculate(id, input);
     const estimates = this.estimator.estimate(recipe);
 
     return {
