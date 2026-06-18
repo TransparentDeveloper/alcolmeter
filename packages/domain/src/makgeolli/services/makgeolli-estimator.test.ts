@@ -52,12 +52,12 @@ describe('MakgeolliEstimator', () => {
   describe('예상 알코올 도수', () => {
     it('물을 충분히 넣어 농도가 낮으면 당이 모두 발효된 도수를 그대로 반환한다', () => {
       // 쌀 1kg · 물 3L → 잠재 도수가 효모 내성 한계보다 낮아 그대로 발효된다
-      expect(estimator.estimate(makeRecipe(1000, 3000)).alcoholPercent).toBeCloseTo(12.03, 1);
+      expect(estimator.estimate(makeRecipe(1000, 3000)).alcoholPercent).toBeCloseTo(10.6, 1);
     });
 
     it('물을 적게 넣어 농도가 높아도 효모 내성 한계를 넘지 못한다', () => {
-      // 쌀 1kg · 물 1L → 화학량론상 30%대이나 효모가 사멸해 발효주로는 불가능하다
-      expect(estimator.estimate(makeRecipe(1000, 1000)).alcoholPercent).toBeCloseTo(18, 1);
+      // 쌀 1kg · 물 1L → 화학량론상 한계를 크게 웃돌지만 효모가 사멸해 발효주로는 불가능하다
+      expect(estimator.estimate(makeRecipe(1000, 1000)).alcoholPercent).toBeCloseTo(17.5, 1);
     });
 
     it('농도가 높아질수록 도수는 효모 내성 한계로 수렴한다', () => {
@@ -66,7 +66,7 @@ describe('MakgeolliEstimator', () => {
       const concentrated = estimator.estimate(makeRecipe(1000, 1000)).alcoholPercent;
       expect(dilute).toBeLessThan(medium);
       expect(medium).toBeLessThan(concentrated);
-      expect(concentrated).toBeLessThanOrEqual(18);
+      expect(concentrated).toBeLessThanOrEqual(17.5);
     });
 
     it('총 쌀·물량이 같으면 양조 단계 수와 무관하게 같은 도수를 반환한다', () => {
