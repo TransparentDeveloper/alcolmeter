@@ -9,6 +9,11 @@ export interface MakgeolliProductionEstimates {
 const ALCOHOL_COEFFICIENT = 0.397;
 // 쌀이 당화되면서 방출되는 수분 비율
 const RICE_SACCHARIFICATION_WATER_RATIO = 0.3;
+// 효모가 자신이 만든 알코올에 사멸하기 시작하는 도수(%) 상한.
+// 이 위로는 당이 남아도 발효가 멈춰 발효주로는 도달할 수 없다.
+const YEAST_ALCOHOL_TOLERANCE = 18;
+// smooth-min 날카로움(1/%). 클수록 hard min에 가까워진다.
+const SATURATION_SHARPNESS = 1;
 
 export class MakgeolliEstimator {
   estimate(recipe: MakgeolliRecipe): MakgeolliProductionEstimates {
@@ -24,6 +29,15 @@ export class MakgeolliEstimator {
   private estimateAlcohol(recipe: MakgeolliRecipe, volumeLiters: number): number {
     if (volumeLiters <= 0) return 0;
     const riceKg = recipe.totals.rice.grams / 1000;
-    return (riceKg * ALCOHOL_COEFFICIENT / volumeLiters) * 100;
+    // 모든 당이 발효된다고 가정한 화학량론상 잠재 도수
+    const potentialPercent = (riceKg * ALCOHOL_COEFFICIENT / volumeLiters) * 100;
+    // 효모 내성 한계에서 매끄럽게 막는다
+    return Math.max(0, this.smoothMin(potentialPercent, YEAST_ALCOHOL_TOLERANCE));
+  }
+
+  // 두 값의 최솟값을 경계 부근에서 매끄럽게 잇는 근사 (LogSumExp)
+  private smoothMin(a: number, b: number): number {
+    const k = SATURATION_SHARPNESS;
+    return -Math.log(Math.exp(-k * a) + Math.exp(-k * b)) / k;
   }
 }
