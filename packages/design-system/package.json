@@ -1,0 +1,12 @@
+{
+	"name": "@alcolmeter/design-system",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"exports": {
+		"./tokens.css": "./src/tokens.css"
+	},
+	"scripts": {
+		"preview": "open preview/index.html"
+	}
+}

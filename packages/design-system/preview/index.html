@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>alcolmeter · design-system preview</title>
+
+		<!-- Fonts (CDN — falls back to system fonts if offline) -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800&display=swap"
+			rel="stylesheet"
+		/>
+
+		<!-- The library tokens — this page dogfoods them. -->
+		<link rel="stylesheet" href="../src/tokens.css" />
+
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: var(--ds-font-sans);
+				font-size: var(--ds-text-base);
+				line-height: var(--ds-leading-normal);
+				color: var(--ds-color-ink-1);
+				background-color: var(--ds-color-bg);
+				background-image: radial-gradient(var(--ds-color-grid) 1px, transparent 1px);
+				background-size: var(--ds-grid-cell) var(--ds-grid-cell);
+				-webkit-font-smoothing: antialiased;
+				word-break: keep-all;
+				transition: background-color var(--ds-duration-medium) var(--ds-ease-out),
+					color var(--ds-duration-medium) var(--ds-ease-out);
+			}
+
+			.wrap {
+				max-width: var(--ds-container);
+				margin: 0 auto;
+				padding: var(--ds-space-3xl) var(--ds-space-xl) var(--ds-space-4xl);
+			}
+
+			/* ── top bar ───────────────────────────────── */
+			.topbar {
+				display: flex;
+				align-items: baseline;
+				justify-content: space-between;
+				gap: var(--ds-space-md);
+				margin-bottom: var(--ds-space-3xl);
+			}
+			.wordmark {
+				font-family: var(--ds-font-display);
+				font-weight: 800;
+				font-size: var(--ds-text-xl);
+				letter-spacing: var(--ds-tracking-tight);
+			}
+			.wordmark .dot {
+				color: var(--ds-color-spark);
+			}
+			.meta {
+				font-family: var(--ds-font-mono);
+				font-size: var(--ds-text-xs);
+				color: var(--ds-color-ink-3);
+			}
+			.toggle {
+				font-family: var(--ds-font-mono);
+				font-size: var(--ds-text-xs);
+				color: var(--ds-color-ink-2);
+				background: var(--ds-color-surface);
+				border: var(--ds-border-width) solid var(--ds-color-border-2);
+				border-radius: var(--ds-radius-md);
+				padding: var(--ds-space-xs) var(--ds-space-sm);
+				cursor: pointer;
+				transition: border-color var(--ds-duration-short) var(--ds-ease-out),
+					background-color var(--ds-duration-short) var(--ds-ease-out);
+			}
+			.toggle:hover {
+				border-color: var(--ds-color-border-3);
+				background: var(--ds-color-hover);
+			}
+			.toggle:active {
+				background: var(--ds-color-active);
+			}
+
+			/* ── section primitives ────────────────────── */
+			section {
+				margin-bottom: var(--ds-space-3xl);
+			}
+			.eyebrow {
+				font-family: var(--ds-font-mono);
+				font-size: var(--ds-text-xs);
+				font-weight: 500;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				color: var(--ds-color-ink-3);
+				margin-bottom: var(--ds-space-md);
+			}
+			.card {
+				background: var(--ds-color-surface);
+				border: var(--ds-border-width) solid var(--ds-color-border-2);
+				border-radius: var(--ds-radius-lg);
+				box-shadow: var(--ds-shadow-paper);
+				padding: var(--ds-space-xl);
+			}
+
+			/* ── hero readout ──────────────────────────── */
+			.hero h1 {
+				font-family: var(--ds-font-display);
+				font-weight: 700;
+				font-size: var(--ds-text-3xl);
+				line-height: var(--ds-leading-tight);
+				letter-spacing: var(--ds-tracking-tight);
+			}
+			.hero .sub {
+				color: var(--ds-color-ink-2);
+				margin-top: var(--ds-space-md);
+				max-width: 46ch;
+			}
+			.readout {
+				margin-top: var(--ds-space-xl);
+				display: flex;
+				align-items: flex-end;
+				gap: var(--ds-space-sm);
+			}
+			.readout .num {
+				font-family: var(--ds-font-mono);
+				font-weight: 600;
+				font-size: 5.4rem;
+				line-height: 0.9;
+				color: var(--ds-color-spark);
+				font-variant-numeric: tabular-nums;
+			}
+			.readout .unit {
+				font-family: var(--ds-font-mono);
+				font-size: var(--ds-text-xl);
+				color: var(--ds-color-ink-3);
+				padding-bottom: var(--ds-space-sm);
+			}
+			.readout .range {
+				font-family: var(--ds-font-mono);
+				font-size: var(--ds-text-sm);
+				color: var(--ds-color-ink-3);
+				margin-left: auto;
+				padding-bottom: var(--ds-space-sm);
+				font-variant-numeric: tabular-nums;
+			}
+
+			/* ── hand-drawn annotation (the one sketch element) ── */
+			.annot {
+				position: relative;
+				white-space: nowrap;
+			}
+			.annot-underline {
+				position: absolute;
+				left: -2px;
+				right: -2px;
+				bottom: -10px;
+				width: calc(100% + 4px);
+				height: 12px;
+				color: var(--ds-color-spark);
+				overflow: visible;
+			}
+
+			/* ── type family specimen ──────────────────── */
+			.spec-row {
+				display: flex;
+				align-items: baseline;
+				gap: var(--ds-space-md);
+				padding: var(--ds-space-md) 0;
+				border-bottom: var(--ds-border-width) solid var(--ds-color-border-1);
+			}
+			.spec-row:last-child {
+				border-bottom: none;
+			}
+			.spec-row .label {
+				font-family: var(--ds-font-mono);
+				font-size: var(--ds-text-xs);
+				color: var(--ds-color-ink-3);
+				width: 84px;
+				flex: none;
+			}
+			.t-display {
+				font-family: var(--ds-font-display);
+				font-weight: 700;
+				font-size: var(--ds-text-2xl);
+				letter-spacing: var(--ds-tracking-tight);
+			}
+			.t-body {
+				font-family: var(--ds-font-sans);
+				font-size: var(--ds-text-base);
+			}
+			.t-mono {
+				font-family: var(--ds-font-mono);
+				font-size: var(--ds-text-base);
+				font-variant-numeric: tabular-nums;
+			}
+
+			/* ── type SIZE scale specimen ──────────────── */
+			.ts-row {
+				display: flex;
+				align-items: baseline;
+				gap: var(--ds-space-md);
+				padding: var(--ds-space-sm) 0;
+				border-bottom: var(--ds-border-width) solid var(--ds-color-border-1);
+			}
+			.ts-row:last-child {
+				border-bottom: none;
+			}
+			.ts-label {
+				font-family: var(--ds-font-mono);
+				font-size: var(--ds-text-xs);
+				color: var(--ds-color-ink-3);
+				width: 104px;
+				flex: none;
+			}
+			.ts-sample {
+				font-family: var(--ds-font-sans);
+				color: var(--ds-color-ink-1);
+				line-height: var(--ds-leading-tight);
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+
+			/* ── ink + border scales ───────────────────── */
+			.scale-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+				gap: var(--ds-space-md);
+			}
+			.ink-cell {
+				display: flex;
+				align-items: center;
+				gap: var(--ds-space-sm);
+			}
+			.ink-dot {
+				width: 28px;
+				height: 28px;
+				border-radius: var(--ds-radius-sm);
+				flex: none;
+				border: var(--ds-border-width) solid var(--ds-color-border-1);
+			}
+			.ink-cell .t {
+				font-family: var(--ds-font-mono);
+				font-size: var(--ds-text-xs);
+			}
+			.ink-cell .role {
+				color: var(--ds-color-ink-3);
+				display: block;
+			}
+			.border-cell {
+				background: var(--ds-color-surface);
+				border-radius: var(--ds-radius-sm);
+				padding: var(--ds-space-md);
+				font-family: var(--ds-font-mono);
+				font-size: var(--ds-text-xs);
+				color: var(--ds-color-ink-3);
+			}
+
+			/* ── color swatches ────────────────────────── */
+			.swatches {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+				gap: var(--ds-space-md);
+			}
+			.sw {
+				border: var(--ds-border-width) solid var(--ds-color-border-2);
+				border-radius: var(--ds-radius-md);
+				overflow: hidden;
+				background: var(--ds-color-surface);
+			}
+			.sw .chip {
+				height: 48px;
+			}
+			.sw .info {
+				padding: var(--ds-space-sm);
+				font-family: var(--ds-font-mono);
+				font-size: var(--ds-text-xs);
+			}
+			.sw .name {
+				color: var(--ds-color-ink-1);
+				display: block;
+			}
+			.sw .hex {
+				color: var(--ds-color-ink-3);
+			}
+			.tag-rare {
+				display: inline-block;
+				font-family: var(--ds-font-mono);
+				font-size: 10px;
+				color: var(--ds-color-spark);
+				border: 1px solid var(--ds-color-spark);
+				border-radius: var(--ds-radius-full);
+				padding: 0 6px;
+				margin-left: 6px;
+				vertical-align: middle;
+			}
+
+			/* ── components ────────────────────────────── */
+			.stack {
+				display: flex;
+				flex-direction: column;
+				gap: var(--ds-space-lg);
+			}
+			.row {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				gap: var(--ds-space-md);
+			}
+			.btn {
+				font-family: var(--ds-font-sans);
+				font-size: var(--ds-text-sm);
+				font-weight: var(--ds-weight-medium);
+				border-radius: var(--ds-radius-md);
+				padding: var(--ds-space-sm) var(--ds-space-lg);
+				border: var(--ds-border-width) solid transparent;
+				cursor: pointer;
+				transition: background-color var(--ds-duration-short) var(--ds-ease-out),
+					border-color var(--ds-duration-short) var(--ds-ease-out);
+			}
+			.btn-primary {
+				background: var(--ds-color-action);
+				color: var(--ds-color-on-action);
+			}
+			.btn-primary:hover {
+				background: var(--ds-color-action-hover);
+			}
+			.btn-primary:active {
+				background: var(--ds-color-action-active);
+			}
+			.btn-accent {
+				background: var(--ds-color-accent);
+				color: var(--ds-color-on-accent);
+			}
+			.btn-accent:hover {
+				background: var(--ds-color-accent-hover);
+			}
+			.btn-accent:active {
+				background: var(--ds-color-accent-active);
+			}
+			.btn-ghost {
+				background: transparent;
+				color: var(--ds-color-ink-1);
+				border-color: var(--ds-color-border-2);
+			}
+			.btn-ghost:hover {
+				background: var(--ds-color-hover);
+				border-color: var(--ds-color-border-3);
+			}
+			.btn-ghost:active {
+				background: var(--ds-color-active);
+			}
+			.btn:disabled {
+				color: var(--ds-color-disabled-fg);
+				background: transparent;
+				border-color: var(--ds-color-disabled-border);
+				cursor: not-allowed;
+			}
+			.hint {
+				font-family: var(--ds-font-mono);
+				font-size: var(--ds-text-xs);
+				color: var(--ds-color-ink-3);
+			}
+
+			.field label {
+				display: block;
+				font-size: var(--ds-text-sm);
+				font-weight: var(--ds-weight-medium);
+				margin-bottom: var(--ds-space-xs);
+			}
+			.field input {
+				font-family: var(--ds-font-sans);
+				font-size: var(--ds-text-base);
+				color: var(--ds-color-ink-1);
+				background: var(--ds-color-surface);
+				border: var(--ds-border-width) solid var(--ds-color-border-2);
+				border-radius: var(--ds-radius-md);
+				padding: var(--ds-space-sm) var(--ds-space-md);
+				width: 100%;
+				transition: border-color var(--ds-duration-short) var(--ds-ease-out),
+					box-shadow var(--ds-duration-short) var(--ds-ease-out);
+			}
+			.field input::placeholder {
+				color: var(--ds-color-ink-4);
+			}
+			.field input:hover {
+				border-color: var(--ds-color-border-3);
+			}
+			.field input:focus {
+				outline: none;
+				border-color: var(--ds-color-focus);
+				box-shadow: 0 0 0 3px color-mix(in srgb, var(--ds-color-focus) 22%, transparent);
+			}
+
+			table {
+				width: 100%;
+				border-collapse: collapse;
+				font-size: var(--ds-text-sm);
+			}
+			th,
+			td {
+				text-align: left;
+				padding: var(--ds-space-sm) var(--ds-space-md);
+				border-bottom: var(--ds-border-width) solid var(--ds-color-border-1);
+			}
+			th {
+				font-family: var(--ds-font-mono);
+				font-size: var(--ds-text-xs);
+				font-weight: 500;
+				text-transform: uppercase;
+				letter-spacing: 0.06em;
+				color: var(--ds-color-ink-3);
+			}
+			tbody tr {
+				transition: background-color var(--ds-duration-micro) var(--ds-ease-out);
+			}
+			tbody tr:hover {
+				background: var(--ds-color-hover);
+			}
+			td.num {
+				font-family: var(--ds-font-mono);
+				text-align: right;
+				font-variant-numeric: tabular-nums;
+			}
+			tr.total td {
+				border-bottom: none;
+				font-weight: var(--ds-weight-semibold);
+			}
+			tr.total td.num {
+				color: var(--ds-color-spark);
+			}
+
+			.alerts {
+				display: grid;
+				gap: var(--ds-space-sm);
+			}
+			.alert {
+				display: flex;
+				align-items: center;
+				gap: var(--ds-space-sm);
+				font-size: var(--ds-text-sm);
+				padding: var(--ds-space-sm) var(--ds-space-md);
+				border-radius: var(--ds-radius-sm);
+				border-left: 3px solid;
+				background: var(--ds-color-surface);
+			}
+			.alert::before {
+				font-family: var(--ds-font-mono);
+				font-size: var(--ds-text-xs);
+				font-weight: 600;
+			}
+			.alert.success {
+				border-left-color: var(--ds-color-success);
+			}
+			.alert.success::before {
+				content: 'OK';
+				color: var(--ds-color-success);
+			}
+			.alert.warning {
+				border-left-color: var(--ds-color-warning);
+			}
+			.alert.warning::before {
+				content: '!';
+				color: var(--ds-color-warning);
+			}
+			.alert.error {
+				border-left-color: var(--ds-color-error);
+			}
+			.alert.error::before {
+				content: '×';
+				color: var(--ds-color-error);
+			}
+			.alert.info {
+				border-left-color: var(--ds-color-info);
+			}
+			.alert.info::before {
+				content: 'i';
+				color: var(--ds-color-info);
+			}
+
+			footer {
+				font-family: var(--ds-font-mono);
+				font-size: var(--ds-text-xs);
+				color: var(--ds-color-ink-3);
+				border-top: var(--ds-border-width) solid var(--ds-color-border-2);
+				padding-top: var(--ds-space-lg);
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="topbar">
+				<div>
+					<div class="wordmark">alcolmeter<span class="dot">.</span></div>
+					<div class="meta">design-system · v0.1.0 · Measurement Notebook</div>
+				</div>
+				<button class="toggle" id="theme" type="button">◐ 다크</button>
+			</div>
+
+			<!-- HERO / READOUT -->
+			<section class="hero">
+				<div class="card ds-paper-grid">
+					<div class="eyebrow">Estimated ABV · 추정 도수</div>
+					<h1>
+						<span class="annot">집에서 빚은 막걸리<svg class="annot-underline" viewBox="0 0 240 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2,8 C46,2 92,11 138,6 C176,2 212,9 238,5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span>,
+						지금 몇 도일까?
+					</h1>
+					<p class="sub">재료만 넣으면 발효 가정 기준으로 도수를 추정한다. 차분하게, 계측기처럼.</p>
+					<div class="readout">
+						<span class="num">6.2</span>
+						<span class="unit">% ABV</span>
+						<span class="range">est. 5.4 – 7.1</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- INK + BORDER SCALES -->
+			<section>
+				<div class="eyebrow">Ink scale (전경 4단계) · Border scale (3단계)</div>
+				<div class="card stack">
+					<div class="scale-grid">
+						<div class="ink-cell"><span class="ink-dot" style="background:var(--ds-color-ink-1)"></span><span class="t">ink-1<span class="role">본문·제목·버튼</span></span></div>
+						<div class="ink-cell"><span class="ink-dot" style="background:var(--ds-color-ink-2)"></span><span class="t">ink-2<span class="role">보조 텍스트</span></span></div>
+						<div class="ink-cell"><span class="ink-dot" style="background:var(--ds-color-ink-3)"></span><span class="t">ink-3<span class="role">힌트·캡션·메타</span></span></div>
+						<div class="ink-cell"><span class="ink-dot" style="background:var(--ds-color-ink-4)"></span><span class="t">ink-4<span class="role">비활성·placeholder</span></span></div>
+					</div>
+					<div class="scale-grid">
+						<div class="border-cell" style="border:2px solid var(--ds-color-border-1)">border-1 · 구분선</div>
+						<div class="border-cell" style="border:2px solid var(--ds-color-border-2)">border-2 · 컴포넌트</div>
+						<div class="border-cell" style="border:2px solid var(--ds-color-border-3)">border-3 · 강조</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- TYPE FAMILY -->
+			<section>
+				<div class="eyebrow">Typeface</div>
+				<div class="card">
+					<div class="spec-row">
+						<span class="label">display</span>
+						<span class="t-display">Cabinet Grotesk</span>
+					</div>
+					<div class="spec-row">
+						<span class="label">body</span>
+						<span class="t-body">Geist — 재료의 양과 발효 정도로 도수를 가늠한다.</span>
+					</div>
+					<div class="spec-row">
+						<span class="label">mono</span>
+						<span class="t-mono">Geist Mono — 0123456789 · 6.2% · 1.040 SG</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- TYPE SIZE SCALE -->
+			<section>
+				<div class="eyebrow">Type scale · 1.2× (base 19.2px)</div>
+				<div class="card">
+					<div class="ts-row"><span class="ts-label">3xl · 48</span><span class="ts-sample" style="font-size:var(--ds-text-3xl)">도수 6.2%</span></div>
+					<div class="ts-row"><span class="ts-label">2xl · 38.4</span><span class="ts-sample" style="font-size:var(--ds-text-2xl)">도수 6.2%</span></div>
+					<div class="ts-row"><span class="ts-label">xl · 28.8</span><span class="ts-sample" style="font-size:var(--ds-text-xl)">추정 도수 6.2%</span></div>
+					<div class="ts-row"><span class="ts-label">lg · 24</span><span class="ts-sample" style="font-size:var(--ds-text-lg)">추정 도수 6.2%</span></div>
+					<div class="ts-row"><span class="ts-label">base · 19.2</span><span class="ts-sample" style="font-size:var(--ds-text-base)">집에서 빚은 막걸리, 추정 도수 6.2%</span></div>
+					<div class="ts-row"><span class="ts-label">sm · 16.8</span><span class="ts-sample" style="font-size:var(--ds-text-sm)">집에서 빚은 막걸리, 추정 도수 6.2%</span></div>
+					<div class="ts-row"><span class="ts-label">xs · 14.4</span><span class="ts-sample" style="font-size:var(--ds-text-xs)">집에서 빚은 막걸리, 추정 도수 6.2%</span></div>
+				</div>
+			</section>
+
+			<!-- COLOR -->
+			<section>
+				<div class="eyebrow">Color · 쿨 그래파이트 베이스 + 희소 스파크 + 시맨틱</div>
+				<div class="swatches">
+					<div class="sw"><div class="chip" style="background:var(--ds-color-spark)"></div><div class="info"><span class="name">spark<span class="tag-rare">rare</span></span><span class="hex">#F2512D</span></div></div>
+					<div class="sw"><div class="chip" style="background:var(--ds-color-bg)"></div><div class="info"><span class="name">bg</span><span class="hex">paper</span></div></div>
+					<div class="sw"><div class="chip" style="background:var(--ds-color-success)"></div><div class="info"><span class="name">success</span><span class="hex">#16A34A</span></div></div>
+					<div class="sw"><div class="chip" style="background:var(--ds-color-warning)"></div><div class="info"><span class="name">warning</span><span class="hex">#D97706</span></div></div>
+					<div class="sw"><div class="chip" style="background:var(--ds-color-error)"></div><div class="info"><span class="name">error</span><span class="hex">#B91C1C</span></div></div>
+					<div class="sw"><div class="chip" style="background:var(--ds-color-info)"></div><div class="info"><span class="name">info</span><span class="hex">#0891B2</span></div></div>
+				</div>
+			</section>
+
+			<!-- COMPONENTS -->
+			<section>
+				<div class="eyebrow">Components · hover·active·focus 모두 토큰</div>
+				<div class="card stack">
+					<div>
+						<div class="row">
+							<button class="btn btn-primary" type="button">추정하기</button>
+							<button class="btn btn-accent" type="button">결과 저장</button>
+							<button class="btn btn-ghost" type="button">초기화</button>
+							<button class="btn btn-ghost" type="button" disabled>비활성</button>
+						</div>
+						<p class="hint" style="margin-top:8px">
+							기본 버튼 = ink-1 · 액센트(스파크)는 히어로/라이브에만. 마우스 올려·눌러보면 상태색이 보여.
+						</p>
+					</div>
+
+					<div class="field">
+						<label for="rice">멥쌀 (g)</label>
+						<input id="rice" type="text" value="1000" inputmode="numeric" placeholder="예: 1000" />
+					</div>
+
+					<table>
+						<thead>
+							<tr>
+								<th>재료</th>
+								<th style="text-align:right">양 (g)</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr><td>멥쌀</td><td class="num">1,000</td></tr>
+							<tr><td>누룩</td><td class="num">150</td></tr>
+							<tr><td>물</td><td class="num">1,500</td></tr>
+							<tr class="total"><td>합계</td><td class="num">2,650</td></tr>
+						</tbody>
+					</table>
+
+					<div class="alerts">
+						<div class="alert success">추정 완료 — 입력값이 정상 범위야.</div>
+						<div class="alert warning">물 비율이 높아 도수가 낮게 추정될 수 있어.</div>
+						<div class="alert error">누룩 양이 0이면 발효를 추정할 수 없어.</div>
+						<div class="alert info">추정값은 발효 가정 기준이라 실제와 다를 수 있어.</div>
+					</div>
+				</div>
+			</section>
+
+			<footer>
+				프리뷰 · 생성 2026-06-19 · web/extension과 격리된 정적 페이지 · @alcolmeter/design-system v0.1.0
+			</footer>
+		</div>
+
+		<script>
+			const root = document.documentElement;
+			const themeBtn = document.getElementById('theme');
+			function setTheme(t) {
+				root.setAttribute('data-theme', t);
+				themeBtn.textContent = t === 'dark' ? '◑ 라이트' : '◐ 다크';
+			}
+			setTheme(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+			themeBtn.addEventListener('click', () => {
+				setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,197 @@
+/*
+ * @alcolmeter/design-system — design tokens
+ * Concept: "Measurement Notebook" — cool, precise, one red-pen spark.
+ *
+ * Single source of truth: ../DESIGN.md
+ * All custom properties are namespaced with `--ds-`.
+ *
+ * Foreground scale : --ds-color-ink-1 (strongest) … ink-4 (faintest)
+ * Border scale     : --ds-color-border-1 (faintest) … border-3 (strongest)
+ * Interaction      : *-hover / *-active per role + neutral --ds-color-hover/active overlays
+ *
+ * Neutral undertone: Cool Graphite — midpoint of Deep × Blueprint (mild cool lean).
+ *
+ * Theming:
+ *   :root                       light tokens (default)
+ *   @media prefers-color-scheme dark tokens (auto)
+ *   [data-theme="dark"]         dark tokens (manual override)
+ *   [data-theme="light"]        light tokens (manual override, wins over media)
+ */
+
+:root {
+	/* ── Typography ─────────────────────────────────────────── */
+	--ds-font-display: 'Cabinet Grotesk', 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+	--ds-font-sans: 'Geist', -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', sans-serif;
+	--ds-font-mono: 'Geist Mono', ui-monospace, 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+
+	/* scale is 1.2× the conventional ramp (base 19.2px instead of 16px) */
+	--ds-text-xs: 0.9rem; /* 14.4 */
+	--ds-text-sm: 1.05rem; /* 16.8 */
+	--ds-text-base: 1.2rem; /* 19.2 */
+	--ds-text-lg: 1.5rem; /* 24 */
+	--ds-text-xl: 1.8rem; /* 28.8 */
+	--ds-text-2xl: 2.4rem; /* 38.4 */
+	--ds-text-3xl: 3rem; /* 48 */
+
+	--ds-leading-tight: 1.2;
+	--ds-leading-snug: 1.4;
+	--ds-leading-normal: 1.6;
+
+	--ds-weight-regular: 400;
+	--ds-weight-medium: 500;
+	--ds-weight-semibold: 600;
+	--ds-weight-bold: 700;
+
+	--ds-tracking-tight: -0.01em;
+	--ds-tracking-normal: 0;
+
+	/* ── Spacing (base 4px) ─────────────────────────────────── */
+	--ds-space-2xs: 2px;
+	--ds-space-xs: 4px;
+	--ds-space-sm: 8px;
+	--ds-space-md: 12px;
+	--ds-space-lg: 16px;
+	--ds-space-xl: 24px;
+	--ds-space-2xl: 32px;
+	--ds-space-3xl: 48px;
+	--ds-space-4xl: 64px;
+
+	/* ── Grid (notebook / dot-grid metaphor) ────────────────── */
+	--ds-grid-cell: 8px;
+
+	/* ── Radius (crisp, instrument-like) ────────────────────── */
+	--ds-radius-xs: 2px;
+	--ds-radius-sm: 4px;
+	--ds-radius-md: 6px;
+	--ds-radius-lg: 8px;
+	--ds-radius-full: 9999px; /* pills / avatars only */
+
+	/* ── Border width / shadow ──────────────────────────────── */
+	--ds-border-width: 1px;
+	--ds-shadow-paper: 0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.06);
+	--ds-shadow-raised: 0 4px 12px rgba(15, 23, 42, 0.08);
+
+	/* ── Motion (minimal-functional, no bounce) ─────────────── */
+	--ds-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+	--ds-ease-in: cubic-bezier(0.4, 0, 1, 1);
+	--ds-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+	--ds-duration-micro: 80ms;
+	--ds-duration-short: 160ms;
+	--ds-duration-medium: 240ms;
+	--ds-duration-long: 400ms;
+
+	/* ── Layout ─────────────────────────────────────────────── */
+	--ds-container: 680px;
+	--ds-container-wide: 960px;
+
+	/* ── Color · spark (use sparingly: live values, annotations, hero CTA) */
+	--ds-color-spark: #f2512d;
+	--ds-color-spark-hover: #d8431f;
+	--ds-color-spark-active: #c0380f;
+	--ds-color-spark-tint: #feede8;
+
+	/* ── Color · semantic ───────────────────────────────────── */
+	--ds-color-success: #16a34a;
+	--ds-color-warning: #d97706;
+	--ds-color-error: #b91c1c; /* deeper than spark, kept distinct */
+	--ds-color-info: #0891b2;
+
+	/* ── Color · neutral — Cool Graphite (Deep × Blueprint midpoint) ─ */
+	--ds-color-bg: #f2f4f7;
+	--ds-color-surface: #ffffff;
+	--ds-color-ink-1: #141825; /* primary text, headings, action bg */
+	--ds-color-ink-2: #3b4354; /* secondary text */
+	--ds-color-ink-3: #5c6478; /* tertiary: hints, captions, meta (AA ≥4.5 on tinted bg) */
+	--ds-color-ink-4: #a7adbb; /* faint: disabled, placeholder, watermark */
+	--ds-color-border-1: #e6e9ee; /* faintest: dividers, table rows */
+	--ds-color-border-2: #d4d9e2; /* component borders: cards, inputs */
+	--ds-color-border-3: #b8bfce; /* strong: emphasis / active edge */
+	--ds-color-grid: #e8ecf1; /* dot-grid dots */
+
+	/* ── Color · roles (reference neutral/spark — auto-adapt across themes) */
+	--ds-color-action: var(--ds-color-ink-1); /* default/primary button = ink, NOT spark */
+	--ds-color-action-hover: color-mix(in srgb, var(--ds-color-ink-1) 86%, var(--ds-color-surface));
+	--ds-color-action-active: color-mix(in srgb, var(--ds-color-ink-1) 74%, var(--ds-color-surface));
+	--ds-color-on-action: var(--ds-color-surface); /* text on action: surface contrasts ink in both modes */
+
+	--ds-color-accent: var(--ds-color-spark); /* hero / live readout only */
+	--ds-color-accent-hover: var(--ds-color-spark-hover);
+	--ds-color-accent-active: var(--ds-color-spark-active);
+	--ds-color-on-accent: #ffffff;
+
+	/* neutral interaction overlays — ghost buttons, rows, list/menu items */
+	--ds-color-hover: color-mix(in srgb, var(--ds-color-ink-1) 6%, transparent);
+	--ds-color-active: color-mix(in srgb, var(--ds-color-ink-1) 12%, transparent);
+
+	/* disabled */
+	--ds-color-disabled-fg: var(--ds-color-ink-4);
+	--ds-color-disabled-border: var(--ds-color-border-1);
+
+	--ds-color-focus: var(--ds-color-info); /* cool focus ring — appears often, stays out of spark */
+}
+
+/* Dark tokens — applied automatically unless an explicit light theme is set */
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme='light']) {
+		--ds-color-spark: #ff6a47;
+		--ds-color-spark-hover: #ff8366;
+		--ds-color-spark-active: #ff9b80;
+		--ds-color-spark-tint: #2a130c;
+
+		--ds-color-success: #22c55e;
+		--ds-color-warning: #f59e0b;
+		--ds-color-error: #ef4444;
+		--ds-color-info: #22d3ee;
+
+		--ds-color-bg: #0b0e15;
+		--ds-color-surface: #141822;
+		--ds-color-ink-1: #eaedf3;
+		--ds-color-ink-2: #b9c0ce;
+		--ds-color-ink-3: #82899a;
+		--ds-color-ink-4: #545b6b;
+		--ds-color-border-1: #1f2430;
+		--ds-color-border-2: #2b3141;
+		--ds-color-border-3: #3d4558;
+		--ds-color-grid: #1a1f2c;
+
+		--ds-shadow-paper: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.4);
+		--ds-shadow-raised: 0 4px 12px rgba(0, 0, 0, 0.45);
+	}
+}
+
+/* Manual dark override (wins regardless of system setting) */
+[data-theme='dark'] {
+	--ds-color-spark: #ff6a47;
+	--ds-color-spark-hover: #ff8366;
+	--ds-color-spark-active: #ff9b80;
+	--ds-color-spark-tint: #2a130c;
+
+	--ds-color-success: #22c55e;
+	--ds-color-warning: #f59e0b;
+	--ds-color-error: #ef4444;
+	--ds-color-info: #22d3ee;
+
+	--ds-color-bg: #0b0e15;
+	--ds-color-surface: #141822;
+	--ds-color-ink-1: #eaedf3;
+	--ds-color-ink-2: #b9c0ce;
+	--ds-color-ink-3: #82899a;
+	--ds-color-ink-4: #545b6b;
+	--ds-color-border-1: #1f2430;
+	--ds-color-border-2: #2b3141;
+	--ds-color-border-3: #3d4558;
+	--ds-color-grid: #1a1f2c;
+
+	--ds-shadow-paper: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.4);
+	--ds-shadow-raised: 0 4px 12px rgba(0, 0, 0, 0.45);
+}
+
+/*
+ * Helper — notebook dot-grid background.
+ *   <div class="ds-paper-grid"> … </div>
+ */
+.ds-paper-grid {
+	background-color: var(--ds-color-bg);
+	background-image: radial-gradient(var(--ds-color-grid) 1px, transparent 1px);
+	background-size: var(--ds-grid-cell) var(--ds-grid-cell);
+}
