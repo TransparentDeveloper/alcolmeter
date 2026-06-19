@@ -51,6 +51,7 @@ pnpm --filter @alcolmeter/design-system preview   # = open preview/index.html
 
 - Geist / Geist Mono — Google Fonts
 - Cabinet Grotesk — Fontshare
+- **Pretendard (한글)** — jsDelivr (`cdn.jsdelivr.net/gh/orioncactus/pretendard`). 라틴 폰트엔 한글 글리프가 없어 한글은 Pretendard로 렌더된다.
 
 ## 토큰 변경 규칙
 

@@ -21,10 +21,11 @@
 
 ## Typography
 
-- **Display/Hero:** Cabinet Grotesk — 모던 그로테스크, 약간의 각.
-- **Body/UI:** Geist — 깔끔·테크니컬, tabular-nums 지원.
+- **Display/Hero:** Cabinet Grotesk — 모던 그로테스크, 약간의 각. (라틴 전용)
+- **Body/UI:** Geist — 깔끔·테크니컬, tabular-nums 지원. (라틴 전용)
 - **Data/Numbers/Code:** Geist Mono — 계측기 readout. Geist와 한 슈퍼패밀리.
-- **로딩:** Geist·Geist Mono = Google Fonts / Cabinet Grotesk = Fontshare (README 참고).
+- **한글:** Pretendard — Cabinet/Geist는 한글 글리프가 없어 한글은 Pretendard로 렌더(스택 폴백). Apple SD Gothic Neo 룩을 크로스플랫폼으로 재현.
+- **로딩:** Geist·Geist Mono = Google Fonts / Cabinet Grotesk = Fontshare / Pretendard = jsDelivr (README 참고).
 - **스케일(일반 대비 1.2× · base 19.2px):** xs 14.4 · sm 16.8 · base 19.2 · lg 24 · xl 28.8 · 2xl 38.4 · 3xl 48 (px).
 - **행간:** tight 1.2 · snug 1.4 · normal 1.6.
 
@@ -73,3 +74,4 @@
 | 2026-06-19 | 타입 스케일 1.2× 확대 (base 19.2px)           | 일반 16px base 대비 1.2배. 약간 큼직한 읽기. (1.5×는 과해서 1.2×로 조정)                                |
 | 2026-06-19 | 상호작용 상태 토큰화 (hover/active/disabled)  | 역할별 `*-hover`/`*-active` + 중립 오버레이(`--ds-color-hover/active`) + disabled. `color-mix`로 테마 자동 적응. |
 | 2026-06-19 | ink-3 다크닝 `#6e7689 → #5c6478` (라이트)     | 틴트 bg 위 4.13:1(AA 미달) → 5.37:1로 통과. 작은 캡션·메타 가독 확보. 다크 ink-3는 이미 5.5:1라 유지. |
+| 2026-06-19 | 폰트 스택에 한글 Pretendard 추가 (v0.2.0)     | Cabinet/Geist는 라틴 전용 → 한글 제품(web)에선 폰트 정체성이 한글에 안 먹음. Pretendard로 Apple SD Gothic Neo 룩을 크로스플랫폼 재현. |

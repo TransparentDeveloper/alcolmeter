@@ -20,9 +20,10 @@
 
 :root {
 	/* ── Typography ─────────────────────────────────────────── */
-	--ds-font-display: 'Cabinet Grotesk', 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-	--ds-font-sans: 'Geist', -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', sans-serif;
-	--ds-font-mono: 'Geist Mono', ui-monospace, 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+	/* Latin faces (Cabinet/Geist) have no Korean glyphs → Korean renders in Pretendard */
+	--ds-font-display: 'Cabinet Grotesk', 'Geist', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+	--ds-font-sans: 'Geist', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', sans-serif;
+	--ds-font-mono: 'Geist Mono', 'Pretendard', ui-monospace, 'JetBrains Mono', 'SF Mono', Menlo, monospace;
 
 	/* scale is 1.2× the conventional ramp (base 19.2px instead of 16px) */
 	--ds-text-xs: 0.9rem; /* 14.4 */
