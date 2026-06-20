@@ -41,18 +41,21 @@ export class Wash {
 	}
 
 	/**
-	 * 물·당을 투입한다. 투입 후 당 농도가 maxConcentration을 넘으면
-	 * 초과분은 효모가 감당 못 해 발효되지 못하고 단맛(discardedSugar)으로 굳는다.
+	 * 물·당을 투입한다. 투입 후 당 농도가 maxConcentration을 넘으면, 그 초과분 중
+	 * lossRatio 비율만큼이 효모 삼투압 스트레스로 굳어 단맛(discardedSugar)으로 영구 손실되고,
+	 * 나머지는 용존 당으로 남아 다음 투입(희석)·발효 때 다시 발효될 수 있다.
+	 * 초과분 전부가 아니라 일부만 손실되므로, 한 번에 부어도 도수가 한 값으로 고정되지 않는다.
 	 */
-	feed(addedVolume: number, addedSugar: number, maxConcentration: number): Wash {
+	feed(addedVolume: number, addedSugar: number, maxConcentration: number, lossRatio: number): Wash {
 		const volume = this.volume + addedVolume;
 		let sugar = this.sugar + addedSugar;
 		let discardedSugar = this.discardedSugar;
 
-		const capacity = maxConcentration * volume;
-		if (sugar > capacity) {
-			discardedSugar += sugar - capacity;
-			sugar = capacity;
+		const excess = sugar - maxConcentration * volume;
+		if (excess > 0) {
+			const locked = lossRatio * excess; // 초과분 중 일부만 굳어 손실, 나머지는 용존으로 잔류
+			discardedSugar += locked;
+			sugar -= locked;
 		}
 
 		return new Wash(volume, this.ethanol, sugar, discardedSugar);
