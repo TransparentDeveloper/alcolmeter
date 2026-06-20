@@ -64,7 +64,7 @@ pnpm check            # web 타입 체크
   - domain-v2 → `packages/domain-v2/CHANGELOG.md` (전환 중; domain 대체 시 흡수)
   - design-system → `packages/design-system/CHANGELOG.md`
 - **릴리즈 태그**: `{하위프로젝트}-v{SemVer}` (예: `web-v0.4.0`). 태그가 하위프로젝트를 식별한다. 과거 버전도 해당 커밋에 소급 태깅 가능.
-- **GitHub Release**: 태그 push 후 `gh release create {태그}` — 본문은 해당 CHANGELOG 섹션. (수동)
+- **GitHub Release**: 태그(`{하위프로젝트}-v{SemVer}`) push 시 `.github/workflows/release.yml`가 태그 prefix로 하위프로젝트를 식별해 그 `CHANGELOG.md`의 해당 버전 섹션을 본문으로 Release를 **자동 생성**한다. (단, 이 워크플로보다 앞선 커밋에 다는 태그는 그 커밋에 워크플로 파일이 없어 자동화되지 않으므로 `gh release create {태그} --notes-file …`로 수동 처리.)
 - **CHANGELOG 톤**: 양조장 밤일지 — 존댓말 + 실제 릴리즈 시점(날짜·계절·절기)에 근거한 이탤릭 인용문 + 명확한 변경 불릿. 작성 보조 스킬: `/alcol-release-notes`.
 - **pre-push 게이트**: **어떤 하위프로젝트든** 사용자 영향(비-`chore`) 변경을 `main`에 push하려면 그 하위프로젝트의 `CHANGELOG.md` 갱신이 필수. `chore` 커밋만 있거나 해당 하위프로젝트를 안 건드리면 면제. 구현: `.githooks/pre-push` + `core.hooksPath=.githooks`(루트 `prepare`가 설정). 클라이언트 훅이라 `--no-verify`로 우회 가능(서버 차단은 아님).
 
