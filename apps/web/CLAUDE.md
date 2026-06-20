@@ -43,3 +43,10 @@ src/routes/{page}/
 - `lastmod`: 작업일 (YYYY-MM-DD). 용어는 frontmatter `updated` 사용
 - `changefreq`: 자주 바뀌는 콘텐츠 `weekly`(또는 `daily`) · 일반 `monthly` · 약관 등 `yearly`
 - `priority`: 홈 `1.0` → 주요 기능 `0.9` → 보조 페이지 `0.7` → 용어 페이지 `0.6` → 법적 페이지 `0.3`
+
+## 용어사전(/dictionary) 콘텐츠 규칙
+
+- 용어 파일: `src/content/dictionary/{slug}.md` (mdsvex). frontmatter: `title·slug·summary·category·domain·order·related·updated`.
+- **slug은 공백 없이** 한 토큰으로 둔다 (예: `알코올발효`, `효모내성`). URL이 `%20`으로 깨지거나 공유·메신저에서 잘리는 것을 막는다. 표시 이름은 `title`에 공백 그대로 둔다 (예: `알코올 발효`).
+- 본문 위키링크는 `[[slug]]`, 표시문구가 slug와 다르면 `[[slug|표시]]` (예: `[[알코올발효|알코올 발효]]`).
+- `related`는 slug 배열. 인덱스 정렬은 `order`(작을수록 먼저, 10단위 갭), 관련용어 박스는 가나다순.
