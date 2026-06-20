@@ -1,5 +1,6 @@
 <script>
 	import '@alcolmeter/design-system/tokens.css';
+	import '@alcolmeter/design-system/motion.css';
 	import '../app.css';
 	import { afterNavigate } from '$app/navigation';
 	let { children } = $props();
