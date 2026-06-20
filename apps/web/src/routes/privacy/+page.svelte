@@ -27,45 +27,48 @@
 
 <style>
 	article {
-		max-width: 640px;
+		max-width: var(--ds-container);
 	}
 
 	h1 {
-		font-size: 1.75rem;
-		font-weight: 800;
-		margin-bottom: 0.375rem;
-		letter-spacing: -0.02em;
+		font-family: var(--ds-font-display);
+		font-size: var(--ds-text-2xl);
+		font-weight: var(--ds-weight-bold);
+		letter-spacing: var(--ds-tracking-tight);
+		color: var(--ds-color-ink-1);
+		margin-bottom: var(--ds-space-xs);
 	}
 
 	.updated {
-		font-size: 0.8rem;
-		color: var(--color-muted);
-		margin-bottom: 2.5rem;
+		font-family: var(--ds-font-mono);
+		font-size: var(--ds-text-xs);
+		color: var(--ds-color-ink-3);
+		margin-bottom: var(--ds-space-3xl);
 	}
 
 	section {
-		margin-bottom: 2rem;
+		padding-top: var(--ds-space-lg);
+		margin-bottom: var(--ds-space-xl);
+		border-top: var(--ds-border-width) solid var(--ds-color-border-1);
 	}
 
 	h2 {
-		font-size: 1rem;
-		font-weight: 700;
-		margin-bottom: 0.5rem;
+		font-family: var(--ds-font-display);
+		font-size: var(--ds-text-lg);
+		font-weight: var(--ds-weight-semibold);
+		color: var(--ds-color-ink-1);
+		margin-bottom: var(--ds-space-sm);
 	}
 
 	p {
-		font-size: 0.9rem;
-		line-height: 1.7;
-		color: var(--color-muted);
-	}
-
-	a {
-		color: var(--color-primary);
+		font-size: var(--ds-text-base);
+		line-height: var(--ds-leading-normal);
+		color: var(--ds-color-ink-2);
 	}
 
 	.email-img {
 		display: block;
-		margin-top: 0.5rem;
-		height: 1rem;
+		margin-top: var(--ds-space-sm);
+		height: 1.25rem;
 	}
 </style>
