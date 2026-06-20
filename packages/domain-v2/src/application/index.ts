@@ -1,58 +1,45 @@
-import type { FermentationRequest, FermentationResult, IngredientAmount } from '../types';
+import type { IngredientAmount, MakgeolliRequest, MakgeolliResult, MakgeolliStage } from '../types';
 
-import { Nuruk, Rice, Water } from '../model/ingredient';
-import { FermentationCalculator, type StageMaterials } from '../calculator/fermentation';
+import { MakgeolliCalculator, type StageComposition } from '../calculator/makgeolli';
+import { Rice } from '../model/ingredient';
+import { RiceForm } from '../model/rice-form';
 import { toGrams } from '../utils/unit-helper';
 
 /**
- * 응용 서비스(Application Service) 계층 — 발효주 빚기 use case.
- * 입력 DTO를 도메인 재료로 옮기고, 발효 계산기 결과를 DTO로 되돌린다.
+ * 응용 서비스(Application Service) — 막걸리 빚기 use case.
+ * 입력 DTO를 도메인 입력으로 옮기고, 막걸리 계산기 결과를 DTO로 되돌린다.
+ * 연산은 계산기에 위임하고, 여기선 번역·조율만 한다.
  */
-export class FermentationService {
-	private readonly calculator = new FermentationCalculator();
+export class MakgeolliService {
+	private readonly calculator = new MakgeolliCalculator();
 
-	private toStageIngredients(stage: StageMaterials): IngredientAmount[] {
-		const items: IngredientAmount[] = [{ kind: 'RICE', amount: stage.rice.amount, unit: 'g' }];
-		if (stage.water && stage.water.amount > 0) {
-			items.push({ kind: 'WATER', amount: stage.water.amount, unit: 'g' });
+	private toStageDto(stage: StageComposition): MakgeolliStage {
+		const ingredients: IngredientAmount[] = [
+			{ kind: 'RICE', amount: stage.rice.amount, unit: 'g' }
+		];
+		if (stage.water.amount > 0) {
+			ingredients.push({ kind: 'WATER', amount: stage.water.amount, unit: 'g' });
 		}
-		if (stage.nuruk && stage.nuruk.amount > 0) {
-			items.push({ kind: 'NURUK', amount: stage.nuruk.amount, unit: 'g' });
+		if (stage.nuruk.amount > 0) {
+			ingredients.push({ kind: 'NURUK', amount: stage.nuruk.amount, unit: 'g' });
 		}
-		return items;
+		return { ingredients, riceForm: stage.form.code };
 	}
 
-	simulate(request: FermentationRequest): FermentationResult {
-		let riceGrams = 0;
-		let waterGrams = 0;
-		let nurukGrams = 0;
-
-		for (const item of request.ingredients) {
-			const grams = toGrams(item.amount, item.unit);
-			switch (item.kind) {
-				case 'RICE':
-					riceGrams += grams;
-					break;
-				case 'WATER':
-					waterGrams += grams;
-					break;
-				case 'NURUK':
-					nurukGrams += grams;
-					break;
-			}
-		}
-
+	brew(request: MakgeolliRequest): MakgeolliResult {
+		const totalRiceGrams = toGrams(request.totalRice.amount, request.totalRice.unit);
 		const outcome = this.calculator.calculate({
-			rice: Rice.ofGrams(riceGrams),
-			water: Water.ofGrams(waterGrams),
-			nuruk: Nuruk.ofGrams(nurukGrams),
+			rice: Rice.ofGrams(totalRiceGrams),
+			baseForm: RiceForm.of(request.riceForm),
+			waterRatio: request.waterRatio,
+			nurukRatio: request.nurukRatio,
 			stageCount: request.stageCount
 		});
-
 		return {
 			abvPercent: outcome.abvPercent,
 			volumeLiters: outcome.volumeLiters,
-			stages: outcome.stages.map((stage) => ({ ingredients: this.toStageIngredients(stage) }))
+			optimalWaterRatio: outcome.optimalWaterRatio,
+			stages: outcome.stages.map((stage) => this.toStageDto(stage))
 		};
 	}
 }

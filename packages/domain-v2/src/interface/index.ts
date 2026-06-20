@@ -1,16 +1,16 @@
-import type { FermentationRequest, FermentationResult } from '../types';
+import type { MakgeolliRequest, MakgeolliResult } from '../types';
 
-import { FermentationService } from '../application';
+import { MakgeolliService } from '../application';
 
 /**
  * Interface 계층(Controller) — 외부 요청을 받아 알맞은 응용 서비스로 라우팅한다.
- * 발효주는 ferment()로, 담금주(침출주)는 추후 infuse() 등으로 평행하게 늘린다.
+ * 막걸리는 makgeolli()로. 다른 술(청주·증류주 등)은 추후 평행하게 늘린다.
  */
 export class LiquorController {
-	private readonly fermentationService = new FermentationService();
+	private readonly makgeolliService = new MakgeolliService();
 
-	/** 발효주 빚기 요청을 발효주 응용 서비스로 라우팅한다. */
-	ferment(request: FermentationRequest): FermentationResult {
-		return this.fermentationService.simulate(request);
+	/** 막걸리 빚기 요청을 막걸리 서비스로 라우팅한다. */
+	makgeolli(request: MakgeolliRequest): MakgeolliResult {
+		return this.makgeolliService.brew(request);
 	}
 }
