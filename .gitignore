@@ -8,4 +8,5 @@ build
 .env.local
 .DS_Store
 docs/superpowers/
+docs/prd/
 .claude/worktrees/
