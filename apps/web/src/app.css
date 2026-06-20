@@ -1,17 +1,24 @@
+/* Design tokens come from @alcolmeter/design-system (imported in +layout.svelte). */
+
+/*
+ * Legacy alias layer — maps old var names to design-system tokens so pages
+ * not yet redesigned keep working with the new palette/radius.
+ * Remove once every page references --ds-* directly.
+ */
 :root {
-	--color-primary: #2563eb;
-	--color-bg: #ffffff;
-	--color-text: #111827;
-	--color-muted: #9ca3af;
-	--color-border: #f3f4f6;
-	--color-card: #fafafa;
-	--color-accent: #facc15;
-	--max-width: 640px;
-	--radius-xs: 2px;
-	--radius-sm: 3px;
-	--radius: 4px;
-	--radius-md: 5px;
-	--radius-lg: 6px;
+	--max-width: var(--ds-container);
+	--color-bg: var(--ds-color-bg);
+	--color-text: var(--ds-color-ink-1);
+	--color-muted: var(--ds-color-ink-3);
+	--color-border: var(--ds-color-border-1);
+	--color-card: var(--ds-color-surface);
+	--color-primary: var(--ds-color-action);
+	--color-accent: var(--ds-color-spark);
+	--radius-xs: var(--ds-radius-xs);
+	--radius-sm: var(--ds-radius-sm);
+	--radius: var(--ds-radius-sm);
+	--radius-md: var(--ds-radius-md);
+	--radius-lg: var(--ds-radius-lg);
 }
 
 * {
@@ -21,10 +28,13 @@
 }
 
 body {
-	font-family: 'Nanum Gothic', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-	background: var(--color-bg);
-	color: var(--color-text);
-	line-height: 1.7;
+	font-family: var(--ds-font-sans);
+	font-size: var(--ds-text-base);
+	line-height: var(--ds-leading-normal);
+	color: var(--ds-color-ink-1);
+	background-color: var(--ds-color-bg);
+	background-image: radial-gradient(var(--ds-color-grid) 1px, transparent 1px);
+	background-size: var(--ds-grid-cell) var(--ds-grid-cell);
 	-webkit-font-smoothing: antialiased;
 	word-break: keep-all;
 	overflow-wrap: break-word;

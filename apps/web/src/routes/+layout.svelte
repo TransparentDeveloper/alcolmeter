@@ -1,4 +1,5 @@
 <script>
+	import '@alcolmeter/design-system/tokens.css';
 	import '../app.css';
 	import { afterNavigate } from '$app/navigation';
 	let { children } = $props();
@@ -16,14 +17,9 @@
 <div class="app">
 	<header>
 		<a href="/" class="logo">
-			<svg class="logo-icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-				<rect width="32" height="32" rx="8" fill="#2563eb"/>
-				<circle cx="11" cy="13" r="4.5" fill="#facc15"/>
-				<circle cx="21" cy="13" r="3.5" fill="#fb923c"/>
-				<circle cx="16" cy="22" r="4" fill="#fbbf24"/>
-			</svg>
-			<span class="logo-text">알콜미터</span>
+			<span class="logo-text">알콜미터<span class="logo-dot">.</span></span>
 		</a>
+		<span class="logo-meta">BREWING CALCULATOR</span>
 	</header>
 	<main>
 		{@render children()}
@@ -35,36 +31,45 @@
 
 <style>
 	.app {
-		max-width: var(--max-width);
+		max-width: var(--ds-container);
 		margin: 0 auto;
-		padding: 1.5rem;
+		padding: var(--ds-space-xl);
 		min-height: 100vh;
 		display: flex;
 		flex-direction: column;
 	}
 
 	header {
-		padding-bottom: 1.5rem;
-		margin-bottom: 1.5rem;
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: var(--ds-space-md);
+		padding-bottom: var(--ds-space-lg);
+		margin-bottom: var(--ds-space-2xl);
+		border-bottom: var(--ds-border-width) solid var(--ds-color-border-1);
 	}
 
 	.logo {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.5rem;
 		text-decoration: none;
 	}
 
-	.logo-icon {
-		width: 1.75rem;
-		height: 1.75rem;
+	.logo-text {
+		font-family: var(--ds-font-display);
+		font-size: var(--ds-text-lg);
+		font-weight: var(--ds-weight-bold);
+		color: var(--ds-color-ink-1);
+		letter-spacing: var(--ds-tracking-tight);
 	}
 
-	.logo-text {
-		font-size: 1.1rem;
-		font-weight: 800;
-		color: var(--color-text);
-		letter-spacing: -0.02em;
+	.logo-dot {
+		color: var(--ds-color-spark);
+	}
+
+	.logo-meta {
+		font-family: var(--ds-font-mono);
+		font-size: var(--ds-text-xs);
+		letter-spacing: 0.08em;
+		color: var(--ds-color-ink-3);
 	}
 
 	main {
@@ -73,14 +78,13 @@
 
 	footer {
 		text-align: center;
-		padding: 2rem 0 0.5rem;
-		margin-top: 3rem;
+		padding: var(--ds-space-2xl) 0 var(--ds-space-sm);
+		margin-top: var(--ds-space-3xl);
 	}
 
 	.version {
-		font-size: 0.6rem;
-		color: var(--color-muted);
-		font-weight: 400;
-		opacity: 0.5;
+		font-family: var(--ds-font-mono);
+		font-size: var(--ds-text-xs);
+		color: var(--ds-color-ink-4);
 	}
 </style>
