@@ -1,14 +1,23 @@
 #!/usr/bin/env bash
 #
-# pre-push 게이트 — apps/web 릴리즈에 CHANGELOG 갱신 강제
+# pre-push 게이트 — 하위프로젝트 릴리즈에 CHANGELOG 갱신 강제
 #
-# main 으로 push 될 때, apps/web 에 사용자 영향(비-chore) 변경이 있으면
-# apps/web/CHANGELOG.md 도 함께 갱신됐는지 확인한다. chore 커밋만 있거나
-# apps/web 을 건드리지 않으면 면제. (자세한 규칙은 CLAUDE.md "릴리즈 / CHANGELOG")
+# main 으로 push 될 때, 각 하위프로젝트에 사용자 영향(비-chore) 변경이 있으면
+# 그 하위프로젝트의 CHANGELOG.md 도 함께 갱신됐는지 확인한다.
+# chore 커밋만 있거나 해당 하위프로젝트를 건드리지 않으면 면제.
+# (자세한 규칙은 CLAUDE.md "릴리즈 / CHANGELOG")
 #
 # 활성화: git config core.hooksPath .githooks  (루트 pnpm prepare 가 설정)
+# 한계: 클라이언트 훅이라 --no-verify 로 우회 가능. 서버 차단이 아니다.
 
 zero="0000000000000000000000000000000000000000"
+
+# 하위프로젝트 = "디렉터리|CHANGELOG경로" (domain-v2 는 domain 대체 시 흡수)
+subprojects="apps/web|apps/web/CHANGELOG.md
+apps/extension|apps/extension/CHANGELOG.md
+packages/domain|packages/domain/CHANGELOG.md
+packages/domain-v2|packages/domain-v2/CHANGELOG.md
+packages/design-system|packages/design-system/CHANGELOG.md"
 
 while read -r local_ref local_sha remote_ref remote_sha; do
 	# main 으로 가는 push 만 검사
@@ -24,32 +33,37 @@ while read -r local_ref local_sha remote_ref remote_sha; do
 
 	commits=$(git rev-list "$range")
 	[ -z "$commits" ] && continue
+	changed=$(git diff --name-only "$range")
 
-	need_changelog=0
-	for c in $commits; do
-		subject=$(git log -1 --format=%s "$c")
-		case "$subject" in
-			chore*) continue ;; # chore 커밋은 면제
-		esac
-		# 이 커밋이 apps/web(CHANGELOG 제외)을 건드렸나?
-		web_files=$(git diff-tree --no-commit-id --name-only -r "$c" \
-			| grep '^apps/web/' | grep -v '^apps/web/CHANGELOG\.md$' || true)
-		[ -n "$web_files" ] && need_changelog=1
-	done
+	fail=0
+	while IFS='|' read -r dir changelog; do
+		[ -z "$dir" ] && continue
 
-	# web 사용자 영향 변경 없음 → 통과
-	[ "$need_changelog" -eq 0 ] && continue
+		# 이 하위프로젝트에 비-chore 사용자 영향 변경이 있나? (CHANGELOG 제외)
+		need=0
+		for c in $commits; do
+			case "$(git log -1 --format=%s "$c")" in
+				chore*) continue ;;
+			esac
+			impact=$(git diff-tree --no-commit-id --name-only -r "$c" \
+				| grep "^$dir/" | grep -v "^$changelog\$" || true)
+			[ -n "$impact" ] && need=1
+		done
+		[ "$need" -eq 0 ] && continue
 
-	# CHANGELOG 가 범위 내에서 갱신됐나?
-	if git diff --name-only "$range" | grep -q '^apps/web/CHANGELOG\.md$'; then
-		continue
+		# CHANGELOG 가 범위 내에서 갱신됐나?
+		if ! printf '%s\n' "$changed" | grep -q "^$changelog\$"; then
+			echo "✋ pre-push 차단: $dir 에 사용자 영향 변경이 있는데 $changelog 가 갱신되지 않았습니다." >&2
+			fail=1
+		fi
+	done <<EOF
+$subprojects
+EOF
+
+	if [ "$fail" -ne 0 ]; then
+		echo "   /alcol-release-notes 로 해당 버전 항목을 추가한 뒤 다시 push 하세요. (chore 커밋만 있으면 면제)" >&2
+		exit 1
 	fi
-
-	echo "" >&2
-	echo "✋ pre-push 차단: apps/web 에 사용자 영향 변경이 있는데 apps/web/CHANGELOG.md 가 갱신되지 않았습니다." >&2
-	echo "   /release-notes 로 해당 버전 항목을 추가한 뒤 다시 push 하세요. (chore 커밋만 있으면 면제)" >&2
-	echo "" >&2
-	exit 1
 done
 
 exit 0
