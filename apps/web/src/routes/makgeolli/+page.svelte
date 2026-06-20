@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { useMakgeolli } from './useMakgeolli.svelte';
+	import { useMakgeolli, INPUT_MAX } from './useMakgeolli.svelte';
 	import type { BrewTab, BrewMeta, StageNames, NurukHints } from './types';
 	import IngredientInput from '$lib/components/IngredientInput.svelte';
 	import ResultTable from '$lib/components/ResultTable.svelte';
@@ -48,6 +48,9 @@
 			nurukHint={m.nurukHint}
 			nurukDefault={m.nurukDefault}
 			showGodubap={m.showGodubap}
+			riceMax={INPUT_MAX.rice}
+			waterMax={INPUT_MAX.water}
+			nurukMax={INPUT_MAX.nuruk}
 		/>
 	</section>
 

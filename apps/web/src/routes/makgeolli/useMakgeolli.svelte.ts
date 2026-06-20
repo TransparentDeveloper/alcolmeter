@@ -18,6 +18,11 @@ const FROM_DOMAIN_RICE_FORM = {
 
 const BREW_COUNT = { DANYANG: 1, IYANG: 2, SAMYANG: 3 } as const satisfies Record<BrewTab, 1 | 2 | 3>;
 
+// 입력 상한 (UI max 속성은 타이핑/붙여넣기로 뚫리므로 여기서 hard clamp)
+export const INPUT_MAX = { rice: 999, water: 500, nuruk: 50 } as const;
+const clamp = (v: number, max: number) =>
+	Number.isFinite(v) ? Math.max(0, Math.min(v, max)) : v;
+
 const controller = new LiquorController();
 
 export function useMakgeolli(brewMeta: BrewMeta, stageNames: StageNames, nurukHints: NurukHints) {
@@ -80,13 +85,13 @@ export function useMakgeolli(brewMeta: BrewMeta, stageNames: StageNames, nurukHi
 
 	return {
 		get totalRice() { return totalRice; },
-		set totalRice(v: number) { totalRice = v; },
+		set totalRice(v: number) { totalRice = clamp(v, INPUT_MAX.rice); },
 		get riceForm() { return riceForm; },
 		set riceForm(v: RiceForm) { riceForm = v; },
 		get waterRatioPercent() { return waterRatioPercent; },
-		set waterRatioPercent(v: number) { waterRatioPercent = v; },
+		set waterRatioPercent(v: number) { waterRatioPercent = clamp(v, INPUT_MAX.water); },
 		get nurukRatio() { return nurukRatio; },
-		set nurukRatio(v: number) { nurukRatio = v; },
+		set nurukRatio(v: number) { nurukRatio = clamp(v, INPUT_MAX.nuruk); },
 		get activeTab() { return activeTab; },
 		get nurukHint() { return nurukHint; },
 		get nurukDefault() { return nurukDefault; },

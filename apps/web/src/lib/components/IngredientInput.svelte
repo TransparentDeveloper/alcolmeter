@@ -8,7 +8,10 @@
 		nurukRatio = $bindable(10),
 		nurukHint = '표준 10%',
 		nurukDefault = 10,
-		showGodubap = false
+		showGodubap = false,
+		riceMax = 999,
+		waterMax = 500,
+		nurukMax = 50
 	}: {
 		totalRice: number;
 		riceForm: RiceForm;
@@ -17,6 +20,9 @@
 		nurukHint?: string;
 		nurukDefault?: number;
 		showGodubap?: boolean;
+		riceMax?: number;
+		waterMax?: number;
+		nurukMax?: number;
 	} = $props();
 
 	let showNurukTooltip = $state(false);
@@ -32,14 +38,18 @@
 <section class="input-section">
 	<div class="field">
 		<label for="total-rice">가용 쌀 총량 (kg)</label>
-		<input
-			id="total-rice"
-			type="number"
-			min="0.1"
-			step="0.1"
-			placeholder="6"
-			bind:value={totalRice}
-		/>
+		<div class="input-with-hint">
+			<input
+				id="total-rice"
+				type="number"
+				min="0.1"
+				max={riceMax}
+				step="0.1"
+				placeholder="6"
+				bind:value={totalRice}
+			/>
+			<span class="ratio-hint">최대 {riceMax}kg</span>
+		</div>
 	</div>
 
 	<div class="field">
@@ -78,12 +88,12 @@
 					id="water-ratio"
 					type="number"
 					min="0"
-					max="500"
+					max={waterMax}
 					step="10"
 					placeholder="100"
 					bind:value={waterRatio}
 				/>
-				<span class="ratio-hint">표준 100%</span>
+				<span class="ratio-hint">표준 100% · 최대 {waterMax}%</span>
 			</div>
 		</div>
 
@@ -102,12 +112,12 @@
 				id="nuruk-ratio"
 				type="number"
 				min="1"
-				max="50"
+				max={nurukMax}
 				step="1"
 				placeholder={nurukDefault.toString()}
 				bind:value={nurukRatio}
 			/>
-			<span class="ratio-hint">{nurukHint}</span>
+			<span class="ratio-hint">{nurukHint} · 최대 {nurukMax}%</span>
 		</div>
 	</div>
 </section>
@@ -193,7 +203,7 @@
 
 	.input-with-hint input {
 		width: 100%;
-		padding-right: 7rem;
+		padding-right: 9.5rem;
 	}
 
 	.ratio-hint {
