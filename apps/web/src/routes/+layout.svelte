@@ -26,6 +26,11 @@
 		{@render children()}
 	</main>
 	<footer>
+		<nav class="footer-links">
+			<a href="/settings">설정</a>
+			<span class="sep" aria-hidden="true">·</span>
+			<a href="/privacy">개인정보처리방침</a>
+		</nav>
 		<span class="version">v{version}</span>
 	</footer>
 </div>
@@ -81,6 +86,31 @@
 		text-align: center;
 		padding: var(--ds-space-2xl) 0 var(--ds-space-sm);
 		margin-top: var(--ds-space-3xl);
+	}
+
+	.footer-links {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: var(--ds-space-sm);
+		margin-bottom: var(--ds-space-sm);
+	}
+
+	.footer-links a {
+		font-family: var(--ds-font-mono);
+		font-size: var(--ds-text-xs);
+		color: var(--ds-color-ink-3);
+		text-decoration: none;
+		transition: color var(--ds-duration-short) var(--ds-ease-out);
+	}
+
+	.footer-links a:hover {
+		color: var(--ds-color-spark);
+	}
+
+	.footer-links .sep {
+		font-size: var(--ds-text-xs);
+		color: var(--ds-color-ink-4);
 	}
 
 	.version {
