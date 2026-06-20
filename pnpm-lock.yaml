@@ -35,6 +35,9 @@ importers:
       '@alcolmeter/domain':
         specifier: workspace:*
         version: link:../../packages/domain
+      '@alcolmeter/domain-v2':
+        specifier: workspace:*
+        version: link:../../packages/domain-v2
       '@supabase/supabase-js':
         specifier: ^2.49.8
         version: 2.106.1

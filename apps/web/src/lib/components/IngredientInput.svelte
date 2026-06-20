@@ -51,7 +51,6 @@
 		</select>
 	</div>
 
-	{#if riceForm !== 'tteok' && riceForm !== 'godubap'}
 		<div class="field">
 			<label for="water-ratio">
 				물 비율 (쌀 총량 대비 %)
@@ -87,7 +86,6 @@
 				<span class="ratio-hint">표준 100%</span>
 			</div>
 		</div>
-	{/if}
 
 	<div class="field">
 		<label for="nuruk-ratio">

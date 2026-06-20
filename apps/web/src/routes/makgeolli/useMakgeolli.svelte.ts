@@ -1,4 +1,4 @@
-import { MakgeolliController } from '@alcolmeter/domain/makgeolli';
+import { LiquorController, type MakgeolliRequest } from '@alcolmeter/domain-v2';
 import { RICE_FORM_LABELS, type RiceForm, type BrewResult } from '$lib/types';
 import type { BrewTab, BrewMeta, StageNames, NurukHints } from './types';
 
@@ -10,15 +10,15 @@ const NURUK_CONFIG: Record<BrewTab, { default: number; min: number; max: number 
 
 const TO_DOMAIN_RICE_FORM = {
 	godubap: 'GODUBAP', tteok: 'TTEOK', beombuk: 'BEOMBUK', juk: 'JUK'
-} as const satisfies Record<RiceForm, 'GODUBAP' | 'TTEOK' | 'BEOMBUK' | 'JUK'>;
+} as const satisfies Record<RiceForm, MakgeolliRequest['riceForm']>;
 
 const FROM_DOMAIN_RICE_FORM = {
 	GODUBAP: 'godubap', TTEOK: 'tteok', BEOMBUK: 'beombuk', JUK: 'juk'
-} as const satisfies Record<'GODUBAP' | 'TTEOK' | 'BEOMBUK' | 'JUK', RiceForm>;
+} as const satisfies Record<MakgeolliRequest['riceForm'], RiceForm>;
 
 const BREW_COUNT = { DANYANG: 1, IYANG: 2, SAMYANG: 3 } as const satisfies Record<BrewTab, 1 | 2 | 3>;
 
-const controller = new MakgeolliController();
+const controller = new LiquorController();
 
 export function useMakgeolli(brewMeta: BrewMeta, stageNames: StageNames, nurukHints: NurukHints) {
 	let totalRice = $state(6);
@@ -35,29 +35,38 @@ export function useMakgeolli(brewMeta: BrewMeta, stageNames: StageNames, nurukHi
 		const rice = Math.max(0, totalRice || 0);
 		const water = Math.max(0, waterRatioPercent || 100) / 100;
 		const nuruk = Math.max(0, nurukRatio || NURUK_CONFIG[activeTab].default);
+		const stageCount = BREW_COUNT[activeTab];
 
-		const domainResult = controller.calculate({
-			totalRiceGrams: rice * 1000,
+		const outcome = controller.makgeolli({
+			totalRice: { kind: 'RICE', amount: rice, unit: 'kg' },
 			riceForm: TO_DOMAIN_RICE_FORM[riceForm],
 			waterRatio: water,
 			nurukRatio: nuruk / 100,
-			brewCount: BREW_COUNT[activeTab]
+			stageCount
 		});
 
-		const names = stageNames[domainResult.brewCount];
+		const names = stageNames[stageCount];
+		const gramsOf = (stage: (typeof outcome.stages)[number], kind: 'RICE' | 'WATER' | 'NURUK') =>
+			stage.ingredients.find((item) => item.kind === kind)?.amount ?? 0;
+
+		const stages = outcome.stages.map((s, i) => ({
+			name: names[i],
+			riceFormLabel: RICE_FORM_LABELS[FROM_DOMAIN_RICE_FORM[s.riceForm]],
+			rice: gramsOf(s, 'RICE') / 1000,
+			water: gramsOf(s, 'WATER') / 1000,
+			nuruk: gramsOf(s, 'NURUK') / 1000
+		}));
+
 		return {
 			...brewMeta[activeTab],
-			stages: domainResult.stages.map((s, i) => ({
-				name: names[i],
-				riceFormLabel: RICE_FORM_LABELS[FROM_DOMAIN_RICE_FORM[s.riceForm]],
-				rice: s.riceGrams / 1000,
-				water: s.waterGrams / 1000,
-				nuruk: s.nurukGrams / 1000
-			})),
-			totalRice: domainResult.totalRiceGrams / 1000,
-			totalWater: domainResult.totalWaterGrams / 1000,
-			totalNuruk: domainResult.totalNurukGrams / 1000,
-			estimates: domainResult.estimates
+			stages,
+			totalRice: stages.reduce((sum, s) => sum + s.rice, 0),
+			totalWater: stages.reduce((sum, s) => sum + s.water, 0),
+			totalNuruk: stages.reduce((sum, s) => sum + s.nuruk, 0),
+			estimates: {
+				volumeLiters: outcome.volumeLiters,
+				alcoholPercent: outcome.abvPercent
+			}
 		};
 	});
 

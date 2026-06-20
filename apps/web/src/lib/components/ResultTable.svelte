@@ -3,8 +3,6 @@
 
 	let { result, riceForm = 'tteok' as RiceForm, availableRice = 0 }: { result: BrewResult; riceForm?: RiceForm; availableRice?: number } = $props();
 
-	let isReduced = $derived(availableRice > 0 && result.totalRice < availableRice - 0.01);
-
 	function fmt(value: number): string {
 		if (value <= 0) return '-';
 		return value.toFixed(2);
@@ -40,12 +38,6 @@
 			</tr>
 		</tfoot>
 	</table>
-
-	{#if isReduced}
-		<div class="optimal-rice">
-			쌀 적정 사용량 <strong>{fmt(result.totalRice)} kg</strong> <span class="of-available">/ {fmt(availableRice)} kg</span>
-		</div>
-	{/if}
 
 	<div class="estimates">
 		<div class="estimate-item">
@@ -120,31 +112,6 @@
 
 	tfoot td:not(.stage-name) {
 		color: var(--ds-color-spark);
-	}
-
-	.optimal-rice {
-		margin-top: var(--ds-space-lg);
-		padding: var(--ds-space-md);
-		border-top: var(--ds-border-width) solid var(--ds-color-border-1);
-		font-size: var(--ds-text-sm);
-		display: flex;
-		align-items: baseline;
-		gap: var(--ds-space-sm);
-		color: var(--ds-color-ink-1);
-	}
-
-	.optimal-rice strong {
-		font-family: var(--ds-font-mono);
-		font-variant-numeric: tabular-nums;
-		font-size: var(--ds-text-lg);
-		color: var(--ds-color-ink-1);
-	}
-
-	.of-available {
-		font-family: var(--ds-font-mono);
-		font-size: var(--ds-text-xs);
-		font-weight: var(--ds-weight-regular);
-		color: var(--ds-color-ink-3);
 	}
 
 	.estimates {
