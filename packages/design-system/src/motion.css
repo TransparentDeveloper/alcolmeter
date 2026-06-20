@@ -87,8 +87,19 @@
 		animation: none;
 		stroke-dashoffset: 0;
 	}
+	/* 모션은 끄되 거품은 정지 상태로 보이게 — 동작 줄이기 사용자도 탄산을 볼 수 있도록.
+	   bottom:0에 몰리지 않게 nth-child로 높이를 정적으로 흩뿌립니다. */
 	.ds-fizz__bubble {
 		animation: none;
-		opacity: 0;
+		opacity: 0.5;
+	}
+	.ds-fizz__bubble:nth-child(3n) {
+		transform: translateY(-30px);
+	}
+	.ds-fizz__bubble:nth-child(3n + 1) {
+		transform: translateY(-85px);
+	}
+	.ds-fizz__bubble:nth-child(3n + 2) {
+		transform: translateY(-135px);
 	}
 }
