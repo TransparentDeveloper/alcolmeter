@@ -6,51 +6,43 @@
 
 <div class="landing">
 	<!-- Hero -->
-	<section class="hero">
-		<div class="hero-visual">
-			<img
-				src="https://images.unsplash.com/photo-1584225064785-c62a8b43d148?w=800&h=400&fit=crop&crop=center"
-				alt="전통주 양조"
-				class="hero-img"
-			/>
-			<div class="hero-overlay"></div>
-		</div>
-		<div class="hero-content">
-			<p class="tagline">Brewing Calculator</p>
-			<h1>알콜미터</h1>
-			<p class="hero-desc">전통주 양조를 위한 정밀 배합 계산기.<br/>쌀의 양만 입력하면 최적의 비율을 알려드립니다.</p>
-		</div>
+	<section class="hero ds-paper-grid">
+		<p class="eyebrow">정밀 배합 · 양조 노트</p>
+		<h1>알콜미터</h1>
+		<p class="hero-desc">
+			전통주 양조를 위한 정밀 배합 계산기.<br />쌀의 양만 입력하면 최적의 비율을 알려드립니다.
+		</p>
 	</section>
 
 	<!-- Drink Selection -->
 	<section class="section">
 		<h2 class="section-title">어떤 술을 빚으시나요?</h2>
-		<div class="card-grid">
-			<a href="/makgeolli" class="card card--active">
-				<div class="card-icon">🍶</div>
-				<div class="card-body">
-					<span class="card-name">막걸리</span>
-					<span class="card-desc">쌀 + 누룩 + 물</span>
-				</div>
-				<span class="card-arrow">→</span>
+		<div class="entries">
+			<a href="/makgeolli" class="entry entry--active">
+				<span class="entry-no">01</span>
+				<span class="entry-body">
+					<span class="entry-name">막걸리</span>
+					<span class="entry-desc">쌀 + 누룩 + 물</span>
+				</span>
+				<span class="entry-arrow">→</span>
 			</a>
 
-			<div class="card card--disabled">
-				<div class="card-icon">🍺</div>
-				<div class="card-body">
-					<span class="card-name">사이다</span>
-					<span class="card-desc">사과 + 효모 + 설탕</span>
-				</div>
-				<span class="card-badge">준비 중</span>
+			<div class="entry entry--disabled">
+				<span class="entry-no">02</span>
+				<span class="entry-body">
+					<span class="entry-name">사이다</span>
+					<span class="entry-desc">사과 + 효모 + 설탕</span>
+				</span>
+				<span class="entry-badge">준비 중</span>
 			</div>
 
-			<div class="card card--disabled">
-				<div class="card-icon">🍷</div>
-				<div class="card-body">
-					<span class="card-name">와인</span>
-					<span class="card-desc">포도 + 효모</span>
-				</div>
-				<span class="card-badge">준비 중</span>
+			<div class="entry entry--disabled">
+				<span class="entry-no">03</span>
+				<span class="entry-body">
+					<span class="entry-name">와인</span>
+					<span class="entry-desc">포도 + 효모</span>
+				</span>
+				<span class="entry-badge">준비 중</span>
 			</div>
 		</div>
 	</section>
@@ -58,12 +50,12 @@
 	<!-- FAQ -->
 	<section class="section">
 		<h2 class="section-title">양조가 처음이신가요?</h2>
-		<a href="/faq" class="banner">
-			<div class="banner-content">
-				<span class="banner-title">자주 묻는 질문</span>
-				<span class="banner-desc">쌀 형태, 양조 방식, 비율 원리, 주의사항까지</span>
-			</div>
-			<span class="card-arrow">→</span>
+		<a href="/faq" class="faq-card">
+			<span class="faq-body">
+				<span class="faq-title">자주 묻는 질문</span>
+				<span class="faq-desc">쌀 형태, 양조 방식, 비율 원리, 주의사항까지</span>
+			</span>
+			<span class="entry-arrow">→</span>
 		</a>
 	</section>
 </div>
@@ -72,206 +64,178 @@
 	.landing {
 		display: flex;
 		flex-direction: column;
-		gap: 2.5rem;
-		padding-bottom: 3rem;
+		gap: var(--ds-space-3xl);
+		padding-bottom: var(--ds-space-2xl);
 	}
 
-	/* Hero */
+	/* Hero — measurement-notebook paper */
 	.hero {
-		position: relative;
-		border-radius: var(--radius-lg);
-		overflow: hidden;
-		min-height: 240px;
-		display: flex;
-		align-items: flex-end;
+		border: var(--ds-border-width) solid var(--ds-color-border-2);
+		border-radius: var(--ds-radius-lg);
+		box-shadow: var(--ds-shadow-paper);
+		padding: var(--ds-space-2xl) var(--ds-space-xl);
 	}
 
-	.hero-visual {
-		position: absolute;
-		inset: 0;
-	}
-
-	.hero-img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-	}
-
-	.hero-overlay {
-		position: absolute;
-		inset: 0;
-		background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 100%);
-	}
-
-	.hero-content {
-		position: relative;
-		padding: 2rem 1.5rem;
-		color: #ffffff;
-	}
-
-	.tagline {
-		font-size: 0.7rem;
+	.eyebrow {
+		font-family: var(--ds-font-mono);
+		font-size: var(--ds-text-xs);
+		font-weight: var(--ds-weight-medium);
+		letter-spacing: 0.08em;
 		text-transform: uppercase;
-		letter-spacing: 0.15em;
-		opacity: 0.7;
-		margin-bottom: 0.5rem;
-		font-weight: 700;
+		color: var(--ds-color-ink-3);
+		margin-bottom: var(--ds-space-md);
 	}
 
 	.hero h1 {
-		font-size: 2rem;
-		font-weight: 800;
-		letter-spacing: -0.03em;
-		margin-bottom: 0.75rem;
+		font-family: var(--ds-font-display);
+		font-size: var(--ds-text-3xl);
+		font-weight: var(--ds-weight-bold);
+		line-height: var(--ds-leading-tight);
+		letter-spacing: var(--ds-tracking-tight);
+		color: var(--ds-color-ink-1);
 	}
 
 	.hero-desc {
-		font-size: 0.85rem;
-		line-height: 1.6;
-		opacity: 0.85;
-		font-weight: 400;
+		margin-top: var(--ds-space-md);
+		font-size: var(--ds-text-base);
+		color: var(--ds-color-ink-2);
+		max-width: 42ch;
 	}
 
 	/* Section */
 	.section-title {
-		font-size: 1.1rem;
-		font-weight: 800;
-		margin-bottom: 0.75rem;
-		letter-spacing: -0.02em;
+		font-family: var(--ds-font-display);
+		font-size: var(--ds-text-lg);
+		font-weight: var(--ds-weight-bold);
+		letter-spacing: var(--ds-tracking-tight);
+		color: var(--ds-color-ink-1);
+		margin-bottom: var(--ds-space-md);
 	}
 
-	/* Card Grid */
-	.card-grid {
+	/* Entries — numbered notebook rows */
+	.entries {
 		display: flex;
 		flex-direction: column;
-		gap: 0.625rem;
+		gap: var(--ds-space-sm);
 	}
 
-	.card {
+	.entry {
 		display: flex;
 		align-items: center;
-		gap: 1rem;
-		padding: 1rem 1.25rem;
-		border-radius: var(--radius-lg);
-		background: var(--color-card);
+		gap: var(--ds-space-md);
+		padding: var(--ds-space-md) var(--ds-space-lg);
+		border: var(--ds-border-width) solid var(--ds-color-border-2);
+		border-radius: var(--ds-radius-md);
+		background: var(--ds-color-surface);
 		text-decoration: none;
-		color: var(--color-text);
-		transition: all 0.2s ease;
-		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+		color: var(--ds-color-ink-1);
+		transition: border-color var(--ds-duration-short) var(--ds-ease-out),
+			transform var(--ds-duration-short) var(--ds-ease-out),
+			box-shadow var(--ds-duration-short) var(--ds-ease-out);
 	}
 
-	.card--active {
-		background: #ffffff;
-		box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
-		border: 1.5px solid #e5e7eb;
+	.entry-no {
+		font-family: var(--ds-font-mono);
+		font-size: var(--ds-text-sm);
+		color: var(--ds-color-ink-3);
+		font-variant-numeric: tabular-nums;
+		flex: none;
 	}
 
-	.card--active:hover {
-		border-color: var(--color-primary);
-		box-shadow: 0 4px 12px rgba(37, 99, 235, 0.12), 0 1px 3px rgba(0, 0, 0, 0.04);
-		transform: translateY(-1px);
-	}
-
-	.card--active:active {
-		transform: translateY(0);
-	}
-
-	.card--disabled {
-		opacity: 0.4;
-		cursor: not-allowed;
-		border: 1.5px solid transparent;
-	}
-
-	.card-icon {
-		font-size: 1.5rem;
-		flex-shrink: 0;
-		width: 2.5rem;
-		height: 2.5rem;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background: var(--color-border);
-		border-radius: var(--radius-sm);
-	}
-
-	.card-body {
+	.entry-body {
 		flex: 1;
 		display: flex;
 		flex-direction: column;
-		gap: 0.125rem;
+		gap: 2px;
 	}
 
-	.card-name {
-		font-size: 0.95rem;
-		font-weight: 800;
+	.entry-name {
+		font-size: var(--ds-text-base);
+		font-weight: var(--ds-weight-semibold);
 	}
 
-	.card-desc {
-		font-size: 0.75rem;
-		color: var(--color-muted);
+	.entry-desc {
+		font-family: var(--ds-font-mono);
+		font-size: var(--ds-text-xs);
+		color: var(--ds-color-ink-3);
 	}
 
-	.card-arrow {
-		font-size: 1rem;
-		color: var(--color-muted);
-		flex-shrink: 0;
-		transition: transform 0.15s ease;
+	.entry-arrow {
+		font-size: var(--ds-text-lg);
+		color: var(--ds-color-ink-3);
+		flex: none;
+		transition: transform var(--ds-duration-short) var(--ds-ease-out),
+			color var(--ds-duration-short) var(--ds-ease-out);
 	}
 
-	.card--active:hover .card-arrow {
-		transform: translateX(2px);
-		color: var(--color-primary);
-	}
-
-	.card-badge {
-		font-size: 0.7rem;
-		color: var(--color-muted);
-		flex-shrink: 0;
-	}
-
-	/* FAQ Banner */
-	.banner {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		padding: 1.25rem 1.5rem;
-		border-radius: var(--radius-lg);
-		background: linear-gradient(135deg, #eff6ff 0%, #f0f4ff 100%);
-		border: 1.5px solid #dbeafe;
-		text-decoration: none;
-		color: var(--color-text);
-		transition: all 0.2s ease;
-	}
-
-	.banner:hover {
-		border-color: var(--color-primary);
-		box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+	.entry--active:hover {
+		border-color: var(--ds-color-border-3);
+		box-shadow: var(--ds-shadow-paper);
 		transform: translateY(-1px);
 	}
 
-	.banner:active {
-		transform: translateY(0);
+	.entry--active:hover .entry-arrow {
+		transform: translateX(3px);
+		color: var(--ds-color-spark);
 	}
 
-	.banner-content {
+	.entry--active:hover .entry-no {
+		color: var(--ds-color-spark);
+	}
+
+	.entry--disabled {
+		opacity: 0.55;
+		cursor: not-allowed;
+		border-style: dashed;
+		border-color: var(--ds-color-border-1);
+	}
+
+	.entry-badge {
+		font-family: var(--ds-font-mono);
+		font-size: var(--ds-text-xs);
+		color: var(--ds-color-ink-4);
+		flex: none;
+	}
+
+	/* FAQ card */
+	.faq-card {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--ds-space-md);
+		padding: var(--ds-space-lg);
+		border: var(--ds-border-width) solid var(--ds-color-border-2);
+		border-radius: var(--ds-radius-md);
+		background: var(--ds-color-surface);
+		text-decoration: none;
+		color: var(--ds-color-ink-1);
+		transition: border-color var(--ds-duration-short) var(--ds-ease-out),
+			transform var(--ds-duration-short) var(--ds-ease-out);
+	}
+
+	.faq-body {
 		display: flex;
 		flex-direction: column;
-		gap: 0.2rem;
+		gap: 2px;
 	}
 
-	.banner-title {
-		font-size: 0.95rem;
-		font-weight: 800;
-		color: var(--color-primary);
+	.faq-title {
+		font-size: var(--ds-text-base);
+		font-weight: var(--ds-weight-semibold);
 	}
 
-	.banner-desc {
-		font-size: 0.75rem;
-		color: #6b7280;
+	.faq-desc {
+		font-size: var(--ds-text-sm);
+		color: var(--ds-color-ink-3);
 	}
 
-	.banner:hover .card-arrow {
-		transform: translateX(2px);
-		color: var(--color-primary);
+	.faq-card:hover {
+		border-color: var(--ds-color-border-3);
+		transform: translateY(-1px);
+	}
+
+	.faq-card:hover .entry-arrow {
+		transform: translateX(3px);
+		color: var(--ds-color-spark);
 	}
 </style>
