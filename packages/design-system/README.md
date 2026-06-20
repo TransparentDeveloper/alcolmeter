@@ -10,6 +10,7 @@ alcolmeter의 독립 디자인 시스템 라이브러리. 콘셉트는 **Measure
 ```
 DESIGN.md          디자인 단일 소스 (읽고 시작)
 src/tokens.css     CSS 커스텀 프로퍼티 (라이트/다크 + .ds-paper-grid 헬퍼)
+src/motion.css     모션 키프레임/유틸 (밑줄 드로인 · 탄산 fizz, reduced-motion 존중)
 preview/index.html 임시 미리보기 (격리된 정적 페이지)
 ```
 
@@ -17,6 +18,7 @@ preview/index.html 임시 미리보기 (격리된 정적 페이지)
 
 ```ts
 import '@alcolmeter/design-system/tokens.css';
+import '@alcolmeter/design-system/motion.css'; // 애니메이션 쓸 때만
 ```
 
 ```css

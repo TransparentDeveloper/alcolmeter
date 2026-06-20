@@ -57,7 +57,10 @@
 - **접근:** minimal-functional. 바운스 없음.
 - **이징:** out `cubic-bezier(.16,1,.3,1)` · in `(.4,0,1,1)` · in-out `(.4,0,.2,1)`.
 - **지속:** micro 80 · short 160 · medium 240 · long 400 (ms).
-- **시그니처:** 빨간펜 주석이 가끔 "그려지는"(~300ms) 효과, 아주 절제.
+- **유틸(`motion.css`, 별도 import):** 키프레임 + 헬퍼를 라이브러리에서 관리. `prefers-reduced-motion` 존중.
+  - `.ds-underline-draw` — SVG `<path pathLength="1">`에 적용. 손그림 밑줄이 그려졌다 → 멈췄다 → 지워졌다 반복(빨간펜 주석 시그니처의 모션화).
+  - `.ds-fizz` / `.ds-fizz__bubble` — 탄산 거품이 올라오며 터짐. 색 `--ds-fizz-color`(기본 spark). 양조/발효 테마.
+- **시그니처:** 위 두 모션은 *희소하게* — 히어로/브랜드 모먼트에만.
 
 ## Decisions Log
 
@@ -75,3 +78,4 @@
 | 2026-06-19 | 상호작용 상태 토큰화 (hover/active/disabled)  | 역할별 `*-hover`/`*-active` + 중립 오버레이(`--ds-color-hover/active`) + disabled. `color-mix`로 테마 자동 적응. |
 | 2026-06-19 | ink-3 다크닝 `#6e7689 → #5c6478` (라이트)     | 틴트 bg 위 4.13:1(AA 미달) → 5.37:1로 통과. 작은 캡션·메타 가독 확보. 다크 ink-3는 이미 5.5:1라 유지. |
 | 2026-06-19 | 폰트 스택에 한글 Pretendard 추가 (v0.2.0)     | Cabinet/Geist는 라틴 전용 → 한글 제품(web)에선 폰트 정체성이 한글에 안 먹음. Pretendard로 Apple SD Gothic Neo 룩을 크로스플랫폼 재현. |
+| 2026-06-20 | 모션 레이어 `motion.css` 추가 (v0.3.0)        | 애니메이션을 라이브러리에서 관리. 밑줄 드로인 + 탄산 fizz 키프레임/유틸. 모션 토큰 재사용, reduced-motion 존중. 별도 export로 토큰만 쓰는 소비처엔 비용 0. |

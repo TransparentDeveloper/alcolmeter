@@ -1,0 +1,94 @@
+/*
+ * @alcolmeter/design-system — motion layer
+ * Keyframes + utilities for the Measurement Notebook signatures.
+ * Reuses motion tokens from tokens.css (--ds-ease-*, --ds-duration-*).
+ * Respects prefers-reduced-motion.
+ *
+ * Import alongside tokens.css:
+ *   import '@alcolmeter/design-system/tokens.css';
+ *   import '@alcolmeter/design-system/motion.css';
+ */
+
+/* ── Annotation underline ───────────────────────────────────
+ * Hand-drawn line that draws in → holds → erases, looping.
+ * Apply to an SVG <path> that has pathLength="1" and a stroke.
+ *   <path class="ds-underline-draw" pathLength="1" … />
+ */
+@keyframes ds-underline-draw {
+	0% {
+		stroke-dashoffset: 1;
+	}
+	30% {
+		stroke-dashoffset: 0;
+	}
+	70% {
+		stroke-dashoffset: 0;
+	}
+	100% {
+		stroke-dashoffset: -1;
+	}
+}
+
+.ds-underline-draw {
+	stroke-dasharray: 1;
+	stroke-dashoffset: 1;
+	animation: ds-underline-draw 4s var(--ds-ease-in-out) infinite;
+}
+
+/* ── Carbonation fizz ───────────────────────────────────────
+ * Bubbles rise and pop. `.ds-fizz` is an absolute overlay inside a
+ * positioned container; each `.ds-fizz__bubble` sets its own
+ * left / size / animation-delay / duration inline.
+ * Color: --ds-fizz-color (defaults to the spark).
+ *
+ *   <div class="ds-fizz">
+ *     <span class="ds-fizz__bubble" style="left:12%;width:8px;height:8px;animation-delay:.4s"></span>
+ *     …
+ *   </div>
+ */
+@keyframes ds-fizz-rise {
+	0% {
+		transform: translateY(8px) scale(0.5);
+		opacity: 0;
+	}
+	20% {
+		opacity: 0.6;
+	}
+	80% {
+		opacity: 0.4;
+	}
+	100% {
+		transform: translateY(-180px) scale(1.1);
+		opacity: 0;
+	}
+}
+
+.ds-fizz {
+	position: absolute;
+	inset: 0;
+	overflow: hidden;
+	pointer-events: none;
+}
+
+.ds-fizz__bubble {
+	position: absolute;
+	bottom: 0;
+	width: 10px;
+	height: 10px;
+	border-radius: var(--ds-radius-full);
+	background: var(--ds-fizz-color, var(--ds-color-spark));
+	opacity: 0;
+	animation: ds-fizz-rise 4.5s var(--ds-ease-out) infinite;
+}
+
+/* Accessibility — honor reduced-motion preference. */
+@media (prefers-reduced-motion: reduce) {
+	.ds-underline-draw {
+		animation: none;
+		stroke-dashoffset: 0;
+	}
+	.ds-fizz__bubble {
+		animation: none;
+		opacity: 0;
+	}
+}
