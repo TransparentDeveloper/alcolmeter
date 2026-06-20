@@ -5,6 +5,7 @@
 - `apps/web` — SvelteKit 웹 앱
 - `apps/extension` — Chrome 확장프로그램 (WXT + Svelte)
 - `packages/domain` — 순수 도메인 로직 (TypeScript)
+- `packages/design-system` — 디자인 시스템 라이브러리 (CSS 토큰·모션)
 
 ## 환경
 
@@ -44,6 +45,7 @@ pnpm check            # web 타입 체크
   - `web-{SemVer}` — 예: `web-0.2.5`
   - `extension-{SemVer}` — 예: `extension-0.2.1`
   - `domain-{SemVer}` — 예: `domain-0.1.1`
+  - `design-system-{SemVer}` — 예: `design-system-0.3.0`
   - `common/{작업명}` — 전역 설정 (CLAUDE.md, 루트 config 등), 버저닝 없음 — 예: `common/branch-convention`
 - 한 브랜치 = 한 논리적 작업 단위
 - `main`에 직접 작업하지 않는다 (force-push/삭제/머지 커밋 금지)
@@ -52,6 +54,18 @@ pnpm check            # web 타입 체크
 
 - **web**: main push 시 Vercel 자동 배포
 - **extension**: main push 시 `apps/extension/**` 변경 감지 → Chrome Web Store 자동 빌드·배포 (`.github/workflows/deploy-extension.yml`)
+
+## 릴리즈 / CHANGELOG
+
+- 하위프로젝트마다 자체 `CHANGELOG.md`를 둔다 (Keep a Changelog, 최신 위):
+  - web → `apps/web/CHANGELOG.md`
+  - extension → `apps/extension/CHANGELOG.md`
+  - domain → `packages/domain/CHANGELOG.md`
+  - design-system → `packages/design-system/CHANGELOG.md`
+- **릴리즈 태그**: `{하위프로젝트}-v{SemVer}` (예: `web-v0.4.0`). 태그가 하위프로젝트를 식별한다. 과거 버전도 해당 커밋에 소급 태깅 가능.
+- **GitHub Release**: 태그 push 후 `gh release create {태그}` — 본문은 해당 CHANGELOG 섹션. (수동)
+- **CHANGELOG 톤**: 양조장 밤일지 — 존댓말 + 실제 릴리즈 시점(날짜·계절·절기)에 근거한 이탤릭 인용문 + 명확한 변경 불릿. 작성 보조 스킬: `/release-notes`.
+- **pre-push 게이트**: `apps/web`에 사용자 영향(비-`chore`) 변경을 `main`에 push하려면 `apps/web/CHANGELOG.md` 갱신이 필수. `chore` 커밋만 있으면 면제. 구현: `.githooks/pre-push` + `core.hooksPath=.githooks`(루트 `prepare`가 설정). (현재 web 한정 — 추후 확장 가능)
 
 ## 플랜 문서
 

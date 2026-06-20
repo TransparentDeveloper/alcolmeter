@@ -4,6 +4,7 @@
 	"private": true,
 	"packageManager": "pnpm@10.24.0",
 	"scripts": {
+		"prepare": "git config core.hooksPath .githooks || true",
 		"dev": "pnpm --filter @alcolmeter/web dev",
 		"build": "pnpm --filter @alcolmeter/web build",
 		"preview": "pnpm --filter @alcolmeter/web preview",
