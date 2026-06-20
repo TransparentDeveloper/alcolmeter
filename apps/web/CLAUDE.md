@@ -27,20 +27,19 @@ src/routes/{page}/
 
 ### 참고: `src/routes/makgeolli/`
 
-## 사이트맵 동기화 규칙
+## 사이트맵 규칙
 
-`src/routes/` 아래에서 다음 작업이 발생하면 반드시 `static/sitemap.xml`도 함께 수정한다:
+사이트맵은 **동적 엔드포인트** `src/routes/sitemap.xml/+server.ts`가 생성한다 (`prerender = true`라 빌드 시 정적 파일로 출력). 정적 `static/sitemap.xml`은 사용하지 않는다.
 
-- 새 페이지 추가 (`+page.svelte` 생성) → `<url>` 항목 추가
-- 페이지 제거 → 해당 `<url>` 항목 삭제
-- 라우트 디렉토리 이름 변경 (URL 변경) → `<loc>` 수정
+- **고정 페이지**: `+server.ts`의 `staticEntries` 배열을 직접 수정한다.
+  - 새 페이지 추가 (`+page.svelte` 생성) → `staticEntries`에 항목 추가
+  - 페이지 제거 → 해당 항목 삭제
+  - 라우트 디렉토리 이름 변경 → `loc` 수정
+- **용어사전(`/dictionary/*`)**: `src/content/dictionary/*.md` frontmatter에서 **자동 생성**된다. 용어를 추가·삭제해도 사이트맵은 손대지 않는다.
 
-### sitemap.xml 작성 기준
+### 작성 기준
 
-- `<loc>`: `https://alcolmeter.kr/{경로}`
-- `<lastmod>`: 작업일 (YYYY-MM-DD)
-- `<changefreq>`: 페이지 성격에 맞게 선택
-  - 자주 바뀌는 콘텐츠: `weekly`
-  - 일반 페이지: `monthly`
-  - 거의 안 바뀌는 페이지 (약관, 개인정보 등): `yearly`
-- `<priority>`: 홈 `1.0` → 주요 기능 `0.9` → 보조 페이지 `0.7` → 법적 페이지 `0.3`
+- `loc`: `https://alcolmeter.kr/{경로}` (한글 slug는 `encodeURIComponent`)
+- `lastmod`: 작업일 (YYYY-MM-DD). 용어는 frontmatter `updated` 사용
+- `changefreq`: 자주 바뀌는 콘텐츠 `weekly`(또는 `daily`) · 일반 `monthly` · 약관 등 `yearly`
+- `priority`: 홈 `1.0` → 주요 기능 `0.9` → 보조 페이지 `0.7` → 용어 페이지 `0.6` → 법적 페이지 `0.3`

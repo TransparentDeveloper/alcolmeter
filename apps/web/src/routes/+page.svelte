@@ -72,16 +72,25 @@
 		</div>
 	</section>
 
-	<!-- FAQ -->
+	<!-- 학습 -->
 	<section class="section">
 		<h2 class="section-title">양조가 처음이신가요?</h2>
-		<a href="/faq" class="faq-card">
-			<span class="faq-body">
-				<span class="faq-title">자주 묻는 질문</span>
-				<span class="faq-desc">쌀 형태, 양조 방식, 비율 원리, 주의사항까지</span>
-			</span>
-			<span class="entry-arrow">→</span>
-		</a>
+		<div class="learn-cards">
+			<a href="/dictionary" class="faq-card">
+				<span class="faq-body">
+					<span class="faq-title">용어사전</span>
+					<span class="faq-desc">고두밥, 밑술, 덧술… 양조 용어를 한곳에서</span>
+				</span>
+				<span class="entry-arrow">→</span>
+			</a>
+			<a href="/faq" class="faq-card">
+				<span class="faq-body">
+					<span class="faq-title">자주 묻는 질문</span>
+					<span class="faq-desc">쌀 형태, 양조 방식, 비율 원리, 주의사항까지</span>
+				</span>
+				<span class="entry-arrow">→</span>
+			</a>
+		</div>
 	</section>
 </div>
 
@@ -242,7 +251,13 @@
 		flex: none;
 	}
 
-	/* FAQ card */
+	/* 학습 카드 */
+	.learn-cards {
+		display: flex;
+		flex-direction: column;
+		gap: var(--ds-space-sm);
+	}
+
 	.faq-card {
 		display: flex;
 		align-items: center;
