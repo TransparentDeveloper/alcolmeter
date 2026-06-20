@@ -27,9 +27,11 @@
 	</main>
 	<footer>
 		<nav class="footer-links">
+			<a href="/makgeolli">막걸리 계산기</a>
 			<a href="/settings">설정</a>
-			<span class="sep" aria-hidden="true">·</span>
+			<a href="/dictionary">용어사전</a>
 			<a href="/privacy">개인정보처리방침</a>
+			<a href="/faq">자주 묻는 질문</a>
 		</nav>
 		<span class="version">v{version}</span>
 	</footer>
@@ -89,11 +91,13 @@
 	}
 
 	.footer-links {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: var(--ds-space-sm);
-		margin-bottom: var(--ds-space-sm);
+		display: grid;
+		grid-template-columns: auto auto;
+		column-gap: var(--ds-space-2xl);
+		row-gap: var(--ds-space-xs);
+		justify-content: start;
+		justify-items: start;
+		margin-bottom: var(--ds-space-md);
 	}
 
 	.footer-links a {
@@ -108,12 +112,9 @@
 		color: var(--ds-color-spark);
 	}
 
-	.footer-links .sep {
-		font-size: var(--ds-text-xs);
-		color: var(--ds-color-ink-4);
-	}
-
 	.version {
+		display: block;
+		text-align: right;
 		font-family: var(--ds-font-mono);
 		font-size: var(--ds-text-xs);
 		color: var(--ds-color-ink-4);
