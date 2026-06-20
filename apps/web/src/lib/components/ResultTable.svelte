@@ -110,10 +110,6 @@
 		border-bottom: none;
 	}
 
-	tfoot td:not(.stage-name) {
-		color: var(--ds-color-spark);
-	}
-
 	.estimates {
 		margin-top: var(--ds-space-lg);
 		border-top: var(--ds-border-width) solid var(--ds-color-border-1);
@@ -129,6 +125,7 @@
 		align-items: baseline;
 		gap: var(--ds-space-sm);
 		color: var(--ds-color-ink-2);
+		white-space: nowrap;
 	}
 
 	.estimate-item + .estimate-item {
@@ -138,9 +135,18 @@
 	.estimate-item strong {
 		font-family: var(--ds-font-mono);
 		font-variant-numeric: tabular-nums;
-		font-size: var(--ds-text-xl);
+		font-size: var(--ds-text-base);
 		color: var(--ds-color-spark);
 		white-space: nowrap;
+	}
+
+	/* 512px 이하: 라벨/값을 세로로 배치해 큰 값이 옆으로 잘리지 않게 */
+	@media (max-width: 512px) {
+		.estimate-item {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: var(--ds-space-2xs);
+		}
 	}
 
 </style>
