@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 #
-# pre-push 게이트 — 하위프로젝트 릴리즈에 CHANGELOG 갱신 강제
+# pre-push 게이트 — 배포 앱 릴리즈에 CHANGELOG 갱신 강제
 #
-# main 으로 push 될 때, 각 하위프로젝트에 사용자 영향(비-chore) 변경이 있으면
-# 그 하위프로젝트의 CHANGELOG.md 도 함께 갱신됐는지 확인한다.
-# chore 커밋만 있거나 해당 하위프로젝트를 건드리지 않으면 면제.
+# main 으로 push 될 때, 배포 앱(web·extension)에 사용자 영향(비-chore) 변경이 있으면
+# 그 앱의 CHANGELOG.md 도 함께 갱신됐는지 확인한다.
+# chore 커밋만 있거나 해당 앱을 건드리지 않으면 면제.
+# 라이브러리(domain·design-system 등)는 사용자에게 직접 배포되지 않아 게이트 대상이 아니다.
 # (자세한 규칙은 CLAUDE.md "릴리즈 / CHANGELOG")
 #
 # 활성화: git config core.hooksPath .githooks  (루트 pnpm prepare 가 설정)
@@ -12,12 +13,9 @@
 
 zero="0000000000000000000000000000000000000000"
 
-# 하위프로젝트 = "디렉터리|CHANGELOG경로" (domain-v2 는 domain 대체 시 흡수)
+# 배포 앱 = "디렉터리|CHANGELOG경로"
 subprojects="apps/web|apps/web/CHANGELOG.md
-apps/extension|apps/extension/CHANGELOG.md
-packages/domain|packages/domain/CHANGELOG.md
-packages/domain-v2|packages/domain-v2/CHANGELOG.md
-packages/design-system|packages/design-system/CHANGELOG.md"
+apps/extension|apps/extension/CHANGELOG.md"
 
 while read -r local_ref local_sha remote_ref remote_sha; do
 	# main 으로 가는 push 만 검사
