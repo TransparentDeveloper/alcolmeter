@@ -64,8 +64,13 @@ pnpm check            # web 타입 체크
   - design-system → `packages/design-system/CHANGELOG.md`
 - **릴리즈 태그**: `{하위프로젝트}-v{SemVer}` (예: `web-v0.4.0`). 태그가 하위프로젝트를 식별한다. 과거 버전도 해당 커밋에 소급 태깅 가능.
 - **GitHub Release**: 태그 push 후 `gh release create {태그}` — 본문은 해당 CHANGELOG 섹션. (수동)
-- **CHANGELOG 톤**: 양조장 밤일지 — 존댓말 + 실제 릴리즈 시점(날짜·계절·절기)에 근거한 이탤릭 인용문 + 명확한 변경 불릿. 작성 보조 스킬: `/release-notes`.
+- **CHANGELOG 톤**: 양조장 밤일지 — 존댓말 + 실제 릴리즈 시점(날짜·계절·절기)에 근거한 이탤릭 인용문 + 명확한 변경 불릿. 작성 보조 스킬: `/alcol-release-notes`.
 - **pre-push 게이트**: `apps/web`에 사용자 영향(비-`chore`) 변경을 `main`에 push하려면 `apps/web/CHANGELOG.md` 갱신이 필수. `chore` 커밋만 있으면 면제. 구현: `.githooks/pre-push` + `core.hooksPath=.githooks`(루트 `prepare`가 설정). (현재 web 한정 — 추후 확장 가능)
+
+## 스킬
+
+- 알콜미터 전용 스킬은 레포 `.claude/skills/`에 두고, 이름에 **`alcol-` prefix**를 붙인다 (예: `alcol-release-notes`).
+- 레포에 커밋되어 공유·버전관리된다 (개인 워크플로우 스킬과 구분).
 
 ## 플랜 문서
 
