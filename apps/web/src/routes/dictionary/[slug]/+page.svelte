@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
+	import { buildFeedbackUrl } from '$lib/dictionary/feedback-link';
 
 	let { data }: { data: PageData } = $props();
 
@@ -29,11 +30,22 @@
 </svelte:head>
 
 <article class="term">
-	<nav class="breadcrumb" aria-label="경로">
-		<a href="/dictionary">용어사전</a>
-		<span class="sep" aria-hidden="true">›</span>
-		<span class="current">{meta.title}</span>
-	</nav>
+	<div class="term-top">
+		<nav class="breadcrumb" aria-label="경로">
+			<a href="/dictionary">용어사전</a>
+			<span class="sep" aria-hidden="true">›</span>
+			<span class="current">{meta.title}</span>
+		</nav>
+		<a
+			class="feedback-btn"
+			href={buildFeedbackUrl(meta.title)}
+			target="_blank"
+			rel="noopener noreferrer"
+		>
+			<span class="feedback-icon" aria-hidden="true">✎</span>
+			수정요청
+		</a>
+	</div>
 
 	<header class="term-header">
 		<div class="tags">
@@ -289,5 +301,45 @@
 		font-size: var(--ds-text-xs);
 		color: var(--ds-color-ink-3);
 		line-height: 1.5;
+	}
+
+	/* 상단 행: 브레드크럼(좌) + 수정요청(우) */
+	.term-top {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--ds-space-md);
+	}
+
+	.term-top .breadcrumb {
+		min-width: 0;
+	}
+
+	/* 수정요청 — 저강조 외곽선 버튼 */
+	.feedback-btn {
+		flex-shrink: 0;
+		display: inline-flex;
+		align-items: center;
+		gap: var(--ds-space-2xs);
+		padding: var(--ds-space-2xs) var(--ds-space-md);
+		font-family: var(--ds-font-mono);
+		font-size: var(--ds-text-xs);
+		color: var(--ds-color-ink-3);
+		background: var(--ds-color-surface);
+		border: var(--ds-border-width) solid var(--ds-color-border-2);
+		border-radius: var(--ds-radius-sm);
+		text-decoration: none;
+		transition:
+			border-color var(--ds-duration-short) var(--ds-ease-out),
+			color var(--ds-duration-short) var(--ds-ease-out);
+	}
+
+	.feedback-btn:hover {
+		color: var(--ds-color-ink-1);
+		border-color: var(--ds-color-border-3);
+	}
+
+	.feedback-icon {
+		font-size: 0.9em;
 	}
 </style>
