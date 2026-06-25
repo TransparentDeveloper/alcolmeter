@@ -5,6 +5,7 @@
 	import { afterNavigate } from '$app/navigation';
 	let { children } = $props();
 	const version = __APP_VERSION__;
+	const faviconVersion = __FAVICON_VERSION__;
 
 	afterNavigate(({ from, to }) => {
 		if (from && typeof gtag !== 'undefined' && to) {
@@ -14,6 +15,10 @@
 		}
 	});
 </script>
+
+<svelte:head>
+	<link rel="icon" type="image/svg+xml" href={`/favicon.svg?v=${faviconVersion}`} />
+</svelte:head>
 
 <div class="app">
 	<header>
