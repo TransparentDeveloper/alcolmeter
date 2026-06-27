@@ -68,7 +68,7 @@
 
 	/* 쇼츠(세로 9:16)와 일반 영상(가로 16:9)의 폭·비율 */
 	.term-video.portrait {
-		max-width: 240px;
+		max-width: 280px;
 	}
 
 	.term-video.landscape {
