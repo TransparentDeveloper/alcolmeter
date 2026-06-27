@@ -27,6 +27,15 @@ src/routes/{page}/
 
 ### 참고: `src/routes/makgeolli/`
 
+## SEO·공유 메타 규칙
+
+페이지의 title·description·canonical·OpenGraph·Twitter 메타는 `src/lib/components/Seo.svelte` 한 컴포넌트로 주입한다.
+
+- 각 페이지 `+page.svelte`에서 `<Seo title=… description=… path=… image=… />`를 호출한다. 구조화 데이터(JSON-LD)는 페이지의 별도 `<svelte:head>`에 둔다.
+- **`app.html`에는 전역 공유 메타(title·description·og·twitter)를 두지 않는다.** app.html 정적 메타와 페이지 `<svelte:head>`가 합쳐져 태그가 중복되기 때문이다. 전 페이지 공통 메타(keywords·author·theme-color·site-verification)만 app.html에 둔다.
+- **OG 이미지**는 `static/og/{page}.png`(1200×630)로 페이지별로 두고 `image` prop에 `/og/{page}.png`를 넘긴다. 용어사전 개별 용어(`/dictionary/[slug]`)는 공통 `og/dictionary.png`를 쓴다.
+- OG 이미지를 새로 만들거나 디자인시스템 변경으로 다시 뽑을 때는 `/alcol-og-image` 스킬(템플릿 + Playwright 렌더)을 쓴다.
+
 ## 사이트맵 규칙
 
 사이트맵은 **동적 엔드포인트** `src/routes/sitemap.xml/+server.ts`가 생성한다 (`prerender = true`라 빌드 시 정적 파일로 출력). 정적 `static/sitemap.xml`은 사용하지 않는다.
