@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { useSettings } from './useSettings.svelte';
 	import type { ThemeOption } from './types';
+	import Seo from '$lib/components/Seo.svelte';
 
 	const themeOptions: ThemeOption[] = [
 		{ mode: 'system', label: '시스템', hint: '기기 설정에 맞춤' },
@@ -13,11 +14,12 @@
 	onMount(settings.sync);
 </script>
 
-<svelte:head>
-	<title>설정 - 알콜미터</title>
-	<meta name="description" content="알콜미터 화면 테마 등 환경설정." />
-	<link rel="canonical" href="https://alcolmeter.kr/settings" />
-</svelte:head>
+<Seo
+	title="설정 - 알콜미터"
+	description="알콜미터 화면 테마 등 환경설정."
+	path="/settings"
+	image="/og/settings.png"
+/>
 
 <article>
 	<h1>설정</h1>

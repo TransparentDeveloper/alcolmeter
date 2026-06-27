@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import { useDictionary } from './useDictionary.svelte';
+	import Seo from '$lib/components/Seo.svelte';
 
 	let { data }: { data: PageData } = $props();
 
@@ -21,13 +22,14 @@
 	});
 </script>
 
+<Seo
+	title="전통주 용어사전 - 알콜미터"
+	description="막걸리·전통주 양조 용어를 입문자 눈높이로 풀어 설명하는 용어사전. 고두밥, 밑술, 덧술, 누룩부터 양조 방식까지."
+	path="/dictionary"
+	image="/og/dictionary.png"
+/>
+
 <svelte:head>
-	<title>전통주 용어사전 - 알콜미터</title>
-	<meta
-		name="description"
-		content="막걸리·전통주 양조 용어를 입문자 눈높이로 풀어 설명하는 용어사전. 고두밥, 밑술, 덧술, 누룩부터 양조 방식까지."
-	/>
-	<link rel="canonical" href="https://alcolmeter.kr/dictionary" />
 	{@html `<script type="application/ld+json">${jsonLd}</script>`}
 </svelte:head>
 

@@ -2,6 +2,7 @@
 	import { browser } from '$app/environment';
 	import { page } from '$app/state';
 	import { tick } from 'svelte';
+	import Seo from '$lib/components/Seo.svelte';
 
 	type FaqItem = { id: string; q: string; a: string };
 	type FaqSection = { id: string; title: string; items: FaqItem[] };
@@ -167,13 +168,14 @@
 	});
 </script>
 
+<Seo
+	title="자주 묻는 질문 - 알콜미터"
+	description="막걸리 도수·생산량 예측, 배합기 계산에 대한 질문과 답변을 준비했습니다."
+	path="/faq"
+	image="/og/faq.png"
+/>
+
 <svelte:head>
-	<title>자주 묻는 질문 - 알콜미터</title>
-	<meta
-		name="description"
-		content="막걸리 도수·생산량 예측, 배합기 계산에 대한 질문과 답변을 준비했습니다."
-	/>
-	<link rel="canonical" href="https://alcolmeter.kr/faq" />
 	{@html `<script type="application/ld+json">${JSON.stringify(faqJsonLd)}</script>`}
 </svelte:head>
 

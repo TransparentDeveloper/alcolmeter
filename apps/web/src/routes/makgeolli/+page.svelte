@@ -3,6 +3,7 @@
 	import type { BrewTab, BrewMeta, StageNames, NurukHints } from './types';
 	import IngredientInput from '$lib/components/IngredientInput.svelte';
 	import ResultTable from '$lib/components/ResultTable.svelte';
+	import Seo from '$lib/components/Seo.svelte';
 
 	const tabs: { id: BrewTab; label: string }[] = [
 		{ id: 'DANYANG', label: '단양주' },
@@ -31,11 +32,12 @@
 	const m = useMakgeolli(brewMeta, stageNames, nurukHints);
 </script>
 
-<svelte:head>
-	<title>막걸리 계산기 - 알콜미터</title>
-	<meta name="description" content="막걸리 양조 배합 계산기. 쌀 총량과 형태를 입력하면 단양주, 이양주, 삼양주별 쌀·물·누룩 비율을 자동 계산합니다." />
-	<link rel="canonical" href="https://alcolmeter.kr/makgeolli" />
-</svelte:head>
+<Seo
+	title="막걸리 계산기 - 알콜미터"
+	description="막걸리 양조 배합 계산기. 쌀 총량과 형태를 입력하면 단양주, 이양주, 삼양주별 쌀·물·누룩 비율을 자동 계산합니다."
+	path="/makgeolli"
+	image="/og/makgeolli.png"
+/>
 
 <div class="calculator">
 	<section class="card">

@@ -1,8 +1,13 @@
-<svelte:head>
-	<title>개인정보처리방침 - 알콜미터</title>
-	<meta name="description" content="알콜미터 개인정보처리방침. 사용자 데이터를 수집하지 않습니다." />
-	<link rel="canonical" href="https://alcolmeter.kr/privacy" />
-</svelte:head>
+<script lang="ts">
+	import Seo from '$lib/components/Seo.svelte';
+</script>
+
+<Seo
+	title="개인정보처리방침 - 알콜미터"
+	description="알콜미터 개인정보처리방침. 사용자 데이터를 수집하지 않습니다."
+	path="/privacy"
+	image="/og/privacy.png"
+/>
 
 <article>
 	<h1>개인정보처리방침</h1>

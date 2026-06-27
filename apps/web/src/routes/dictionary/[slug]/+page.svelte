@@ -3,6 +3,7 @@
 	import { buildFeedbackUrl } from '$lib/dictionary/feedback-link';
 	import { videoThumbnails, videoWatchUrl, videoEmbedUrl } from '$lib/dictionary/terms';
 	import TermVideo from '$lib/dictionary/TermVideo.svelte';
+	import Seo from '$lib/components/Seo.svelte';
 
 	let { data }: { data: PageData } = $props();
 
@@ -41,10 +42,14 @@
 	);
 </script>
 
+<Seo
+	title="{meta.title} - 전통주 용어사전 - 알콜미터"
+	description={meta.summary}
+	path="/dictionary/{encodeURIComponent(meta.slug)}"
+	image="/og/dictionary.png"
+/>
+
 <svelte:head>
-	<title>{meta.title} - 전통주 용어사전 - 알콜미터</title>
-	<meta name="description" content={meta.summary} />
-	<link rel="canonical" href={canonicalUrl} />
 	{@html `<script type="application/ld+json">${jsonLd}</script>`}
 	{#if videoJsonLd}
 		{@html `<script type="application/ld+json">${videoJsonLd}</script>`}
