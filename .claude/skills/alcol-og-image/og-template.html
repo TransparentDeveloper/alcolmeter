@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<style>
+  :root {
+    --bg: #f2f4f7;
+    --surface: #ffffff;
+    --ink1: #141825;
+    --ink2: #3b4354;
+    --ink3: #5c6478;
+    --ink4: #a7adbb;
+    --spark: #f2512d;
+    --border2: #d4d9e2;
+    --grid: #dbe0e9;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; }
+  body {
+    font-family: 'Pretendard', sans-serif;
+    background-color: var(--bg);
+    background-image: radial-gradient(var(--grid) 1.5px, transparent 1.5px);
+    background-size: 32px 32px;
+    background-position: 8px 8px;
+    color: var(--ink1);
+    overflow: hidden;
+  }
+  .frame {
+    position: absolute;
+    inset: 0;
+    padding: 84px 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .top { display: flex; align-items: center; justify-content: space-between; }
+  .brand { font-weight: 800; font-size: 34px; letter-spacing: -0.01em; color: var(--ink1); }
+  .brand .dot { color: var(--spark); }
+  .tag {
+    font-family: 'Geist Mono', monospace;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    color: var(--ink3);
+  }
+  .mid { display: flex; flex-direction: column; }
+  .title {
+    font-weight: 800;
+    font-size: 78px;
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+    color: var(--ink1);
+  }
+  .subtitle {
+    margin-top: 32px;
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 1.45;
+    color: var(--ink3);
+    max-width: 920px;
+  }
+  .bottom { display: flex; align-items: flex-end; justify-content: space-between; }
+  .url {
+    font-family: 'Geist Mono', monospace;
+    font-size: 19px;
+    font-weight: 500;
+    color: var(--ink2);
+    letter-spacing: 0.02em;
+  }
+  .ticks { display: flex; align-items: flex-end; gap: 7px; height: 26px; }
+  .ticks i { width: 2px; background: var(--ink4); border-radius: 1px; }
+  .ticks i:nth-child(5n + 1) { background: var(--spark); }
+</style>
+</head>
+<body>
+  <div class="frame">
+    <div class="top">
+      <div class="brand">알콜미터<span class="dot">.</span></div>
+      <div class="tag">BREWING&nbsp;&nbsp;CALCULATOR</div>
+    </div>
+    <div class="mid">
+      <div class="title" id="title">전통주 양조 계산기</div>
+      <div class="subtitle" id="subtitle">쌀의 양만 입력하면 최적의 배합 비율을 알려드립니다</div>
+    </div>
+    <div class="bottom">
+      <div class="url">alcolmeter.kr</div>
+      <div class="ticks" id="ticks"></div>
+    </div>
+  </div>
+  <script>
+    // 제목·부제는 URL 파라미터(?title=..&subtitle=..) 또는 DOM 교체로 주입한다.
+    const p = new URLSearchParams(location.search);
+    if (p.get('title')) document.getElementById('title').textContent = p.get('title');
+    if (p.get('subtitle')) document.getElementById('subtitle').textContent = p.get('subtitle');
+    // 우하단 측정 눈금 (5번째마다 spark, 높이 패턴)
+    const ticks = document.getElementById('ticks');
+    const heights = [12, 16, 12, 16, 26, 12, 16, 12, 16, 26, 12, 16, 12, 16];
+    heights.forEach((h) => {
+      const i = document.createElement('i');
+      i.style.height = h + 'px';
+      ticks.appendChild(i);
+    });
+  </script>
+</body>
+</html>
