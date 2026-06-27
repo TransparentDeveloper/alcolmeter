@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import { buildFeedbackUrl } from '$lib/dictionary/feedback-link';
+	import { videoThumbnails, videoWatchUrl, videoEmbedUrl } from '$lib/dictionary/terms';
 	import TermVideo from '$lib/dictionary/TermVideo.svelte';
 
 	let { data }: { data: PageData } = $props();
@@ -23,6 +24,7 @@
 	);
 
 	// 소개 영상이 있으면 VideoObject 구조화 데이터를 추가한다 (동영상 리치결과 대상).
+	// 썸네일·URL은 컴포넌트와 같은 헬퍼로 파생해 표시와 구조화 데이터가 어긋나지 않게 한다.
 	const videoJsonLd = $derived(
 		meta.video
 			? JSON.stringify({
@@ -30,13 +32,10 @@
 					'@type': 'VideoObject',
 					name: meta.video.title,
 					description: meta.video.description,
-					thumbnailUrl: [
-						`https://i.ytimg.com/vi/${meta.video.id}/oardefault.jpg`,
-						`https://i.ytimg.com/vi/${meta.video.id}/maxresdefault.jpg`
-					],
+					thumbnailUrl: videoThumbnails(meta.video),
 					uploadDate: meta.video.uploadDate,
-					embedUrl: `https://www.youtube.com/embed/${meta.video.id}`,
-					contentUrl: `https://www.youtube.com/shorts/${meta.video.id}`
+					embedUrl: videoEmbedUrl(meta.video),
+					contentUrl: videoWatchUrl(meta.video)
 				})
 			: null
 	);

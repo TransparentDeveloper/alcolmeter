@@ -1,25 +1,30 @@
 <script lang="ts">
-	import type { TermVideo } from './terms';
+	import {
+		isPortraitVideo,
+		videoThumbnails,
+		videoWatchUrl,
+		videoEmbedUrl,
+		type TermVideo
+	} from './terms';
 
 	let { video }: { video: TermVideo } = $props();
 
-	// 썸네일·임베드 URL은 영상 id에서 파생한다.
-	// 쇼츠 세로(9:16) 썸네일은 oardefault(Original Aspect Ratio). 비공식 URL이라 maxresdefault로 폴백.
-	const thumbUrl = $derived(`https://i.ytimg.com/vi/${video.id}/oardefault.jpg`);
-	const fallbackThumbUrl = $derived(`https://i.ytimg.com/vi/${video.id}/maxresdefault.jpg`);
-	const embedUrl = $derived(`https://www.youtube.com/embed/${video.id}?autoplay=1`);
-	const watchUrl = $derived(`https://www.youtube.com/shorts/${video.id}`);
+	const portrait = $derived(isPortraitVideo(video));
+	// [기본, 폴백] 썸네일. oardefault(쇼츠 세로)/maxresdefault는 비공식·결측 가능성이 있어 폴백을 둔다.
+	const thumbs = $derived(videoThumbnails(video));
+	const embedUrl = $derived(`${videoEmbedUrl(video)}?autoplay=1`);
+	const watchUrl = $derived(videoWatchUrl(video));
+	// CLS 방지용 고유비율(실제 비율은 CSS aspect-ratio가 잡지만 width/height 힌트로 둔다).
+	const thumbWidth = $derived(portrait ? 1080 : 1280);
+	const thumbHeight = $derived(portrait ? 1920 : 720);
 
 	// Lite 파사드: 클릭 전까지 YouTube iframe(스크립트)을 로드하지 않는다.
 	let playing = $state(false);
-
-	function handleThumbError(event: Event) {
-		const img = event.currentTarget as HTMLImageElement;
-		if (!img.src.endsWith('/maxresdefault.jpg')) img.src = fallbackThumbUrl;
-	}
+	let thumbFailed = $state(false);
+	const thumbUrl = $derived(thumbFailed ? thumbs[1] : thumbs[0]);
 </script>
 
-<figure class="term-video">
+<figure class="term-video" class:portrait class:landscape={!portrait}>
 	<div class="frame">
 		{#if playing}
 			<iframe
@@ -38,10 +43,10 @@
 				<img
 					src={thumbUrl}
 					alt={video.title}
-					width="1080"
-					height="1920"
+					width={thumbWidth}
+					height={thumbHeight}
 					loading="lazy"
-					onerror={handleThumbError}
+					onerror={() => (thumbFailed = true)}
 				/>
 				<span class="play-icon" aria-hidden="true"></span>
 			</button>
@@ -55,17 +60,32 @@
 <style>
 	.term-video {
 		width: 100%;
-		max-width: 320px;
 		margin: 0 auto;
 		display: flex;
 		flex-direction: column;
 		gap: var(--ds-space-sm);
 	}
 
+	/* 쇼츠(세로 9:16)와 일반 영상(가로 16:9)의 폭·비율 */
+	.term-video.portrait {
+		max-width: 240px;
+	}
+
+	.term-video.landscape {
+		max-width: 480px;
+	}
+
+	.term-video.portrait .frame {
+		aspect-ratio: 9 / 16;
+	}
+
+	.term-video.landscape .frame {
+		aspect-ratio: 16 / 9;
+	}
+
 	.frame {
 		position: relative;
 		width: 100%;
-		aspect-ratio: 9 / 16;
 		overflow: hidden;
 		border-radius: var(--ds-radius-md);
 		background: var(--ds-color-surface);
