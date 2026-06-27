@@ -1,3 +1,4 @@
+import '@alcolmeter/design-system/tokens.css';
 import { mount } from 'svelte';
 import App from './App.svelte';
 

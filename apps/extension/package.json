@@ -9,6 +9,7 @@
 		"zip": "wxt zip"
 	},
 	"dependencies": {
+		"@alcolmeter/design-system": "workspace:*",
 		"@alcolmeter/domain": "workspace:*"
 	},
 	"devDependencies": {

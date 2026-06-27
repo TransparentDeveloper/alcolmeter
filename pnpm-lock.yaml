@@ -10,6 +10,9 @@ importers:
 
   apps/extension:
     dependencies:
+      '@alcolmeter/design-system':
+        specifier: workspace:*
+        version: link:../../packages/design-system
       '@alcolmeter/domain':
         specifier: workspace:*
         version: link:../../packages/domain
