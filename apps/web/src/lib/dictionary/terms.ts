@@ -15,6 +15,20 @@ export type TermMeta = {
 	related?: string[];
 	/** 최종 수정일 YYYY-MM-DD */
 	updated?: string;
+	/** 소개 영상 (YouTube). 있으면 용어 페이지에 임베드 + VideoObject JSON-LD */
+	video?: TermVideo;
+};
+
+/** 용어 소개 영상 (YouTube). 썸네일·임베드 URL은 id에서 파생한다. */
+export type TermVideo = {
+	/** YouTube 영상/쇼츠 ID */
+	id: string;
+	/** 영상 제목 — VideoObject.name, figcaption */
+	title: string;
+	/** 영상 설명 — VideoObject.description */
+	description: string;
+	/** 게시일 YYYY-MM-DD — VideoObject.uploadDate */
+	uploadDate: string;
 };
 
 // frontmatter(metadata)만 eager 로드한다 — 본문 컴포넌트는 [slug] 라우트에서 지연 로드.

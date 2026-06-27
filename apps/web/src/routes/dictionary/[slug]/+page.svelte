@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import { buildFeedbackUrl } from '$lib/dictionary/feedback-link';
+	import TermVideo from '$lib/dictionary/TermVideo.svelte';
 
 	let { data }: { data: PageData } = $props();
 
@@ -20,6 +21,25 @@
 			url: canonicalUrl
 		})
 	);
+
+	// 소개 영상이 있으면 VideoObject 구조화 데이터를 추가한다 (동영상 리치결과 대상).
+	const videoJsonLd = $derived(
+		meta.video
+			? JSON.stringify({
+					'@context': 'https://schema.org',
+					'@type': 'VideoObject',
+					name: meta.video.title,
+					description: meta.video.description,
+					thumbnailUrl: [
+						`https://i.ytimg.com/vi/${meta.video.id}/oardefault.jpg`,
+						`https://i.ytimg.com/vi/${meta.video.id}/maxresdefault.jpg`
+					],
+					uploadDate: meta.video.uploadDate,
+					embedUrl: `https://www.youtube.com/embed/${meta.video.id}`,
+					contentUrl: `https://www.youtube.com/shorts/${meta.video.id}`
+				})
+			: null
+	);
 </script>
 
 <svelte:head>
@@ -27,6 +47,9 @@
 	<meta name="description" content={meta.summary} />
 	<link rel="canonical" href={canonicalUrl} />
 	{@html `<script type="application/ld+json">${jsonLd}</script>`}
+	{#if videoJsonLd}
+		{@html `<script type="application/ld+json">${videoJsonLd}</script>`}
+	{/if}
 </svelte:head>
 
 <article class="term">
@@ -57,6 +80,10 @@
 		<h1>{meta.title}</h1>
 		<p class="summary">{meta.summary}</p>
 	</header>
+
+	{#if meta.video}
+		<TermVideo video={meta.video} />
+	{/if}
 
 	<div class="prose">
 		<Content />
