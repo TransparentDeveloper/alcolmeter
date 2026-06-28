@@ -38,6 +38,7 @@ pnpm check            # web 타입 체크
 4. 사용자 피드백이 완료될 때까지 각 커밋을 `git commit --amend`로 다듬는다
 5. 모든 커밋이 승인되면 로컬에서 `main`으로 머지 (PR 없음)
 6. 작업 브랜치는 원격에 push하지 않는다. `main` 머지 후 `main`만 push한다
+7. **web·extension 작업이면 `main` push 후 릴리즈 태그를 단다** (배포의 마지막 단계). 버전 범프 커밋에 `{앱}-v{SemVer}` 태그를 달아 push하면 GitHub Release가 자동 생성된다. PATCH도 빠짐없이. 라이브러리·`common` 작업은 태그하지 않는다. 상세는 릴리즈/CHANGELOG 참고
 
 ## 브랜치 규칙
 
@@ -61,7 +62,7 @@ pnpm check            # web 타입 체크
   - web → `apps/web/CHANGELOG.md`
   - extension → `apps/extension/CHANGELOG.md`
 - **라이브러리(domain·domain-v2·design-system)는 자체 CHANGELOG를 두지 않는다.** 사용자에게 직접 배포되지 않기 때문. 라이브러리 변경의 사용자 영향은 그걸 소비하는 앱의 CHANGELOG에 **버전을 인용**해 서술한다 (예: web `0.4.2`의 "… (design-system 0.3.1)"). 라이브러리 자체 결정 기록은 design-system=`DESIGN.md` Decisions Log, domain=커밋 히스토리·버전으로 충분.
-- **릴리즈 태그 / GitHub Release는 CHANGELOG가 있는 앱(web·extension)에만.** 태그 형식 `{앱}-v{SemVer}` (예: `web-v0.4.0`) — 태그가 앱을 식별한다. 과거 버전도 해당 커밋에 소급 태깅 가능. 라이브러리는 `package.json` 버전 범프만 하고 태그·Release는 만들지 않는다.
+- **web·extension 릴리즈는 반드시 태그를 단다 (배포의 마지막 단계, PATCH 포함 빠짐없이).** `main` 머지·push 후 버전 범프 커밋에 `{앱}-v{SemVer}` 태그(예: `web-v0.4.0`)를 달아 push하면, 태그 prefix가 앱을 식별해 GitHub Release가 자동 생성된다(아래 항목). 누락한 과거 버전은 해당 범프 커밋에 소급 태깅한다. 라이브러리(domain·design-system)는 `package.json` 버전 범프만 하고 태그·Release는 만들지 않는다.
 - **GitHub Release**: 태그(`{하위프로젝트}-v{SemVer}`) push 시 `.github/workflows/release.yml`가 태그 prefix로 하위프로젝트를 식별해 그 `CHANGELOG.md`의 해당 버전 섹션을 본문으로 Release를 **자동 생성**한다. (단, 이 워크플로보다 앞선 커밋에 다는 태그는 그 커밋에 워크플로 파일이 없어 자동화되지 않으므로 `gh release create {태그} --notes-file …`로 수동 처리.)
 - **CHANGELOG 톤**: 양조장 밤일지 — 존댓말 + 실제 릴리즈 시점(날짜·계절·절기)에 근거한 이탤릭 인용문 + 명확한 변경 불릿. 작성 보조 스킬: `/alcol-release-notes`.
 - **pre-push 게이트**: **배포 앱(web·extension)** 에 사용자 영향(비-`chore`) 변경을 `main`에 push하려면 그 앱의 `CHANGELOG.md` 갱신이 필수. `chore` 커밋만 있거나 해당 앱을 안 건드리면 면제. 라이브러리는 게이트 대상이 아니다. 구현: `.githooks/pre-push` + `core.hooksPath=.githooks`(루트 `prepare`가 설정). 클라이언트 훅이라 `--no-verify`로 우회 가능(서버 차단은 아님).
