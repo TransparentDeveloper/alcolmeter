@@ -8,7 +8,13 @@ pnpm build    # 프로덕션 빌드
 pnpm check    # 타입 체크
 ```
 
-## 페이지 구조 규칙
+## 아키텍처 (FSD)
+
+`apps/web`은 Feature-Sliced Design으로 전환 중이다. **새 페이지를 만들거나 기존 페이지 구조를 개선할 때는 `docs/convention/architecture.md`를 먼저 읽고 그 컨벤션(레이어·세그먼트·배럴·import 규칙)을 따른다.** 마이그레이션은 페이지 단위로 점진 진행하며, 아직 옮기지 않은 페이지는 아래 레거시 규칙을 유지한다.
+
+## 페이지 구조 규칙 (레거시 · 미마이그레이션 페이지 한정)
+
+> FSD로 마이그레이션한 페이지에는 적용하지 않는다. 신규·개선 작업은 `docs/convention/architecture.md`를 따른다.
 
 로직이 있는 페이지는 라우트 디렉토리 안에 다음 세 파일로 구성한다:
 
@@ -27,7 +33,9 @@ src/routes/{page}/
 
 ### 참고: `src/routes/makgeolli/`
 
-## SEO·공유 메타 규칙
+## SEO·공유 메타 규칙 (레거시 · 미마이그레이션 페이지 한정)
+
+> FSD로 마이그레이션한 페이지는 SEO를 `apps` 레이어에서 `shared/ui/SEO`로 주입한다. 아래는 아직 옮기지 않은 페이지 기준이다.
 
 페이지의 title·description·canonical·OpenGraph·Twitter 메타는 `src/lib/components/Seo.svelte` 한 컴포넌트로 주입한다.
 
