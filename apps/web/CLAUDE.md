@@ -35,7 +35,7 @@ src/routes/{page}/
 
 ## SEO·공유 메타 규칙 (레거시 · 미마이그레이션 페이지 한정)
 
-> FSD로 마이그레이션한 페이지는 SEO를 `apps` 레이어에서 `shared/ui/SEO`로 주입한다. 아래는 아직 옮기지 않은 페이지 기준이다.
+> FSD로 마이그레이션한 페이지는 SEO를 `apps` 레이어에서 `shared/ui/MetaHead`로 주입한다. 아래는 아직 옮기지 않은 페이지 기준이다.
 
 페이지의 title·description·canonical·OpenGraph·Twitter 메타는 `src/lib/components/Seo.svelte` 한 컴포넌트로 주입한다.
 

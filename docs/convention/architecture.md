@@ -100,5 +100,5 @@ widgets/home/ui/Hero.svelte
 widgets/home/ui/DrinkSelection.svelte
 widgets/home/ui/Learn.svelte
 widgets/home/ui/index.ts                   (ui 세그먼트 배럴, 셋 다 export)
-shared/ui/SEO/Seo.svelte + index.ts        ($lib/components/Seo.svelte 복사, home만 사용)
+shared/ui/MetaHead/MetaHead.svelte + index.ts  ($lib/components/Seo.svelte 복사, home만 사용)
 ```
