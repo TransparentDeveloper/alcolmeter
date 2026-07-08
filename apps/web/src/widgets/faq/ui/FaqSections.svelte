@@ -81,6 +81,24 @@
 		border-color: var(--ds-color-border-3);
 	}
 
+	.faq-item::details-content {
+		block-size: 0;
+		overflow: hidden;
+		transition:
+			block-size var(--ds-duration-medium) var(--ds-ease-out),
+			content-visibility var(--ds-duration-medium) var(--ds-ease-out) allow-discrete;
+	}
+
+	.faq-item[open]::details-content {
+		block-size: auto;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.faq-item::details-content {
+			transition: none;
+		}
+	}
+
 	.faq-item summary {
 		padding: 1rem 1.25rem;
 		font-size: 0.88rem;

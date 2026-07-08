@@ -21,6 +21,11 @@
 	--radius-lg: var(--ds-radius-lg);
 }
 
+/* auto 등 키워드로의 크기 전환을 문서 전역에서 허용한다. */
+:root {
+	interpolate-size: allow-keywords;
+}
+
 * {
 	margin: 0;
 	padding: 0;
