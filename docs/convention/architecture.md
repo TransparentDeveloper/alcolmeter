@@ -39,6 +39,13 @@ Slice 내부 폴더는 아래 6종만 쓴다. 임의 세그먼트 금지.
 - 상위 레이어는 반드시 `lib` 배럴을 경유해 import한다. 구체 파일 직접 import는 금지한다.
 - 예: FAQ 콘텐츠는 `entities/faq/lib/constant.ts`에 두고, 소비처는 `import { sections } from '$entities/faq/lib'`로 읽는다.
 
+### 뷰 상태·연산 (ui)
+
+- 위젯의 지역 상태와 뷰 연산(검색·필터·그룹핑 등)은 해당 `ui` 세그먼트에 **`{Name}.svelte.ts` class**로 둔다. React식 `use…` 훅을 두지 않는다.
+- class는 `$state`·`$derived` 룬을 필드·게터에 쓰고, 컴포넌트가 인스턴스화해 바인딩한다.
+- 한 위젯에 닫힌 상태는 이 class로 충분하다. 여러 위젯이 공유해야 하는 상태만 `features`로 올린다.
+- 예: `widgets/dictionary/ui/DictionaryView.svelte.ts`의 `DictionaryView`가 검색어와 필터·그룹 파생을 담고, `DictionaryIndex.svelte`가 인스턴스화한다.
+
 ## 4. 배럴·import 규칙
 
 - **모든 세그먼트에 `index.ts` 배럴을 둔다.**
