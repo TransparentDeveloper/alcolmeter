@@ -1,4 +1,4 @@
-import { terms } from '$lib/dictionary/terms';
+import { terms } from '$entities/dictionary/lib';
 import type { RequestHandler } from './$types';
 
 export const prerender = true;
