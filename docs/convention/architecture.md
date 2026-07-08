@@ -19,17 +19,25 @@
 | `entities` | 도메인 모델·데이터 형태, API 호출·컨버팅 | 관심사(Domain) | |
 | `shared` | 프로젝트 전반 공통 모듈 (Slice 구조 없음) | 없음 | |
 
-## 3. 세그먼트 (5종 고정)
+## 3. 세그먼트 (6종 고정)
 
-Slice 내부 폴더는 아래 5종만 쓴다. 임의 세그먼트 금지.
+Slice 내부 폴더는 아래 6종만 쓴다. 임의 세그먼트 금지.
 
-**슬라이스 바로 아래에는 세그먼트(5종)만 온다.** 섹션·컴포넌트를 슬라이스 밑 별도 폴더로 두지 않는다. 예를 들어 home의 여러 섹션은 `widgets/home/ui/`에 `Hero.svelte`·`DrinkSelection.svelte`처럼 나란히 둔다 (`widgets/home/hero/ui/…` 처럼 중간 폴더를 끼우지 않는다).
+**슬라이스 바로 아래에는 세그먼트(6종)만 온다.** 섹션·컴포넌트를 슬라이스 밑 별도 폴더로 두지 않는다. 예를 들어 home의 여러 섹션은 `widgets/home/ui/`에 `Hero.svelte`·`DrinkSelection.svelte`처럼 나란히 둔다 (`widgets/home/hero/ui/…` 처럼 중간 폴더를 끼우지 않는다).
 
 - `ui`: 컴포넌트·스타일
 - `model`: 상태 관리, 데이터 타입 (Store, Type, Class)
 - `api`: 백엔드 통신·데이터 페칭
 - `service`: 비즈니스 로직, 데이터타입·에러타입 정형화
 - `controller`: 이벤트를 적절한 `service` 로직으로 라우팅
+- `lib`: 상태 없는 순수 유틸·헬퍼·상수·정적 데이터. 프레임워크·비즈니스 로직과 무관하다
+
+### 상수·정적 데이터
+
+- 슬라이스에 종속된 상수·정적 콘텐츠는 그 슬라이스의 **`lib/constant.ts`** 에 둔다.
+- 종류가 많아지면 `lib/` 아래 목적별 파일(`constant.ts`·`schema.ts` 등)로 나누고 `lib/index.ts` 배럴로 노출한다.
+- 상위 레이어는 반드시 `lib` 배럴을 경유해 import한다. 구체 파일 직접 import는 금지한다.
+- 예: FAQ 콘텐츠는 `entities/faq/lib/constant.ts`에 두고, 소비처는 `import { sections } from '$entities/faq/lib'`로 읽는다.
 
 ## 4. 배럴·import 규칙
 
@@ -69,8 +77,9 @@ Slice 내부 폴더는 아래 5종만 쓴다. 임의 세그먼트 금지.
 ## 7. 체크리스트
 
 - [ ] 컴포넌트가 `.svelte`인가 (`.tsx` 없음)
-- [ ] 세그먼트가 5종(`ui`/`model`/`api`/`service`/`controller`) 안에 있는가
+- [ ] 세그먼트가 6종(`ui`/`model`/`api`/`service`/`controller`/`lib`) 안에 있는가
 - [ ] 슬라이스 바로 아래에 세그먼트만 있는가 (중간 폴더 없음)
+- [ ] 상수·정적 데이터가 `lib/constant.ts`에 있는가
 - [ ] 세그먼트마다 `index.ts` 배럴이 있는가
 - [ ] 크로스 레이어 import가 배럴을 경유하는가
 - [ ] import가 단방향인가
