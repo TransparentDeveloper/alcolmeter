@@ -3,8 +3,8 @@ import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
 // 콘텐츠 디렉터리는 이 파일 기준으로 해석한다 (cwd 비의존).
-// src/lib/dictionary/ → ../../content/dictionary = src/content/dictionary
-const CONTENT_DIR = resolve(dirname(fileURLToPath(import.meta.url)), '../../content/dictionary');
+// src/entities/dictionary/lib/ → ../../../content/dictionary = src/content/dictionary
+const CONTENT_DIR = resolve(dirname(fileURLToPath(import.meta.url)), '../../../content/dictionary');
 
 const WIKI_LINK = /\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g;
 

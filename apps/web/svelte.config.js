@@ -1,7 +1,7 @@
 import adapter from '@sveltejs/adapter-vercel';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { mdsvex } from 'mdsvex';
-import { wikiLinkPreprocess } from './src/lib/dictionary/wiki-link-preprocess.js';
+import { wikiLinkPreprocess } from './src/entities/dictionary/lib/wiki-link.js';
 
 /** @type {import('mdsvex').MdsvexOptions} */
 const mdsvexConfig = {
