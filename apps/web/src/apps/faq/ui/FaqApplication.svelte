@@ -12,10 +12,7 @@
 	description="막걸리 도수·생산량 예측, 배합기 계산에 대한 질문과 답변을 준비했습니다."
 	path="/faq"
 	image="/og/faq.png"
+	schemas={[JsonLd.createFAQPageSchemaMarkup(questions)]}
 />
-
-<svelte:head>
-	{@html JsonLd.createFAQPageSchemaMarkup(questions)}
-</svelte:head>
 
 <FaqPage />
