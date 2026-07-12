@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { PostModel, createBlock } from '.';
+import { PostModel } from '.';
 import type { PostRow } from '.';
 
 const row: PostRow = {
@@ -43,10 +43,10 @@ describe('PostModel.fromRow', () => {
 	});
 });
 
-describe('createBlock', () => {
+describe('PostModel.createBlock', () => {
 	it('빈 문단은 고유 id + 빈 heading/text를 갖는다', () => {
-		const a = createBlock();
-		const b = createBlock();
+		const a = PostModel.createBlock();
+		const b = PostModel.createBlock();
 		expect(a.id).not.toBe(b.id);
 		expect(a.heading).toBe('');
 		expect(a.text).toBe('');

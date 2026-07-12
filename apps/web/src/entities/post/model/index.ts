@@ -31,10 +31,6 @@ interface PostRow {
 
 const SUMMARY_LIMIT = 100;
 
-function createBlock(): PostBlock {
-	return { id: crypto.randomUUID(), heading: '', text: '' };
-}
-
 class PostModel {
 	private data: PostData;
 
@@ -79,6 +75,10 @@ class PostModel {
 		};
 	}
 
+	static createBlock(): PostBlock {
+		return { id: crypto.randomUUID(), heading: '', text: '' };
+	}
+
 	static fromRow(row: PostRow): PostModel {
 		return new PostModel({
 			id: row.id,
@@ -91,5 +91,5 @@ class PostModel {
 	}
 }
 
-export { PostModel, createBlock };
+export { PostModel };
 export type { PostBlock, PostAuthor, PostData, PostRow };

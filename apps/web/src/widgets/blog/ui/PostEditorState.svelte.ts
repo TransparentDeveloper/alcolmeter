@@ -1,15 +1,15 @@
-import { createBlock } from '$entities/post/model';
+import { PostModel } from '$entities/post/model';
 import type { PostBlock } from '$entities/post/model';
 
 // 문단 배열 편집 상태. 한 위젯에 닫힌 지역 상태라 store가 아니라 ui의 class로 둔다.
 class PostEditorState {
 	title = $state('');
-	blocks = $state<PostBlock[]>([createBlock()]);
+	blocks = $state<PostBlock[]>([PostModel.createBlock()]);
 
 	constructor(initial?: { title: string; blocks: PostBlock[] }) {
 		if (initial) {
 			this.title = initial.title;
-			this.blocks = initial.blocks.length ? initial.blocks.map((b) => ({ ...b })) : [createBlock()];
+			this.blocks = initial.blocks.length ? initial.blocks.map((b) => ({ ...b })) : [PostModel.createBlock()];
 		}
 	}
 
@@ -18,7 +18,7 @@ class PostEditorState {
 	}
 
 	addBlock(): void {
-		this.blocks = [...this.blocks, createBlock()];
+		this.blocks = [...this.blocks, PostModel.createBlock()];
 	}
 
 	removeBlock(id: string): void {
