@@ -43,6 +43,15 @@ class UserModel {
 		return this.data.provider;
 	}
 
+	get displayName(): string {
+		if (this.data.name) return this.data.name;
+		if (this.data.email) {
+			const local = this.data.email.split('@')[0];
+			return `${local.slice(0, 3)}***`;
+		}
+		return '익명';
+	}
+
 	// 소셜(Google)은 full_name·name으로 이름이 온다. 이메일 가입은 메타데이터가 비어 null이 된다.
 	static fromSupabaseUser(supabaseUser: SupabaseUser): UserModel {
 		const meta = supabaseUser.user_metadata ?? {};

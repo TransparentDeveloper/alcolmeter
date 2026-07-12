@@ -89,3 +89,31 @@ describe('UserModel.fromSupabaseUser', () => {
 		expect(user.provider).toBeNull();
 	});
 });
+
+describe('UserModel.displayName', () => {
+	it('name이 있으면 name을 그대로 쓴다', () => {
+		const user = UserModel.fromSupabaseUser(
+			supabaseUser({ email: 'jeff@example.com', user_metadata: { full_name: '제프' } })
+		);
+		expect(user.displayName).toBe('제프');
+	});
+
+	it('name이 없으면 이메일 로컬파트 앞 3글자 + ***로 마스킹한다', () => {
+		const user = UserModel.fromSupabaseUser(
+			supabaseUser({ email: 'jeff@example.com', user_metadata: {} })
+		);
+		expect(user.displayName).toBe('jef***');
+	});
+
+	it('로컬파트가 3글자 이하면 있는 만큼만 남기고 ***를 붙인다', () => {
+		const user = UserModel.fromSupabaseUser(
+			supabaseUser({ email: 'ab@example.com', user_metadata: {} })
+		);
+		expect(user.displayName).toBe('ab***');
+	});
+
+	it('name도 email도 없으면 익명이다', () => {
+		const user = UserModel.fromSupabaseUser(supabaseUser({}));
+		expect(user.displayName).toBe('익명');
+	});
+});
