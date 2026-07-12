@@ -18,6 +18,6 @@ export default defineConfig({
 		__FAVICON_VERSION__: JSON.stringify(faviconVersion)
 	},
 	test: {
-		include: ['../../tests/**/*.test.ts']
+		include: ['src/**/*.test.ts']
 	}
 });
