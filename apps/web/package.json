@@ -15,6 +15,7 @@
 		"@alcolmeter/design-system": "workspace:*",
 		"@alcolmeter/domain": "workspace:*",
 		"@alcolmeter/domain-v2": "workspace:*",
+		"@supabase/ssr": "^0.12.0",
 		"@supabase/supabase-js": "^2.49.8"
 	},
 	"devDependencies": {
