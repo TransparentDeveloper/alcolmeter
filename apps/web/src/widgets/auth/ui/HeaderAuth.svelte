@@ -29,8 +29,6 @@
 		<span class="name">{authStore.value.user.displayName}</span>
 		<button type="button" onclick={signOut}>로그아웃</button>
 	</span>
-{:else if authStore.value.status === 'signedOut'}
-	<a class="auth" href="/login">로그인</a>
 {/if}
 
 <style>
