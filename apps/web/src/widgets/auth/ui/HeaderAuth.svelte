@@ -1,9 +1,12 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { page } from '$app/state';
 	import { UserModel } from '$entities/user/model';
 	import { UserAPI } from '$entities/user/api';
 	import { AuthAPI } from '$features/auth/api';
 	import { authStore } from '$features/auth/store/index.svelte';
+
+	const loginHref = $derived(`/login?redirect=${encodeURIComponent(page.url.pathname)}`);
 
 	onMount(() => {
 		const { data } = AuthAPI.onAuthStateChange((_event, session) => {
@@ -29,6 +32,8 @@
 		<span class="name">{authStore.value.user.displayName}</span>
 		<button type="button" onclick={signOut}>로그아웃</button>
 	</span>
+{:else if authStore.value.status === 'signedOut' && page.url.pathname !== '/login'}
+	<a class="login-link" href={loginHref}>로그인</a>
 {/if}
 
 <style>
@@ -53,6 +58,16 @@
 		padding: 0;
 	}
 	button:hover {
+		color: var(--ds-color-spark);
+	}
+	.login-link {
+		font-family: var(--ds-font-mono);
+		font-size: var(--ds-text-xs);
+		color: var(--ds-color-ink-3);
+		text-decoration: none;
+		transition: color var(--ds-duration-short) var(--ds-ease-out);
+	}
+	.login-link:hover {
 		color: var(--ds-color-spark);
 	}
 </style>

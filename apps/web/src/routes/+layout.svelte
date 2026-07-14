@@ -3,6 +3,7 @@
 	import '@alcolmeter/design-system/motion.css';
 	import '../app.css';
 	import { afterNavigate } from '$app/navigation';
+	import { page } from '$app/state';
 	import { HeaderAuth } from '$widgets/auth/ui';
 	let { children } = $props();
 	const version = __APP_VERSION__;
@@ -26,22 +27,23 @@
 		<a href="/" class="logo">
 			<span class="logo-text">알콜미터<span class="logo-dot">.</span></span>
 		</a>
-		<span class="logo-meta">BREWING CALCULATOR</span>
 		<HeaderAuth />
 	</header>
 	<main>
 		{@render children()}
 	</main>
-	<footer>
-		<nav class="footer-links">
-			<a href="/makgeolli">막걸리 계산기</a>
-			<a href="/settings">설정</a>
-			<a href="/dictionary">용어사전</a>
-			<a href="/privacy">개인정보처리방침</a>
-			<a href="/faq">자주 묻는 질문</a>
-		</nav>
-		<span class="version">v{version}</span>
-	</footer>
+	{#if page.url.pathname !== '/login'}
+		<footer>
+			<nav class="footer-links">
+				<a href="/makgeolli">막걸리 계산기</a>
+				<a href="/settings">설정</a>
+				<a href="/dictionary">용어사전</a>
+				<a href="/privacy">개인정보처리방침</a>
+				<a href="/faq">자주 묻는 질문</a>
+			</nav>
+			<span class="version">v{version}</span>
+		</footer>
+	{/if}
 </div>
 
 <style>
@@ -78,13 +80,6 @@
 
 	.logo-dot {
 		color: var(--ds-color-spark);
-	}
-
-	.logo-meta {
-		font-family: var(--ds-font-mono);
-		font-size: var(--ds-text-xs);
-		letter-spacing: 0.08em;
-		color: var(--ds-color-ink-3);
 	}
 
 	main {
