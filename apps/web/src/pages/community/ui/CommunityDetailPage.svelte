@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { PostModel } from '$entities/post/model';
 	import type { PostData } from '$entities/post/model';
-	import { PostDetail } from '$widgets/blog/ui';
+	import { PostDetail } from '$widgets/community/ui';
 
 	let { post }: { post: PostData } = $props();
 

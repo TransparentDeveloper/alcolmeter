@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { BlogWritePage } from '$pages/blog/ui';
+	import { CommunityWritePage } from '$pages/community/ui';
 </script>
 
 <svelte:head>
@@ -7,4 +7,4 @@
 	<meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 
-<BlogWritePage />
+<CommunityWritePage />

@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { BlogListApplication } from '$apps/blog/ui';
+	import { CommunityListApplication } from '$apps/community/ui';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
 </script>
 
-<BlogListApplication posts={data.posts} />
+<CommunityListApplication posts={data.posts} />

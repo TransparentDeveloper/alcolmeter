@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { PostModel } from '$entities/post/model';
 	import type { PostData } from '$entities/post/model';
-	import { PostList } from '$widgets/blog/ui';
+	import { PostList } from '$widgets/community/ui';
 	import { authStore } from '$features/auth/store/index.svelte';
 
 	let { posts }: { posts: PostData[] } = $props();
@@ -14,7 +14,7 @@
 	<div class="head">
 		<h1>커뮤니티</h1>
 		{#if canWrite}
-			<a class="write" href="/blog/new">글쓰기</a>
+			<a class="write" href="/community/new">글쓰기</a>
 		{/if}
 	</div>
 	<PostList posts={models} />

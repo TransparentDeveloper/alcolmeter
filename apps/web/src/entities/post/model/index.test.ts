@@ -6,8 +6,14 @@ const row: PostRow = {
 	id: 42,
 	title: '첫 글',
 	content: [
-		{ id: 'b1', heading: '소제목', text: '본문 내용' },
-		{ id: 'b2', heading: '', text: '두 번째 문단' }
+		{
+			id: 'b1',
+			elements: [
+				{ id: 'e1', type: 'heading', value: '소제목' },
+				{ id: 'e2', type: 'body', value: '본문 내용' }
+			]
+		},
+		{ id: 'b2', elements: [{ id: 'e3', type: 'body', value: '두 번째 문단' }] }
 	],
 	author_id: 'uuid-1',
 	created_at: '2026-07-12T00:00:00Z',
@@ -29,9 +35,20 @@ describe('PostModel.fromRow', () => {
 		expect(post.author.displayName).toBe('익명');
 	});
 
-	it('summary는 첫 문단 본문을 100자로 자른다', () => {
+	it('summary는 소제목을 건너뛰고 첫 본문 요소를 100자로 자른다', () => {
 		const long = 'x'.repeat(150);
-		const post = PostModel.fromRow({ ...row, content: [{ id: 'b1', heading: '', text: long }] });
+		const post = PostModel.fromRow({
+			...row,
+			content: [
+				{
+					id: 'b1',
+					elements: [
+						{ id: 'e1', type: 'heading', value: '제목만' },
+						{ id: 'e2', type: 'body', value: long }
+					]
+				}
+			]
+		});
 		expect(post.summary).toBe('x'.repeat(100) + '…');
 	});
 
@@ -44,11 +61,21 @@ describe('PostModel.fromRow', () => {
 });
 
 describe('PostModel.createBlock', () => {
-	it('빈 문단은 고유 id + 빈 heading/text를 갖는다', () => {
+	it('새 문단은 고유 id + 빈 본문 요소 하나를 갖는다', () => {
 		const a = PostModel.createBlock();
 		const b = PostModel.createBlock();
 		expect(a.id).not.toBe(b.id);
-		expect(a.heading).toBe('');
-		expect(a.text).toBe('');
+		expect(a.elements).toHaveLength(1);
+		expect(a.elements[0].type).toBe('body');
+		expect(a.elements[0].value).toBe('');
+	});
+});
+
+describe('PostModel.createElement', () => {
+	it('지정한 타입의 빈 요소를 만든다', () => {
+		const h = PostModel.createElement('heading');
+		expect(h.type).toBe('heading');
+		expect(h.value).toBe('');
+		expect(h.id).toBeTruthy();
 	});
 });

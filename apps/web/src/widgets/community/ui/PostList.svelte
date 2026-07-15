@@ -10,7 +10,7 @@
 	<ul>
 		{#each posts as post (post.id)}
 			<li>
-				<a href={`/blog/${post.id}`}>
+				<a href={`/community/${post.id}`}>
 					<h2>{post.title}</h2>
 					<p class="summary">{post.summary}</p>
 					<span class="meta">{post.author.displayName} · {post.createdAt.slice(0, 10)}</span>

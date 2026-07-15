@@ -1,7 +1,14 @@
+type BlockElementType = 'heading' | 'body' | 'image';
+
+interface BlockElement {
+	id: string;
+	type: BlockElementType;
+	value: string; // heading·body: 텍스트, image: URL (todo)
+}
+
 interface PostBlock {
 	id: string;
-	heading: string;
-	text: string;
+	elements: BlockElement[]; // 소제목(heading)은 문단당 1개이며 맨 앞에 온다
 }
 
 interface PostAuthor {
@@ -63,20 +70,30 @@ class PostModel {
 	}
 
 	get summary(): string {
-		const text = this.data.blocks[0]?.text ?? '';
+		const body = this.data.blocks
+			.flatMap((b) => b.elements)
+			.find((e) => e.type === 'body' && e.value.trim().length > 0);
+		const text = body?.value ?? '';
 		return text.length > SUMMARY_LIMIT ? `${text.slice(0, SUMMARY_LIMIT)}…` : text;
 	}
 
 	toData(): PostData {
 		return {
 			...this.data,
-			blocks: this.data.blocks.map((b) => ({ ...b })),
+			blocks: this.data.blocks.map((b) => ({
+				...b,
+				elements: b.elements.map((e) => ({ ...e }))
+			})),
 			author: { ...this.data.author }
 		};
 	}
 
 	static createBlock(): PostBlock {
-		return { id: crypto.randomUUID(), heading: '', text: '' };
+		return { id: crypto.randomUUID(), elements: [PostModel.createElement('body')] };
+	}
+
+	static createElement(type: BlockElementType): BlockElement {
+		return { id: crypto.randomUUID(), type, value: '' };
 	}
 
 	static fromRow(row: PostRow): PostModel {
@@ -92,4 +109,4 @@ class PostModel {
 }
 
 export { PostModel };
-export type { PostBlock, PostAuthor, PostData, PostRow };
+export type { BlockElement, BlockElementType, PostBlock, PostAuthor, PostData, PostRow };

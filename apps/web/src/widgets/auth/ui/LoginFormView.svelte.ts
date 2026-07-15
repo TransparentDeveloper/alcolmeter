@@ -8,7 +8,7 @@ class LoginFormView {
 	password = $state('');
 	oauthError = $state<string | null>(null);
 
-	redirectTo = $derived(page.url.searchParams.get('redirect') ?? '/blog');
+	redirectTo = $derived(page.url.searchParams.get('redirect') ?? '/community');
 
 	get isSignedIn(): boolean {
 		return authStore.value.status === 'signedIn';
