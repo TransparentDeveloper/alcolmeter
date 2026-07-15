@@ -1,9 +1,10 @@
 <script lang="ts">
-	import { Hero, DrinkSelection, Learn } from '$widgets/home/ui';
+	import { Hero, DrinkSelection, Community, Learn } from '$widgets/home/ui';
 </script>
 
 <div class="landing">
 	<Hero />
+	<Community />
 	<DrinkSelection />
 	<Learn />
 </div>

@@ -12,6 +12,7 @@ type Entry = { loc: string; lastmod: string; changefreq: string; priority: strin
 const staticEntries: Entry[] = [
 	{ loc: `${SITE}/`, lastmod: '2026-06-20', changefreq: 'daily', priority: '1.0' },
 	{ loc: `${SITE}/makgeolli`, lastmod: '2026-06-20', changefreq: 'daily', priority: '0.9' },
+	{ loc: `${SITE}/community`, lastmod: '2026-07-15', changefreq: 'weekly', priority: '0.7' },
 	{ loc: `${SITE}/faq`, lastmod: '2026-06-20', changefreq: 'daily', priority: '0.7' },
 	{ loc: `${SITE}/dictionary`, lastmod: '2026-06-20', changefreq: 'weekly', priority: '0.7' },
 	{ loc: `${SITE}/settings`, lastmod: '2026-06-20', changefreq: 'monthly', priority: '0.3' },
