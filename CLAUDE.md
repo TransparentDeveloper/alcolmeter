@@ -37,7 +37,7 @@ pnpm check            # web 타입 체크
 3. 합의된 내용을 논리적 작업 단위로 분리해 구현한다 (원자성 = 단일 의도)
 4. 사용자 피드백이 완료될 때까지 각 커밋을 `git commit --amend`로 다듬는다
 5. 모든 커밋이 승인되면 로컬에서 `main`으로 머지 (PR 없음)
-6. 작업 브랜치는 원격에 push하지 않는다. `main` 머지 후 `main`만 push한다
+6. 배포는 `main` 머지 후 `main` push로 한다. 작업 브랜치도 필요하면 원격에 push해 리뷰·프리뷰로 관찰할 수 있다
 7. **web·extension 작업이면 `main` push 후 릴리즈 태그를 단다** (배포의 마지막 단계). 버전 범프 커밋에 `{앱}-v{SemVer}` 태그를 달아 push하면 GitHub Release가 자동 생성된다. PATCH도 빠짐없이. 라이브러리·`common` 작업은 태그하지 않는다. 상세는 릴리즈/CHANGELOG 참고
 
 ## 브랜치 규칙
