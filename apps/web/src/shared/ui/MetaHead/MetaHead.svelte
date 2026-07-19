@@ -21,7 +21,8 @@
 
 	const SITE = 'https://alcolmeter.kr';
 	const url = $derived(`${SITE}${path}`);
-	const imageUrl = $derived(`${SITE}${image}`);
+	// image가 절대 URL(대표이미지 등)이면 그대로 쓰고, 사이트 루트 기준 경로면 SITE를 붙인다.
+	const imageUrl = $derived(image.startsWith('http') ? image : `${SITE}${image}`);
 </script>
 
 <svelte:head>
