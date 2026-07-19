@@ -26,4 +26,11 @@ describe('renderWiki', () => {
 		const html = renderWiki('[클릭](javascript:alert(1))', slugs);
 		expect(html).not.toContain('javascript:');
 	});
+	it('::youtube{id} 를 썸네일 파사드 링크로 바꾼다', () => {
+		const html = renderWiki('본문\n\n::youtube{id=abc123}\n\n끝', slugs);
+		expect(html).toContain('class="wiki-video"');
+		expect(html).toContain('https://www.youtube.com/watch?v=abc123');
+		expect(html).toContain('i.ytimg.com/vi/abc123');
+		expect(html).not.toContain('<iframe');
+	});
 });
