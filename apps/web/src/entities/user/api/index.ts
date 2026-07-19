@@ -9,6 +9,12 @@ class UserAPI {
 			.from('profiles')
 			.upsert({ id: user.id, display_name: user.displayName }, { onConflict: 'id' });
 	}
+
+	// 관리자 판별용 role 조회. role 컬럼은 SELECT 공개, 쓰기만 잠겨 있다.
+	static async getRole(userId: string): Promise<'admin' | 'user'> {
+		const { data } = await Supabase.getClient().from('profiles').select('role').eq('id', userId).maybeSingle();
+		return (data?.role as 'admin' | 'user') ?? 'user';
+	}
 }
 
 export { UserAPI };
