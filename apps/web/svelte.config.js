@@ -1,7 +1,6 @@
 import adapter from '@sveltejs/adapter-vercel';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { mdsvex } from 'mdsvex';
-import { wikiLinkPreprocess } from './src/entities/dictionary/lib/wiki-link.js';
 
 /** @type {import('mdsvex').MdsvexOptions} */
 const mdsvexConfig = {
@@ -23,8 +22,7 @@ const config = {
 			$shared: 'src/shared'
 		}
 	},
-	// wikiLinkPreprocess는 mdsvex보다 먼저 실행되어 `[[용어]]`를 raw HTML로 치환한다.
-	preprocess: [wikiLinkPreprocess(), vitePreprocess(), mdsvex(mdsvexConfig)]
+	preprocess: [vitePreprocess(), mdsvex(mdsvexConfig)]
 };
 
 export default config;
