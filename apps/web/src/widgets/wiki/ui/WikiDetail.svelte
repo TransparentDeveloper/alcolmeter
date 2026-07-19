@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { WikiTermData } from '$entities/wiki/model';
-	import { videoThumbnails, videoWatchUrl } from '$entities/wiki/lib';
 	import WikiBody from './WikiBody.svelte';
+	import WikiVideo from './WikiVideo.svelte';
 	let {
 		term,
 		bodyHtml,
@@ -19,12 +19,7 @@
 
 	{#if term.mainImage}<img class="main" src={term.mainImage} alt={term.title} />{/if}
 
-	{#if term.video}
-		{@const thumbs = videoThumbnails(term.video)}
-		<a class="video" href={videoWatchUrl(term.video)}>
-			<img src={thumbs[0]} alt={term.video.title} />
-		</a>
-	{/if}
+	{#if term.video}<WikiVideo video={term.video} />{/if}
 
 	<WikiBody {bodyHtml} />
 
@@ -78,15 +73,6 @@
 	.main {
 		max-width: 100%;
 		height: auto;
-		border-radius: var(--ds-radius-md);
-	}
-	.video {
-		display: inline-block;
-		max-width: 320px;
-		justify-self: center;
-	}
-	.video img {
-		width: 100%;
 		border-radius: var(--ds-radius-md);
 	}
 	.related h2 {
