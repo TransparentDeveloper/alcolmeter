@@ -94,6 +94,13 @@ export class JsonLd {
 	}
 
 	private static toMarkup(schema: Record<string, unknown>): string {
-		return `<script type="application/ld+json">${JSON.stringify(schema)}</script>`;
+		// XSS 차단: JSON.stringify는 `</script>`·`<`를 이스케이프하지 않는다. 이 마크업은 {@html}로 head에
+		// 주입되고 schema에는 사용자 콘텐츠(용어 제목·요약 등)가 들어오므로, <>&를 유효한 JSON 유니코드
+		// 이스케이프로 치환해 script 조기 종료를 막는다. (JSON 구조 문자는 <>&를 쓰지 않아 안전하다.)
+		const json = JSON.stringify(schema)
+			.replace(/</g, '\\u003c')
+			.replace(/>/g, '\\u003e')
+			.replace(/&/g, '\\u0026');
+		return `<script type="application/ld+json">${json}</script>`;
 	}
 }
