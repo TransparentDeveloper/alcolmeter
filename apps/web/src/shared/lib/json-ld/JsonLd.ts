@@ -8,6 +8,7 @@ export type DefinedTermInput = {
 	url: string;
 	/** 소속 용어집 URL (DefinedTermSet.url) */
 	inDefinedTermSet?: string;
+	image?: string;
 };
 
 export type DefinedTermSetInput = {
@@ -62,6 +63,7 @@ export class JsonLd {
 			name: term.name,
 			description: term.description,
 			...(term.inDefinedTermSet ? { inDefinedTermSet: term.inDefinedTermSet } : {}),
+			...(term.image ? { image: term.image } : {}),
 			url: term.url
 		});
 	}
