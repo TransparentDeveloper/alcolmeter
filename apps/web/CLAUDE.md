@@ -41,29 +41,30 @@ src/routes/{page}/
 
 - 각 페이지 `+page.svelte`에서 `<Seo title=… description=… path=… image=… />`를 호출한다. 구조화 데이터(JSON-LD)는 페이지의 별도 `<svelte:head>`에 둔다.
 - **`app.html`에는 전역 공유 메타(title·description·og·twitter)를 두지 않는다.** app.html 정적 메타와 페이지 `<svelte:head>`가 합쳐져 태그가 중복되기 때문이다. 전 페이지 공통 메타(keywords·author·theme-color·site-verification)만 app.html에 둔다.
-- **OG 이미지**는 `static/og/{page}.png`(1200×630)로 페이지별로 두고 `image` prop에 `/og/{page}.png`를 넘긴다. 용어사전 개별 용어(`/dictionary/[slug]`)는 공통 `og/dictionary.png`를 쓴다.
+- **OG 이미지**는 `static/og/{page}.png`(1200×630)로 페이지별로 두고 `image` prop에 `/og/{page}.png`를 넘긴다. 알콜위키 개별 용어(`/wiki/{slug}`)는 `main_image ?? /og/dictionary.png`를 쓴다(등록된 이미지가 없으면 공통 이미지로 대체).
 - OG 이미지를 새로 만들거나 디자인시스템 변경으로 다시 뽑을 때는 `/alcol-og-image` 스킬(템플릿 + Playwright 렌더)을 쓴다.
 
 ## 사이트맵 규칙
 
-사이트맵은 **동적 엔드포인트** `src/routes/sitemap.xml/+server.ts`가 생성한다 (`prerender = true`라 빌드 시 정적 파일로 출력). 정적 `static/sitemap.xml`은 사용하지 않는다.
+사이트맵은 **동적 엔드포인트** `src/routes/sitemap.xml/+server.ts`가 생성한다 (`prerender = false`라 요청마다 서버에서 생성). 정적 `static/sitemap.xml`은 사용하지 않는다.
 
 - **고정 페이지**: `+server.ts`의 `staticEntries` 배열을 직접 수정한다.
   - 새 페이지 추가 (`+page.svelte` 생성) → `staticEntries`에 항목 추가
   - 페이지 제거 → 해당 항목 삭제
   - 라우트 디렉토리 이름 변경 → `loc` 수정
-- **용어사전(`/dictionary/*`)**: `src/content/dictionary/*.md` frontmatter에서 **자동 생성**된다. 용어를 추가·삭제해도 사이트맵은 손대지 않는다.
+  - 알콜위키 목록 페이지는 고정 항목 `/wiki`로 들어간다.
+- **알콜위키(`/wiki/{slug}`)**: 빌드 시 고정되지 않고 요청마다 `wiki_terms` 테이블을 조회해 **자동 생성**된다. 용어를 추가·수정해도 사이트맵 코드는 손대지 않는다.
 
 ### 작성 기준
 
 - `loc`: `https://alcolmeter.kr/{경로}` (한글 slug는 `encodeURIComponent`)
-- `lastmod`: 작업일 (YYYY-MM-DD). 용어는 frontmatter `updated` 사용
+- `lastmod`: 작업일 (YYYY-MM-DD). 알콜위키 용어는 DB `updated_at`을 그대로 사용(자동)
 - `changefreq`: 자주 바뀌는 콘텐츠 `weekly`(또는 `daily`) · 일반 `monthly` · 약관 등 `yearly`
 - `priority`: 홈 `1.0` → 주요 기능 `0.9` → 보조 페이지 `0.7` → 용어 페이지 `0.6` → 법적 페이지 `0.3`
 
-## 용어사전(/dictionary) 콘텐츠 규칙
+## 알콜위키(/wiki) 규칙
 
-- 용어 파일: `src/content/dictionary/{slug}.md` (mdsvex). frontmatter: `title·slug·summary·category·domain·order·related·updated`.
-- **slug은 공백 없이** 한 토큰으로 둔다 (예: `알코올발효`, `효모내성`). URL이 `%20`으로 깨지거나 공유·메신저에서 잘리는 것을 막는다. 표시 이름은 `title`에 공백 그대로 둔다 (예: `알코올 발효`).
-- 본문 위키링크는 `[[slug]]`, 표시문구가 slug와 다르면 `[[slug|표시]]` (예: `[[알코올발효|알코올 발효]]`).
-- `related`는 slug 배열. 인덱스 정렬은 `order`(작을수록 먼저, 10단위 갭), 관련용어 박스는 가나다순.
+- 콘텐츠는 파일이 아니라 Supabase에 있다: 현재 버전은 `wiki_terms`, 편집 이력은 `wiki_revisions` 테이블.
+- 편집은 앱 UI에서 한다: 가입자가 새 용어를 추가하고(`/wiki/new`) 기존 용어를 수정하며(`/wiki/{slug}/edit`), 이력 조회·되돌리기도 UI에서 처리한다(`/wiki/{slug}/history`).
+- `slug`은 제목에서 자동 생성되고(`entities/wiki/lib/slug.ts`) 이후 고정된다.
+- 본문은 마크다운으로 저장되고 `shared/lib/wiki-render`가 런타임에 렌더링한다. 위키링크 `[[slug]]`(표시문구가 다르면 `[[slug|표시]]`)를 지원한다.
