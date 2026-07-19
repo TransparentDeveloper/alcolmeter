@@ -71,19 +71,19 @@ for (const f of files) {
     : null;
   values.push(
     `  (${q(fm.slug)}, ${q(fm.title)}, ${q(fm.summary)}, ${q(fm.category ?? '')}, ` +
-      `${arr(fm.domain)}, ${arr(fm.related)}, ${jsonOrNull(video)}, ${q(body)}, ` +
+      `${arr(fm.related)}, ${jsonOrNull(video)}, ${q(body)}, ` +
       `${q(fm.updated ?? '2026-06-20')})`
   );
 }
-console.log(', seed(slug,title,summary,category,domain,related,video,body,updated) as (values');
+console.log(', seed(slug,title,summary,category,related,video,body,updated) as (values');
 console.log(values.join(',\n'));
 console.log('),');
 console.log(`ins_term as (
-  insert into public.wiki_terms (slug,title,summary,category,domain,related,video,body,author_id,updated_at)
-  select s.slug,s.title,s.summary,s.category,s.domain,s.related,s.video,s.body,a.id,(s.updated||'T00:00:00Z')::timestamptz
+  insert into public.wiki_terms (slug,title,summary,category,related,video,body,author_id,updated_at)
+  select s.slug,s.title,s.summary,s.category,s.related,s.video,s.body,a.id,(s.updated||'T00:00:00Z')::timestamptz
   from seed s cross join author a
-  returning id, slug, title, summary, category, domain, related, video, body
+  returning id, slug, title, summary, category, related, video, body
 )
-insert into public.wiki_revisions (term_id,type,title,summary,category,domain,related,video,body,editor_id,comment)
-select t.id,'add',t.title,t.summary,t.category,t.domain,t.related,t.video,t.body,a.id,'초기 이관'
+insert into public.wiki_revisions (term_id,type,title,summary,category,related,video,body,editor_id,comment)
+select t.id,'add',t.title,t.summary,t.category,t.related,t.video,t.body,a.id,'초기 이관'
 from ins_term t cross join author a;`);

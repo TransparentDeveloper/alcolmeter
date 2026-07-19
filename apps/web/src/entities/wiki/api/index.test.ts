@@ -8,7 +8,6 @@ const row: WikiTermRow = {
 	title: '고두밥',
 	summary: '된밥',
 	category: '쌀 형태',
-	domain: ['전통주'],
 	related: ['죽'],
 	main_image: null,
 	video: null,

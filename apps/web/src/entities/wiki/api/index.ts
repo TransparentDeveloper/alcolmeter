@@ -3,9 +3,9 @@ import { WikiTerm, WikiRevision } from '$entities/wiki/model';
 import type { WikiFields, WikiTermRow, WikiRevisionRow } from '$entities/wiki/model';
 
 const TERM_SELECT =
-	'id, slug, title, summary, category, domain, related, main_image, video, body, author_id, created_at, updated_at, profiles(display_name)';
+	'id, slug, title, summary, category, related, main_image, video, body, author_id, created_at, updated_at, profiles(display_name)';
 const REV_SELECT =
-	'id, term_id, type, title, summary, category, domain, related, main_image, video, body, editor_id, comment, reverted_from_revision_id, created_at, profiles(display_name)';
+	'id, term_id, type, title, summary, category, related, main_image, video, body, editor_id, comment, reverted_from_revision_id, created_at, profiles(display_name)';
 
 // 이력 삽입 payload (edit·revert 공용)
 function revisionPayload(
@@ -22,7 +22,6 @@ function revisionPayload(
 		title: f.title,
 		summary: f.summary,
 		category: f.category,
-		domain: f.domain,
 		related: f.related,
 		main_image: f.mainImage,
 		video: f.video,
@@ -76,7 +75,6 @@ class WikiAPI {
 			p_title: f.title,
 			p_summary: f.summary,
 			p_category: f.category,
-			p_domain: f.domain,
 			p_related: f.related,
 			p_main_image: f.mainImage,
 			p_video: f.video,

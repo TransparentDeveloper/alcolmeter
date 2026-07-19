@@ -15,7 +15,6 @@ interface WikiFields {
 	title: string;
 	summary: string;
 	category: string;
-	domain: string[];
 	related: string[];
 	mainImage: string | null;
 	video: WikiVideo | null;
@@ -41,7 +40,6 @@ interface WikiTermRow {
 	title: string;
 	summary: string;
 	category: string;
-	domain: string[] | null;
 	related: string[] | null;
 	main_image: string | null;
 	video: WikiVideo | null;
@@ -72,7 +70,6 @@ interface WikiRevisionRow {
 	title: string;
 	summary: string;
 	category: string;
-	domain: string[] | null;
 	related: string[] | null;
 	main_image: string | null;
 	video: WikiVideo | null;
@@ -104,9 +101,6 @@ class WikiTerm {
 	get category() {
 		return this.data.category;
 	}
-	get domain() {
-		return this.data.domain;
-	}
 	get related() {
 		return this.data.related;
 	}
@@ -132,7 +126,6 @@ class WikiTerm {
 	toData(): WikiTermData {
 		return {
 			...this.data,
-			domain: [...this.data.domain],
 			related: [...this.data.related],
 			author: { ...this.data.author }
 		};
@@ -140,8 +133,8 @@ class WikiTerm {
 
 	// 편집 입력으로 변환 (수정 시 스냅샷 시작점)
 	toFields(): WikiFields {
-		const { slug, title, summary, category, domain, related, mainImage, video, body } = this.data;
-		return { slug, title, summary, category, domain: [...domain], related: [...related], mainImage, video, body };
+		const { slug, title, summary, category, related, mainImage, video, body } = this.data;
+		return { slug, title, summary, category, related: [...related], mainImage, video, body };
 	}
 
 	static fromRow(row: WikiTermRow): WikiTerm {
@@ -151,7 +144,6 @@ class WikiTerm {
 			title: row.title,
 			summary: row.summary,
 			category: row.category,
-			domain: row.domain ?? [],
 			related: row.related ?? [],
 			mainImage: row.main_image,
 			video: row.video,
@@ -199,14 +191,13 @@ class WikiRevision {
 	toData(): WikiRevisionData {
 		return {
 			...this.data,
-			domain: [...this.data.domain],
 			related: [...this.data.related],
 			editor: { ...this.data.editor }
 		};
 	}
 	toFields(): WikiFields {
-		const { slug, title, summary, category, domain, related, mainImage, video, body } = this.data;
-		return { slug, title, summary, category, domain: [...domain], related: [...related], mainImage, video, body };
+		const { slug, title, summary, category, related, mainImage, video, body } = this.data;
+		return { slug, title, summary, category, related: [...related], mainImage, video, body };
 	}
 
 	static fromRow(row: WikiRevisionRow): WikiRevision {
@@ -218,7 +209,6 @@ class WikiRevision {
 			title: row.title,
 			summary: row.summary,
 			category: row.category,
-			domain: row.domain ?? [],
 			related: row.related ?? [],
 			mainImage: row.main_image,
 			video: row.video,
