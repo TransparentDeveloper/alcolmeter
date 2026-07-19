@@ -8,8 +8,8 @@
 	/* 본문(마크다운 렌더 결과)은 {@html}이라 :global 필요. 옛 용어사전 TermBody의 prose 스타일을 이관.
 	   WikiDetail(현재 버전)·WikiRevisionView(과거 스냅샷)가 공유한다. */
 	.body {
-		font-size: var(--ds-text-sm);
-		line-height: 1.85;
+		font-size: var(--ds-text-base);
+		line-height: var(--ds-leading-normal);
 		color: var(--ds-color-ink-2);
 	}
 
@@ -98,8 +98,9 @@
 
 	/* 본문 인라인 영상(::youtube) 파사드 */
 	.body :global(.wiki-video) {
-		display: inline-block;
+		display: block;
 		max-width: 320px;
+		margin: var(--ds-space-lg) auto;
 	}
 
 	.body :global(.wiki-video img) {

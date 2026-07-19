@@ -83,6 +83,7 @@
 	.video {
 		display: inline-block;
 		max-width: 320px;
+		justify-self: center;
 	}
 	.video img {
 		width: 100%;
