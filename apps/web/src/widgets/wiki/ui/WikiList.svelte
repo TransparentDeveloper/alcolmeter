@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { WikiTermData } from '$entities/wiki/model';
-	import { EntryCard } from '$shared/ui';
 	import { WikiIndexState } from './WikiIndexState.svelte';
 
 	let { terms }: { terms: WikiTermData[] } = $props();
@@ -9,53 +8,34 @@
 </script>
 
 <div class="wiki-index">
-	<input
-		class="search"
-		type="text"
-		placeholder="용어 검색"
-		aria-label="용어 검색"
-		bind:value={state.query}
-	/>
-
-	<div class="chips" role="group" aria-label="카테고리 필터">
-		<button
-			type="button"
-			class="chip"
-			class:active={state.activeCategory === null}
-			aria-pressed={state.activeCategory === null}
-			onclick={() => state.clearCategory()}
-		>
-			전체
-		</button>
-		{#each state.categories as category (category)}
-			<button
-				type="button"
-				class="chip"
-				class:active={state.activeCategory === category}
-				aria-pressed={state.activeCategory === category}
-				onclick={() => state.selectCategory(category)}
-			>
-				{category}
-			</button>
-		{/each}
+	<div class="hero">
+		<h1>알콜위키</h1>
+		<p class="tagline">막걸리·전통주 양조 용어를 검색하고, 함께 고쳐 쓰는 위키.</p>
+		<input
+			class="search"
+			type="text"
+			placeholder="용어 검색"
+			aria-label="용어 검색"
+			bind:value={state.query}
+		/>
 	</div>
 
-	{#if state.isEmpty}
-		<p class="empty">검색 결과가 없어요</p>
-	{:else}
-		<div class="grid">
-			{#each state.displayed as term (term.slug)}
-				{@const meta = term.category
-					? `${term.category} · ${term.updatedAt.slice(0, 10)}`
-					: term.updatedAt.slice(0, 10)}
-				<EntryCard
-					href="/wiki/{encodeURIComponent(term.slug)}"
-					title={term.title}
-					description={term.summary}
-					{meta}
-				/>
-			{/each}
-		</div>
+	{#if state.hasQuery}
+		{#if state.isEmpty}
+			<p class="empty">검색 결과가 없어요</p>
+		{:else}
+			<ul class="results">
+				{#each state.results as term (term.slug)}
+					<li>
+						<a href="/wiki/{encodeURIComponent(term.slug)}">
+							<h2>{term.title}</h2>
+							<p class="summary">{term.summary}</p>
+							{#if term.category}<span class="meta">{term.category}</span>{/if}
+						</a>
+					</li>
+				{/each}
+			</ul>
+		{/if}
 	{/if}
 </div>
 
@@ -63,6 +43,22 @@
 	.wiki-index {
 		display: grid;
 		gap: var(--ds-space-xl);
+	}
+
+	.hero {
+		display: grid;
+		justify-items: center;
+		gap: var(--ds-space-lg);
+		text-align: center;
+		padding: var(--ds-space-3xl) 0;
+	}
+	h1 {
+		font-family: var(--ds-font-display);
+	}
+	.tagline {
+		font-size: var(--ds-text-lg);
+		color: var(--ds-color-ink-2);
+		margin: 0;
 	}
 
 	.search {
@@ -87,38 +83,34 @@
 		box-shadow: 0 0 0 3px color-mix(in srgb, var(--ds-color-focus) 18%, transparent);
 	}
 
-	.chips {
-		display: flex;
-		gap: var(--ds-space-sm);
-		flex-wrap: wrap;
-	}
-	.chip {
-		font: inherit;
-		font-size: var(--ds-text-xs);
-		font-weight: var(--ds-weight-medium);
-		color: var(--ds-color-ink-2);
-		background: transparent;
-		border: var(--ds-border-width) solid var(--ds-color-border-2);
-		border-radius: var(--ds-radius-full);
-		padding: var(--ds-space-2xs) var(--ds-space-md);
-		cursor: pointer;
-		transition:
-			border-color var(--ds-duration-short) var(--ds-ease-out),
-			color var(--ds-duration-short) var(--ds-ease-out);
-	}
-	.chip:hover {
-		border-color: var(--ds-color-border-3);
-		color: var(--ds-color-ink-1);
-	}
-	.chip.active {
-		border-color: var(--ds-color-border-3);
-		color: var(--ds-color-ink-1);
-	}
-
-	.grid {
+	.results {
+		list-style: none;
+		padding: 0;
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
 		gap: var(--ds-space-lg);
+	}
+	.results a {
+		display: grid;
+		gap: var(--ds-space-xs);
+		text-decoration: none;
+		color: inherit;
+		padding-bottom: var(--ds-space-lg);
+		border-bottom: var(--ds-border-width) solid var(--ds-color-border-1);
+	}
+	.results h2 {
+		font-family: var(--ds-font-display);
+		font-size: var(--ds-text-lg);
+		color: var(--ds-color-ink-1);
+		margin: 0;
+	}
+	.results .summary {
+		color: var(--ds-color-ink-2);
+		margin: 0;
+	}
+	.results .meta {
+		font-family: var(--ds-font-mono);
+		font-size: var(--ds-text-xs);
+		color: var(--ds-color-ink-3);
 	}
 
 	.empty {
