@@ -7,3 +7,4 @@ export { default as WikiRevisionView } from './WikiRevisionView.svelte';
 export { WikiEditorState } from './WikiEditorState.svelte';
 export { WikiWriteState } from './WikiWriteState.svelte';
 export { WikiEditState } from './WikiEditState.svelte';
+export { WikiRevertState } from './WikiRevertState.svelte';
