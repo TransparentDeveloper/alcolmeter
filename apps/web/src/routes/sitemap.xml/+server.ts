@@ -1,10 +1,10 @@
-import { terms } from '$entities/dictionary/lib';
+import { Supabase } from '$shared/supabase/api';
+import { WikiAPI } from '$entities/wiki/api';
 import type { RequestHandler } from './$types';
 
-export const prerender = true;
+export const prerender = false;
 
 const SITE = 'https://alcolmeter.kr';
-const FALLBACK_DATE = '2026-06-20';
 
 type Entry = { loc: string; lastmod: string; changefreq: string; priority: string };
 
@@ -14,20 +14,10 @@ const staticEntries: Entry[] = [
 	{ loc: `${SITE}/makgeolli`, lastmod: '2026-06-20', changefreq: 'daily', priority: '0.9' },
 	{ loc: `${SITE}/community`, lastmod: '2026-07-15', changefreq: 'weekly', priority: '0.7' },
 	{ loc: `${SITE}/faq`, lastmod: '2026-06-20', changefreq: 'daily', priority: '0.7' },
-	{ loc: `${SITE}/dictionary`, lastmod: '2026-06-20', changefreq: 'weekly', priority: '0.7' },
+	{ loc: `${SITE}/wiki`, lastmod: '2026-07-19', changefreq: 'weekly', priority: '0.7' },
 	{ loc: `${SITE}/settings`, lastmod: '2026-06-20', changefreq: 'monthly', priority: '0.3' },
 	{ loc: `${SITE}/privacy`, lastmod: '2026-05-09', changefreq: 'yearly', priority: '0.3' }
 ];
-
-// 용어 페이지는 frontmatter에서 자동 생성 — 용어가 늘어도 수동 동기화 불필요.
-function termEntries(): Entry[] {
-	return terms.map((t) => ({
-		loc: `${SITE}/dictionary/${encodeURIComponent(t.slug)}`,
-		lastmod: t.updated ?? FALLBACK_DATE,
-		changefreq: 'monthly',
-		priority: '0.6'
-	}));
-}
 
 function renderUrl(e: Entry): string {
 	return `  <url>
@@ -38,8 +28,15 @@ function renderUrl(e: Entry): string {
   </url>`;
 }
 
-export const GET: RequestHandler = () => {
-	const entries = [...staticEntries, ...termEntries()];
+export const GET: RequestHandler = async ({ cookies }) => {
+	const terms = await WikiAPI.list(Supabase.getServerClient(cookies));
+	const termEntries: Entry[] = terms.map((t) => ({
+		loc: `${SITE}/wiki/${encodeURIComponent(t.slug)}`,
+		lastmod: t.updatedAt.slice(0, 10),
+		changefreq: 'monthly',
+		priority: '0.6'
+	}));
+	const entries = [...staticEntries, ...termEntries];
 	const body = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${entries.map(renderUrl).join('\n')}
