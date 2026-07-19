@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
 import { Supabase } from '$shared/supabase/api';
 import { WikiAPI } from '$entities/wiki/api';
-import { renderWiki } from '$shared/lib';
+import { renderWiki } from '$shared/lib/wiki-render';
 import type { PageServerLoad } from './$types';
 
 export const prerender = false;
