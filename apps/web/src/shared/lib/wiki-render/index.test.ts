@@ -33,4 +33,9 @@ describe('renderWiki', () => {
 		expect(html).toContain('i.ytimg.com/vi/abc123');
 		expect(html).not.toContain('<iframe');
 	});
+	it('괄호로 끝나는 CJK 볼드를 닫는다 (CJK flanking)', () => {
+		const html = renderWiki('**단행복합발효(單行複合醱酵)**는 방식입니다.', new Set());
+		expect(html).toContain('<strong>단행복합발효(單行複合醱酵)</strong>');
+		expect(html).not.toContain('**');
+	});
 });

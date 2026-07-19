@@ -1,9 +1,12 @@
 import MarkdownIt from 'markdown-it';
+import markdownItCjkFriendly from 'markdown-it-cjk-friendly';
 import sanitizeHtml from 'sanitize-html';
 
 const md = new MarkdownIt({ html: false, linkify: true, breaks: false });
 // 링크 스킴 안전성은 sanitize-html에 일임(아래 allowedSchemes가 차단)
 md.validateLink = () => true;
+// CJK(한글 등)에서 문장부호·괄호 뒤 `**`가 닫히지 않는 CommonMark emphasis flanking 한계 보정
+md.use(markdownItCjkFriendly);
 
 const WIKI_LINK = /\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g;
 const MISSING = /%%WIKIMISSING:([^%]*)%%/g;
