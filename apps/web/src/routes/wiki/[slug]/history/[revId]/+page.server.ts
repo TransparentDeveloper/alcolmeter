@@ -7,8 +7,11 @@ import type { PageServerLoad } from './$types';
 export const prerender = false;
 
 export const load: PageServerLoad = async ({ params, cookies }) => {
+	const revId = Number(params.revId);
+	if (!Number.isInteger(revId)) throw error(404, '이력을 찾을 수 없습니다.');
+
 	const client = Supabase.getServerClient(cookies);
-	const rev = await WikiAPI.getRevision(client, Number(params.revId));
+	const rev = await WikiAPI.getRevision(client, revId);
 	if (!rev) throw error(404, '이력을 찾을 수 없습니다.');
 	const slugs = await WikiAPI.existingSlugs(client);
 	return { slug: params.slug, revision: rev.toData(), bodyHtml: renderWiki(rev.body, slugs) };
