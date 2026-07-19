@@ -38,7 +38,7 @@
 				<a href="/makgeolli">막걸리 계산기</a>
 				<a href="/community">커뮤니티</a>
 				<a href="/settings">설정</a>
-				<a href="/dictionary">용어사전</a>
+				<a href="/wiki">알콜위키</a>
 				<a href="/privacy">개인정보처리방침</a>
 				<a href="/faq">자주 묻는 질문</a>
 			</nav>

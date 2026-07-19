@@ -1,9 +1,9 @@
 <section class="section">
 	<h2 class="section-title">양조가 처음이신가요?</h2>
 	<div class="learn-cards">
-		<a href="/dictionary" class="faq-card">
+		<a href="/wiki" class="faq-card">
 			<span class="faq-body">
-				<span class="faq-title">용어사전</span>
+				<span class="faq-title">알콜위키</span>
 				<span class="faq-desc">고두밥, 밑술, 덧술… 양조 용어를 한곳에서</span>
 			</span>
 			<span class="entry-arrow">→</span>

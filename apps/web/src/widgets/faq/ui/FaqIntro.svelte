@@ -1,7 +1,7 @@
 <header class="faq-header">
 	<h1>자주 묻는 질문</h1>
 	<p>막걸리 도수·생산량 예측, 배합기 계산에 대한 질문과 답변을 준비했습니다.</p>
-	<a class="dict-link" href="/dictionary">용어가 낯설다면 용어사전에서 찾아보세요 →</a>
+	<a class="dict-link" href="/wiki">용어가 낯설다면 알콜위키에서 찾아보세요 →</a>
 </header>
 
 <style>
