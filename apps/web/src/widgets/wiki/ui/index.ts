@@ -5,6 +5,7 @@ export { default as WikiEditor } from './WikiEditor.svelte';
 export { default as WikiHistory } from './WikiHistory.svelte';
 export { default as WikiRevisionView } from './WikiRevisionView.svelte';
 export { WikiEditorState } from './WikiEditorState.svelte';
+export { WikiIndexState } from './WikiIndexState.svelte';
 export { WikiWriteState } from './WikiWriteState.svelte';
 export { WikiEditState } from './WikiEditState.svelte';
 export { WikiRevertState } from './WikiRevertState.svelte';
