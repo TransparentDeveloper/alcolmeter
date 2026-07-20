@@ -5,6 +5,7 @@
 	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/state';
 	import { HeaderAuth } from '$widgets/auth/ui';
+	import { ThemeToggle } from '$features/theme/ui';
 	let { children } = $props();
 	const version = __APP_VERSION__;
 	const faviconVersion = __FAVICON_VERSION__;
@@ -27,7 +28,10 @@
 		<a href="/" class="logo">
 			<span class="logo-text">알콜미터<span class="logo-dot">.</span></span>
 		</a>
-		<HeaderAuth />
+		<div class="header-right">
+			<ThemeToggle />
+			<HeaderAuth />
+		</div>
 	</header>
 	<main>
 		{@render children()}
@@ -70,6 +74,12 @@
 		padding-bottom: var(--ds-space-lg);
 		margin-bottom: var(--ds-space-2xl);
 		border-bottom: var(--ds-border-width) solid var(--ds-color-border-1);
+	}
+
+	.header-right {
+		display: flex;
+		align-items: center;
+		gap: var(--ds-space-md);
 	}
 
 	.logo {
