@@ -84,6 +84,7 @@
 	/* ── Layout ─────────────────────────────────────────────── */
 	--ds-container: 680px;
 	--ds-container-wide: 960px;
+	--ds-container-hub: 1280px; /* community hub (home) */
 
 	/* ── Color · spark (use sparingly: live values, annotations, hero CTA) */
 	--ds-color-spark: #f2512d;
