@@ -39,6 +39,17 @@ class WikiAPI {
 		return (data ?? []).map((r) => WikiTerm.fromRow(r as unknown as WikiTermRow));
 	}
 
+	// 최근 수정순 N개 (홈 하이라이트용)
+	static async recent(client: SupabaseClient, limit = 5): Promise<WikiTerm[]> {
+		const { data, error } = await client
+			.from('wiki_terms')
+			.select(TERM_SELECT)
+			.order('updated_at', { ascending: false })
+			.limit(limit);
+		if (error) throw error;
+		return (data ?? []).map((r) => WikiTerm.fromRow(r as unknown as WikiTermRow));
+	}
+
 	static async getBySlug(client: SupabaseClient, slug: string): Promise<WikiTerm | null> {
 		const { data, error } = await client.from('wiki_terms').select(TERM_SELECT).eq('slug', slug).maybeSingle();
 		if (error) throw error;

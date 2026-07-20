@@ -25,6 +25,15 @@ interface PostData {
 	updatedAt: string;
 }
 
+// 목록·홈 피드용 경량 뷰 (blocks 대신 요약만 담는다)
+interface PostListItem {
+	id: number;
+	title: string;
+	summary: string;
+	authorName: string;
+	createdAt: string;
+}
+
 // Supabase select 결과 형태 (posts + profiles 조인)
 interface PostRow {
 	id: number;
@@ -109,4 +118,4 @@ class PostModel {
 }
 
 export { PostModel };
-export type { BlockElement, BlockElementType, PostBlock, PostAuthor, PostData, PostRow };
+export type { BlockElement, BlockElementType, PostBlock, PostAuthor, PostData, PostListItem, PostRow };
