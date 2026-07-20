@@ -1,5 +1,6 @@
 <section class="section">
-	<h2 class="section-title">어떤 술을 빚으시나요?</h2>
+	<h2 class="section-title">양조 계산기</h2>
+	<p class="section-desc">재료만 넣으면 배합 비율을 계산해 드려요.</p>
 	<div class="entries">
 		<a href="/makgeolli" class="entry entry--active">
 			<span class="entry-no">01</span>
@@ -37,13 +38,18 @@
 		font-weight: var(--ds-weight-bold);
 		letter-spacing: var(--ds-tracking-tight);
 		color: var(--ds-color-ink-1);
+	}
+
+	.section-desc {
+		font-size: var(--ds-text-sm);
+		color: var(--ds-color-ink-3);
 		margin-bottom: var(--ds-space-md);
 	}
 
-	/* Entries — numbered notebook rows */
+	/* Entries — numbered notebook rows, md 이상 3열 (design-system 브레이크포인트 md 768px) */
 	.entries {
-		display: flex;
-		flex-direction: column;
+		display: grid;
+		grid-template-columns: 1fr;
 		gap: var(--ds-space-sm);
 	}
 
@@ -123,5 +129,11 @@
 		font-size: var(--ds-text-xs);
 		color: var(--ds-color-ink-4);
 		flex: none;
+	}
+
+	@media (min-width: 768px) {
+		.entries {
+			grid-template-columns: repeat(3, 1fr);
+		}
 	}
 </style>

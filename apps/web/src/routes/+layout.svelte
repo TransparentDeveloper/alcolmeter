@@ -22,7 +22,7 @@
 	<link rel="icon" type="image/svg+xml" href={`/favicon.svg?v=${faviconVersion}`} />
 </svelte:head>
 
-<div class="app">
+<div class="app" class:app--hub={page.url.pathname === '/'}>
 	<header>
 		<a href="/" class="logo">
 			<span class="logo-text">알콜미터<span class="logo-dot">.</span></span>
@@ -55,6 +55,11 @@
 		min-height: 100vh;
 		display: flex;
 		flex-direction: column;
+	}
+
+	/* 커뮤니티 허브(홈)만 넓은 폭 */
+	.app--hub {
+		max-width: var(--ds-container-hub);
 	}
 
 	header {

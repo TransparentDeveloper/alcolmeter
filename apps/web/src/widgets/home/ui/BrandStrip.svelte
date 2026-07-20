@@ -1,4 +1,4 @@
-<section class="hero ds-paper-grid">
+<section class="brand ds-paper-grid">
 	<div class="ds-fizz" aria-hidden="true">
 		<span class="ds-fizz__bubble" style="left:9%;width:6px;height:6px;animation-delay:0s;animation-duration:4.4s"></span>
 		<span class="ds-fizz__bubble" style="left:21%;width:9px;height:9px;animation-delay:1.6s;animation-duration:5.2s"></span>
@@ -9,11 +9,11 @@
 		<span class="ds-fizz__bubble" style="left:80%;width:5px;height:5px;animation-delay:1.2s;animation-duration:3.6s"></span>
 		<span class="ds-fizz__bubble" style="left:90%;width:7px;height:7px;animation-delay:2.0s;animation-duration:4.7s"></span>
 	</div>
-	<div class="hero-content">
-		<p class="eyebrow">정밀 배합 · 양조 노트</p>
-		<h1 class="hero-title">
+	<div class="brand-content">
+		<p class="eyebrow">양조 커뮤니티 · 홈브루잉 노트</p>
+		<h1 class="brand-title">
 			알콜미터
-			<svg class="hero-underline" viewBox="0 0 220 12" preserveAspectRatio="none" aria-hidden="true">
+			<svg class="brand-underline" viewBox="0 0 220 12" preserveAspectRatio="none" aria-hidden="true">
 				<path
 					class="ds-underline-draw"
 					pathLength="1"
@@ -25,15 +25,15 @@
 				/>
 			</svg>
 		</h1>
-		<p class="hero-desc">
-			전통주 양조를 위한 정밀 배합 계산기.<br />쌀의 양만 입력하면 최적의 비율을 알려드립니다.
+		<p class="brand-desc">
+			집에서 술 빚는 사람들의 기록과 후기, 질문이 모이는 곳.<br />함께 담그고 나눕니다.
 		</p>
 	</div>
 </section>
 
 <style>
-	/* Hero — measurement-notebook paper */
-	.hero {
+	/* 브랜드 스트립 — measurement-notebook paper */
+	.brand {
 		position: relative;
 		overflow: hidden;
 		border: var(--ds-border-width) solid var(--ds-color-border-2);
@@ -42,7 +42,7 @@
 		padding: var(--ds-space-2xl) var(--ds-space-xl);
 	}
 
-	.hero-content {
+	.brand-content {
 		position: relative;
 		z-index: 1;
 	}
@@ -57,7 +57,7 @@
 		margin-bottom: var(--ds-space-md);
 	}
 
-	.hero-title {
+	.brand-title {
 		position: relative;
 		display: inline-block;
 		font-family: var(--ds-font-display);
@@ -68,7 +68,7 @@
 		color: var(--ds-color-ink-1);
 	}
 
-	.hero-underline {
+	.brand-underline {
 		position: absolute;
 		left: 0;
 		right: 0;
@@ -79,10 +79,10 @@
 		overflow: visible;
 	}
 
-	.hero-desc {
+	.brand-desc {
 		margin-top: var(--ds-space-md);
 		font-size: var(--ds-text-base);
 		color: var(--ds-color-ink-2);
-		max-width: 42ch;
+		max-width: 48ch;
 	}
 </style>

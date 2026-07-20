@@ -1,12 +1,16 @@
 <script lang="ts">
-	import { Hero, DrinkSelection, Community, Learn } from '$widgets/home/ui';
+	import { BrandStrip, CommunityFeed, WikiHighlight, DrinkSelection } from '$widgets/home/ui';
+	import type { PostListItem } from '$entities/post/model';
+	import type { WikiTermData } from '$entities/wiki/model';
+
+	let { posts, terms }: { posts: PostListItem[]; terms: WikiTermData[] } = $props();
 </script>
 
 <div class="landing">
-	<Hero />
-	<Community />
+	<BrandStrip />
+	<CommunityFeed {posts} />
+	<WikiHighlight {terms} />
 	<DrinkSelection />
-	<Learn />
 </div>
 
 <style>

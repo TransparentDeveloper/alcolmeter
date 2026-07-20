@@ -1,13 +1,17 @@
 <script lang="ts">
 	import { MetaHead } from '$shared/ui';
 	import { HomePage } from '$pages/home/ui';
+	import type { PostListItem } from '$entities/post/model';
+	import type { WikiTermData } from '$entities/wiki/model';
+
+	let { posts, terms }: { posts: PostListItem[]; terms: WikiTermData[] } = $props();
 </script>
 
 <MetaHead
-	title="알콜미터 - 양조 계산기"
-	description="전통주 양조를 위한 정밀 배합 계산기. 막걸리, 사이다, 와인의 최적 배합 비율을 자동으로 계산합니다."
+	title="알콜미터 - 양조 커뮤니티"
+	description="집에서 술 빚는 사람들의 커뮤니티. 양조 기록과 후기, 질문을 나누고 알콜위키로 용어를 익히며 배합 계산기로 비율을 잡습니다."
 	path="/"
 	image="/og/home.png"
 />
 
-<HomePage />
+<HomePage {posts} {terms} />
