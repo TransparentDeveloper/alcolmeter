@@ -13,6 +13,11 @@ const faviconVersion = createHash('sha256')
 
 export default defineConfig({
 	plugins: [sveltekit()],
+	// sanitize-html(CJS)이 htmlparser2 v12(ESM 전용)를 require()하는데, Vercel 서버리스 런타임은
+	// require(ESM)을 금지(ERR_REQUIRE_ESM)한다. 서버 번들에 함께 넣어 빌드 타임에 해소한다.
+	ssr: {
+		noExternal: ['sanitize-html', 'htmlparser2']
+	},
 	define: {
 		__APP_VERSION__: JSON.stringify(pkg.version),
 		__FAVICON_VERSION__: JSON.stringify(faviconVersion)
