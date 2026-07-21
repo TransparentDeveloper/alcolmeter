@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { FeedRow } from '$shared/ui';
 	import { formatDate } from '$shared/lib';
 	import type { PostListItem } from '$entities/post/model';
 
@@ -22,12 +21,13 @@
 	{:else}
 		<div class="list">
 			{#each posts as p (p.id)}
-				<FeedRow
-					href={`/community/${p.id}`}
-					title={p.title}
-					metaLeft={p.authorName}
-					metaRight={formatDate(p.createdAt)}
-				/>
+				<a class="row" href={`/community/${p.id}`}>
+					<span class="title">{p.title}</span>
+					<span class="meta">
+						<span class="author">{p.authorName}</span>
+						<span class="date">{formatDate(p.createdAt)}</span>
+					</span>
+				</a>
 			{/each}
 		</div>
 	{/if}
@@ -69,6 +69,48 @@
 		flex-direction: column;
 		border-top: var(--ds-border-width) solid var(--ds-color-border-1);
 	}
+
+	/* 한 줄 행 — 커뮤니티: 제목 + 작성자·게시일 */
+	.row {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: var(--ds-space-md);
+		padding: var(--ds-space-sm) var(--ds-space-xs);
+		border-bottom: var(--ds-border-width) solid var(--ds-color-border-1);
+		text-decoration: none;
+		color: var(--ds-color-ink-1);
+		transition: background-color var(--ds-duration-short) var(--ds-ease-out);
+	}
+	.row:hover {
+		background: var(--ds-color-hover);
+	}
+	.title {
+		flex: 1;
+		min-width: 0;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		font-size: var(--ds-text-xs);
+		color: var(--ds-color-ink-1);
+		transition: color var(--ds-duration-short) var(--ds-ease-out);
+	}
+	.row:hover .title {
+		color: var(--ds-color-spark);
+	}
+	.meta {
+		display: flex;
+		align-items: baseline;
+		gap: var(--ds-space-md);
+		flex: none;
+		font-family: var(--ds-font-mono);
+		font-size: var(--ds-text-xs);
+		color: var(--ds-color-ink-3);
+	}
+	.author {
+		color: var(--ds-color-ink-4);
+	}
+
 	.empty {
 		display: flex;
 		flex-direction: column;

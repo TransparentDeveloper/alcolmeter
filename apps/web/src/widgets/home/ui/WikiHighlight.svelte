@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { FeedRow } from '$shared/ui';
-	import { formatDate } from '$shared/lib';
 	import type { WikiTermData } from '$entities/wiki/model';
 
 	let { terms }: { terms: WikiTermData[] } = $props();
@@ -18,12 +16,10 @@
 	{:else}
 		<div class="list">
 			{#each terms as t (t.id)}
-				<FeedRow
-					href={`/wiki/${encodeURIComponent(t.slug)}`}
-					title={t.title}
-					metaLeft={t.category}
-					metaRight={formatDate(t.updatedAt)}
-				/>
+				<a class="row" href={`/wiki/${encodeURIComponent(t.slug)}`}>
+					<span class="title">{t.title}</span>
+					<span class="cat">{t.category}</span>
+				</a>
 			{/each}
 		</div>
 	{/if}
@@ -64,6 +60,41 @@
 		display: flex;
 		flex-direction: column;
 		border-top: var(--ds-border-width) solid var(--ds-color-border-1);
+	}
+
+	/* 한 줄 행 — 위키: 제목 + 카테고리 (게시일 없음) */
+	.row {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: var(--ds-space-md);
+		padding: var(--ds-space-sm) var(--ds-space-xs);
+		border-bottom: var(--ds-border-width) solid var(--ds-color-border-1);
+		text-decoration: none;
+		color: var(--ds-color-ink-1);
+		transition: background-color var(--ds-duration-short) var(--ds-ease-out);
+	}
+	.row:hover {
+		background: var(--ds-color-hover);
+	}
+	.title {
+		flex: 1;
+		min-width: 0;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		font-size: var(--ds-text-xs);
+		color: var(--ds-color-ink-1);
+		transition: color var(--ds-duration-short) var(--ds-ease-out);
+	}
+	.row:hover .title {
+		color: var(--ds-color-spark);
+	}
+	.cat {
+		flex: none;
+		font-family: var(--ds-font-mono);
+		font-size: var(--ds-text-xs);
+		color: var(--ds-color-ink-4);
 	}
 	.empty-desc {
 		font-size: var(--ds-text-sm);
