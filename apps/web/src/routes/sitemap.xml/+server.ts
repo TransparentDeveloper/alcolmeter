@@ -11,7 +11,7 @@ type Entry = { loc: string; lastmod: string; changefreq: string; priority: strin
 // 고정 페이지. 새 정적 페이지가 생기면 여기에 추가한다.
 const staticEntries: Entry[] = [
 	{ loc: `${SITE}/`, lastmod: '2026-06-20', changefreq: 'daily', priority: '1.0' },
-	{ loc: `${SITE}/makgeolli`, lastmod: '2026-06-20', changefreq: 'daily', priority: '0.9' },
+	{ loc: `${SITE}/calculate-makgeolli`, lastmod: '2026-07-22', changefreq: 'monthly', priority: '0.3' },
 	{ loc: `${SITE}/community`, lastmod: '2026-07-15', changefreq: 'weekly', priority: '0.7' },
 	{ loc: `${SITE}/faq`, lastmod: '2026-06-20', changefreq: 'daily', priority: '0.7' },
 	{ loc: `${SITE}/wiki`, lastmod: '2026-07-19', changefreq: 'weekly', priority: '0.7' },

@@ -2,7 +2,7 @@
 	<h2 class="section-title">양조 계산기</h2>
 	<p class="section-desc">재료만 넣으면 배합 비율을 계산해 드려요.</p>
 	<div class="entries">
-		<a href="/makgeolli" class="entry entry--active">
+		<a href="/calculate-makgeolli" class="entry entry--active">
 			<span class="entry-no">01</span>
 			<span class="entry-body">
 				<span class="entry-name">막걸리</span>

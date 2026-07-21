@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { RICE_FORM_LABELS, type RiceForm } from '$lib/types';
+	import type { RiceFormType } from '$entities/makgeolli/model';
 
 	let {
 		totalRice = $bindable(6),
-		riceForm = $bindable('tteok' as RiceForm),
+		riceForm = $bindable('TTEOK' as RiceFormType),
 		waterRatio = $bindable(100),
 		nurukRatio = $bindable(10),
+		riceFormLabels,
 		nurukHint = '표준 10%',
 		nurukDefault = 10,
 		showGodubap = false,
@@ -14,9 +15,10 @@
 		nurukMax = 50
 	}: {
 		totalRice: number;
-		riceForm: RiceForm;
+		riceForm: RiceFormType;
 		waterRatio: number;
 		nurukRatio: number;
+		riceFormLabels: Record<RiceFormType, string>;
 		nurukHint?: string;
 		nurukDefault?: number;
 		showGodubap?: boolean;
@@ -29,9 +31,9 @@
 	let showWaterTooltip = $state(false);
 
 	let riceFormOptions = $derived(
-		Object.entries(RICE_FORM_LABELS)
-			.filter(([value]) => showGodubap || value !== 'godubap')
-			.map(([value, label]) => ({ value: value as RiceForm, label }))
+		Object.entries(riceFormLabels)
+			.filter(([value]) => showGodubap || value !== 'GODUBAP')
+			.map(([value, label]) => ({ value: value as RiceFormType, label }))
 	);
 </script>
 

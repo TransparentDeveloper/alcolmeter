@@ -23,7 +23,7 @@
 	<link rel="icon" type="image/svg+xml" href={`/favicon.svg?v=${faviconVersion}`} />
 </svelte:head>
 
-<div class="app" class:app--hub={page.url.pathname === '/'}>
+<div class="app" class:app--hub={page.url.pathname === '/' || page.url.pathname === '/calculate-makgeolli'}>
 	<header>
 		<a href="/" class="logo">
 			<span class="logo-text">알콜미터<span class="logo-dot">.</span></span>
@@ -39,7 +39,7 @@
 	{#if page.url.pathname !== '/login'}
 		<footer>
 			<nav class="footer-links">
-				<a href="/makgeolli">막걸리 계산기</a>
+				<a href="/calculate-makgeolli">막걸리 계산기</a>
 				<a href="/community">커뮤니티</a>
 				<a href="/settings">설정</a>
 				<a href="/wiki">알콜위키</a>
@@ -61,7 +61,7 @@
 		flex-direction: column;
 	}
 
-	/* 커뮤니티 허브(홈)만 넓은 폭 */
+	/* 홈(커뮤니티 허브)·계산기는 넓은 데스크탑 폭 */
 	.app--hub {
 		max-width: var(--ds-container-hub);
 	}

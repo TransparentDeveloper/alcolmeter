@@ -1,7 +1,15 @@
 <script lang="ts">
-	import type { BrewResult, RiceForm } from '$lib/types';
+	import type { MakgeolliBrew, RiceFormType } from '$entities/makgeolli/model';
 
-	let { result, riceForm = 'tteok' as RiceForm, availableRice = 0 }: { result: BrewResult; riceForm?: RiceForm; availableRice?: number } = $props();
+	let {
+		brew,
+		stageNames,
+		riceFormLabels
+	}: {
+		brew: MakgeolliBrew;
+		stageNames: string[];
+		riceFormLabels: Record<RiceFormType, string>;
+	} = $props();
 
 	function fmt(value: number): string {
 		if (value <= 0) return '-';
@@ -20,9 +28,9 @@
 			</tr>
 		</thead>
 		<tbody>
-			{#each result.stages as stage}
+			{#each brew.stages as stage, i}
 				<tr>
-					<td class="stage-name">{stage.name} <span class="rice-form">{stage.riceFormLabel}</span></td>
+					<td class="stage-name">{stageNames[i]} <span class="rice-form">{riceFormLabels[stage.riceForm]}</span></td>
 					<td>{fmt(stage.rice)}</td>
 					<td>{fmt(stage.water)}</td>
 					<td>{fmt(stage.nuruk)}</td>
@@ -32,19 +40,19 @@
 		<tfoot>
 			<tr>
 				<td class="stage-name">합계</td>
-				<td>{fmt(result.totalRice)}</td>
-				<td>{fmt(result.totalWater)}</td>
-				<td>{fmt(result.totalNuruk)}</td>
+				<td>{fmt(brew.totalRice)}</td>
+				<td>{fmt(brew.totalWater)}</td>
+				<td>{fmt(brew.totalNuruk)}</td>
 			</tr>
 		</tfoot>
 	</table>
 
 	<div class="estimates">
 		<div class="estimate-item">
-			예상 도수 <strong>{result.estimates.alcoholPercent.toFixed(1)} %</strong>
+			예상 도수 <strong>{brew.estimates.alcoholPercent.toFixed(1)} %</strong>
 		</div>
 		<div class="estimate-item">
-			예상 생산량 <strong>{fmt(result.estimates.volumeLiters)} L</strong>
+			예상 생산량 <strong>{fmt(brew.estimates.volumeLiters)} L</strong>
 		</div>
 	</div>
 
