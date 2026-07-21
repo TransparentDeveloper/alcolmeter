@@ -19,6 +19,8 @@
 | `entities` | 도메인 모델·데이터 형태, API 호출·컨버팅 | 관심사(Domain) | |
 | `shared` | 프로젝트 전반 공통 모듈. 관심사별 슬라이스를 둔다 | 관심사 | 예: `shared/supabase` |
 
+> **`features` vs `entities` 판별:** 사용자 액션·비즈니스 로직(계산·제출·전환 등 "동사")은 `features`, 도메인 데이터의 형태와 변환("명사")은 `entities`다. 예: 막걸리 계산은 `features/calculate-makgeolli`(입력 → 도메인 호출 → 결과 조립)가 맡고, 그 결과의 데이터 형태·매핑은 `entities/makgeolli`(뷰모델 `MakgeolliBrew`)가 맡는다. 한 위젯에 닫힌 뷰 상태는 둘 중 어느 쪽도 아니라 그 위젯 `ui`의 class다(§3 "뷰 상태·연산").
+
 ## 3. 세그먼트 (7종 고정)
 
 Slice 내부 폴더는 아래 7종만 쓴다. 임의 세그먼트 금지.
@@ -36,6 +38,8 @@ Slice 내부 폴더는 아래 7종만 쓴다. 임의 세그먼트 금지.
 ### 타입·모델 선언
 
 - 도메인 모델은 `model` 세그먼트에 **class**로 둔다. 원시 데이터를 감싸고 접근자(getter)·팩토리(static)를 제공한다. 대표 모델이 하나면 세그먼트 `index.ts`에 바로 선언한다 (예: `entities/user/model/index.ts`의 `UserModel`).
+- **외부 변환은 모델 class의 static 팩토리가 흡수한다.** 도메인 패키지 결과·DB row 등 외부 형태와의 변환은 `fromRow`·`fromSupabaseUser`·`fromOutcome` 같은 static 팩토리로 모델 안에 둔다. 이러면 변환 전용 `lib`가 따로 필요 없다 (예: `entities/makgeolli/model`의 `MakgeolliBrew.fromOutcome(outcome)`가 domain-v2 결과를 뷰모델로 매핑해 `lib` 없이 끝낸다).
+- **모델·타입에는 표시 라벨을 넣지 않는다.** `model`에는 enum·수치·구조만 담고, 한글 표시 문자열(라벨)은 그걸 그리는 뷰에서 관리한다(아래 "상수·정적 데이터" 참고).
 - **객체 형태의 타입은 `interface`로 선언한다.** 예: `interface UserData { … }`, `interface AuthState { … }`.
 - **union(리터럴 합집합 등) 타입은 `type` alias로 선언하고, 이름에 `Type` 접미사를 붙인다.** 예: `type AuthProviderType = 'google' | 'kakao'`, `type AuthStatusType = 'loading' | 'signedIn' | 'signedOut'`. (`interface`로 선언한 객체 타입에는 접미사를 붙이지 않는다.)
 
@@ -45,13 +49,15 @@ Slice 내부 폴더는 아래 7종만 쓴다. 임의 세그먼트 금지.
 - 종류가 많아지면 `lib/` 아래 목적별 파일(`constant.ts`·`schema.ts` 등)로 나누고 `lib/index.ts` 배럴로 노출한다.
 - 상위 레이어는 반드시 `lib` 배럴을 경유해 import한다. 구체 파일 직접 import는 금지한다.
 - 예: FAQ 콘텐츠는 `entities/faq/lib/constant.ts`에 두고, 소비처는 `import { sections } from '$entities/faq/lib'`로 읽는다.
+- **표시 라벨은 예외로 뷰에서 관리한다.** 탭 라벨·단계명·힌트처럼 화면 요소에 붙는 짧은 표시 문자열은 `lib/constant.ts`가 아니라 그 라벨을 렌더하는 `.svelte`에 둔다. 여러 컴포넌트가 같은 라벨을 쓰면 부모 뷰가 정의해 자식에 prop으로 주입한다. `lib`의 정적 데이터는 그 자체가 콘텐츠인 데이터셋(FAQ 문답 등)이나 라벨이 아닌 설정값에 한한다. (`model`도 마찬가지로 라벨을 두지 않는다 — enum·수치만.)
 
 ### 뷰 상태·연산 (ui)
 
 - 위젯의 지역 상태와 뷰 연산(검색·필터·그룹핑 등)은 해당 `ui` 세그먼트에 **`{Name}.svelte.ts` class**로 둔다. React식 `use…` 훅을 두지 않는다.
 - class는 `$state`·`$derived` 룬을 필드·게터에 쓰고, 컴포넌트가 인스턴스화해 바인딩한다.
 - 한 위젯에 닫힌 상태는 이 class로 충분하다. 여러 위젯이 공유해야 하는 상태만 `features`의 `store` 세그먼트로 올린다.
-- 예: `widgets/dictionary/ui/DictionaryView.svelte.ts`의 `DictionaryView`가 검색어와 필터·그룹 파생을 담고, `DictionaryIndex.svelte`가 인스턴스화한다.
+- **class 이름은 `{이름}State`** 로 짓고(`State` 접미사), 파일명은 class명과 같은 `{이름}State.svelte.ts`로 둔다. 컴포넌트는 `import { {이름}State } from './{이름}State.svelte'`로 인스턴스화한다(`.svelte.ts`는 import 경로에 `.svelte`까지만 쓴다). class명과 컴포넌트명이 꼭 같을 필요는 없다.
+- 예: `widgets/wiki/ui/WikiList.svelte` ↔ `WikiIndexState`, `widgets/community/ui/PostEditor.svelte` ↔ `PostEditorState`, `widgets/calculate-makgeolli/ui/MakgeolliCalculator.svelte` ↔ `MakgeolliCalculatorState`.
 
 ### 전역 상태 (store)
 
@@ -91,6 +97,7 @@ Slice 내부 폴더는 아래 7종만 쓴다. 임의 세그먼트 금지.
 
 - **모든 세그먼트는 `index.ts`(룬이 필요하면 `index.svelte.ts`)를 public API로 갖는다.**
 - **세그먼트에 대표 선언이 하나뿐이면 별도 구현 파일을 두지 말고 그 `index.ts`에 바로 선언한다.** 예: `entities/user/model/index.ts`에 `UserModel`을 직접 선언한다 (`UserModel.ts` + 배럴로 나누지 않는다). 대표 이름이 슬라이스명과 맞으면(`user`→`UserModel`) 특히 그렇다. 선언이 여러 개로 늘면 그때 목적별 파일로 쪼개고 `index.ts`를 재-export 배럴로 전환한다.
+- **바꿔 말하면, `index.ts`에 직접 선언할 수 있는 건 그 선언이 슬라이스/세그먼트를 "대표"할 때뿐이다.** 대표하지 못하는 선언(도메인의 일부일 뿐인 결과 뷰모델 등)은 목적별 파일에 두고 `index.ts`는 **순수 재-export 배럴**로만 쓴다. 예: `entities/makgeolli/model`은 `MakgeolliBrew.ts`(결과 뷰모델 class)·`type.ts`(union 어휘)로 나누고 `index.ts`는 배럴이다. `MakgeolliBrew`는 계산 결과일 뿐 makgeolli 도메인 전체를 대표하지 못하기 때문이다. (타입만 있는 `faq`·`theme`의 `model`도 `type.ts` + 배럴 꼴이다.)
 - 상위 레이어가 하위 레이어 모듈을 쓸 때는 **반드시 세그먼트 index에서 import**한다. 구체 파일 직접 import 금지.
   ```ts
   // pages/home/ui/HomePage.svelte
@@ -135,6 +142,10 @@ Slice 내부 폴더는 아래 7종만 쓴다. 임의 세그먼트 금지.
 - [ ] 상수·정적 데이터가 `lib/constant.ts`에 있는가
 - [ ] 세그먼트마다 `index.ts`(또는 `index.svelte.ts`) public API가 있는가
 - [ ] 대표 선언이 하나뿐인 세그먼트는 `index.ts`에 바로 선언했는가 (불필요한 배럴 분리 없음)
+- [ ] 슬라이스를 대표 못 하는 선언은 목적별 파일 + 순수 배럴로 나눴는가
+- [ ] 표시 라벨이 뷰(`.svelte`)에 있는가 (`model`·`lib`에 한글 라벨 없음)
+- [ ] 외부 변환이 모델 class의 static 팩토리에 들어갔는가 (변환 전용 `lib` 없음)
+- [ ] 뷰 상태 class 이름이 `{이름}State`이고 파일명과 같은가
 - [ ] `export`가 파일 하단에 모여 있는가 (선언부 inline export 없음)
 - [ ] 크로스 레이어 import가 세그먼트 index를 경유하는가
 - [ ] import가 단방향인가
@@ -157,3 +168,27 @@ widgets/home/ui/Learn.svelte
 widgets/home/ui/index.ts                   (ui 세그먼트 배럴, 셋 다 export)
 shared/ui/MetaHead/MetaHead.svelte + index.ts  ($lib/components/Seo.svelte 복사, home만 사용)
 ```
+
+## 부록: 막걸리 계산기 마이그레이션 (레퍼런스)
+
+상태·연산·도메인 데이터가 모두 있는 페이지. **상태는 위젯, 계산 액션은 `features`, 데이터 형태·매핑은 `entities`** 로 갈린다. 라벨은 뷰에, 변환은 모델 class에 흡수돼 `lib` 세그먼트는 두지 않았다.
+
+```
+routes/calculate-makgeolli/+page.svelte            → <CalculateMakgeolliApplication /> 렌더만
+apps/calculate-makgeolli/ui/…Application.svelte    MetaHead 주입 + 페이지 렌더
+pages/calculate-makgeolli/ui/…Page.svelte          위젯 조립
+widgets/calculate-makgeolli/ui/
+  MakgeolliCalculator.svelte                       레이아웃 + 표시 라벨(탭·단계명·힌트·쌀형태)
+  MakgeolliCalculatorState.svelte.ts               뷰 상태 class ($state 입력·activeTab, $derived 결과)
+  IngredientInput.svelte · ResultTable.svelte      입력 폼 · 결과 표 (라벨은 prop 주입)
+  index.ts                                         (ui 배럴, 컴포넌트만 export)
+features/calculate-makgeolli/service/index.ts      MakgeolliCalcService.calculate(input) → MakgeolliBrew (계산 액션)
+entities/makgeolli/model/
+  MakgeolliBrew.ts                                 결과 뷰모델 class (static fromOutcome로 domain-v2 결과 매핑)
+  type.ts                                          union 어휘(BrewTabType 등)
+  index.ts                                         (재-export 배럴)
+```
+
+- **라벨은 뷰**(`MakgeolliCalculator.svelte`가 정의해 자식에 prop 주입), **상태는 위젯 class**, **계산은 `features/service`**, **데이터 형태·매핑은 `entities` 모델 class**. `model`엔 enum·수치만.
+- 옛 경로 이전은 라우트 디렉터리 없이 `hooks.server.ts`에서 `redirect(301, …)`로 처리한다(구 `/dictionary`→`/wiki` 선례와 동일).
+- import 방향: `widgets`(상태 class) → `features`(service) → `entities`(model) → domain-v2(외부 패키지).
