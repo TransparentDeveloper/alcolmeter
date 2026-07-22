@@ -4,8 +4,7 @@
 
 ## 1. 원칙
 
-- 기존 구조를 한 번에 대체하지 않는다. **페이지 하나씩** 마이그레이션한다.
-- 마이그레이션한 페이지만 이 컨벤션을 따른다. 나머지는 레거시 구조(`apps/web/CLAUDE.md`의 "페이지 구조 규칙"·"SEO 규칙")를 그대로 둔다.
+- **전 페이지가 FSD를 따른다** (페이지 단위 점진 마이그레이션 완료). 새 페이지·구조 개선도 이 컨벤션을 그대로 적용한다.
 - 스택은 **Svelte 5 + SvelteKit**을 유지한다. React·JSX·`.tsx`를 도입하지 않는다. 컴포넌트는 `.svelte`다.
 
 ## 2. 레이어
@@ -112,7 +111,7 @@ Slice 내부 폴더는 아래 7종만 쓴다. 임의 세그먼트 금지.
   export { Supabase };
   ```
 - **import 방향은 단방향**이다: `apps → pages → widgets → features → entities → shared`. `shared`는 어디서나 쓸 수 있다. 역방향·동일 레이어 슬라이스 간 import는 금지한다.
-- 레이어 alias는 `svelte.config.js`의 `kit.alias`로 등록한다: `$apps` `$pages` `$widgets` `$features` `$entities` `$shared`. `$lib`은 기존 레거시 공용 코드를 가리키며 마이그레이션 완료 전까지 병존한다.
+- 레이어 alias는 `svelte.config.js`의 `kit.alias`로 등록한다: `$apps` `$pages` `$widgets` `$features` `$entities` `$shared`. (레거시 `$lib` 공용 코드는 전 페이지 마이그레이션 완료로 폐기됐다.)
 
 > 참고: 정식 FSD는 슬라이스 루트에 public API(`index.ts`)를 두고 세그먼트를 내부에 감춘다. 이 프로젝트는 세그먼트 index를 직접 노출하는 커스텀 규칙을 쓴다.
 
@@ -166,7 +165,7 @@ widgets/home/ui/Hero.svelte
 widgets/home/ui/DrinkSelection.svelte
 widgets/home/ui/Learn.svelte
 widgets/home/ui/index.ts                   (ui 세그먼트 배럴, 셋 다 export)
-shared/ui/MetaHead/MetaHead.svelte + index.ts  ($lib/components/Seo.svelte 복사, home만 사용)
+shared/ui/MetaHead/MetaHead.svelte + index.ts  (전 페이지 공용 head·SEO 주입 컴포넌트)
 ```
 
 ## 부록: 막걸리 계산기 마이그레이션 (레퍼런스)
