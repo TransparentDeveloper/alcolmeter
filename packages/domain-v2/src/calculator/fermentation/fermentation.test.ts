@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import { Fermentation } from '.';
 
-const fermentation = new Fermentation();
+const fermentation = new Fermentation({ maxConcentration: 0.05, maxAbv: 0.185, lossRatio: 0.6 });
 
 describe('발효 시뮬', () => {
 	it('투입이 없으면 도수는 0이다', () => {

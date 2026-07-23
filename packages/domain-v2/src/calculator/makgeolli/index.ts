@@ -1,9 +1,16 @@
 import { Calculator } from '../abstract';
-import { Fermentation, type Feed } from '../fermentation';
+import { Fermentation, type Feed, type FermentationParams } from '../fermentation';
 import { Nuruk, Rice, Water } from '../../model/ingredient';
 import { RiceForm } from '../../model/rice-form';
 
 const MILSUL_RICE_FRACTION = 0.15; // 밑술 쌀 비율(고정) — 효모 배양 최소 단위. 캘리브레이션 전 임시값.
+
+// 막걸리(누룩) 발효 상수 — 캘리브레이션 전 임시값. (구 fermentation 모듈 상수를 이관)
+const MAKGEOLLI_FERMENTATION: FermentationParams = {
+	maxConcentration: 0.05,
+	maxAbv: 0.185,
+	lossRatio: 0.6
+};
 
 /** 막걸리 빚기 입력. 물·누룩은 쌀 대비 비율로 받는다. */
 export interface MakgeolliInput {
@@ -36,7 +43,7 @@ export interface MakgeolliOutcome {
  * (분배 규칙·식 상세는 README "막걸리 계산 과정" 참고.)
  */
 export class MakgeolliCalculator extends Calculator<MakgeolliInput, MakgeolliOutcome> {
-	private readonly fermentation = new Fermentation();
+	private readonly fermentation = new Fermentation(MAKGEOLLI_FERMENTATION);
 
 	// 쌀 분배: 밑술 고정 비율 + 나머지를 덧술에 점증(1:2:…:N−1) 분배.
 	private distributeRiceGrams(totalRiceGrams: number, stageCount: number): number[] {
