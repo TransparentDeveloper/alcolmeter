@@ -3,3 +3,4 @@ export { Rice } from './rice';
 export { Water } from './water';
 export { Nuruk } from './nuruk';
 export { Apple } from './apple';
+export { Sugar } from './sugar';
