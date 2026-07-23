@@ -5,6 +5,9 @@ export type {
 	MakgeolliResult,
 	MakgeolliStage,
 	RiceFormType,
+	CiderRequest,
+	CiderResult,
+	AppleVarietyType,
 	IngredientAmount,
 	IngredientKindType,
 	UnitType

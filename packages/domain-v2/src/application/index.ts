@@ -1,8 +1,10 @@
-import type { IngredientAmount, MakgeolliRequest, MakgeolliResult, MakgeolliStage } from '../types';
+import type { IngredientAmount, MakgeolliRequest, MakgeolliResult, MakgeolliStage, CiderRequest, CiderResult } from '../types';
 
 import { MakgeolliCalculator, type StageComposition } from '../calculator/makgeolli';
-import { Rice } from '../model/ingredient';
+import { CiderCalculator } from '../calculator/cider';
+import { Rice, Apple, Sugar } from '../model/ingredient';
 import { RiceForm } from '../model/rice-form';
+import { AppleVariety } from '../model/apple-variety';
 import { toGrams } from '../utils/unit-helper';
 
 /**
@@ -40,6 +42,30 @@ export class MakgeolliService {
 			volumeLiters: outcome.volumeLiters,
 			optimalWaterRatio: outcome.optimalWaterRatio,
 			stages: outcome.stages.map((stage) => this.toStageDto(stage))
+		};
+	}
+}
+
+/**
+ * 응용 서비스 — 사이다 빚기 use case.
+ * 입력 DTO를 도메인 재료로 옮기고, 사이다 계산기 결과를 DTO로 되돌린다.
+ */
+export class CiderService {
+	private readonly calculator = new CiderCalculator();
+
+	brew(request: CiderRequest): CiderResult {
+		const appleGrams = toGrams(request.apple.amount, request.apple.unit);
+		const sugarGrams = request.addedSugar
+			? toGrams(request.addedSugar.amount, request.addedSugar.unit)
+			: 0;
+		const outcome = this.calculator.calculate({
+			apple: Apple.of(appleGrams, AppleVariety.of(request.apple.variety)),
+			sugar: Sugar.ofGrams(sugarGrams)
+		});
+		return {
+			abvPercent: outcome.abvPercent,
+			volumeLiters: outcome.volumeLiters,
+			residualSugarLiters: outcome.residualSugarLiters
 		};
 	}
 }
