@@ -3,7 +3,7 @@
 술 빚기·도수 추정 도메인 패키지. 기존 `@alcolmeter/domain`을 완전히 대체할 v2 (작업 중).
 전통주에 한정하지 않는다 — **발효주**(막걸리·청주, 와인 등)를 먼저 다루고, **증류주**(술덧을 증류)·**담금주**(침출주)를 추후 평행 경로로 추가한다.
 
-> ⚠️ **WIP** — 막걸리 경로(`LiquorController.makgeolli`)가 구현됨. 계수·분배 규칙은 **캘리브레이션 전 임시값**이라 절대 수치는 신뢰하지 말 것. 보장하는 건 *거동*(발효횟수↑→도수↑, 진할수록↑·내성 한도)까지다.
+> ⚠️ **WIP** — 막걸리 경로(`LiquorController.makgeolli`)와 사이다 경로(`LiquorController.cider`)가 구현됨. 계수·분배 규칙은 **캘리브레이션 전 임시값**이라 절대 수치는 신뢰하지 말 것. 보장하는 건 *거동*(발효횟수↑→도수↑, 진할수록↑·내성 한도)까지다.
 
 ## 계층 구조
 
@@ -11,15 +11,22 @@
 
 ```mermaid
 flowchart TD
-    Caller -->|MakgeolliRequest| Interface["interface — LiquorController · 라우팅"]
+    Caller -->|MakgeolliRequest| Interface["interface — LiquorController · 막걸리·사이다 라우팅"]
+    Caller -->|CiderRequest| Interface
     Interface --> Application["application — MakgeolliService · use case"]
+    Interface --> CiderApp["application — CiderService · use case"]
     Application --> Makgeolli["calculator/makgeolli — 막걸리 유도(분배)"]
+    CiderApp --> Cider["calculator/cider — 단일 Feed(단발 발효)"]
     Makgeolli --> Fermentation["calculator/fermentation — 공용 발효 시뮬"]
+    Cider --> Fermentation
     Makgeolli --> Model["model — Rice·Water·Nuruk·RiceForm"]
+    Cider --> CiderModel["model — Apple·Sugar·AppleVariety"]
     Fermentation --> Wash["model — Wash"]
     Interface -->|MakgeolliResult| Caller
+    Interface -->|CiderResult| Caller
     Types["types.ts — 경계 DTO"] -. 공유 .-> Interface
     Types -. 공유 .-> Application
+    Types -. 공유 .-> CiderApp
 ```
 
 **핵심 분리 — 유도 ⟂ 발효.** 발효 시뮬(`Fermentation`)은 *단계별 투입을 받아 도수를 내는* 물리/화학이라 **모든 발효주 공용**이다. 술마다 다른 건 **유도**(재료를 단계별로 어떻게 나누나)뿐. 그래서 술별 계산기(`MakgeolliCalculator` 등)는 자기 유도로 단계 계획만 짜서 공용 `Fermentation`에 넘긴다. 의존은 `막걸리 → 발효` 한 방향.
@@ -34,11 +41,13 @@ flowchart TD
 
 당은 **"에탄올 환산 L"(잠재 알코올)** 로 다뤄 에탄올·여유분과 같은 자에서 직접 비교한다. 당→에탄올 화학량론 변환은 모델 바깥(재료 레이어)에서 적용한다. **나눠 담글수록(N↑)** 단계 사이 발효가 당을 비워 더 많은 당이 발효된다 → 도수↑.
 
-| 발효 상수 (임시값) | 값 | 의미 |
-|---|---|---|
-| `MAX_SUGAR_CONCENTRATION` | 0.05 | 한 단계에 녹는 당 농도 한계(에탄올 환산 분율) |
-| `MAX_ABV` | 0.185 | 효모 내성 — 도달 가능한 최대 도수 |
-| `EXCESS_LOSS_RATIO` | 0.6 | 농도 초과분 중 굳어 손실되는 비율 |
+발효 상수는 기질·효모마다 다르므로 **모듈 상수가 아니라 술별 계산기가 생성자로 주입**한다(`FermentationParams`). 발효 시뮬 자체는 이 값을 모른 채 받은 대로 돌린다. 막걸리는 `0.05 / 0.185 / 0.6`, 사이다는 `∞ / 0.12 / 0`(삼투압 lock 없이 내성까지 드라이하게 발효)을 주입한다. 모두 캘리브레이션 전 임시값.
+
+| `FermentationParams` (임시값) | 막걸리 | 사이다 | 의미 |
+|---|---|---|---|
+| `maxConcentration` | 0.05 | ∞ | 한 단계에 녹는 당 농도 한계(에탄올 환산 분율). 사이다는 단발 발효라 한계 없음 |
+| `maxAbv` | 0.185 | 0.12 | 효모 내성 — 도달 가능한 최대 도수 |
+| `lossRatio` | 0.6 | 0 | 농도 초과분 중 굳어 손실되는 비율. 사이다는 한계가 없어 미사용 |
 
 ---
 
@@ -111,7 +120,7 @@ N ≥ 2:  밑술·중간 덧술 = F,   마지막 덧술 = 고두밥(되직)
 도수를 **잔당 없이 최대(내성)** 로 내는 급수율. 모든 당이 발효돼 도수가 내성에 딱 닿는 부피에서 역산한다.
 
 ```
-최적 총부피 V* = 총당 / 내성 = potentialEthanol(R) / MAX_ABV
+최적 총부피 V* = 총당 / 내성 = potentialEthanol(R) / maxAbv
 최적 물      = max(0, V* − riceVolume(R))
 최적 급수율   = 최적 물(g) / R(g)
 ```
@@ -123,6 +132,57 @@ N ≥ 2:  밑술·중간 덧술 = F,   마지막 덧술 = 고두밥(되직)
 - **발효횟수↑ → 도수↑**(포화), **급수율↑ → 도수↓**(내성 한도), **6도 고정 없음**, 도수 ≤ 내성.
 - 계수·밑술비율·형태급수비율은 **캘리브레이션 전 임시값**. 절대 수치 신뢰 금지.
 - 형태의 5/3/1 구분은 현재 도수에 거의 안 드러난다(위 ③ 참고).
+
+---
+
+## 사이다 계산 과정
+
+입력 **사과 양**(kg) · **품종**(고정 목록 `FUJI`·`HONGOK`·`HONGRO`·`AORI`) · **선택적 가당**(설탕 g).
+출력 **예상 도수 · 생산량 · 잔당**.
+
+막걸리와 같은 공용 발효(`Fermentation`)를 쓰지만 **담금 단계가 없는 단발 발효**다. 재료를 단계별로 나누는 유도(분배)가 없어, 계산기는 사과즙과 가당을 **단일 `Feed` 하나**로 묶어 넘긴다.
+
+### 1단계 — 재료를 잠재 에탄올·부피로 환산
+
+#### ① 사과
+
+```
+착즙 부피   = 사과kg × 품종 착즙률(juiceYield)              // L
+당 질량     = 착즙 부피 × 밀도(1.05) × Brix × 10             // g
+잠재 에탄올 = sugarGramsToEthanolLiters(당 질량)            // 에탄올 환산 L (당 1g ≈ 0.000648 L)
+```
+
+품종마다 착즙률·Brix가 다르다. 당은 막걸리와 같은 화학량론(`sugarGramsToEthanolLiters`)으로 에탄올 환산 L에서 다룬다.
+
+#### ② 가당 (설탕, 선택)
+
+```
+잠재 에탄올 = sugarGramsToEthanolLiters(설탕g)             // 사과와 같은 화학량론
+부피        = 설탕g × 0.000629                              // L (용해 시 소량 부피)
+```
+
+### 2단계 — 단일 Feed로 발효
+
+사과즙과 가당을 하나의 `Feed`로 묶어 공용 `Fermentation`에 한 번 넘긴다.
+
+```
+부피 = 착즙부피 + 설탕부피                                   // L
+당   = 사과잠재에탄올 + 설탕잠재에탄올                       // 에탄올 환산 L
+도수·생산량·잔당 = Fermentation.calculate([Feed])
+```
+
+농도 한계가 없어(`maxConcentration = ∞`) 삼투압 lock이 걸리지 않는다 → 당이 **내성(12%)까지 드라이하게** 발효된다. 잔당은 **과가당으로 내성을 넘길 때만** 남는다. 막걸리의 '나눠 담글수록 도수↑' 이점은 단발 발효인 사이다엔 해당 없다.
+
+| 재료 계수 (임시값) | 값 |
+|---|---|
+| 착즙률 `juiceYield` | 품종별 (FUJI 0.65 · HONGOK 0.6 · HONGRO 0.62 · AORI 0.63) |
+| Brix | 품종별 (FUJI 14 · HONGOK 12 · HONGRO 13 · AORI 11) |
+| 착즙액 밀도 | 1.05 kg/L |
+| 당 → 잠재 에탄올 | 0.000648 L/g |
+| 설탕 → 부피 | 0.000629 L/g |
+| 사이다 내성(maxAbv) | 0.12 |
+
+계수·품종값은 모두 **캘리브레이션 전 임시값**이다. 절대 수치 신뢰 금지.
 
 ---
 
@@ -142,9 +202,13 @@ N ≥ 2:  밑술·중간 덧술 = F,   마지막 덧술 = 고두밥(되직)
 classDiagram
     class LiquorController {
         +makgeolli(request) MakgeolliResult
+        +cider(request) CiderResult
     }
     class MakgeolliService {
         +brew(request) MakgeolliResult
+    }
+    class CiderService {
+        +brew(request) CiderResult
     }
     class MakgeolliRequest {
         <<interface>>
@@ -161,6 +225,17 @@ classDiagram
         +optimalWaterRatio : number
         +stages : MakgeolliStage[]
     }
+    class CiderRequest {
+        <<interface>>
+        +apple : amount·unit·variety
+        +addedSugar? : IngredientAmount
+    }
+    class CiderResult {
+        <<interface>>
+        +abvPercent : number
+        +volumeLiters : number
+        +residualSugarLiters : number
+    }
     class Calculator {
         <<abstract>>
         +calculate(input) Out
@@ -168,9 +243,18 @@ classDiagram
     class MakgeolliCalculator {
         +calculate(MakgeolliInput) MakgeolliOutcome
     }
+    class CiderCalculator {
+        +calculate(CiderInput) FermentationOutcome
+    }
     class Fermentation {
         +calculate(Feed[]) FermentationOutcome
         +ceilingVolume(totalSugar) number
+    }
+    class FermentationParams {
+        <<interface>>
+        +maxConcentration : number
+        +maxAbv : number
+        +lossRatio : number
     }
     class Ingredient {
         <<abstract>>
@@ -186,6 +270,20 @@ classDiagram
         +volumeLiters : number
     }
     class Nuruk {
+    }
+    class Apple {
+        +juiceVolumeLiters : number
+        +potentialEthanolLiters : number
+    }
+    class Sugar {
+        +potentialEthanolLiters : number
+        +volumeLiters : number
+    }
+    class AppleVariety {
+        +code : AppleVarietyCodeType
+        +brix : number
+        +juiceYield : number
+        +equals(other) boolean
     }
     class RiceForm {
         +code : RiceFormCodeType
@@ -204,23 +302,35 @@ classDiagram
     }
 
     LiquorController ..> MakgeolliService : routes
+    LiquorController ..> CiderService : routes
     MakgeolliService ..> MakgeolliRequest : input
     MakgeolliService ..> MakgeolliResult : creates
     MakgeolliService ..> MakgeolliCalculator : 연산 위임
+    CiderService ..> CiderRequest : input
+    CiderService ..> CiderResult : creates
+    CiderService ..> CiderCalculator : 연산 위임
     Calculator <|-- MakgeolliCalculator
+    Calculator <|-- CiderCalculator
     Calculator <|-- Fermentation
     MakgeolliCalculator ..> Fermentation : 발효 위임
     MakgeolliCalculator ..> Rice : 재료 사용
     MakgeolliCalculator ..> Water
     MakgeolliCalculator ..> Nuruk
     MakgeolliCalculator ..> RiceForm
+    CiderCalculator ..> Fermentation : 발효 위임
+    CiderCalculator ..> Apple
+    CiderCalculator ..> Sugar
     Fermentation ..> Wash : 발효 시뮬
+    Fermentation ..> FermentationParams : 주입
     Ingredient <|-- Rice
     Ingredient <|-- Water
     Ingredient <|-- Nuruk
+    Ingredient <|-- Apple
+    Ingredient <|-- Sugar
+    Apple ..> AppleVariety
 ```
 
-`MakgeolliService`(application)는 입력 DTO를 도메인 입력으로 옮겨 **`MakgeolliCalculator.calculate`** 에 넘기고, 계산기가 유도로 단계 계획을 짠 뒤 **`Fermentation`** 에 위임해 도수를 낸다. 모델 객체(`Rice`·`Water`·`Nuruk`·`RiceForm`·`Wash`)는 자기 고유 데이터·행동만 갖고, **여러 모델을 엮는 연산은 calculator**가 맡는다. `Nuruk`는 현재 도수·부피 기여가 0이다(추후 역가 반영 여지).
+`MakgeolliService`(application)는 입력 DTO를 도메인 입력으로 옮겨 **`MakgeolliCalculator.calculate`** 에 넘기고, 계산기가 유도로 단계 계획을 짠 뒤 **`Fermentation`** 에 위임해 도수를 낸다. 모델 객체(`Rice`·`Water`·`Nuruk`·`RiceForm`·`Wash`)는 자기 고유 데이터·행동만 갖고, **여러 모델을 엮는 연산은 calculator**가 맡는다. `Nuruk`는 현재 도수·부피 기여가 0이다(추후 역가 반영 여지). 사이다 경로도 같은 골격이되 유도(분배) 단계가 없어, `CiderService` → `CiderCalculator`가 사과·설탕을 **단일 `Feed`** 로 묶어 곧장 `Fermentation`에 넘긴다.
 
 ## 테스트
 
