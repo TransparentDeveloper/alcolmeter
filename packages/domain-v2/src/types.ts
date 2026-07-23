@@ -4,7 +4,7 @@
  */
 
 /** 입력에 쓰이는 재료 종류. 필요 시 확장(배·포도 등). */
-export type IngredientKindType = 'RICE' | 'WATER' | 'NURUK';
+export type IngredientKindType = 'RICE' | 'WATER' | 'NURUK' | 'SUGAR';
 
 /** 양의 단위. 질량(g·kg)·부피(ml·L). */
 export type UnitType = 'g' | 'kg' | 'ml' | 'L';
@@ -40,4 +40,20 @@ export interface MakgeolliResult {
 	volumeLiters: number;
 	optimalWaterRatio: number;
 	stages: MakgeolliStage[];
+}
+
+/** 사과 품종. */
+export type AppleVarietyType = 'FUJI' | 'HONGOK' | 'HONGRO' | 'AORI';
+
+/** 입력: 사이다(하드 사이다) 빚기 요청. 가당(addedSugar)은 선택. */
+export interface CiderRequest {
+	apple: { amount: number; unit: UnitType; variety: AppleVarietyType };
+	addedSugar?: IngredientAmount;
+}
+
+/** 출력: 예상 도수 · 생산량 · 잔당(단맛). */
+export interface CiderResult {
+	abvPercent: number;
+	volumeLiters: number;
+	residualSugarLiters: number;
 }
