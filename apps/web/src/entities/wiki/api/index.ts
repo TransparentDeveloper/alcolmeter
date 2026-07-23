@@ -3,9 +3,9 @@ import { WikiTerm, WikiRevision } from '$entities/wiki/model';
 import type { WikiFields, WikiTermRow, WikiRevisionRow } from '$entities/wiki/model';
 
 const TERM_SELECT =
-	'id, slug, title, summary, category, related, main_image, video, body, author_id, created_at, updated_at, profiles(display_name)';
+	'id, slug, title, summary, main_image, video, info_rows, body, author_id, created_at, updated_at, profiles(display_name)';
 const REV_SELECT =
-	'id, term_id, type, title, summary, category, related, main_image, video, body, editor_id, comment, reverted_from_revision_id, created_at, profiles(display_name)';
+	'id, term_id, type, title, summary, main_image, video, info_rows, body, editor_id, comment, reverted_from_revision_id, created_at, profiles(display_name)';
 
 // 이력 삽입 payload (edit·revert 공용)
 function revisionPayload(
@@ -21,10 +21,9 @@ function revisionPayload(
 		type,
 		title: f.title,
 		summary: f.summary,
-		category: f.category,
-		related: f.related,
 		main_image: f.mainImage,
 		video: f.video,
+		info_rows: f.infoRows,
 		body: f.body,
 		editor_id: editorId,
 		comment,
@@ -85,15 +84,25 @@ class WikiAPI {
 			p_slug: f.slug,
 			p_title: f.title,
 			p_summary: f.summary,
-			p_category: f.category,
-			p_related: f.related,
 			p_main_image: f.mainImage,
 			p_video: f.video,
+			p_info_rows: f.infoRows,
 			p_body: f.body,
 			p_comment: comment
 		});
 		if (error) throw error;
 		return data as string;
+	}
+
+	// 대표이미지 업로드(스토리지 wiki-media). 공개 URL 반환. 제출 시 클라이언트에서 호출한다.
+	static async uploadImage(client: SupabaseClient, file: File): Promise<string> {
+		const ext = (file.name.split('.').pop() ?? 'bin').toLowerCase();
+		const path = `terms/${crypto.randomUUID()}.${ext}`;
+		const { error } = await client.storage
+			.from('wiki-media')
+			.upload(path, file, { cacheControl: '3600', contentType: file.type, upsert: false });
+		if (error) throw error;
+		return client.storage.from('wiki-media').getPublicUrl(path).data.publicUrl;
 	}
 
 	static async edit(

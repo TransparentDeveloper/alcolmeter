@@ -18,7 +18,6 @@
 			{#each terms as t (t.id)}
 				<a class="row" href={`/wiki/${encodeURIComponent(t.slug)}`}>
 					<span class="title">{t.title}</span>
-					<span class="cat">{t.category}</span>
 				</a>
 			{/each}
 		</div>
@@ -89,12 +88,6 @@
 	}
 	.row:hover .title {
 		color: var(--ds-color-spark);
-	}
-	.cat {
-		flex: none;
-		font-family: var(--ds-font-mono);
-		font-size: var(--ds-text-xs);
-		color: var(--ds-color-ink-4);
 	}
 	.empty-desc {
 		font-size: var(--ds-text-sm);

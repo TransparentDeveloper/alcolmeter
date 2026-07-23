@@ -9,6 +9,10 @@ export type DefinedTermInput = {
 	/** 소속 용어집 URL (DefinedTermSet.url) */
 	inDefinedTermSet?: string;
 	image?: string;
+	/** 동의어·별칭·외국어·한자 표기 */
+	alternateName?: string[];
+	/** 동일 대상을 가리키는 권위 있는 외부 문서 URL */
+	sameAs?: string[];
 };
 
 export type DefinedTermSetInput = {
@@ -64,6 +68,8 @@ export class JsonLd {
 			description: term.description,
 			...(term.inDefinedTermSet ? { inDefinedTermSet: term.inDefinedTermSet } : {}),
 			...(term.image ? { image: term.image } : {}),
+			...(term.alternateName?.length ? { alternateName: term.alternateName } : {}),
+			...(term.sameAs?.length ? { sameAs: term.sameAs } : {}),
 			url: term.url
 		});
 	}

@@ -2,16 +2,16 @@ import { WikiAPI } from '$entities/wiki/api';
 import { UserAPI } from '$entities/user/api';
 import { Supabase } from '$shared/supabase/api';
 import type { UserModel } from '$entities/user/model';
-import { WikiEditorState } from './WikiEditorState.svelte';
+import { WikiFormState } from './WikiFormState.svelte';
 
 // 새 용어 작성 흐름: 편집 상태 + 저장(프로필 보장 → 생성). 페이지는 네비게이션만 맡는다.
 class WikiWriteState {
-	editor = new WikiEditorState({ isNew: true });
+	form = new WikiFormState({ isNew: true });
 	saving = $state(false);
 	errorMessage = $state<string | null>(null);
 
 	get canSubmit(): boolean {
-		return this.editor.isValid && !this.saving;
+		return this.form.isValid && !this.saving;
 	}
 
 	// 성공 시 slug 반환, 실패 시 null
@@ -22,7 +22,8 @@ class WikiWriteState {
 		try {
 			const client = Supabase.getClient();
 			await UserAPI.upsertProfile(user);
-			return await WikiAPI.create(client, this.editor.toFields(), null);
+			await this.form.commitImage(client);
+			return await WikiAPI.create(client, this.form.toFields(), null);
 		} catch (e) {
 			// slug unique 위반 = 이미 있는 용어
 			const msg = e instanceof Error ? e.message : '';

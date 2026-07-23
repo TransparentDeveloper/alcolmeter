@@ -2,7 +2,7 @@ import { WikiAPI } from '$entities/wiki/api';
 import { UserAPI } from '$entities/user/api';
 import { Supabase } from '$shared/supabase/api';
 import type { UserModel } from '$entities/user/model';
-import { WikiEditorState } from './WikiEditorState.svelte';
+import { WikiFormState } from './WikiFormState.svelte';
 
 type WikiLoadResultType = 'ok' | 'notfound';
 
@@ -10,7 +10,7 @@ type WikiLoadResultType = 'ok' | 'notfound';
 class WikiEditState {
 	readonly slug: string;
 	termId = $state<number | null>(null);
-	editor = $state<WikiEditorState | null>(null);
+	form = $state<WikiFormState | null>(null);
 	saving = $state(false);
 	errorMessage = $state<string | null>(null);
 	loaded = $state(false);
@@ -20,7 +20,7 @@ class WikiEditState {
 	}
 
 	get canSubmit(): boolean {
-		return this.editor !== null && this.editor.isValid && !this.saving;
+		return this.form !== null && this.form.isValid && !this.saving;
 	}
 
 	async load(): Promise<WikiLoadResultType> {
@@ -29,17 +29,19 @@ class WikiEditState {
 		const term = await WikiAPI.getBySlug(Supabase.getClient(), this.slug);
 		if (!term) return 'notfound';
 		this.termId = term.id;
-		this.editor = new WikiEditorState({ ...term.toFields(), isNew: false }); // 제목 고정은 UI에서 readonly
+		this.form = new WikiFormState({ ...term.toFields(), isNew: false }); // 제목 고정은 UI에서 readonly
 		return 'ok';
 	}
 
 	async submit(user: UserModel): Promise<boolean> {
-		if (this.editor === null || this.termId === null || !this.canSubmit) return false;
+		if (this.form === null || this.termId === null || !this.canSubmit) return false;
 		this.saving = true;
 		this.errorMessage = null;
 		try {
+			const client = Supabase.getClient();
 			await UserAPI.upsertProfile(user);
-			await WikiAPI.edit(Supabase.getClient(), this.termId, this.editor.toFields(), user.id, null);
+			await this.form.commitImage(client);
+			await WikiAPI.edit(client, this.termId, this.form.toFields(), user.id, null);
 			return true;
 		} catch (e) {
 			this.errorMessage = e instanceof Error ? e.message : '저장에 실패했어요.';

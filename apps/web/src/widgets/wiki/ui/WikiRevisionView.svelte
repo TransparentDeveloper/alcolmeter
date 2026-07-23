@@ -11,7 +11,6 @@
 	</p>
 
 	<header>
-		{#if revision.category}<p class="eyebrow">{revision.category}</p>{/if}
 		<h1>{revision.title}</h1>
 		<p class="summary">{revision.summary}</p>
 	</header>
@@ -40,14 +39,6 @@
 	header {
 		display: grid;
 		gap: var(--ds-space-sm);
-	}
-	.eyebrow {
-		font-family: var(--ds-font-mono);
-		font-size: var(--ds-text-xs);
-		font-weight: var(--ds-weight-medium);
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		color: var(--ds-color-ink-3);
 	}
 	h1 {
 		font-family: var(--ds-font-display);

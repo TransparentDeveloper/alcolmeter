@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { WikiEditor, WikiEditState } from '$widgets/wiki/ui';
+	import { WikiForm, WikiEditState } from '$widgets/wiki/ui';
 	import { authStore } from '$features/auth/store/index.svelte';
 
 	let { slug }: { slug: string } = $props();
@@ -31,8 +31,8 @@
 </svelte:head>
 
 <main>
-	{#if state.editor}
-		<WikiEditor editor={state.editor} submitLabel={state.saving ? '저장 중…' : '수정 저장'} onsubmit={submit} />
+	{#if state.form}
+		<WikiForm form={state.form} submitLabel={state.saving ? '저장 중…' : '수정 저장'} onsubmit={submit} />
 		{#if state.errorMessage}<p role="alert">{state.errorMessage}</p>{/if}
 	{:else}
 		<p class="loading">불러오는 중…</p>

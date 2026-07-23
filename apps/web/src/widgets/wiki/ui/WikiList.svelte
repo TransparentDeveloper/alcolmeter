@@ -30,7 +30,6 @@
 						<a href="/wiki/{encodeURIComponent(term.slug)}">
 							<h2>{term.title}</h2>
 							<p class="summary">{term.summary}</p>
-							{#if term.category}<span class="meta">{term.category}</span>{/if}
 						</a>
 					</li>
 				{/each}
@@ -106,11 +105,6 @@
 	.results .summary {
 		color: var(--ds-color-ink-2);
 		margin: 0;
-	}
-	.results .meta {
-		font-family: var(--ds-font-mono);
-		font-size: var(--ds-text-xs);
-		color: var(--ds-color-ink-3);
 	}
 
 	.empty {

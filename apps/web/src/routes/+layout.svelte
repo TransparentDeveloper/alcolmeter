@@ -10,6 +10,9 @@
 	const version = __APP_VERSION__;
 	const faviconVersion = __FAVICON_VERSION__;
 
+	// 위키 상세·작성·수정은 넓은 데스크탑 폭(정보 테이블·본문). 목록·이력은 기본 폭.
+	const WIDE_ROUTES = ['/wiki/[slug]', '/wiki/new', '/wiki/[slug]/edit'];
+
 	afterNavigate(({ from, to }) => {
 		if (from && typeof gtag !== 'undefined' && to) {
 			gtag('event', 'page_view', {
@@ -23,7 +26,11 @@
 	<link rel="icon" type="image/svg+xml" href={`/favicon.svg?v=${faviconVersion}`} />
 </svelte:head>
 
-<div class="app" class:app--hub={page.url.pathname === '/' || page.url.pathname === '/calculate-makgeolli'}>
+<div
+	class="app"
+	class:app--hub={page.url.pathname === '/' || page.url.pathname === '/calculate-makgeolli'}
+	class:app--wide={WIDE_ROUTES.includes(page.route.id ?? '')}
+>
 	<header>
 		<a href="/" class="logo">
 			<span class="logo-text">알콜미터<span class="logo-dot">.</span></span>
@@ -64,6 +71,11 @@
 	/* 홈(커뮤니티 허브)·계산기는 넓은 데스크탑 폭 */
 	.app--hub {
 		max-width: var(--ds-container-hub);
+	}
+
+	/* 위키 상세는 읽는 문서라 중간 폭(정보 테이블·본문이 모바일 폭에 갇히지 않게) */
+	.app--wide {
+		max-width: var(--ds-container-wide);
 	}
 
 	header {

@@ -7,10 +7,9 @@ const row: WikiTermRow = {
 	slug: '고두밥',
 	title: '고두밥',
 	summary: '된밥',
-	category: '쌀 형태',
-	related: ['죽'],
 	main_image: null,
 	video: null,
+	info_rows: [{ key: 'alternateName', label: '다른 이름', value: '지에밥' }],
 	body: '**고두밥**',
 	author_id: 'uid-1',
 	created_at: 't1',
@@ -23,7 +22,11 @@ describe('WikiTerm.fromRow', () => {
 		const t = WikiTerm.fromRow(row);
 		expect(t.slug).toBe('고두밥');
 		expect(t.author.displayName).toBe('알콜미터');
-		expect(t.related).toEqual(['죽']);
+		expect(t.infoRows).toEqual([{ key: 'alternateName', label: '다른 이름', value: '지에밥' }]);
+	});
+	it('info_rows가 null이면 빈 배열', () => {
+		const t = WikiTerm.fromRow({ ...row, info_rows: null });
+		expect(t.infoRows).toEqual([]);
 	});
 	it('profiles가 없으면 익명', () => {
 		const t = WikiTerm.fromRow({ ...row, profiles: null });
