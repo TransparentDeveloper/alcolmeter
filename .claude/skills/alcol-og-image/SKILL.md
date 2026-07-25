@@ -21,12 +21,28 @@ web 페이지별 OG(공유 미리보기) 이미지를 **손으로 디자인하�
 
 ## 디자인 — "측정 노트" 톤 (design-system 토큰)
 
-- **배경**: dot-grid 모눈 종이를 **전면**에 깐다 (흰 카드 없음). `radial-gradient(--grid 1.5px) 32px`
-- **색**: `--bg #f2f4f7`, `--ink1 #141825`(제목), `--ink3 #5c6478`(부제·라벨), `--spark #f2512d`는 **붉은 점 하나에만** (브랜드 `알콜미터.`의 점)
-- **타이포**: 제목·부제는 Pretendard(한글), 라벨·URL·눈금은 Geist Mono
+- **배경**: dot-grid 모눈 종이를 **전면**에 깐다 (흰 카드 없음). 색은 토큰 `--ds-color-grid #e8ecf1`을 쓰고, 카드가 작게 보이는 매체라 눈금만 실제 화면(8px·1px)보다 키워 깐다(`1.5px`·`32px`).
+- **색**: `--bg #f2f4f7`, `--ink1 #141825`(제목), `--ink2 #3b4354`(부제), `--ink3 #5c6478`(라벨), `--spark #f2512d`
 - **구성**: 상단 `알콜미터.` + 섹션 라벨 / 중앙 큰 제목 + 부제 / 하단 `alcolmeter.kr` + 측정 눈금
 - **손그림 밑줄은 쓰지 않는다** (사용자 선호: 절제)
-- 템플릿 파일: 이 스킬 폴더의 `og-template.html`. `?label=`·`?title=`·`?subtitle=` 쿼리로 문구를 주입한다. 제목의 줄바꿈은 개행 문자로 넘긴다(`.title`이 `white-space: pre-line`).
+- 템플릿 파일: 이 스킬 폴더의 `og-template.html`. `?label=`·`?title=`·`?subtitle=`·`?layout=` 쿼리로 문구와 레이아웃을 주입한다. 제목의 줄바꿈은 개행 문자로 넘긴다(`.title`이 `white-space: pre-line`).
+
+### 타이포는 design-system 토큰을 그대로 미러링한다
+
+공유 카드의 로고·제목이 실제 화면과 달라 보이면 대개 여기가 어긋난 것이다. `packages/design-system/src/tokens.css`와 `+layout.svelte`의 `.logo-text`를 기준으로 맞춘다.
+
+| 요소 | 폰트 | 굵기 | 자간 | 색 |
+|---|---|---|---|---|
+| 로고 `알콜미터.` · 큰 제목 | `--ds-font-display` (Cabinet Grotesk → Geist → Pretendard) | 700 | -0.01em | ink-1 |
+| 섹션 라벨 | `--ds-font-mono` (Geist Mono) | 500 | 0.08em | ink-3 |
+| 부제 | `--ds-font-sans` (Geist → Pretendard) | 400 | 기본 | ink-2 |
+
+한글은 Latin 서체에 글리프가 없어 Pretendard로 떨어지고, **마침표 같은 Latin 글리프는 Cabinet Grotesk가 그린다.** 그래서 Cabinet Grotesk를 로딩하지 않으면 로고의 점만 Pretendard의 둥근 점으로 바뀐다.
+
+### 강조와 홈 전용 레이아웃
+
+- **`*강조*`**: 제목·부제에서 `*…*`로 감싼 구간만 `--spark`(주황)로 세운다. **홈에서만 쓴다**(절제).
+- **`?layout=brand`**: 홈 전용. 가운데에 상표 `알콜미터.`를 크게 세우고 그 아래 한 줄 소개를 놓는다. 홈은 섹션이 아니라 서비스 전체를 대표하므로 `?label=none`으로 섹션 라벨을 감춘다.
 
 ### 섹션 라벨
 
@@ -40,10 +56,10 @@ web 페이지별 OG(공유 미리보기) 이미지를 **손으로 디자인하�
 
 | 파일 | 라벨 | 제목 | 부제 |
 |---|---|---|---|
-| `home.png` | COMMUNITY | 술을 빚는 사람과\n즐기는 사람 모두 | 양조 기록과 후기, 알콜위키와 계산기까지 |
+| `home.png` | (없음, `label=none`) | `layout=brand`의 상표 `알콜미터.` | `*술* 즐기는 사람들의 커뮤니티` |
 | `community.png` | COMMUNITY | 커뮤니티 | 양조 기록과 후기, 질문을 나누는 자리 |
 | `wiki.png` | ALCOLWIKI | 알콜위키 | 술과 양조의 낱말을 함께 써 나가는 참여형 위키 |
-| `wiki-guidelines.png` | ALCOLWIKI | 이용 안내 | 문서 라이선스와 편집 규칙, 신고와 면책 안내 |
+| `wiki-guidelines.png` | ALCOLWIKI | 위키 이용 안내 | 문서 라이선스와 편집 규칙, 신고와 면책 안내 |
 | `calculate-makgeolli.png` | CALCULATOR | 막걸리 계산기 | 쌀 총량과 형태를 넣으면 단·이·삼양주 배합을 계산합니다 |
 | `calculate-cider.png` | CALCULATOR | 사이다 계산기 | 사과 양과 품종을 넣으면 예상 도수와 생산량을 계산합니다 |
 | `faq.png` | HELP | 자주 묻는 질문 | 계산기와 알콜위키, 커뮤니티에 대한 질문과 답변 |
@@ -74,6 +90,8 @@ web 페이지별 OG(공유 미리보기) 이미지를 **손으로 디자인하�
 
 ## 실전 함정 (꼭 기억할 것)
 
+- **Cabinet Grotesk를 반드시 로딩한다.** 빠지면 로고 `알콜미터.`의 마침표가 Pretendard의 크고 둥근 점으로 바뀌어 실제 화면과 달라진다. 폰트 link는 `apps/web/src/app.html`과 같은 조합(Geist·Geist Mono·Cabinet Grotesk·Pretendard)을 유지한다.
+- **굵기를 800으로 올리지 않는다.** 실제 화면의 제목·로고는 `--ds-weight-bold`(700)다. 카드가 작게 보인다고 굵기를 키우면 로고가 다른 서체처럼 보인다.
 - **Chrome이 스크린샷을 쓰고도 종료하지 않는다.** `--screenshot`은 파일을 만든 뒤 프로세스가 매달릴 때가 있다. 파일 크기가 안정되면 직접 `terminate()` 해야 한다. 그냥 기다리면 90초 타임아웃까지 끌려간다.
 - **프로필을 페이지마다 새로 판다.** 같은 `--user-data-dir`을 재사용하면 뒤 실행이 앞 브라우저 인스턴스에 붙어 스크린샷을 찍지 않고 매달린다.
 - **`file://` 차단** → 반드시 로컬 HTTP 서버를 거친다.

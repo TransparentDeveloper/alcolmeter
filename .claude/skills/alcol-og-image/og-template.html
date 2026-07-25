@@ -2,12 +2,22 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8" />
+<!-- 폰트는 app.html과 같은 출처·같은 조합을 쓴다. Cabinet Grotesk가 빠지면 상표의 마침표가
+     Pretendard의 둥근 점으로 바뀌어 실제 화면의 로고와 달라진다. -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 <style>
+  /* design-system 토큰(packages/design-system/src/tokens.css)을 그대로 옮겨 둔다. */
   :root {
+    --font-display: 'Cabinet Grotesk', 'Geist', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    --font-sans: 'Geist', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    --font-mono: 'Geist Mono', 'Pretendard', ui-monospace, Menlo, monospace;
+    --weight-bold: 700;
+    --tracking-tight: -0.01em;
+
     --bg: #f2f4f7;
     --surface: #ffffff;
     --ink1: #141825;
@@ -16,13 +26,14 @@
     --ink4: #a7adbb;
     --spark: #f2512d;
     --border2: #d4d9e2;
-    --grid: #dbe0e9;
+    --grid: #e8ecf1;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { width: 1200px; height: 630px; }
   body {
-    font-family: 'Pretendard', sans-serif;
+    font-family: var(--font-sans);
     background-color: var(--bg);
+    /* 카드가 작게 보이는 매체라 실제 화면(8px·1px)보다 눈금을 키워 깐다. 색은 토큰 그대로. */
     background-image: radial-gradient(var(--grid) 1.5px, transparent 1.5px);
     background-size: 32px 32px;
     background-position: 8px 8px;
@@ -38,33 +49,67 @@
     justify-content: space-between;
   }
   .top { display: flex; align-items: center; justify-content: space-between; }
-  .brand { font-weight: 800; font-size: 34px; letter-spacing: -0.01em; color: var(--ink1); }
+  /* 헤더 로고: +layout.svelte의 .logo-text와 같은 폰트·굵기·자간 */
+  .brand {
+    font-family: var(--font-display);
+    font-weight: var(--weight-bold);
+    font-size: 34px;
+    letter-spacing: var(--tracking-tight);
+    color: var(--ink1);
+  }
   .brand .dot { color: var(--spark); }
+  /* 섹션 라벨: 홈 히어로의 .eyebrow와 같은 결(mono·500·0.08em·ink-3) */
   .tag {
-    font-family: 'Geist Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 15px;
     font-weight: 500;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.08em;
     color: var(--ink3);
   }
   .mid { display: flex; flex-direction: column; }
+  /* 큰 제목: 페이지 제목류와 같은 display 폰트·700·-0.01em */
   .title {
-    font-weight: 800;
+    font-family: var(--font-display);
+    font-weight: var(--weight-bold);
     font-size: 78px;
-    line-height: 1.08;
-    letter-spacing: -0.025em;
+    line-height: 1.2;
+    letter-spacing: var(--tracking-tight);
     color: var(--ink1);
     max-width: 1020px;
     /* 제목 줄바꿈은 파라미터의 개행 문자를 그대로 살린다 */
     white-space: pre-line;
   }
+  /* 제목·부제 속 `*강조*` 구간. 홈에서만 쓴다 (절제) */
+  .spark { color: var(--spark); }
+  /* 부제: 히어로 설명문과 같은 결(sans·400·ink-2) */
   .subtitle {
     margin-top: 32px;
-    font-weight: 500;
+    font-family: var(--font-sans);
+    font-weight: 400;
     font-size: 30px;
-    line-height: 1.45;
-    color: var(--ink3);
+    line-height: 1.6;
+    color: var(--ink2);
     max-width: 920px;
+  }
+  /* 브랜드 레이아웃(홈 전용): 상표를 가운데 크게 세우고 그 아래 한 줄로 소개한다. */
+  .brand-mark { display: none; }
+  body.brand .top .brand { visibility: hidden; }
+  body.brand .mid { align-items: center; text-align: center; }
+  body.brand .title { display: none; }
+  body.brand .brand-mark {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: var(--weight-bold);
+    font-size: 112px;
+    line-height: 1.2;
+    letter-spacing: var(--tracking-tight);
+    color: var(--ink1);
+  }
+  body.brand .brand-mark .dot { color: var(--spark); }
+  body.brand .subtitle {
+    margin-top: 24px;
+    font-size: 38px;
+    max-width: none;
   }
   .bottom { display: flex; align-items: flex-end; justify-content: space-between; }
   .url {
@@ -86,8 +131,8 @@
       <div class="tag" id="label">COMMUNITY</div>
     </div>
     <div class="mid">
-      <div class="title" id="title">술을 빚는 사람과
-즐기는 사람 모두</div>
+      <div class="brand-mark">알콜미터<span class="dot">.</span></div>
+      <div class="title" id="title">술을 <span class="spark">빚고 즐기는</span> 사람들</div>
       <div class="subtitle" id="subtitle">양조 기록과 후기, 알콜위키와 계산기까지</div>
     </div>
     <div class="bottom">
@@ -98,10 +143,29 @@
   <script>
     // 라벨·제목·부제는 URL 파라미터(?label=..&title=..&subtitle=..) 또는 DOM 교체로 주입한다.
     // 제목의 줄바꿈은 개행 문자(%0A)로 넘긴다 (.title이 white-space: pre-line).
+    // `?layout=brand`는 홈 전용 레이아웃(가운데 상표 + 한 줄 소개)이다.
     const p = new URLSearchParams(location.search);
-    if (p.get('label')) document.getElementById('label').textContent = p.get('label');
-    if (p.get('title')) document.getElementById('title').textContent = p.get('title');
-    if (p.get('subtitle')) document.getElementById('subtitle').textContent = p.get('subtitle');
+    if (p.get('layout') === 'brand') document.body.classList.add('brand');
+    if (p.get('label') === 'none') document.getElementById('label').style.visibility = 'hidden';
+    else if (p.get('label')) document.getElementById('label').textContent = p.get('label');
+    if (p.get('title')) setSpark(document.getElementById('title'), p.get('title'));
+    if (p.get('subtitle')) setSpark(document.getElementById('subtitle'), p.get('subtitle'));
+
+    // `*…*` 구간만 주황(--spark)으로 세운다. innerHTML을 쓰지 않고 노드로 짜 넣는다.
+    function setSpark(el, text) {
+      el.textContent = '';
+      text.split(/\*([^*]+)\*/).forEach((chunk, i) => {
+        if (!chunk) return;
+        if (i % 2 === 0) {
+          el.appendChild(document.createTextNode(chunk));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'spark';
+          span.textContent = chunk;
+          el.appendChild(span);
+        }
+      });
+    }
     // 우하단 측정 눈금 (5번째마다 spark, 높이 패턴)
     const ticks = document.getElementById('ticks');
     const heights = [12, 16, 12, 16, 26, 12, 16, 12, 16, 26, 12, 16, 12, 16];
