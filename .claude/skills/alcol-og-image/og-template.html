@@ -54,6 +54,9 @@
     line-height: 1.08;
     letter-spacing: -0.025em;
     color: var(--ink1);
+    max-width: 1020px;
+    /* 제목 줄바꿈은 파라미터의 개행 문자를 그대로 살린다 */
+    white-space: pre-line;
   }
   .subtitle {
     margin-top: 32px;
@@ -80,11 +83,12 @@
   <div class="frame">
     <div class="top">
       <div class="brand">알콜미터<span class="dot">.</span></div>
-      <div class="tag">BREWING&nbsp;&nbsp;CALCULATOR</div>
+      <div class="tag" id="label">COMMUNITY</div>
     </div>
     <div class="mid">
-      <div class="title" id="title">전통주 양조 계산기</div>
-      <div class="subtitle" id="subtitle">쌀의 양만 입력하면 최적의 배합 비율을 알려드립니다</div>
+      <div class="title" id="title">술을 빚는 사람과
+즐기는 사람 모두</div>
+      <div class="subtitle" id="subtitle">양조 기록과 후기, 알콜위키와 계산기까지</div>
     </div>
     <div class="bottom">
       <div class="url">alcolmeter.kr</div>
@@ -92,8 +96,10 @@
     </div>
   </div>
   <script>
-    // 제목·부제는 URL 파라미터(?title=..&subtitle=..) 또는 DOM 교체로 주입한다.
+    // 라벨·제목·부제는 URL 파라미터(?label=..&title=..&subtitle=..) 또는 DOM 교체로 주입한다.
+    // 제목의 줄바꿈은 개행 문자(%0A)로 넘긴다 (.title이 white-space: pre-line).
     const p = new URLSearchParams(location.search);
+    if (p.get('label')) document.getElementById('label').textContent = p.get('label');
     if (p.get('title')) document.getElementById('title').textContent = p.get('title');
     if (p.get('subtitle')) document.getElementById('subtitle').textContent = p.get('subtitle');
     // 우하단 측정 눈금 (5번째마다 spark, 높이 패턴)
