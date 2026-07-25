@@ -6,6 +6,7 @@ import { Rice, Apple, Sugar } from '../model/ingredient';
 import { RiceForm } from '../model/rice-form';
 import { AppleVariety } from '../model/apple-variety';
 import { toGrams } from '../utils/unit-helper';
+import { ethanolLitersToSugarGrams } from '../utils/sugar-helper';
 
 /**
  * 응용 서비스(Application Service) — 막걸리 빚기 use case.
@@ -65,7 +66,7 @@ export class CiderService {
 		return {
 			abvPercent: outcome.abvPercent,
 			volumeLiters: outcome.volumeLiters,
-			residualSugarLiters: outcome.residualSugarLiters
+			residualSugarGrams: ethanolLitersToSugarGrams(outcome.residualSugarLiters)
 		};
 	}
 }

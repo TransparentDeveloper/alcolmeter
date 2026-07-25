@@ -51,9 +51,9 @@ export interface CiderRequest {
 	addedSugar?: IngredientAmount;
 }
 
-/** 출력: 예상 도수 · 생산량 · 잔당(단맛). */
+/** 출력: 예상 도수 · 생산량 · 잔당(발효가능당 기준 그램). */
 export interface CiderResult {
 	abvPercent: number;
 	volumeLiters: number;
-	residualSugarLiters: number;
+	residualSugarGrams: number;
 }
