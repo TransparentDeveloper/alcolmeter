@@ -44,3 +44,4 @@ pnpm check    # 타입 체크
 - 편집은 앱 UI에서 한다: 가입자가 새 용어를 추가하고(`/wiki/new`) 기존 용어를 수정하며(`/wiki/{slug}/edit`), 이력 조회·되돌리기도 UI에서 처리한다(`/wiki/{slug}/history`).
 - `slug`은 제목에서 자동 생성되고(`entities/wiki/lib/slug.ts`) 이후 고정된다.
 - 본문은 마크다운으로 저장되고 `shared/lib/wiki-render`가 런타임에 렌더링한다. 위키링크 `[[slug]]`(표시문구가 다르면 `[[slug|표시]]`)를 지원한다.
+- 작성·수정 폼의 본문은 `shared/ui/Editor`(합성 툴바 WYSIWYG)로 편집하고, `shared/lib/markdown`이 DOM↔마크다운을 변환한다(`MarkdownWriter`=DOM→md, `MarkdownConverter`=md→편집용 HTML). **저장 포맷은 마크다운 그대로**라 렌더·편집이력·SEO 파이프라인은 손대지 않는다. 사용자에게 마크다운 문법을 노출하지 않는 게 원칙이다.
