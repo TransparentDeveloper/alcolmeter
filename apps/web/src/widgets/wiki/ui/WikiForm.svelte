@@ -1,5 +1,19 @@
 <script lang="ts">
 	import { slide } from 'svelte/transition';
+	import {
+		Editor,
+		EditorToolbar,
+		EditorToolbarSeparator,
+		EditorHeading,
+		EditorBold,
+		EditorItalic,
+		EditorStrikethrough,
+		EditorBulletList,
+		EditorOrderedList,
+		EditorQuote,
+		EditorLink,
+		EditorDivider
+	} from '$shared/ui';
 	import type { WikiFormState } from './WikiFormState.svelte';
 
 	let {
@@ -28,8 +42,8 @@
 	</div>
 
 	<label>
-		<span>요약 (선택)</span>
-		<input bind:value={form.summary} placeholder="한 줄 요약" />
+		<span>개요 (선택)</span>
+		<input bind:value={form.summary} placeholder="개요" />
 	</label>
 
 	<!-- 정보 테이블: 대표이미지·대표영상·정보행을 한 표(테두리)로 -->
@@ -107,10 +121,25 @@
 		</div>
 	</fieldset>
 
-	<label>
-		<span>본문(마크다운)</span>
-		<textarea bind:value={form.body} rows="16" placeholder="용어 설명을 마크다운으로 작성하세요"></textarea>
-	</label>
+	<div class="field">
+		<Editor bind:value={form.body} placeholder="용어 설명을 작성하세요">
+			<EditorToolbar>
+				<EditorHeading level={2} label="H2" />
+				<EditorHeading level={3} label="H3" />
+				<EditorToolbarSeparator />
+				<EditorBold />
+				<EditorItalic />
+				<EditorStrikethrough />
+				<EditorToolbarSeparator />
+				<EditorBulletList />
+				<EditorOrderedList />
+				<EditorQuote />
+				<EditorToolbarSeparator />
+				<EditorLink />
+				<EditorDivider />
+			</EditorToolbar>
+		</Editor>
+	</div>
 
 	<div class="actions">
 		<button type="submit" class="submit" disabled={!form.isValid}>{submitLabel}</button>

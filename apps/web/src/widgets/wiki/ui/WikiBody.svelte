@@ -42,7 +42,7 @@
 	/* 본문(마크다운 렌더 결과)은 {@html}이라 :global 필요. 옛 용어사전 TermBody의 prose 스타일을 이관.
 	   WikiDetail(현재 버전)·WikiRevisionView(과거 스냅샷)가 공유한다. */
 	.body {
-		font-size: var(--ds-text-base);
+		font-size: var(--ds-text-xs);
 		line-height: var(--ds-leading-normal);
 		color: var(--ds-color-ink-2);
 	}
@@ -60,12 +60,37 @@
 		margin: var(--ds-space-md) 0;
 	}
 
-	.body :global(ul) {
+	.body :global(h3) {
+		font-family: var(--ds-font-display);
+		font-size: var(--ds-text-base);
+		font-weight: var(--ds-weight-bold);
+		letter-spacing: var(--ds-tracking-tight);
+		color: var(--ds-color-ink-1);
+		margin: var(--ds-space-lg) 0 var(--ds-space-sm);
+	}
+
+	.body :global(h4) {
+		font-family: var(--ds-font-display);
+		font-size: var(--ds-text-sm);
+		font-weight: var(--ds-weight-bold);
+		letter-spacing: var(--ds-tracking-tight);
+		color: var(--ds-color-ink-1);
+		margin: var(--ds-space-lg) 0 var(--ds-space-sm);
+	}
+
+	.body :global(ul),
+	.body :global(ol) {
 		margin: var(--ds-space-md) 0;
 		padding-left: 1.25rem;
 		display: flex;
 		flex-direction: column;
 		gap: var(--ds-space-xs);
+	}
+
+	.body :global(hr) {
+		margin: var(--ds-space-lg) 0;
+		border: none;
+		border-top: var(--ds-border-width) solid var(--ds-color-border-2);
 	}
 
 	.body :global(strong) {
