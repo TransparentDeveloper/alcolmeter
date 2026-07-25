@@ -71,6 +71,13 @@
 			달게 만들려면 발효를 마친 뒤 가당(백스위트닝)하거나 저온으로 발효를 멈추세요.<br />
 			사과만으로는 보통 <strong>5~8%</strong>가 나옵니다.
 		</p>
+		{#if calc.appleKg > 0 && calc.brew.fermentationStopped}
+			<div class="warning">
+				<strong>발효가 멈출 수 있어요.</strong><br />
+				가당이 효모 내성(약 12%)을 넘어 당이 다 발효되지 못하고 잔당 약 {calc.brew.residualSugarPerLiter.toFixed(0)} g/L이 남습니다.<br />
+				이취·알코올 열감이 생기기 쉽습니다.
+			</div>
+		{/if}
 		<section class="card">
 			<h2 class="section-label">예상 결과</h2>
 			{#if calc.appleKg > 0}
@@ -215,6 +222,17 @@
 
 	.guide strong {
 		color: var(--ds-color-ink-1);
+	}
+
+	.warning {
+		padding: var(--ds-space-md);
+		background: var(--ds-color-surface);
+		border: var(--ds-border-width) solid var(--ds-color-border-2);
+		border-left: 3px solid var(--ds-color-warning);
+		border-radius: var(--ds-radius-sm);
+		font-size: var(--ds-text-sm);
+		color: var(--ds-color-ink-1);
+		line-height: 1.5;
 	}
 
 	.empty {
