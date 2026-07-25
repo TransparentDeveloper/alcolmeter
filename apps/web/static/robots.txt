@@ -1,4 +1,11 @@
 User-agent: *
 Allow: /
 
+# 로그인·작성·수정 화면은 ssr=false라 robots 메타가 하이드레이션 뒤에야 붙는다.
+# JS를 실행하지 않는 크롤러를 위해 여기서 한 번 더 막는다. (편집 이력은 SSR이라 noindex 메타로 충분하다.)
+Disallow: /login
+Disallow: /community/new
+Disallow: /wiki/new
+Disallow: /*/edit
+
 Sitemap: https://alcolmeter.kr/sitemap.xml
