@@ -6,6 +6,7 @@ export { default as WikiVideo } from './WikiVideo.svelte';
 export { default as WikiForm } from './WikiForm.svelte';
 export { default as WikiHistory } from './WikiHistory.svelte';
 export { default as WikiRevisionView } from './WikiRevisionView.svelte';
+export { default as WikiGuidelines } from './WikiGuidelines.svelte';
 export { WikiFormState } from './WikiFormState.svelte';
 export { WikiIndexState } from './WikiIndexState.svelte';
 export { WikiWriteState } from './WikiWriteState.svelte';

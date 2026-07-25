@@ -36,6 +36,10 @@
 			</ul>
 		{/if}
 	{/if}
+
+	<p class="guide-link">
+		문서를 편집하기 전에 <a href="/wiki/guidelines">이용 안내</a>를 읽어 주세요.
+	</p>
 </div>
 
 <style>
@@ -109,5 +113,16 @@
 
 	.empty {
 		color: var(--ds-color-ink-3);
+	}
+
+	.guide-link {
+		text-align: center;
+		font-size: var(--ds-text-sm);
+		color: var(--ds-color-ink-3);
+	}
+	.guide-link a {
+		color: var(--ds-color-spark);
+		text-decoration: underline;
+		text-underline-offset: 0.15em;
 	}
 </style>
