@@ -54,6 +54,11 @@
 	</div>
 
 	<div class="col">
+		<p class="guide">
+			담금을 <strong>여러 번 나눌수록</strong>(단→이→삼양주) 도수가 높아집니다.<br />
+			물을 <strong>적게</strong> 잡을수록 진하고 도수가 오르지만, 효모 내성까지가 한계입니다.<br />
+			계산값은 거르기 전 <strong>원주</strong> 기준이라, 드실 땐 물을 타 도수를 낮춥니다.
+		</p>
 		{#if calc.riceForm === 'TTEOK'}
 			<p class="tteok-warning">떡(설기)을 사용하면 발효가 더디거나 맛이 극단적으로 달아질 수 있습니다.<br/>초보자에게는 죽이나 범벅을 권장합니다.</p>
 		{/if}
@@ -156,6 +161,21 @@
 
 	.tab:hover:not(.active) {
 		border-color: var(--ds-color-border-3);
+		color: var(--ds-color-ink-1);
+	}
+
+	.guide {
+		padding: var(--ds-space-md);
+		background: var(--ds-color-surface);
+		border: var(--ds-border-width) solid var(--ds-color-border-2);
+		border-left: 3px solid var(--ds-color-info);
+		border-radius: var(--ds-radius-sm);
+		font-size: var(--ds-text-sm);
+		color: var(--ds-color-ink-2);
+		line-height: 1.55;
+	}
+
+	.guide strong {
 		color: var(--ds-color-ink-1);
 	}
 
