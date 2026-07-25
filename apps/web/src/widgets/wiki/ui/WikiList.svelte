@@ -10,7 +10,7 @@
 <div class="wiki-index">
 	<div class="hero">
 		<h1>알콜위키</h1>
-		<p class="tagline">막걸리·전통주 양조 용어를 검색하고, 함께 고쳐 쓰는 위키.</p>
+		<p class="tagline">술에 관한 용어를 검색하고, 함께 고쳐 쓰는 위키.</p>
 		<input
 			class="search"
 			type="text"
@@ -18,6 +18,8 @@
 			aria-label="용어 검색"
 			bind:value={state.query}
 		/>
+		<p class="add">찾는 용어가 없나요? <a href="/wiki/new">새 용어 추가 →</a></p>
+		<p class="guide-link">편집 전 <a href="/wiki/guidelines">이용 안내</a>를 읽어 주세요.</p>
 	</div>
 
 	{#if state.hasQuery}
@@ -36,10 +38,6 @@
 			</ul>
 		{/if}
 	{/if}
-
-	<p class="guide-link">
-		문서를 편집하기 전에 <a href="/wiki/guidelines">이용 안내</a>를 읽어 주세요.
-	</p>
 </div>
 
 <style>
@@ -54,6 +52,9 @@
 		gap: var(--ds-space-lg);
 		text-align: center;
 		padding: var(--ds-space-3xl) 0;
+		max-width: 42rem;
+		width: 100%;
+		margin: 0 auto;
 	}
 	h1 {
 		font-family: var(--ds-font-display);
@@ -117,12 +118,26 @@
 
 	.guide-link {
 		text-align: center;
-		font-size: var(--ds-text-sm);
+		font-size: var(--ds-text-xs);
 		color: var(--ds-color-ink-3);
 	}
 	.guide-link a {
-		color: var(--ds-color-spark);
+		color: inherit;
 		text-decoration: underline;
 		text-underline-offset: 0.15em;
+	}
+
+	.add {
+		font-size: var(--ds-text-sm);
+		color: var(--ds-color-ink-3);
+	}
+	.add a {
+		font-family: var(--ds-font-mono);
+		color: var(--ds-color-spark);
+		text-decoration: none;
+		transition: color var(--ds-duration-short) var(--ds-ease-out);
+	}
+	.add a:hover {
+		color: var(--ds-color-spark-hover);
 	}
 </style>

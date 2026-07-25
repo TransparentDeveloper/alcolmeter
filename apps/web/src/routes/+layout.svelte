@@ -10,7 +10,9 @@
 	const version = __APP_VERSION__;
 	const faviconVersion = __FAVICON_VERSION__;
 
-	// 위키 상세·작성·수정은 넓은 데스크탑 폭(정보 테이블·본문). 목록·이력은 기본 폭.
+	// 홈·계산기·위키 목록·이용 안내는 hub 폭(1280).
+	const HUB_ROUTES = ['/', '/calculate-makgeolli', '/privacy', '/wiki', '/wiki/guidelines'];
+	// 위키 상세·작성·수정은 넓은 데스크탑 폭(정보 테이블·본문). 이력은 기본 폭.
 	const WIDE_ROUTES = ['/wiki/[slug]', '/wiki/new', '/wiki/[slug]/edit'];
 
 	afterNavigate(({ from, to }) => {
@@ -28,9 +30,7 @@
 
 <div
 	class="app"
-	class:app--hub={page.url.pathname === '/' ||
-		page.url.pathname === '/calculate-makgeolli' ||
-		page.url.pathname === '/privacy'}
+	class:app--hub={HUB_ROUTES.includes(page.url.pathname)}
 	class:app--wide={WIDE_ROUTES.includes(page.route.id ?? '')}
 >
 	<header>
@@ -47,14 +47,19 @@
 	</main>
 	{#if page.url.pathname !== '/login'}
 		<footer>
-			<nav class="footer-links">
-				<a href="/calculate-makgeolli">막걸리 계산기</a>
-				<a href="/community">커뮤니티</a>
-				<a href="/settings">설정</a>
-				<a href="/wiki">알콜위키</a>
-				<a href="/privacy">개인정보처리방침</a>
-				<a href="/faq">자주 묻는 질문</a>
-			</nav>
+			<div class="footer-top">
+				<nav class="footer-links">
+					<a href="/calculate-makgeolli">막걸리 계산기</a>
+					<a href="/community">커뮤니티</a>
+					<a href="/settings">설정</a>
+					<a href="/wiki">알콜위키</a>
+					<a href="/privacy">개인정보처리방침</a>
+					<a href="/faq">자주 묻는 질문</a>
+				</nav>
+				{#if page.url.pathname === '/wiki' || page.url.pathname.startsWith('/wiki/')}
+					<a class="footer-guide" href="/wiki/guidelines">이용 안내</a>
+				{/if}
+			</div>
 			<span class="version">v{version}</span>
 		</footer>
 	{/if}
@@ -129,6 +134,13 @@
 		row-gap: var(--ds-space-xs);
 		justify-content: start;
 		justify-items: start;
+	}
+
+	.footer-top {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: var(--ds-space-lg);
 		margin-bottom: var(--ds-space-md);
 	}
 
@@ -141,6 +153,18 @@
 	}
 
 	.footer-links a:hover {
+		color: var(--ds-color-spark);
+	}
+
+	.footer-guide {
+		flex: none;
+		font-family: var(--ds-font-mono);
+		font-size: var(--ds-text-xs);
+		color: var(--ds-color-ink-3);
+		text-decoration: none;
+		transition: color var(--ds-duration-short) var(--ds-ease-out);
+	}
+	.footer-guide:hover {
 		color: var(--ds-color-spark);
 	}
 
