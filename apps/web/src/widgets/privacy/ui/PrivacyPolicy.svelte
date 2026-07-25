@@ -110,9 +110,10 @@
 			<li>삭제 및 처리정지 요청</li>
 		</ul>
 		<p>
-			현재 앱 안의 계정 삭제(회원 탈퇴) 기능은 준비 중이며, 그전까지는 아래 문의처로 요청하시면 관계
-			법령이 정한 기간 안에 처리해 드립니다. 다만 알콜위키처럼 여러 이용자가 함께 작성·수정하는
-			콘텐츠는 편집 이력의 성격상 일부가 남을 수 있으며, 이 경우 작성자를 식별할 수 없도록 처리합니다.
+			로그인한 이용자는 <a href="/settings">설정</a> 페이지에서 직접 회원 탈퇴를 할 수 있으며, 탈퇴 시
+			계정과 로그인 정보는 삭제됩니다. 다만 알콜위키·커뮤니티처럼 여러 이용자가 함께 작성·수정하거나
+			공개된 콘텐츠는 그대로 남고, 작성자를 식별할 수 없도록 익명 처리합니다. 그 밖의 열람·정정 요청은
+			아래 문의처로 연락해 주시면 관계 법령이 정한 기간 안에 처리해 드립니다.
 		</p>
 	{:else if id === 'cookies'}
 		<p>
@@ -185,6 +186,12 @@
 	.section-body :global(strong) {
 		font-weight: var(--ds-weight-semibold);
 		color: var(--ds-color-ink-1);
+	}
+
+	.section-body :global(a) {
+		color: var(--ds-color-ink-1);
+		text-decoration: underline;
+		text-underline-offset: 2px;
 	}
 
 	.section-body :global(ul) {

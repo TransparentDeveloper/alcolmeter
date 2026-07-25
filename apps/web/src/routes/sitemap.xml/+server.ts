@@ -18,7 +18,7 @@ const staticEntries: Entry[] = [
 	{ loc: `${SITE}/faq`, lastmod: '2026-06-20', changefreq: 'daily', priority: '0.7' },
 	{ loc: `${SITE}/wiki`, lastmod: '2026-07-19', changefreq: 'weekly', priority: '0.7' },
 	{ loc: `${SITE}/settings`, lastmod: '2026-06-20', changefreq: 'monthly', priority: '0.3' },
-	{ loc: `${SITE}/privacy`, lastmod: '2026-07-25', changefreq: 'yearly', priority: '0.3' },
+	{ loc: `${SITE}/privacy`, lastmod: '2026-07-26', changefreq: 'yearly', priority: '0.3' },
 	{ loc: `${SITE}/wiki/guidelines`, lastmod: '2026-07-25', changefreq: 'yearly', priority: '0.3' }
 ];
 

@@ -5,7 +5,7 @@
 <article>
 	<header class="doc-head">
 		<h1>개인정보처리방침</h1>
-		<p class="effective">시행일: 2026년 7월 25일</p>
+		<p class="effective">시행일: 2026년 7월 26일</p>
 	</header>
 	<PrivacyDocument />
 </article>
