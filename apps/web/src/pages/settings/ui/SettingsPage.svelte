@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { ThemeSection } from '$widgets/settings/ui';
+	import { ThemeSection, AccountSection } from '$widgets/settings/ui';
 </script>
 
 <article>
 	<h1>설정</h1>
 	<p class="updated">화면 환경을 취향에 맞게 조정합니다.</p>
 	<ThemeSection />
+	<AccountSection />
 </article>
 
 <style>
