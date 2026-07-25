@@ -60,7 +60,7 @@
 			계산값은 거르기 전 <strong>원주</strong> 기준이라, 드실 땐 물을 타 도수를 낮춥니다.
 		</p>
 		{#if calc.riceForm === 'TTEOK'}
-			<p class="tteok-warning">떡(설기)을 사용하면 발효가 더디거나 맛이 극단적으로 달아질 수 있습니다.<br/>초보자에게는 죽이나 범벅을 권장합니다.</p>
+			<p class="tteok-warning"><strong>떡(설기)을 사용하면 발효가 더디거나 맛이 극단적으로 달아질 수 있습니다.</strong><br/>초보자에게는 죽이나 범벅을 권장합니다.</p>
 		{/if}
 		<section class="card">
 			<h2 class="section-label">배합 결과</h2>
@@ -168,7 +168,7 @@
 		padding: var(--ds-space-md);
 		background: var(--ds-color-surface);
 		border: var(--ds-border-width) solid var(--ds-color-border-2);
-		border-left: 3px solid var(--ds-color-info);
+		border-left: 3px solid var(--ds-color-warning);
 		border-radius: var(--ds-radius-sm);
 		font-size: var(--ds-text-sm);
 		color: var(--ds-color-ink-2);
@@ -186,8 +186,8 @@
 		border-left: 3px solid var(--ds-color-warning);
 		border-radius: var(--ds-radius-sm);
 		font-size: var(--ds-text-sm);
-		font-weight: var(--ds-weight-medium);
 		color: var(--ds-color-ink-1);
+		line-height: 1.5;
 	}
 
 	.empty {
