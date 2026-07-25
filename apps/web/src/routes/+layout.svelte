@@ -28,7 +28,9 @@
 
 <div
 	class="app"
-	class:app--hub={page.url.pathname === '/' || page.url.pathname === '/calculate-makgeolli'}
+	class:app--hub={page.url.pathname === '/' ||
+		page.url.pathname === '/calculate-makgeolli' ||
+		page.url.pathname === '/privacy'}
 	class:app--wide={WIDE_ROUTES.includes(page.route.id ?? '')}
 >
 	<header>
