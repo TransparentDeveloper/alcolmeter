@@ -51,13 +51,12 @@
 				nurukMax={INPUT_MAX.nuruk}
 			/>
 		</section>
-
-		{#if calc.riceForm === 'TTEOK'}
-			<p class="tteok-warning">떡(설기)을 사용하면 발효가 더디거나 맛이 극단적으로 달아질 수 있습니다.<br/>초보자에게는 죽이나 범벅을 권장합니다.</p>
-		{/if}
 	</div>
 
 	<div class="col">
+		{#if calc.riceForm === 'TTEOK'}
+			<p class="tteok-warning">떡(설기)을 사용하면 발효가 더디거나 맛이 극단적으로 달아질 수 있습니다.<br/>초보자에게는 죽이나 범벅을 권장합니다.</p>
+		{/if}
 		<section class="card">
 			<h2 class="section-label">배합 결과</h2>
 			<nav class="tabs">
@@ -161,7 +160,6 @@
 	}
 
 	.tteok-warning {
-		margin-top: var(--ds-space-lg);
 		padding: var(--ds-space-md);
 		background: var(--ds-color-surface);
 		border: var(--ds-border-width) solid var(--ds-color-border-2);

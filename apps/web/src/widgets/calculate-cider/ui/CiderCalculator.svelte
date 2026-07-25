@@ -63,15 +63,14 @@
 				{/if}
 			</div>
 		</section>
+	</div>
 
+	<div class="col">
 		<p class="guide">
 			사이다는 기본적으로 끝까지 발효돼 <strong>드라이</strong>합니다.<br />
 			달게 만들려면 발효를 마친 뒤 가당(백스위트닝)하거나 저온으로 발효를 멈추세요.<br />
 			사과만으로는 보통 <strong>5~8%</strong>가 나옵니다.
 		</p>
-	</div>
-
-	<div class="col">
 		<section class="card">
 			<h2 class="section-label">예상 결과</h2>
 			{#if calc.appleKg > 0}
@@ -204,7 +203,6 @@
 	}
 
 	.guide {
-		margin-top: var(--ds-space-lg);
 		padding: var(--ds-space-md);
 		background: var(--ds-color-surface);
 		border: var(--ds-border-width) solid var(--ds-color-border-2);
