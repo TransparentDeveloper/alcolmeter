@@ -7,6 +7,7 @@
 	import { HeaderAuth } from '$widgets/auth/ui';
 	import { ThemeToggle } from '$features/theme/ui';
 	import { SiteMeta } from '$shared/ui';
+	import { DialogProvider } from '$apps/root/ui';
 	let { children } = $props();
 	const version = __APP_VERSION__;
 	const faviconVersion = __FAVICON_VERSION__;
@@ -31,6 +32,7 @@
 
 <SiteMeta />
 
+<DialogProvider>
 <div
 	class="app"
 	class:app--hub={HUB_ROUTES.includes(page.url.pathname)}
@@ -74,6 +76,7 @@
 		</footer>
 	{/if}
 </div>
+</DialogProvider>
 
 <style>
 	.app {
