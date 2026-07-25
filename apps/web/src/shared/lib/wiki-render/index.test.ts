@@ -17,6 +17,10 @@ describe('renderWiki', () => {
 		expect(html).toContain('wiki-link--missing');
 		expect(html).not.toContain('href');
 	});
+	it('취소선(~~)을 <s>로 렌더한다', () => {
+		const html = renderWiki('~~설익음~~', new Set());
+		expect(html).toContain('<s>설익음</s>');
+	});
 	it('raw HTML/script를 살균한다', () => {
 		const html = renderWiki('<script>alert(1)</script>\n\n**굵게**', slugs);
 		expect(html).not.toContain('<script>');

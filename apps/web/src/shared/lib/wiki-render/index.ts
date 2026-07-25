@@ -36,7 +36,7 @@ function renderWiki(markdown: string, slugs: Set<string>): string {
 				`<img src="https://i.ytimg.com/vi/${id}/hqdefault.jpg" alt="영상 재생" /></a>`
 		);
 	return sanitizeHtml(classed, {
-		allowedTags: ['p', 'h1', 'h2', 'h3', 'h4', 'ul', 'ol', 'li', 'blockquote', 'strong', 'em', 'code', 'pre', 'a', 'span', 'img', 'hr', 'br', 'table', 'thead', 'tbody', 'tr', 'th', 'td'],
+		allowedTags: ['p', 'h1', 'h2', 'h3', 'h4', 'ul', 'ol', 'li', 'blockquote', 'strong', 'em', 's', 'del', 'code', 'pre', 'a', 'span', 'img', 'hr', 'br', 'table', 'thead', 'tbody', 'tr', 'th', 'td'],
 		allowedAttributes: {
 			a: ['href', 'class', 'title'],
 			span: ['class', 'title'],
