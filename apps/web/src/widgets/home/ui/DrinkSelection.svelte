@@ -11,14 +11,14 @@
 			<span class="entry-arrow">→</span>
 		</a>
 
-		<div class="entry entry--disabled">
+		<a href="/calculate-cider" class="entry entry--active">
 			<span class="entry-no">02</span>
 			<span class="entry-body">
 				<span class="entry-name">사이다</span>
-				<span class="entry-desc">사과 + 효모 + 설탕</span>
+				<span class="entry-desc">사과 + 효모</span>
 			</span>
-			<span class="entry-badge">준비 중</span>
-		</div>
+			<span class="entry-arrow">→</span>
+		</a>
 
 		<div class="entry entry--disabled">
 			<span class="entry-no">03</span>
