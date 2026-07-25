@@ -14,7 +14,7 @@
 	ogTitle="{term.title} - 알콜위키"
 	description={term.summary}
 	path="/wiki/{encodeURIComponent(term.slug)}"
-	image={term.mainImage?.url ?? '/og/dictionary.png'}
+	image={term.mainImage?.url ?? '/og/wiki.png'}
 	{schemas}
 />
 <WikiDetailPage {term} {bodyHtml} />

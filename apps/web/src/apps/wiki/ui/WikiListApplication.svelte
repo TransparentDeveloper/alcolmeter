@@ -20,7 +20,7 @@
 	title="알콜위키 - 전통주 양조 용어 위키 - 알콜미터"
 	description="막걸리·전통주 양조 용어를 입문자 눈높이로 풀어 쓰는 참여형 위키. 고두밥, 밑술, 덧술, 누룩부터 양조 방식까지."
 	path="/wiki"
-	image="/og/dictionary.png"
+	image="/og/wiki.png"
 	schemas={[schema]}
 />
 <WikiListPage {terms} />

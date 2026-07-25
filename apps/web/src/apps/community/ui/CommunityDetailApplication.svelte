@@ -13,6 +13,7 @@
 	title={`${model.title} · 알콜미터 커뮤니티`}
 	description={model.summary || model.title}
 	path={`/community/${model.id}`}
+	image="/og/community.png"
 />
 
 <CommunityDetailPage {post} />

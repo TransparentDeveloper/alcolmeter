@@ -10,6 +10,7 @@
 	title="커뮤니티 · 알콜미터"
 	description="알콜미터 사용자들이 남긴 양조 기록·후기·질문."
 	path="/community"
+	image="/og/community.png"
 />
 
 <CommunityListPage {posts} />
