@@ -10,6 +10,11 @@ interface PostInput {
 	blocks: PostBlock[];
 }
 
+interface PostIndexEntry {
+	id: number;
+	updatedAt: string;
+}
+
 // 읽기는 서버/브라우저 클라이언트를 인자로 받아 SSR·CSR 공용. 쓰기는 인증된 브라우저 클라이언트로 호출한다.
 class PostAPI {
 	static async list(client: SupabaseClient, limit = 20): Promise<PostModel[]> {
@@ -20,6 +25,17 @@ class PostAPI {
 			.limit(limit);
 		if (error) throw error;
 		return (data ?? []).map((row) => PostModel.fromRow(row as unknown as PostRow));
+	}
+
+	// 사이트맵처럼 주소와 갱신 시각만 필요한 곳을 위한 경량 조회 (본문 JSON을 끌어오지 않는다).
+	static async listIndex(client: SupabaseClient, limit = 500): Promise<PostIndexEntry[]> {
+		const { data, error } = await client
+			.from('posts')
+			.select('id, updated_at')
+			.order('updated_at', { ascending: false })
+			.limit(limit);
+		if (error) throw error;
+		return (data ?? []).map((row) => ({ id: row.id as number, updatedAt: row.updated_at as string }));
 	}
 
 	static async getById(client: SupabaseClient, id: number): Promise<PostModel | null> {
@@ -53,4 +69,4 @@ class PostAPI {
 }
 
 export { PostAPI };
-export type { PostInput };
+export type { PostInput, PostIndexEntry };

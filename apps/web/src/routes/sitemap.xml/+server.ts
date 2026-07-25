@@ -1,5 +1,6 @@
 import { Supabase } from '$shared/supabase/api';
 import { WikiAPI } from '$entities/wiki/api';
+import { PostAPI } from '$entities/post/api';
 import type { RequestHandler } from './$types';
 
 export const prerender = false;
@@ -31,14 +32,21 @@ function renderUrl(e: Entry): string {
 }
 
 export const GET: RequestHandler = async ({ cookies }) => {
-	const terms = await WikiAPI.list(Supabase.getServerClient(cookies));
+	const client = Supabase.getServerClient(cookies);
+	const [terms, posts] = await Promise.all([WikiAPI.list(client), PostAPI.listIndex(client)]);
 	const termEntries: Entry[] = terms.map((t) => ({
 		loc: `${SITE}/wiki/${encodeURIComponent(t.slug)}`,
 		lastmod: t.updatedAt.slice(0, 10),
 		changefreq: 'monthly',
 		priority: '0.6'
 	}));
-	const entries = [...staticEntries, ...termEntries];
+	const postEntries: Entry[] = posts.map((p) => ({
+		loc: `${SITE}/community/${p.id}`,
+		lastmod: p.updatedAt.slice(0, 10),
+		changefreq: 'monthly',
+		priority: '0.6'
+	}));
+	const entries = [...staticEntries, ...termEntries, ...postEntries];
 	const body = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${entries.map(renderUrl).join('\n')}
