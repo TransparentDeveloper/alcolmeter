@@ -49,12 +49,19 @@
 		<footer>
 			<div class="footer-top">
 				<nav class="footer-links">
-					<a href="/calculate-makgeolli">막걸리 계산기</a>
-					<a href="/community">커뮤니티</a>
-					<a href="/settings">설정</a>
-					<a href="/wiki">알콜위키</a>
-					<a href="/privacy">개인정보처리방침</a>
-					<a href="/faq">자주 묻는 질문</a>
+					<div class="footer-col">
+						<a href="/community">커뮤니티</a>
+						<a href="/wiki">알콜위키</a>
+					</div>
+					<div class="footer-col">
+						<a href="/calculate-makgeolli">막걸리 계산기</a>
+						<a href="/calculate-cider">사이다 계산기</a>
+					</div>
+					<div class="footer-col">
+						<a href="/faq">자주 묻는 질문</a>
+						<a href="/privacy">개인정보처리방침</a>
+						<a href="/settings">설정</a>
+					</div>
 				</nav>
 				{#if page.url.pathname === '/wiki' || page.url.pathname.startsWith('/wiki/')}
 					<a class="footer-guide" href="/wiki/guidelines">이용 안내</a>
@@ -128,12 +135,10 @@
 	}
 
 	.footer-links {
-		display: grid;
-		grid-template-columns: auto auto;
-		column-gap: var(--ds-space-2xl);
-		row-gap: var(--ds-space-xs);
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--ds-space-2xl);
 		justify-content: start;
-		justify-items: start;
 	}
 
 	.footer-top {
@@ -142,6 +147,13 @@
 		justify-content: space-between;
 		gap: var(--ds-space-lg);
 		margin-bottom: var(--ds-space-md);
+	}
+
+	.footer-col {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--ds-space-xs);
 	}
 
 	.footer-links a {
