@@ -8,7 +8,7 @@
 	let { post }: { post: PostData } = $props();
 
 	const model = $derived(new PostModel(post));
-	const description = $derived(model.summary || `${model.title} · 알콜미터 커뮤니티에 올라온 글입니다.`);
+	const description = $derived(model.summary || '알콜미터 커뮤니티에 올라온 글입니다.');
 	// 본문에 이미지가 있으면 그걸 공유 카드에 쓰고, 없으면 커뮤니티 공통 이미지로 대체한다.
 	const image = $derived(model.shareImage ?? '/og/community.png');
 	const schema = $derived(
