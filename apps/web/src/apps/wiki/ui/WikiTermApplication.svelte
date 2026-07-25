@@ -15,6 +15,11 @@
 	description={term.summary}
 	path="/wiki/{encodeURIComponent(term.slug)}"
 	image={term.mainImage?.url ?? '/og/wiki.png'}
+	imageAlt={term.mainImage?.alt}
+	type="article"
+	publishedTime={term.createdAt}
+	modifiedTime={term.updatedAt}
+	authorName={term.author.displayName}
 	{schemas}
 />
 <WikiDetailPage {term} {bodyHtml} />
