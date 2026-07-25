@@ -30,6 +30,7 @@
 		"@sveltejs/vite-plugin-svelte": "^7.0.0",
 		"@types/markdown-it": "^14.1.2",
 		"@types/sanitize-html": "^2.13.0",
+		"happy-dom": "^20.11.1",
 		"mdsvex": "^0.12.7",
 		"svelte": "^5.55.2",
 		"svelte-check": "^4.4.6",
