@@ -86,6 +86,14 @@ class PostModel {
 		return text.length > SUMMARY_LIMIT ? `${text.slice(0, SUMMARY_LIMIT)}…` : text;
 	}
 
+	// 공유 카드용 대표 이미지: 본문 첫 이미지 요소. 없으면 null(커뮤니티 공통 이미지로 폴백한다).
+	get shareImage(): string | null {
+		const image = this.data.blocks
+			.flatMap((b) => b.elements)
+			.find((e) => e.type === 'image' && e.value.trim().length > 0);
+		return image?.value ?? null;
+	}
+
 	toData(): PostData {
 		return {
 			...this.data,

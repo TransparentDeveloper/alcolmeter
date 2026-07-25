@@ -52,6 +52,26 @@ describe('PostModel.fromRow', () => {
 		expect(post.summary).toBe('x'.repeat(100) + '…');
 	});
 
+	it('shareImage는 본문 첫 이미지 요소를 쓰고 없으면 null이다', () => {
+		expect(PostModel.fromRow(row).shareImage).toBeNull();
+
+		const withImage = PostModel.fromRow({
+			...row,
+			content: [
+				{ id: 'b1', elements: [{ id: 'e1', type: 'body', value: '본문' }] },
+				{
+					id: 'b2',
+					elements: [
+						{ id: 'e2', type: 'image', value: '   ' },
+						{ id: 'e3', type: 'image', value: 'https://cdn.example.com/a.png' },
+						{ id: 'e4', type: 'image', value: 'https://cdn.example.com/b.png' }
+					]
+				}
+			]
+		});
+		expect(withImage.shareImage).toBe('https://cdn.example.com/a.png');
+	});
+
 	it('toData는 직렬화 가능한 평문 객체를 반환한다', () => {
 		const post = PostModel.fromRow(row);
 		const data = post.toData();
