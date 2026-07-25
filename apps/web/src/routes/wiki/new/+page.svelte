@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { WikiWritePage } from '$pages/wiki/ui';
+	import { WikiWriteApplication } from '$apps/wiki/ui';
 </script>
 
-<WikiWritePage />
+<WikiWriteApplication />

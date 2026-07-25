@@ -22,10 +22,6 @@
 	}
 </script>
 
-<svelte:head>
-	<meta name="robots" content="noindex, nofollow" />
-</svelte:head>
-
 <main>
 	<h1>{term.title} 편집 이력</h1>
 	<WikiHistory slug={term.slug} {history} canRevert={revertState.canRevert} {onrevert} />

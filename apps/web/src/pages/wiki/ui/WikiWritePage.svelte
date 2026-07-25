@@ -18,10 +18,6 @@
 	}
 </script>
 
-<svelte:head>
-	<meta name="robots" content="noindex, nofollow" />
-</svelte:head>
-
 <main>
 	<WikiForm form={state.form} submitLabel={state.saving ? '저장 중…' : '게시'} onsubmit={submit} />
 	{#if state.errorMessage}<p role="alert">{state.errorMessage}</p>{/if}

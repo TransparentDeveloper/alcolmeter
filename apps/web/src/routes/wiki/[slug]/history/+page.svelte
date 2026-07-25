@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { WikiHistoryPage } from '$pages/wiki/ui';
+	import { WikiHistoryApplication } from '$apps/wiki/ui';
 	let { data } = $props();
 </script>
-<WikiHistoryPage term={data.term} history={data.history} authorId={data.authorId} />
+
+<WikiHistoryApplication term={data.term} history={data.history} authorId={data.authorId} />

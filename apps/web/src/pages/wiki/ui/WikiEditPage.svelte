@@ -26,10 +26,6 @@
 	}
 </script>
 
-<svelte:head>
-	<meta name="robots" content="noindex, nofollow" />
-</svelte:head>
-
 <main>
 	{#if state.form}
 		<WikiForm form={state.form} submitLabel={state.saving ? '저장 중…' : '수정 저장'} onsubmit={submit} />

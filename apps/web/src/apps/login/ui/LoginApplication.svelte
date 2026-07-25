@@ -1,10 +1,13 @@
 <script lang="ts">
+	import { MetaHead } from '$shared/ui';
 	import { LoginPage } from '$pages/login/ui';
 </script>
 
-<svelte:head>
-	<title>로그인 · 알콜미터</title>
-	<meta name="robots" content="noindex, nofollow" />
-</svelte:head>
+<MetaHead
+	title="로그인 - 알콜미터"
+	description="알콜미터에 로그인해 커뮤니티와 알콜위키에 참여합니다."
+	path="/login"
+	noindex
+/>
 
 <LoginPage />

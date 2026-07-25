@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { WikiRevisionPage } from '$pages/wiki/ui';
+	import { WikiRevisionApplication } from '$apps/wiki/ui';
 	let { data } = $props();
 </script>
-<WikiRevisionPage slug={data.slug} revision={data.revision} bodyHtml={data.bodyHtml} />
+
+<WikiRevisionApplication slug={data.slug} revision={data.revision} bodyHtml={data.bodyHtml} />
