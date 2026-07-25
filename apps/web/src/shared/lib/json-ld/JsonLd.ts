@@ -31,7 +31,73 @@ export type VideoObjectInput = {
 	contentUrl: string;
 };
 
+export type OrganizationInput = {
+	name: string;
+	url: string;
+	logo: string;
+	description: string;
+	/** 같은 주체를 가리키는 외부 계정·문서 URL */
+	sameAs?: string[];
+};
+
+export type WebSiteInput = {
+	name: string;
+	url: string;
+	description: string;
+	/** 발행 주체 이름 (Organization.name과 같게 둔다) */
+	publisherName: string;
+};
+
+export type ForumPostingInput = {
+	headline: string;
+	description: string;
+	url: string;
+	datePublished: string;
+	dateModified: string;
+	authorName: string;
+	image?: string;
+};
+
 export class JsonLd {
+	// 사이트 전역(브랜드) 스키마. 개별 페이지 스키마와 달리 전 페이지에 한 번씩 깔린다.
+	static createOrganizationSchemaMarkup(org: OrganizationInput): string {
+		return JsonLd.toMarkup({
+			'@context': SCHEMA_CONTEXT,
+			'@type': 'Organization',
+			name: org.name,
+			url: org.url,
+			logo: org.logo,
+			description: org.description,
+			...(org.sameAs?.length ? { sameAs: org.sameAs } : {})
+		});
+	}
+
+	static createWebSiteSchemaMarkup(site: WebSiteInput): string {
+		return JsonLd.toMarkup({
+			'@context': SCHEMA_CONTEXT,
+			'@type': 'WebSite',
+			name: site.name,
+			url: site.url,
+			description: site.description,
+			inLanguage: 'ko-KR',
+			publisher: { '@type': 'Organization', name: site.publisherName }
+		});
+	}
+
+	static createDiscussionForumPostingSchemaMarkup(post: ForumPostingInput): string {
+		return JsonLd.toMarkup({
+			'@context': SCHEMA_CONTEXT,
+			'@type': 'DiscussionForumPosting',
+			headline: post.headline,
+			description: post.description,
+			url: post.url,
+			datePublished: post.datePublished,
+			dateModified: post.dateModified,
+			author: { '@type': 'Person', name: post.authorName },
+			...(post.image ? { image: post.image } : {})
+		});
+	}
+
 	static createFAQPageSchemaMarkup(questions: QuestionAnswer[]): string {
 		return JsonLd.toMarkup({
 			'@context': SCHEMA_CONTEXT,

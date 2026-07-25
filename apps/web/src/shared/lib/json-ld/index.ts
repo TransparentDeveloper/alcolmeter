@@ -3,5 +3,8 @@ export type {
 	QuestionAnswer,
 	DefinedTermInput,
 	DefinedTermSetInput,
-	VideoObjectInput
+	VideoObjectInput,
+	OrganizationInput,
+	WebSiteInput,
+	ForumPostingInput
 } from './JsonLd';

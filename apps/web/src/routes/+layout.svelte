@@ -6,6 +6,7 @@
 	import { page } from '$app/state';
 	import { HeaderAuth } from '$widgets/auth/ui';
 	import { ThemeToggle } from '$features/theme/ui';
+	import { SiteMeta } from '$shared/ui';
 	let { children } = $props();
 	const version = __APP_VERSION__;
 	const faviconVersion = __FAVICON_VERSION__;
@@ -27,6 +28,8 @@
 <svelte:head>
 	<link rel="icon" type="image/svg+xml" href={`/favicon.svg?v=${faviconVersion}`} />
 </svelte:head>
+
+<SiteMeta />
 
 <div
 	class="app"
