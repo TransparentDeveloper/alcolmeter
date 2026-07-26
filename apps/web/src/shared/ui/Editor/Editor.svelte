@@ -38,6 +38,19 @@
 
 	function onKeydown(e: KeyboardEvent) {
 		if (e.key === 'Escape') editor.closeLinkPopover();
+		const isTab = e.key === 'Tab';
+		if (!isTab && e.key !== ' ') return;
+		// 마커('-'/숫자)만 있는 문단·목록 항목에서 Tab·Space는 그 타입의 목록(중첩) 전환이 우선.
+		// 그 외 목록 안 Tab은 들여쓰기, 나머지는 기본 동작(포커스 이동·공백 입력)을 지킨다.
+		if ((!isTab || !e.shiftKey) && editor.autoListFromMarker()) {
+			e.preventDefault();
+			return;
+		}
+		if (isTab && editor.inListItem) {
+			e.preventDefault();
+			if (e.shiftKey) editor.outdentList();
+			else editor.indentList();
+		}
 	}
 </script>
 
@@ -46,7 +59,7 @@
 	<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 	<div
 		class="area"
-		class:is-empty={editor.isEmpty}
+		class:show-placeholder={editor.isEmpty && !editor.hasActiveFormat}
 		bind:this={area}
 		contenteditable="true"
 		role="textbox"
@@ -78,7 +91,7 @@
 	.area:focus {
 		outline: none;
 	}
-	.area.is-empty::before {
+	.area.show-placeholder::before {
 		content: attr(data-placeholder);
 		position: absolute;
 		top: var(--ds-space-md);
@@ -139,6 +152,13 @@
 		display: flex;
 		flex-direction: column;
 		gap: var(--ds-space-xs);
+	}
+	/* 중첩 목록: 부모 li와 한 덩어리로 보이게 상하 마진 제거 */
+	.area :global(ul ul),
+	.area :global(ul ol),
+	.area :global(ol ul),
+	.area :global(ol ol) {
+		margin: 0;
 	}
 	.area :global(strong),
 	.area :global(b) {

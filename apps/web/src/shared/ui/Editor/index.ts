@@ -8,5 +8,7 @@ export { default as EditorItalic } from './EditorItalic.svelte';
 export { default as EditorStrikethrough } from './EditorStrikethrough.svelte';
 export { default as EditorBulletList } from './EditorBulletList.svelte';
 export { default as EditorOrderedList } from './EditorOrderedList.svelte';
+export { default as EditorIndent } from './EditorIndent.svelte';
+export { default as EditorOutdent } from './EditorOutdent.svelte';
 export { default as EditorLink } from './EditorLink.svelte';
 export { default as EditorDivider } from './EditorDivider.svelte';

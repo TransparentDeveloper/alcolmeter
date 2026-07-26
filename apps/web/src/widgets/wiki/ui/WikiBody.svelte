@@ -86,6 +86,13 @@
 		flex-direction: column;
 		gap: var(--ds-space-xs);
 	}
+	/* 중첩 목록: 부모 li와 한 덩어리로 보이게 상하 마진 제거 */
+	.body :global(ul ul),
+	.body :global(ul ol),
+	.body :global(ol ul),
+	.body :global(ol ol) {
+		margin: 0;
+	}
 
 	.body :global(hr) {
 		margin: var(--ds-space-lg) 0;

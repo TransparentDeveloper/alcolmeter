@@ -10,6 +10,8 @@
 		EditorStrikethrough,
 		EditorBulletList,
 		EditorOrderedList,
+		EditorIndent,
+		EditorOutdent,
 		EditorQuote,
 		EditorLink,
 		EditorDivider
@@ -133,6 +135,8 @@
 				<EditorToolbarSeparator />
 				<EditorBulletList />
 				<EditorOrderedList />
+				<EditorIndent />
+				<EditorOutdent />
 				<EditorQuote />
 				<EditorToolbarSeparator />
 				<EditorLink />
