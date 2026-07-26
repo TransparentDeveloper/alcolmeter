@@ -12,7 +12,7 @@
 
 {#each dialogs.stack as entry (entry.id)}
 	{@const close = () => dialogs.close(entry.id)}
-	<DialogFrame onDismiss={close}>
+	<DialogFrame onDismiss={close} dismissible={entry.dismissible}>
 		{@render entry.content({ close })}
 	</DialogFrame>
 {/each}

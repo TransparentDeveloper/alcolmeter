@@ -4,9 +4,15 @@ import type { Snippet } from 'svelte';
 // 다이얼로그 내용 snippet은 자신을 닫을 수 있도록 { close }를 받는다.
 type DialogContent = Snippet<[{ close: () => void }]>;
 
+// dismissible: false면 ESC 같은 사용자 취소로 닫히지 않는다 (로딩 등 진행 중 표시용).
+interface DialogOptions {
+	dismissible?: boolean;
+}
+
 interface DialogEntry {
 	id: number;
 	content: DialogContent;
+	dismissible: boolean;
 }
 
 // 열린 다이얼로그 스택 + context 주입/조회. open이 엔트리를 push하고,
@@ -29,9 +35,9 @@ class DialogState {
 	private seq = 0;
 	stack = $state<DialogEntry[]>([]);
 
-	open(content: DialogContent): { close: () => void } {
+	open(content: DialogContent, options: DialogOptions = {}): { close: () => void } {
 		const id = ++this.seq;
-		this.stack = [...this.stack, { id, content }];
+		this.stack = [...this.stack, { id, content, dismissible: options.dismissible ?? true }];
 		return { close: () => this.close(id) };
 	}
 
@@ -41,4 +47,4 @@ class DialogState {
 }
 
 export { DialogState };
-export type { DialogContent, DialogEntry };
+export type { DialogContent, DialogEntry, DialogOptions };

@@ -1,7 +1,11 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 
-	let { onDismiss, children }: { onDismiss: () => void; children: Snippet } = $props();
+	let {
+		onDismiss,
+		dismissible = true,
+		children
+	}: { onDismiss: () => void; dismissible?: boolean; children: Snippet } = $props();
 
 	let el = $state<HTMLDialogElement | null>(null);
 
@@ -16,7 +20,14 @@
 	});
 </script>
 
-<dialog bind:this={el} class="frame" onclose={onDismiss}>
+<dialog
+	bind:this={el}
+	class="frame"
+	oncancel={(e) => {
+		if (!dismissible) e.preventDefault();
+	}}
+	onclose={onDismiss}
+>
 	{@render children()}
 </dialog>
 
