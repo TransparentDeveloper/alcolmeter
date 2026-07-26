@@ -52,26 +52,24 @@
 	</main>
 	{#if page.url.pathname !== '/login'}
 		<footer>
-			<div class="footer-top">
-				<nav class="footer-links">
-					<div class="footer-col">
-						<a href="/community">커뮤니티</a>
-						<a href="/wiki">알콜위키</a>
-					</div>
-					<div class="footer-col">
-						<a href="/calculate-makgeolli">막걸리 계산기</a>
-						<a href="/calculate-cider">사이다 계산기</a>
-					</div>
-					<div class="footer-col">
-						<a href="/faq">자주 묻는 질문</a>
-						<a href="/privacy">개인정보처리방침</a>
-						<a href="/settings">설정</a>
-					</div>
-				</nav>
-				{#if page.url.pathname === '/wiki' || page.url.pathname.startsWith('/wiki/')}
-					<a class="footer-guide" href="/wiki/guidelines">이용 안내</a>
-				{/if}
-			</div>
+			<nav class="footer-links">
+				<div class="footer-col">
+					<a href="/community">커뮤니티</a>
+					<a href="/wiki">알콜위키</a>
+				</div>
+				<div class="footer-col">
+					<a href="/calculate-makgeolli">막걸리 계산기</a>
+					<a href="/calculate-cider">사이다 계산기</a>
+				</div>
+				<div class="footer-col">
+					{#if page.url.pathname === '/wiki' || page.url.pathname.startsWith('/wiki/')}
+						<a href="/wiki/guidelines">이용 안내</a>
+					{/if}
+					<a href="/faq">자주 묻는 질문</a>
+					<a href="/privacy">개인정보처리방침</a>
+					<a href="/settings">설정</a>
+				</div>
+			</nav>
 			<span class="version">v{version}</span>
 		</footer>
 	{/if}
@@ -145,13 +143,6 @@
 		flex-wrap: wrap;
 		gap: var(--ds-space-2xl);
 		justify-content: start;
-	}
-
-	.footer-top {
-		display: flex;
-		align-items: baseline;
-		justify-content: space-between;
-		gap: var(--ds-space-lg);
 		margin-bottom: var(--ds-space-md);
 	}
 
@@ -171,18 +162,6 @@
 	}
 
 	.footer-links a:hover {
-		color: var(--ds-color-spark);
-	}
-
-	.footer-guide {
-		flex: none;
-		font-family: var(--ds-font-mono);
-		font-size: var(--ds-text-xs);
-		color: var(--ds-color-ink-3);
-		text-decoration: none;
-		transition: color var(--ds-duration-short) var(--ds-ease-out);
-	}
-	.footer-guide:hover {
 		color: var(--ds-color-spark);
 	}
 
