@@ -203,37 +203,44 @@ class MarkdownWriter {
 	private static serializeList(list: HTMLElement, depth: number, type: 'ul' | 'ol'): string {
 		const lines: string[] = [];
 		const indent = '    '.repeat(depth);
+		// 항목의 두 번째 블록부터는 불릿 콘텐츠 칼럼(ul 2·ol 3)에 맞춰 들여쓴다
+		const hang = indent + (type === 'ul' ? '  ' : '   ');
 		let order = 1;
 		for (const child of Array.from(list.children)) {
 			if (child.tagName !== 'LI') continue;
 			const li = child as HTMLElement;
-			// 중첩 목록은 아래에서 depth+1로 따로 처리하므로 여기선 제외한다
-			const [first, ...rest] = MarkdownWriter.serializeBlocks(
-				Array.from(li.childNodes).filter(
-					(n) =>
-						!(n.nodeType === Node.ELEMENT_NODE && ['UL', 'OL'].includes((n as HTMLElement).tagName))
-				)
-			);
-			if (first) {
+			// 첫 블록은 마커 줄에, 나머지는 빈 줄 + 들여쓰기로 잇는다
+			let marked = false;
+			function pushBlocks(blocks: string[]): void {
+				for (const block of blocks) {
+					if (marked) {
+						lines.push('', ...block.split('\n').map((line) => hang + line));
+						continue;
+					}
+					lines.push(
+						indent +
+							(type === 'ul'
+								? MarkdownWriter.bulletItem(block)
+								: MarkdownWriter.orderedItem(order++, block))
+					);
+					marked = true;
+				}
+			}
+			// 중첩 목록은 만난 자리에서 depth+1로 처리해 DOM 순서를 지킨다
+			let run: Node[] = [];
+			for (const node of Array.from(li.childNodes)) {
+				const tag = node.nodeType === Node.ELEMENT_NODE ? (node as HTMLElement).tagName : '';
+				if (tag !== 'UL' && tag !== 'OL') {
+					run.push(node);
+					continue;
+				}
+				pushBlocks(MarkdownWriter.serializeBlocks(run));
+				run = [];
 				lines.push(
-					indent +
-						(type === 'ul'
-							? MarkdownWriter.bulletItem(first)
-							: MarkdownWriter.orderedItem(order++, first))
+					MarkdownWriter.serializeList(node as HTMLElement, depth + 1, tag === 'UL' ? 'ul' : 'ol')
 				);
-				// 이어지는 블록은 불릿 콘텐츠 칼럼(ul 2·ol 3)에 맞춰 들여쓰고 빈 줄로 띄운다
-				const hang = indent + (type === 'ul' ? '  ' : '   ');
-				for (const block of rest) {
-					lines.push('', ...block.split('\n').map((line) => hang + line));
-				}
 			}
-			for (const sub of Array.from(li.children)) {
-				if (sub.tagName === 'UL') {
-					lines.push(MarkdownWriter.serializeList(sub as HTMLElement, depth + 1, 'ul'));
-				} else if (sub.tagName === 'OL') {
-					lines.push(MarkdownWriter.serializeList(sub as HTMLElement, depth + 1, 'ol'));
-				}
-			}
+			pushBlocks(MarkdownWriter.serializeBlocks(run));
 		}
 		return lines.join('\n');
 	}

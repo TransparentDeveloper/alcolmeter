@@ -119,3 +119,75 @@ describe('MarkdownWriter.fromDom 중첩 블록', () => {
 		);
 	});
 });
+
+describe('MarkdownWriter.fromDom 복합 구조', () => {
+	it('컨테이너 세 겹 + 구분선 + 목록', () => {
+		expect(
+			MarkdownWriter.fromDom(
+				dom(
+					'<div><div><p>여는 문단</p><div><h2>제목</h2><ul><li>항목</li></ul></div></div><hr><p>닫는 문단</p></div>'
+				)
+			)
+		).toBe('여는 문단\n\n## 제목\n\n- 항목\n\n---\n\n닫는 문단');
+	});
+	it('컨테이너 안에서 hard break와 블록이 섞여도 각각 살린다', () => {
+		expect(MarkdownWriter.fromDom(dom('<div>첫 줄<br>둘째 줄<h3>제목</h3>뒤 문장</div>'))).toBe(
+			'첫 줄  \n둘째 줄\n\n### 제목\n\n뒤 문장'
+		);
+	});
+	it('제목 안의 링크·강조를 보존한다', () => {
+		expect(
+			MarkdownWriter.fromDom(
+				dom('<div><h2>제목 <a href="https://a.com">링크</a> <b>굵게</b></h2></div>')
+			)
+		).toBe('## 제목 [링크](https://a.com) **굵게**');
+	});
+	it('목록 항목이 div로 감싸여도 항목 하나로 본다', () => {
+		expect(
+			MarkdownWriter.fromDom(dom('<ul><li><div>항목1</div></li><li><div>항목2</div></li></ul>'))
+		).toBe('- 항목1\n- 항목2');
+	});
+	it('목록 항목 안의 인용구는 콘텐츠 칼럼에 맞춰 들여쓴다', () => {
+		expect(
+			MarkdownWriter.fromDom(dom('<ul><li>항목<blockquote><p>인용</p></blockquote></li></ul>'))
+		).toBe('- 항목\n\n  > 인용');
+	});
+	it('목록 항목 안의 블록은 DOM 순서를 지킨다 (중첩 목록을 뒤로 밀지 않는다)', () => {
+		expect(
+			MarkdownWriter.fromDom(dom('<ul><li>쌀<ul><li>멥쌀</li></ul><p>추가 설명</p></li></ul>'))
+		).toBe('- 쌀\n    - 멥쌀\n\n  추가 설명');
+	});
+	it('인용구 안의 목록', () => {
+		expect(MarkdownWriter.fromDom(dom('<blockquote><ul><li>가</li><li>나</li></ul></blockquote>'))).toBe(
+			'> - 가\n> - 나'
+		);
+	});
+	it('인용구 안의 제목과 중첩 인용구', () => {
+		expect(
+			MarkdownWriter.fromDom(
+				dom('<blockquote><h3>제목</h3><blockquote><p>중첩</p></blockquote></blockquote>')
+			)
+		).toBe('> ### 제목\n>\n> > 중첩');
+	});
+	it('목록 3단 중첩 (ul → ul → ol)', () => {
+		expect(
+			MarkdownWriter.fromDom(dom('<ul><li>쌀<ul><li>멥쌀<ol><li>씻기</li></ol></li></ul></li></ul>'))
+		).toBe('- 쌀\n    - 멥쌀\n        1. 씻기');
+	});
+	it('블록 사이 공백 텍스트 노드는 문단을 만들지 않는다', () => {
+		expect(MarkdownWriter.fromDom(dom('<div>\n<h3>제목</h3>\n<p>본문</p>\n</div>'))).toBe(
+			'### 제목\n\n본문'
+		);
+	});
+	it('내용 없는 컨테이너는 사라진다', () => {
+		expect(MarkdownWriter.fromDom(dom('<div><p><br></p><div>   </div></div>'))).toBe('');
+	});
+	// 표는 마크다운 표로 되살리지 않는다. 다만 셀이 접합되면 안 된다(셀마다 문단).
+	it('표의 셀은 접합하지 않는다', () => {
+		expect(
+			MarkdownWriter.fromDom(
+				dom('<table><tbody><tr><td>가</td><td>나</td></tr><tr><td>다</td><td>라</td></tr></tbody></table>')
+			)
+		).toBe('가\n\n나\n\n다\n\n라');
+	});
+});

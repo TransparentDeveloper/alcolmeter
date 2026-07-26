@@ -64,8 +64,44 @@ describe('라운드트립 (toHtml → DOM → fromDom)', () => {
 		expect(roundtrip('윗줄  \n아랫줄')).toBe('윗줄  \n아랫줄');
 	});
 	it('위키 문법([[slug]]·::youtube) 평문 보존', () => {
-		expect(roundtrip('[[고두밥]] 참고\n\n::youtube{id=abc123}')).toBe(
-			'[[고두밥]] 참고\n\n::youtube{id=abc123}'
+		expect(roundtrip('[[고두밥]] 평문 보존\n\n::youtube{id=abc123}')).toBe(
+			'[[고두밥]] 평문 보존\n\n::youtube{id=abc123}'
 		);
+	});
+	it('문단이 여러 개인 인용구 왕복', () => {
+		const src = '> 첫 줄\n>\n> 둘째 줄';
+		expect(roundtrip(src)).toBe(src);
+	});
+	it('인용구 안 목록 왕복', () => {
+		const src = '> - 가\n> - 나';
+		expect(roundtrip(src)).toBe(src);
+	});
+	it('목록 3단 중첩 왕복', () => {
+		const src = '- 쌀\n    - 멥쌀\n        1. 씻기';
+		expect(roundtrip(src)).toBe(src);
+	});
+	it('느슨한 목록(항목 사이 빈 줄)은 촘촘한 목록으로 정규화된다', () => {
+		expect(roundtrip('- 가\n\n- 나')).toBe('- 가\n- 나');
+	});
+	it('복합 문서(제목·목록·인용·구분선·링크)가 보존된다', () => {
+		const source = [
+			'## 이양주',
+			'',
+			'**이양주(二釀酒)**는 두 번 빚는 술이다.',
+			'',
+			'### 발효 원리',
+			'',
+			'- **당화**: 전분이 당으로 바뀐다',
+			'- **알코올 발효**: 당이 알코올로 바뀐다',
+			'    1. 밑술',
+			'    2. 덧술',
+			'',
+			'> 삼양주는 한 번 더 덧술을 한다.',
+			'',
+			'---',
+			'',
+			'[참고](https://naver.com) · [[고두밥]]'
+		].join('\n');
+		expect(roundtrip(source)).toBe(source);
 	});
 });
