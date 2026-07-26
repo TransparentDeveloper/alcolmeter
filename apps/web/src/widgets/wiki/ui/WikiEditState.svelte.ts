@@ -7,12 +7,12 @@ import { WikiFormState } from './WikiFormState.svelte';
 type WikiLoadResultType = 'ok' | 'notfound';
 
 // 기존 용어 수정 흐름: 로딩 + 편집 상태 + 저장(편집=이력 INSERT). 페이지는 네비게이션만 맡는다.
+// 실패는 throw로 알린다 — 에러 표시는 다이얼로그 플로우(WikiSubmitFlow)의 몫.
 class WikiEditState {
 	readonly slug: string;
 	termId = $state<number | null>(null);
 	form = $state<WikiFormState | null>(null);
 	saving = $state(false);
-	errorMessage = $state<string | null>(null);
 	loaded = $state(false);
 
 	constructor(slug: string) {
@@ -33,20 +33,18 @@ class WikiEditState {
 		return 'ok';
 	}
 
-	async submit(user: UserModel): Promise<boolean> {
-		if (this.form === null || this.termId === null || !this.canSubmit) return false;
+	// 실패 시 throw
+	async submit(user: UserModel): Promise<void> {
+		if (this.form === null || this.termId === null || !this.canSubmit)
+			throw new Error('저장할 수 없는 상태예요.');
 		this.saving = true;
-		this.errorMessage = null;
 		try {
 			const client = Supabase.getClient();
 			await UserAPI.upsertProfile(user);
 			await this.form.commitImage(client);
 			await WikiAPI.edit(client, this.termId, this.form.toFields(), user.id, null);
-			return true;
-		} catch (e) {
-			this.errorMessage = e instanceof Error ? e.message : '저장에 실패했어요.';
+		} finally {
 			this.saving = false;
-			return false;
 		}
 	}
 }
