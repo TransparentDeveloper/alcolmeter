@@ -9,21 +9,6 @@ function dom(html: string): HTMLElement {
 	return root;
 }
 
-describe('MarkdownWriter 토큰 어휘', () => {
-	it('조각 빌더가 마크다운 조각을 만든다', () => {
-		expect(MarkdownWriter.bold('밥')).toBe('**밥**');
-		expect(MarkdownWriter.italic('밥')).toBe('_밥_');
-		expect(MarkdownWriter.code('밥')).toBe('`밥`');
-		expect(MarkdownWriter.strikethrough('밥')).toBe('~~밥~~');
-		expect(MarkdownWriter.link('네이버', 'https://naver.com')).toBe('[네이버](https://naver.com)');
-		expect(MarkdownWriter.heading(2, '만드는 법')).toBe('## 만드는 법');
-		expect(MarkdownWriter.bulletItem('쌀')).toBe('- 쌀');
-		expect(MarkdownWriter.orderedItem(3, '찐다')).toBe('3. 찐다');
-		expect(MarkdownWriter.blockquote('인용')).toBe('> 인용');
-		expect(MarkdownWriter.divider()).toBe('---');
-	});
-});
-
 describe('MarkdownWriter.fromDom', () => {
 	it('빈 에디터(<p><br></p>)는 빈 문자열', () => {
 		expect(MarkdownWriter.fromDom(dom('<p><br></p>'))).toBe('');

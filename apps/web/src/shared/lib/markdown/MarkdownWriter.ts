@@ -33,34 +33,35 @@ class MarkdownWriter {
 		'FIGCAPTION'
 	]);
 
-	static bold(text: string): string {
+	// 토큰 어휘(조각 빌더). fromDom 내부 전용이라 밖으로 열지 않는다.
+	private static bold(text: string): string {
 		return `**${text}**`;
 	}
-	static italic(text: string): string {
+	private static italic(text: string): string {
 		return `_${text}_`;
 	}
-	static code(text: string): string {
+	private static code(text: string): string {
 		return `\`${text}\``;
 	}
-	static strikethrough(text: string): string {
+	private static strikethrough(text: string): string {
 		return `~~${text}~~`;
 	}
-	static link(text: string, href: string): string {
+	private static link(text: string, href: string): string {
 		return `[${text}](${href})`;
 	}
-	static heading(level: number, text: string): string {
+	private static heading(level: number, text: string): string {
 		return `${'#'.repeat(level)} ${text}`;
 	}
-	static bulletItem(text: string): string {
+	private static bulletItem(text: string): string {
 		return `- ${text}`;
 	}
-	static orderedItem(order: number, text: string): string {
+	private static orderedItem(order: number, text: string): string {
 		return `${order}. ${text}`;
 	}
-	static blockquote(text: string): string {
+	private static blockquote(text: string): string {
 		return `> ${text}`;
 	}
-	static divider(): string {
+	private static divider(): string {
 		return '---';
 	}
 
