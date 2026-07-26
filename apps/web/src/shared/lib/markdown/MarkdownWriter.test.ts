@@ -87,3 +87,50 @@ describe('MarkdownWriter.fromDom', () => {
 		expect(MarkdownWriter.fromDom(dom('<p>::youtube{id=abc}</p>'))).toBe('::youtube{id=abc}');
 	});
 });
+
+// execCommand(목록 토글·formatBlock 등)는 블록을 다른 블록으로 감싼 DOM을 예사로 만든다.
+// 이 모양을 문단으로 오인하면 제목·목록 마커가 소실되고 텍스트가 구분자 없이 접합된다.
+describe('MarkdownWriter.fromDom 중첩 블록', () => {
+	it('컨테이너(div)로 감싸도 안의 블록 구조를 보존한다', () => {
+		expect(
+			MarkdownWriter.fromDom(dom('<div><h3>소제목</h3><p>본문</p><ul><li>쌀</li></ul></div>'))
+		).toBe('### 소제목\n\n본문\n\n- 쌀');
+	});
+	it('여러 겹 감싸도 보존한다', () => {
+		expect(MarkdownWriter.fromDom(dom('<div><div><h3>소제목</h3></div><p>본문</p></div>'))).toBe(
+			'### 소제목\n\n본문'
+		);
+	});
+	it('인라인과 블록이 섞이면 인라인 구간을 문단으로 끊는다', () => {
+		expect(MarkdownWriter.fromDom(dom('<div>앞 문장<h3>소제목</h3>뒤 문장</div>'))).toBe(
+			'앞 문장\n\n### 소제목\n\n뒤 문장'
+		);
+	});
+	it('인접한 블록끼리 접합해 강조 마크를 깨뜨리지 않는다', () => {
+		expect(
+			MarkdownWriter.fromDom(
+				dom('<div><ul><li><b>당화</b></li><li><b>알코올 발효</b></li></ul></div>')
+			)
+		).toBe('- **당화**\n- **알코올 발효**');
+	});
+	it('문단이 여러 개인 인용구는 각 줄에 인용 표시를 붙인다', () => {
+		expect(MarkdownWriter.fromDom(dom('<blockquote><p>첫 줄</p><p>둘째 줄</p></blockquote>'))).toBe(
+			'> 첫 줄\n>\n> 둘째 줄'
+		);
+	});
+	it('블록이 여러 개인 목록 항목은 들여쓰기로 잇는다', () => {
+		expect(MarkdownWriter.fromDom(dom('<ul><li><p>첫 문단</p><p>둘째 문단</p></li></ul>'))).toBe(
+			'- 첫 문단\n\n  둘째 문단'
+		);
+	});
+	it('순서 목록 항목의 이어지는 블록은 번호 폭만큼 들여쓴다', () => {
+		expect(MarkdownWriter.fromDom(dom('<ol><li><p>첫 문단</p><p>둘째 문단</p></li></ol>'))).toBe(
+			'1. 첫 문단\n\n   둘째 문단'
+		);
+	});
+	it('컨테이너 안의 구분선도 살린다', () => {
+		expect(MarkdownWriter.fromDom(dom('<div><p>위</p><hr><p>아래</p></div>'))).toBe(
+			'위\n\n---\n\n아래'
+		);
+	});
+});
