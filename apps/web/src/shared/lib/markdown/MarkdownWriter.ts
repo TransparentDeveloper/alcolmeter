@@ -207,6 +207,17 @@ class MarkdownWriter {
 		const hang = indent + (type === 'ul' ? '  ' : '   ');
 		let order = 1;
 		for (const child of Array.from(list.children)) {
+			// Chrome execCommand('indent')는 중첩 목록을 li 밖(목록 직계)에 만들기 때문에 depth+1 중첩으로 수용한다
+			if (child.tagName === 'UL' || child.tagName === 'OL') {
+				const nested = MarkdownWriter.serializeList(
+					child as HTMLElement,
+					depth + 1,
+					child.tagName === 'UL' ? 'ul' : 'ol'
+				);
+				// 빈 항목뿐인 중첩(편집 중 li에 <br>만 남는 순간)은 개행 찌꺼기를 남기지 않는다
+				if (nested) lines.push(nested);
+				continue;
+			}
 			if (child.tagName !== 'LI') continue;
 			const li = child as HTMLElement;
 			// 첫 블록은 마커 줄에, 나머지는 빈 줄 + 들여쓰기로 잇는다
@@ -236,9 +247,12 @@ class MarkdownWriter {
 				}
 				pushBlocks(MarkdownWriter.serializeBlocks(run));
 				run = [];
-				lines.push(
-					MarkdownWriter.serializeList(node as HTMLElement, depth + 1, tag === 'UL' ? 'ul' : 'ol')
+				const nested = MarkdownWriter.serializeList(
+					node as HTMLElement,
+					depth + 1,
+					tag === 'UL' ? 'ul' : 'ol'
 				);
+				if (nested) lines.push(nested);
 			}
 			pushBlocks(MarkdownWriter.serializeBlocks(run));
 		}

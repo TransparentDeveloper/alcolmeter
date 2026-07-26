@@ -190,4 +190,33 @@ describe('MarkdownWriter.fromDom 복합 구조', () => {
 			)
 		).toBe('가\n\n나\n\n다\n\n라');
 	});
+	// Chrome execCommand('indent')는 중첩 목록을 li 밖(목록 직계 자식)에 만든다.
+	// 이 비표준 모양도 depth+1 중첩으로 받아줘야 저장 시 내용이 유실되지 않는다.
+	it('목록 직계 자식 중첩 목록(Chrome 모양)도 중첩으로 직렬화한다', () => {
+		expect(MarkdownWriter.fromDom(dom('<ul><li>쌀</li><ul><li>멥쌀</li></ul></ul>'))).toBe(
+			'- 쌀\n    - 멥쌀'
+		);
+	});
+	it('순서 목록의 직계 자식 중첩은 번호를 이어 센다', () => {
+		expect(
+			MarkdownWriter.fromDom(dom('<ol><li>씻기</li><ol><li>불리기</li></ol><li>찌기</li></ol>'))
+		).toBe('1. 씻기\n    1. 불리기\n2. 찌기');
+	});
+	it('직계 자식 중첩의 목록 종류 혼합(ul 안 ol)', () => {
+		expect(MarkdownWriter.fromDom(dom('<ul><li>쌀</li><ol><li>씻기</li></ol></ul>'))).toBe(
+			'- 쌀\n    1. 씻기'
+		);
+	});
+	it('직계 자식 중첩이 여러 단계여도 깊이를 누적한다', () => {
+		expect(
+			MarkdownWriter.fromDom(dom('<ul><li>가</li><ul><li>나</li><ul><li>다</li></ul></ul></ul>'))
+		).toBe('- 가\n    - 나\n        - 다');
+	});
+	// 편집 중 li에 <br>만 남는 순간(중첩 직후 등)의 빈 목록이 개행 찌꺼기를 남기면 안 된다
+	it('빈 항목만 있는 중첩 목록은 흔적 없이 사라진다', () => {
+		expect(MarkdownWriter.fromDom(dom('<ol><li>하나</li><ol><li><br></li></ol></ol>'))).toBe(
+			'1. 하나'
+		);
+		expect(MarkdownWriter.fromDom(dom('<ul><li>쌀<ul><li><br></li></ul></li></ul>'))).toBe('- 쌀');
+	});
 });

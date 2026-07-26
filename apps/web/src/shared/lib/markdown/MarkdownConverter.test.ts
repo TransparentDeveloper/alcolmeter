@@ -80,6 +80,26 @@ describe('라운드트립 (toHtml → DOM → fromDom)', () => {
 		const src = '- 쌀\n    - 멥쌀\n        1. 씻기';
 		expect(roundtrip(src)).toBe(src);
 	});
+	it('목록 3단 혼합(ul→ol→ul) 왕복', () => {
+		const src = '- 가\n    1. 나\n        - 다';
+		expect(roundtrip(src)).toBe(src);
+	});
+	it('순서 목록 안 순서 목록 왕복 (번호 유지)', () => {
+		const src = '1. 하나\n    1. 둘\n    2. 셋\n2. 넷';
+		expect(roundtrip(src)).toBe(src);
+	});
+	it('형제 중첩 그룹이 여러 개인 목록 왕복', () => {
+		const src = '- 가\n    - 가1\n- 나\n    - 나1';
+		expect(roundtrip(src)).toBe(src);
+	});
+	it('중첩 항목의 인라인 강조 왕복', () => {
+		const src = '- **굵게**\n    - _기울임_ 항목';
+		expect(roundtrip(src)).toBe(src);
+	});
+	it('목록 항목 안 hard break 왕복', () => {
+		const src = '- 윗줄  \n아랫줄';
+		expect(roundtrip(src)).toBe(src);
+	});
 	it('느슨한 목록(항목 사이 빈 줄)은 촘촘한 목록으로 정규화된다', () => {
 		expect(roundtrip('- 가\n\n- 나')).toBe('- 가\n- 나');
 	});
