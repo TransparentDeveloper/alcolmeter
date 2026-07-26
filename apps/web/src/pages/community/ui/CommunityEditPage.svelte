@@ -11,7 +11,7 @@
 		const { status, user } = authStore.value;
 		if (status === 'loading' || state.loaded) return;
 		if (status === 'signedOut' || !user) {
-			goto(`/login?redirect=/community/${state.id}/edit`);
+			goto(`/login?redirect=/community/${state.id}/edit`, { replaceState: true });
 			return;
 		}
 		void resolve(user.id);

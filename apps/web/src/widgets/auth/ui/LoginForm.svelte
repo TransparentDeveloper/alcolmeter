@@ -14,8 +14,9 @@
 	];
 
 	// 이미 로그인 상태로 로그인 페이지에 오면 목적지로 보낸다.
+	// replace: 히스토리에서 로그인 페이지를 지워 뒤로 가기가 걸리지 않게 한다.
 	$effect(() => {
-		if (form.isSignedIn) goto(form.redirectTo);
+		if (form.isSignedIn) goto(form.redirectTo, { replaceState: true });
 	});
 
 	onMount(() => form.readOAuthError());

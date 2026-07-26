@@ -9,7 +9,7 @@
 	// 상태 확정 후: 비로그인 → 로그인, 로그인 → 문서 로딩(없으면 상세로).
 	$effect(() => {
 		if (authStore.value.status === 'signedOut') {
-			goto(`/login?redirect=/wiki/${encodeURIComponent(slug)}/edit`);
+			goto(`/login?redirect=/wiki/${encodeURIComponent(slug)}/edit`, { replaceState: true });
 			return;
 		}
 		if (authStore.value.status === 'signedIn') {

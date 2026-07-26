@@ -7,7 +7,8 @@
 
 	// 로그인 가드: 상태가 확정된 뒤 비로그인이면 로그인으로 보낸다.
 	$effect(() => {
-		if (authStore.value.status === 'signedOut') goto('/login?redirect=/wiki/new');
+		if (authStore.value.status === 'signedOut')
+			goto('/login?redirect=/wiki/new', { replaceState: true });
 	});
 
 	async function submit() {
