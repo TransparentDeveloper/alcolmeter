@@ -30,6 +30,30 @@ describe('MarkdownConverter.toHtml', () => {
 	it('CJK 괄호 끝 볼드 (cjk-friendly)', () => {
 		expect(MarkdownConverter.toHtml('**단행복합발효(單行複合醱酵)**입니다')).toContain('<strong>');
 	});
+	it('표를 편집 가능한 표 DOM으로', () => {
+		const html = MarkdownConverter.toHtml('| 재료 | 양 |\n| --- | --- |\n| 쌀 | 1kg |');
+		expect(html).toContain('<table>');
+		expect(html).toContain('<thead>');
+		expect(html).toContain('<tbody>');
+		expect(html).toContain('<th>재료</th>');
+		expect(html).toContain('<td>쌀</td>');
+	});
+	it('열 정렬을 text-align 인라인 스타일로 통과시킨다', () => {
+		const html = MarkdownConverter.toHtml('| 가 | 나 | 다 |\n| :--- | :---: | ---: |\n| 1 | 2 | 3 |');
+		expect(html).toContain('style="text-align:left"');
+		expect(html).toContain('style="text-align:center"');
+		expect(html).toContain('style="text-align:right"');
+	});
+	it('셀 안 인라인 서식을 살린다', () => {
+		const html = MarkdownConverter.toHtml('| 항목 |\n| --- |\n| **당화** `t` |');
+		expect(html).toContain('<strong>당화</strong>');
+		expect(html).toContain('<code>t</code>');
+	});
+	it('표 모양 raw HTML은 평문으로 남는다 (html: false)', () => {
+		expect(MarkdownConverter.toHtml('<table><tr><td>가</td></tr></table>')).not.toContain(
+			'<table>'
+		);
+	});
 });
 
 describe('라운드트립 (toHtml → DOM → fromDom)', () => {
@@ -123,5 +147,97 @@ describe('라운드트립 (toHtml → DOM → fromDom)', () => {
 			'[참고](https://naver.com) · [[고두밥]]'
 		].join('\n');
 		expect(roundtrip(source)).toBe(source);
+	});
+});
+
+describe('표 라운드트립 (toHtml → DOM → fromDom)', () => {
+	function roundtrip(md: string): string {
+		const root = document.createElement('div');
+		root.innerHTML = MarkdownConverter.toHtml(md);
+		return MarkdownWriter.fromDom(root);
+	}
+
+	it('기본 표 왕복', () => {
+		const src = '| 재료 | 양 |\n| --- | --- |\n| 쌀 | 1kg |\n| 물 | 1.5L |';
+		expect(roundtrip(src)).toBe(src);
+	});
+	it('한 열 표 왕복', () => {
+		const src = '| 재료 |\n| --- |\n| 쌀 |';
+		expect(roundtrip(src)).toBe(src);
+	});
+	it('네 열 표 왕복', () => {
+		const src = '| 가 | 나 | 다 | 라 |\n| --- | --- | --- | --- |\n| 1 | 2 | 3 | 4 |';
+		expect(roundtrip(src)).toBe(src);
+	});
+	it('헤더만 있는 표 왕복', () => {
+		const src = '| 재료 | 양 |\n| --- | --- |';
+		expect(roundtrip(src)).toBe(src);
+	});
+	it('가운데·오른쪽 정렬 왕복', () => {
+		const src = '| 재료 | 양 |\n| :---: | ---: |\n| 쌀 | 1kg |';
+		expect(roundtrip(src)).toBe(src);
+	});
+	it('정렬이 열마다 다른 표 왕복', () => {
+		const src = '| 가 | 나 | 다 |\n| --- | :---: | ---: |\n| 1 | 2 | 3 |';
+		expect(roundtrip(src)).toBe(src);
+	});
+	it('왼쪽 정렬 표기(:---)는 기본 표기(---)로 정규화된다', () => {
+		expect(roundtrip('| 가 |\n| :--- |\n| 나 |')).toBe('| 가 |\n| --- |\n| 나 |');
+	});
+	it('구분행의 대시 개수는 세 개로 정규화된다', () => {
+		expect(roundtrip('| 가 |\n| ------- |\n| 나 |')).toBe('| 가 |\n| --- |\n| 나 |');
+	});
+	it('바깥 파이프가 없는 표기도 표로 정규화된다', () => {
+		expect(roundtrip('가 | 나\n--- | ---\n1 | 2')).toBe('| 가 | 나 |\n| --- | --- |\n| 1 | 2 |');
+	});
+	it('셀 수가 부족한 본문 행은 빈 셀로 채워 정규화된다', () => {
+		expect(roundtrip('| 가 | 나 |\n| --- | --- |\n| 다 |')).toBe(
+			'| 가 | 나 |\n| --- | --- |\n| 다 |  |'
+		);
+	});
+	it('빈 셀이 섞인 표 왕복', () => {
+		const src = '| 가 | 나 |\n| --- | --- |\n| 다 |  |';
+		expect(roundtrip(src)).toBe(src);
+	});
+	it('셀 안 강조·링크·위키링크 왕복', () => {
+		const src = '| 항목 | 설명 |\n| --- | --- |\n| **당화** | [[고두밥]] [참고](https://naver.com) |';
+		expect(roundtrip(src)).toBe(src);
+	});
+	it('셀 안 기울임·취소선·인라인 코드 왕복', () => {
+		const src = '| 가 | 나 | 다 |\n| --- | --- | --- |\n| _기울임_ | ~~취소~~ | `코드` |';
+		expect(roundtrip(src)).toBe(src);
+	});
+	it('이스케이프한 파이프 왕복', () => {
+		const src = '| 기호 |\n| --- |\n| 가\\|나 |';
+		expect(roundtrip(src)).toBe(src);
+	});
+	it('백슬래시가 든 셀 왕복', () => {
+		const src = '| 경로 |\n| --- |\n| C:\\\\굽는방 |';
+		expect(roundtrip(src)).toBe(src);
+	});
+	it('CJK 셀 안 볼드 왕복 (cjk-friendly)', () => {
+		const src = '| 용어 |\n| --- |\n| **단행복합발효(單行複合醱酵)** |';
+		expect(roundtrip(src)).toBe(src);
+	});
+	it('표와 다른 블록이 섞인 문서 왕복', () => {
+		const src = [
+			'## 배합',
+			'',
+			'| 재료 | 양 |',
+			'| ---: | --- |',
+			'| 쌀 | 1kg |',
+			'',
+			'> 물은 나중에 잡습니다.',
+			'',
+			'- 쌀은 멥쌀',
+			'- 물은 정수',
+			'',
+			'---',
+			'',
+			'| 단계 | 기간 |',
+			'| --- | --- |',
+			'| 밑술 | 3일 |'
+		].join('\n');
+		expect(roundtrip(src)).toBe(src);
 	});
 });

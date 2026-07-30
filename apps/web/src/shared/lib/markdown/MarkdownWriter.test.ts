@@ -182,14 +182,6 @@ describe('MarkdownWriter.fromDom 복합 구조', () => {
 	it('내용 없는 컨테이너는 사라진다', () => {
 		expect(MarkdownWriter.fromDom(dom('<div><p><br></p><div>   </div></div>'))).toBe('');
 	});
-	// 표는 마크다운 표로 되살리지 않는다. 다만 셀이 접합되면 안 된다(셀마다 문단).
-	it('표의 셀은 접합하지 않는다', () => {
-		expect(
-			MarkdownWriter.fromDom(
-				dom('<table><tbody><tr><td>가</td><td>나</td></tr><tr><td>다</td><td>라</td></tr></tbody></table>')
-			)
-		).toBe('가\n\n나\n\n다\n\n라');
-	});
 	// Chrome execCommand('indent')는 중첩 목록을 li 밖(목록 직계 자식)에 만든다.
 	// 이 비표준 모양도 depth+1 중첩으로 받아줘야 저장 시 내용이 유실되지 않는다.
 	it('목록 직계 자식 중첩 목록(Chrome 모양)도 중첩으로 직렬화한다', () => {
@@ -218,5 +210,174 @@ describe('MarkdownWriter.fromDom 복합 구조', () => {
 			'1. 하나'
 		);
 		expect(MarkdownWriter.fromDom(dom('<ul><li>쌀<ul><li><br></li></ul></li></ul>'))).toBe('- 쌀');
+	});
+});
+
+describe('MarkdownWriter.fromDom 표 구조', () => {
+	it('헤더 행과 본문 행을 GFM 파이프 표로 쓴다', () => {
+		expect(
+			MarkdownWriter.fromDom(
+				dom(
+					'<table><thead><tr><th>재료</th><th>양</th></tr></thead><tbody><tr><td>쌀</td><td>1kg</td></tr><tr><td>물</td><td>1.5L</td></tr></tbody></table>'
+				)
+			)
+		).toBe('| 재료 | 양 |\n| --- | --- |\n| 쌀 | 1kg |\n| 물 | 1.5L |');
+	});
+	it('thead가 없으면 첫 행을 헤더로 본다', () => {
+		expect(
+			MarkdownWriter.fromDom(
+				dom(
+					'<table><tbody><tr><td>가</td><td>나</td></tr><tr><td>다</td><td>라</td></tr></tbody></table>'
+				)
+			)
+		).toBe('| 가 | 나 |\n| --- | --- |\n| 다 | 라 |');
+	});
+	it('헤더만 있고 본문 행이 없어도 구분행까지 쓴다', () => {
+		expect(
+			MarkdownWriter.fromDom(dom('<table><thead><tr><th>재료</th><th>양</th></tr></thead></table>'))
+		).toBe('| 재료 | 양 |\n| --- | --- |');
+	});
+	it('한 행에 th와 td가 섞여도 셀로 함께 센다', () => {
+		expect(MarkdownWriter.fromDom(dom('<table><tr><th>구분</th><td>값</td></tr></table>'))).toBe(
+			'| 구분 | 값 |\n| --- | --- |'
+		);
+	});
+	it('본문 행이 헤더보다 짧으면 빈 셀로 채운다', () => {
+		expect(
+			MarkdownWriter.fromDom(
+				dom('<table><tr><th>가</th><th>나</th></tr><tr><td>다</td></tr></table>')
+			)
+		).toBe('| 가 | 나 |\n| --- | --- |\n| 다 |  |');
+	});
+	it('헤더가 본문보다 짧으면 열 수를 본문에 맞춰 넓힌다', () => {
+		expect(
+			MarkdownWriter.fromDom(
+				dom('<table><tr><th>가</th></tr><tr><td>나</td><td>다</td></tr></table>')
+			)
+		).toBe('| 가 |  |\n| --- | --- |\n| 나 | 다 |');
+	});
+	it('셀이 전부 비어도 표 구조는 남는다', () => {
+		expect(
+			MarkdownWriter.fromDom(dom('<table><tr><th></th><th></th></tr><tr><td></td><td></td></tr></table>'))
+		).toBe('|  |  |\n| --- | --- |\n|  |  |');
+	});
+	it('공백·nbsp만 있는 셀은 빈 셀로 본다', () => {
+		expect(
+			MarkdownWriter.fromDom(dom('<table><tr><td>가</td><td>&nbsp; </td></tr></table>'))
+		).toBe('| 가 |  |\n| --- | --- |');
+	});
+	it('행이 없는 표는 흔적 없이 사라진다', () => {
+		expect(MarkdownWriter.fromDom(dom('<table></table>'))).toBe('');
+		expect(MarkdownWriter.fromDom(dom('<table><thead></thead><tbody></tbody></table>'))).toBe('');
+	});
+	it('문단 사이의 표도 블록으로 끊어 쓴다', () => {
+		expect(
+			MarkdownWriter.fromDom(dom('<p>위</p><table><tr><td>가</td></tr></table><p>아래</p>'))
+		).toBe('위\n\n| 가 |\n| --- |\n\n아래');
+	});
+	it('컨테이너(div)로 감싼 표도 표로 살린다', () => {
+		expect(
+			MarkdownWriter.fromDom(dom('<div><h3>배합</h3><table><tr><td>가</td></tr></table></div>'))
+		).toBe('### 배합\n\n| 가 |\n| --- |');
+	});
+	it('표가 연달아 있으면 각각 별개 블록으로 쓴다', () => {
+		expect(
+			MarkdownWriter.fromDom(
+				dom('<table><tr><td>가</td></tr></table><table><tr><td>나</td></tr></table>')
+			)
+		).toBe('| 가 |\n| --- |\n\n| 나 |\n| --- |');
+	});
+});
+
+describe('MarkdownWriter.fromDom 표 열 정렬', () => {
+	it('가운데·오른쪽 정렬을 구분행 표기로 옮긴다 (왼쪽은 기본이라 표기 없음)', () => {
+		expect(
+			MarkdownWriter.fromDom(
+				dom(
+					'<table><thead><tr><th style="text-align:left">가</th><th style="text-align:center">나</th><th style="text-align:right">다</th></tr></thead></table>'
+				)
+			)
+		).toBe('| 가 | 나 | 다 |\n| --- | :---: | ---: |');
+	});
+	it('정렬 없는 열은 기본 표기를 쓴다', () => {
+		expect(
+			MarkdownWriter.fromDom(
+				dom('<table><tr><th>가</th><th style="text-align:center">나</th></tr></table>')
+			)
+		).toBe('| 가 | 나 |\n| --- | :---: |');
+	});
+	it('정렬은 헤더 행에서만 읽는다 (본문 셀 정렬은 무시)', () => {
+		expect(
+			MarkdownWriter.fromDom(
+				dom('<table><tr><th>가</th></tr><tr><td style="text-align:right">나</td></tr></table>')
+			)
+		).toBe('| 가 |\n| --- |\n| 나 |');
+	});
+	it('헤더에 없는 열의 정렬은 기본 표기로 채운다', () => {
+		expect(
+			MarkdownWriter.fromDom(
+				dom(
+					'<table><tr><th style="text-align:right">가</th></tr><tr><td>나</td><td>다</td></tr></table>'
+				)
+			)
+		).toBe('| 가 |  |\n| ---: | --- |\n| 나 | 다 |');
+	});
+});
+
+describe('MarkdownWriter.fromDom 표 셀 내용', () => {
+	it('인라인 서식과 링크를 보존한다', () => {
+		expect(
+			MarkdownWriter.fromDom(
+				dom(
+					'<table><tr><td><b>굵게</b></td><td><a href="https://naver.com">참고</a></td></tr></table>'
+				)
+			)
+		).toBe('| **굵게** | [참고](https://naver.com) |\n| --- | --- |');
+	});
+	it('기울임·취소선·인라인 코드를 보존한다', () => {
+		expect(
+			MarkdownWriter.fromDom(
+				dom('<table><tr><td><i>기울임</i></td><td><s>취소</s></td><td><code>코드</code></td></tr></table>')
+			)
+		).toBe('| _기울임_ | ~~취소~~ | `코드` |\n| --- | --- | --- |');
+	});
+	it('위키 문법 평문을 파괴하지 않는다', () => {
+		expect(MarkdownWriter.fromDom(dom('<table><tr><td>[[고두밥]] 참고</td></tr></table>'))).toBe(
+			'| [[고두밥]] 참고 |\n| --- |'
+		);
+	});
+	it('파이프는 이스케이프해 표 구조를 지킨다', () => {
+		expect(MarkdownWriter.fromDom(dom('<table><tr><td>가|나|다</td></tr></table>'))).toBe(
+			'| 가\\|나\\|다 |\n| --- |'
+		);
+	});
+	it('백슬래시를 먼저 이스케이프해 파이프 표기가 깨지지 않게 한다', () => {
+		// 셀 평문이 '가\|나'면 파이프만 이스케이프하면 '가\\|나'가 되어 셀이 쪼개진다
+		expect(MarkdownWriter.fromDom(dom('<table><tr><td>가\\|나</td></tr></table>'))).toBe(
+			'| 가\\\\\\|나 |\n| --- |'
+		);
+		expect(MarkdownWriter.fromDom(dom('<table><tr><td>C:\\경로</td></tr></table>'))).toBe(
+			'| C:\\\\경로 |\n| --- |'
+		);
+	});
+	it('줄바꿈은 공백으로 눌린다 (GFM 셀은 개행 불가)', () => {
+		expect(MarkdownWriter.fromDom(dom('<table><tr><td>윗줄<br>아랫줄</td></tr></table>'))).toBe(
+			'| 윗줄 아랫줄 |\n| --- |'
+		);
+	});
+	it('셀 안에 블록이 생겨도 한 셀로 눌러 담는다', () => {
+		expect(
+			MarkdownWriter.fromDom(dom('<table><tr><td><div>앞</div><div>뒤</div></td></tr></table>'))
+		).toBe('| 앞 뒤 |\n| --- |');
+	});
+	it('셀 안 목록도 내용을 잃지 않고 한 셀로 눌러 담는다', () => {
+		expect(
+			MarkdownWriter.fromDom(dom('<table><tr><td><ul><li>가</li><li>나</li></ul></td></tr></table>'))
+		).toBe('| - 가 - 나 |\n| --- |');
+	});
+	it('셀 안 span 등 미지 인라인은 태그를 버리고 내용만 남긴다', () => {
+		expect(
+			MarkdownWriter.fromDom(dom('<table><tr><td><span style="color:red">빨강</span></td></tr></table>'))
+		).toBe('| 빨강 |\n| --- |');
 	});
 });

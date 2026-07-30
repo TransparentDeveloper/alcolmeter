@@ -30,9 +30,17 @@ class MarkdownConverter {
 				'hr',
 				'br',
 				'blockquote',
-				'code'
+				'code',
+				'table',
+				'thead',
+				'tbody',
+				'tr',
+				'th',
+				'td'
 			],
-			allowedAttributes: { a: ['href'] },
+			// 열 정렬은 markdown-it이 셀에 붙이는 인라인 style로 나른다(클래스 배관을 새로 깔지 않는다)
+			allowedAttributes: { a: ['href'], th: ['style'], td: ['style'] },
+			allowedStyles: { '*': { 'text-align': [/^left$/, /^center$/, /^right$/] } },
 			allowedSchemes: ['http', 'https']
 		});
 	}

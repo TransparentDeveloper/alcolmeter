@@ -64,6 +64,11 @@ class MarkdownWriter {
 	private static divider(): string {
 		return '---';
 	}
+	// 구분행 표기. 왼쪽은 GFM 기본이라 표기하지 않는다(':---'로 쓰면 왕복마다 표기가 붙는다).
+	private static readonly ALIGN_RULE: Record<string, string> = {
+		center: ':---:',
+		right: '---:'
+	};
 
 	// contenteditable 루트를 순회해 마크다운 문서로 직렬화한다. 빈 문서는 ''.
 	static fromDom(root: HTMLElement): string {
@@ -120,6 +125,8 @@ class MarkdownWriter {
 				return [MarkdownWriter.serializeList(el, 0, 'ul')];
 			case 'OL':
 				return [MarkdownWriter.serializeList(el, 0, 'ol')];
+			case 'TABLE':
+				return MarkdownWriter.serializeTable(el);
 			case 'BLOCKQUOTE': {
 				// 문단이 여러 개면 빈 줄까지 인용 안에 있어야 하므로 줄 단위로 표시를 붙인다
 				const inner = MarkdownWriter.serializeBlocks(Array.from(el.childNodes)).join('\n\n');
@@ -197,6 +204,54 @@ class MarkdownWriter {
 		const trail = children.match(/\s*$/)![0];
 		const core = children.slice(lead.length, children.length - trail.length);
 		return core ? lead + wrap(core) + trail : children;
+	}
+
+	// GFM 파이프 표. 첫 행이 헤더고 그 아래 구분행이 열 정렬을 싣는다.
+	// 열 수는 가장 넓은 행에 맞추고(짧은 행은 빈 셀로 채움) 행이 없으면 표를 버린다.
+	private static serializeTable(table: HTMLElement): string[] {
+		const rows = Array.from(table.querySelectorAll('tr'));
+		const grid = rows.map((row) => MarkdownWriter.tableCells(row));
+		const width = Math.max(0, ...grid.map((cells) => cells.length));
+		if (!width) return [];
+		const [header, ...body] = grid;
+		return [
+			[
+				MarkdownWriter.tableRow(header, width),
+				MarkdownWriter.tableRow(MarkdownWriter.tableAligns(rows[0], width), width),
+				...body.map((cells) => MarkdownWriter.tableRow(cells, width))
+			].join('\n')
+		];
+	}
+
+	private static tableRow(cells: string[], width: number): string {
+		const padded = Array.from({ length: width }, (_, index) => cells[index] ?? '');
+		return `| ${padded.join(' | ')} |`;
+	}
+
+	private static tableCells(row: Element): string[] {
+		return Array.from(row.children)
+			.filter((cell) => cell.tagName === 'TH' || cell.tagName === 'TD')
+			.map((cell) => MarkdownWriter.tableCell(cell as HTMLElement));
+	}
+
+	// 정렬은 헤더 행에서만 읽는다(GFM은 열 단위 정렬이라 본문 셀 정렬은 의미가 없다)
+	private static tableAligns(header: Element, width: number): string[] {
+		const cells = Array.from(header.children);
+		return Array.from({ length: width }, (_, index) => {
+			const align = (cells[index] as HTMLElement | undefined)?.style.textAlign ?? '';
+			return MarkdownWriter.ALIGN_RULE[align] ?? '---';
+		});
+	}
+
+	// GFM 셀은 인라인 한 줄만 담는다: 셀 안 블록은 공백으로 이어 붙이고 개행도 공백으로 눌러
+	// 표 구조를 지킨다. 파이프는 이스케이프하고, 그 표기가 깨지지 않게 백슬래시를 먼저 겹친다.
+	private static tableCell(cell: HTMLElement): string {
+		return MarkdownWriter.serializeBlocks(Array.from(cell.childNodes))
+			.join(' ')
+			.replace(/\\/g, '\\\\')
+			.replace(/\|/g, '\\|')
+			.replace(/\s*\n\s*/g, ' ')
+			.trim();
 	}
 
 	// 중첩 목록 들여쓰기 4칸: ol 부모(콘텐츠 칼럼 3)에서도 CommonMark 중첩으로 인정되는 안전값
