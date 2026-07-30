@@ -204,15 +204,19 @@
 	/* 표: 조회(Prose)는 밑줄만 긋지만 편집 중에는 격자 전체를 보여야 셀 경계와 빈 셀이 보인다 */
 	.area :global(table) {
 		width: 100%;
+		/* 열 폭을 내용과 무관하게 고정한다: 기본값 auto면 한 셀에 글을 적는 동안
+		   브라우저가 열 폭을 다시 나눠 다른 열이 밀려 좁아진다 */
+		table-layout: fixed;
 		border-collapse: collapse;
 		margin: var(--ds-space-md) 0;
 	}
 	.area :global(th),
 	.area :global(td) {
-		min-width: 3rem;
 		padding: var(--ds-space-xs) var(--ds-space-sm);
 		border: var(--ds-border-width) solid var(--ds-color-border-2);
 		text-align: left;
+		/* 폭이 고정이라 긴 낱말·URL은 줄바꿈해야 셀을 넘지 않는다 */
+		overflow-wrap: break-word;
 	}
 	.area :global(th) {
 		font-family: var(--ds-font-mono);

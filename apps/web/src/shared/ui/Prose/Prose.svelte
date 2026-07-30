@@ -87,6 +87,9 @@
 
 	.prose :global(table) {
 		width: 100%;
+		/* 편집 화면과 같은 열 폭 계산을 쓴다: 여기서 auto면 내용 길이에 따라 열이 재배분돼
+		   글쓴이가 편집 중에 본 표와 독자가 보는 표의 폭이 어긋난다 */
+		table-layout: fixed;
 		border-collapse: collapse;
 		margin: var(--ds-space-lg) 0;
 		font-size: var(--ds-text-xs);
@@ -97,6 +100,7 @@
 		text-align: left;
 		padding: var(--ds-space-sm) var(--ds-space-md);
 		border-bottom: var(--ds-border-width) solid var(--ds-color-border-2);
+		overflow-wrap: break-word;
 	}
 
 	.prose :global(th) {
