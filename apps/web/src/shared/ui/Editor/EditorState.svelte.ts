@@ -1,6 +1,10 @@
 import { MarkdownWriter } from '$shared/lib/markdown';
+import { TableGrid, type TableAlign } from './TableGrid';
 
 type EditorBlockType = 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'blockquote';
+
+// 표를 교체한 뒤 새 표를 되찾는 표식. insertHTML이 노드를 갈아끼워 참조가 끊기기 때문이다.
+const TABLE_MARK = 'data-table-edit';
 
 interface EditorLinkUi {
 	open: boolean;
@@ -35,6 +39,11 @@ class EditorState {
 	block = $state<EditorBlockType>('p');
 	isEmpty = $state(true);
 	link = $state<EditorLinkUi>({ ...CLOSED_LINK });
+	// 표 상태: 툴바가 표 전용 컨트롤을 이 값으로 여닫고 버튼을 비활성한다
+	inTable = $state(false);
+	canDeleteTableRow = $state(false);
+	canDeleteTableColumn = $state(false);
+	columnAlign = $state<TableAlign>('left');
 
 	// 서식(툴바 버튼) 상태가 하나라도 켜져 있으면 true. 빈 에디터라도 서식이 켜졌으면
 	// 커서 자리에 마커·스타일이 이미 보이므로 플레이스홀더를 감추는 데 쓴다.
@@ -87,6 +96,7 @@ class EditorState {
 		this.inLink = this.currentAnchor() !== null;
 		this.inListItem = this.currentListItem() !== null;
 		this.block = this.currentBlock();
+		this.syncTableFromSelection();
 		// 링크 armed: 비어있지 않은 선택이 생기면 그 자리에서 팝오버
 		if (this.link.armed && !sel.isCollapsed) this.openLinkPopover();
 	}
@@ -100,10 +110,14 @@ class EditorState {
 	toggleStrike(): void {
 		this.exec('strikeThrough');
 	}
+	// 표 셀 안에서는 블록을 만들지 않는다: GFM 셀은 인라인 한 줄만 담아서, 셀에 생긴 목록·제목·
+	// 구분선은 저장할 때 표기가 평문으로 눌려 내용이 뭉개진다.
 	toggleBulletList(): void {
+		if (this.currentCell()) return;
 		this.toggleList('insertUnorderedList', 'UL');
 	}
 	toggleOrderedList(): void {
+		if (this.currentCell()) return;
 		this.toggleList('insertOrderedList', 'OL');
 	}
 	// 목록 항목 안에서만 동작(밖이면 no-op이라 blockquote 오염 없음).
@@ -157,6 +171,7 @@ class EditorState {
 	// 내용 전체가 목록 마커('-'/숫자)면 마커를 지우고 해당 목록으로 전환한다. 전환했으면 true.
 	// 문단이면 그 타입의 목록을 새로 만들고, 목록 항목 안이면 그 타입의 중첩 목록으로 들여쓴다.
 	autoListFromMarker(): boolean {
+		if (this.currentCell()) return false;
 		const li = this.currentListItem();
 		if (li) return this.nestListFromMarker(li);
 		const block = this.currentParagraph();
@@ -191,14 +206,95 @@ class EditorState {
 		document.execCommand('delete');
 	}
 	insertDivider(): void {
+		if (this.currentCell()) return;
 		this.exec('insertHorizontalRule');
 	}
 	setBlock(type: EditorBlockType): void {
+		if (this.currentCell()) return;
 		this.exec('formatBlock', `<${type}>`);
 	}
 	// 같은 블록이면 본문(p)으로 되돌리는 토글 (제목·소제목·인용구 버튼용)
 	toggleBlock(type: EditorBlockType): void {
 		this.setBlock(this.block === type ? 'p' : type);
+	}
+
+	// 표 삽입. 표가 본문 마지막이면 캐럿이 표 밖으로 나올 길이 없어서 뒤에 빈 문단을 함께 넣는다
+	// (빈 문단은 직렬화에서 사라지므로 저장 결과엔 흔적이 없다). 중첩 표는 GFM에 없어 표 안에선 막는다.
+	insertTable(): void {
+		if (!this.root || this.currentCell()) return;
+		this.root.focus();
+		const sel = document.getSelection();
+		if (!sel?.anchorNode || !this.root.contains(sel.anchorNode)) this.restoreSelection();
+		const table = TableGrid.create();
+		table.setAttribute(TABLE_MARK, '');
+		document.execCommand('insertHTML', false, `${table.outerHTML}<p><br></p>`);
+		this.settleTable(0, 0);
+	}
+
+	insertTableRow(): void {
+		this.editTable((table, row, col) => {
+			TableGrid.insertRowAfter(table, row);
+			return { row: row + 1, col };
+		});
+	}
+
+	deleteTableRow(): void {
+		this.editTable((table, row, col) =>
+			TableGrid.deleteRow(table, row)
+				? { row: Math.min(row, TableGrid.rows(table).length - 1), col }
+				: null
+		);
+	}
+
+	insertTableColumn(): void {
+		this.editTable((table, row, col) => {
+			TableGrid.insertColumnAfter(table, col);
+			return { row, col: col + 1 };
+		});
+	}
+
+	deleteTableColumn(): void {
+		this.editTable((table, row, col) =>
+			TableGrid.deleteColumn(table, col)
+				? { row, col: Math.min(col, TableGrid.columnCount(table) - 1) }
+				: null
+		);
+	}
+
+	setColumnAlign(align: TableAlign): void {
+		this.editTable((table, row, col) => {
+			TableGrid.setColumnAlign(table, col, align);
+			return { row, col };
+		});
+	}
+
+	deleteTable(): void {
+		const table = this.currentTable();
+		if (!this.root || !table) return;
+		this.root.focus();
+		this.selectNode(table);
+		document.execCommand('delete');
+		this.syncFromSelection();
+		this.emit();
+	}
+
+	// Tab 이동. 마지막 셀에서 앞으로 가면 행을 새로 만들고 그 첫 셀로 간다(표 편집 관례).
+	moveCell(offset: 1 | -1): void {
+		const table = this.currentTable();
+		const cell = this.currentCell();
+		if (!table || !cell) return;
+		const cells = TableGrid.rows(table).flatMap((row) => TableGrid.cells(row));
+		const next = cells.indexOf(cell) + offset;
+		if (next < 0) return;
+		if (next >= cells.length) {
+			this.editTable((clone, row) => {
+				TableGrid.insertRowAfter(clone, row);
+				return { row: row + 1, col: 0 };
+			});
+			return;
+		}
+		this.placeCaret(cells[next]);
+		this.syncFromSelection();
 	}
 
 	// select처럼 포커스를 뺏는 컨트롤이 조작 직전에 호출해 선택을 보관한다
@@ -284,54 +380,107 @@ class EditorState {
 		sel?.addRange(this.savedRange);
 	}
 
-	private currentAnchor(): HTMLElement | null {
+	// 표 구조 변경은 표 전체를 새 HTML로 교체한다: execCommand 경로라 네이티브 undo가 따라오고,
+	// 노드가 갈아끼워져 Range 복원이 안 되므로 캐럿은 (행, 열) 좌표로 되돌린다.
+	// mutate가 null을 돌려주면(헤더 행 삭제 등 거부) 아무것도 바꾸지 않는다.
+	private editTable(
+		mutate: (table: HTMLElement, row: number, col: number) => { row: number; col: number } | null
+	): void {
+		const cell = this.currentCell();
+		const table = this.currentTable();
+		if (!this.root || !cell || !table) return;
+		const { row, col } = TableGrid.position(table, cell);
+		if (row < 0 || col < 0) return;
+		const next = table.cloneNode(true) as HTMLElement;
+		const caret = mutate(next, row, col);
+		if (!caret) return;
+		next.setAttribute(TABLE_MARK, '');
+		this.root.focus();
+		this.selectNode(table);
+		document.execCommand('insertHTML', false, next.outerHTML);
+		this.settleTable(caret.row, caret.col);
+	}
+
+	// insertHTML 직후: 표식으로 새 표를 찾아 표식을 떼고 캐럿을 (행, 열) 셀로 되돌린다.
+	private settleTable(row: number, col: number): void {
+		const table = this.root?.querySelector<HTMLElement>(`[${TABLE_MARK}]`);
+		table?.removeAttribute(TABLE_MARK);
+		const cell = table ? TableGrid.cellAt(table, row, col) : null;
+		if (cell) this.placeCaret(cell);
+		this.syncFromSelection();
+		this.emit();
+	}
+
+	private syncTableFromSelection(): void {
+		const table = this.currentTable();
+		const cell = this.currentCell();
+		const { row, col } = table && cell ? TableGrid.position(table, cell) : { row: -1, col: -1 };
+		if (!table || row < 0 || col < 0) {
+			this.inTable = false;
+			this.canDeleteTableRow = false;
+			this.canDeleteTableColumn = false;
+			this.columnAlign = 'left';
+			return;
+		}
+		this.inTable = true;
+		// 헤더 행은 GFM 표의 필수 구성이고, 마지막 남은 열은 지울 수 없다
+		this.canDeleteTableRow = row > 0;
+		this.canDeleteTableColumn = TableGrid.columnCount(table) > 1;
+		this.columnAlign = TableGrid.columnAlign(table, col);
+	}
+
+	private selectNode(node: Node): void {
+		const range = document.createRange();
+		range.selectNode(node);
+		const sel = document.getSelection();
+		sel?.removeAllRanges();
+		sel?.addRange(range);
+	}
+
+	private placeCaret(el: HTMLElement): void {
+		const range = document.createRange();
+		range.selectNodeContents(el);
+		range.collapse(true);
+		const sel = document.getSelection();
+		sel?.removeAllRanges();
+		sel?.addRange(range);
+	}
+
+	// 선택 지점에서 루트까지 올라가며 조건에 맞는 가장 가까운 요소를 찾는다.
+	private closest(match: (tag: string) => boolean): HTMLElement | null {
 		const sel = document.getSelection();
 		let node: Node | null = sel?.anchorNode ?? null;
 		while (node && node !== this.root) {
-			if (node.nodeType === Node.ELEMENT_NODE && (node as HTMLElement).tagName === 'A') {
+			if (node.nodeType === Node.ELEMENT_NODE && match((node as HTMLElement).tagName)) {
 				return node as HTMLElement;
 			}
 			node = node.parentNode;
 		}
 		return null;
+	}
+
+	private currentAnchor(): HTMLElement | null {
+		return this.closest((tag) => tag === 'A');
 	}
 
 	private currentParagraph(): HTMLElement | null {
-		const sel = document.getSelection();
-		let node: Node | null = sel?.anchorNode ?? null;
-		while (node && node !== this.root) {
-			if (node.nodeType === Node.ELEMENT_NODE) {
-				const tag = (node as HTMLElement).tagName;
-				if (tag === 'P' || tag === 'DIV') return node as HTMLElement;
-			}
-			node = node.parentNode;
-		}
-		return null;
+		return this.closest((tag) => tag === 'P' || tag === 'DIV');
 	}
 
 	private currentList(): HTMLElement | null {
-		const sel = document.getSelection();
-		let node: Node | null = sel?.anchorNode ?? null;
-		while (node && node !== this.root) {
-			if (node.nodeType === Node.ELEMENT_NODE) {
-				const tag = (node as HTMLElement).tagName;
-				if (tag === 'UL' || tag === 'OL') return node as HTMLElement;
-			}
-			node = node.parentNode;
-		}
-		return null;
+		return this.closest((tag) => tag === 'UL' || tag === 'OL');
 	}
 
 	private currentListItem(): HTMLElement | null {
-		const sel = document.getSelection();
-		let node: Node | null = sel?.anchorNode ?? null;
-		while (node && node !== this.root) {
-			if (node.nodeType === Node.ELEMENT_NODE && (node as HTMLElement).tagName === 'LI') {
-				return node as HTMLElement;
-			}
-			node = node.parentNode;
-		}
-		return null;
+		return this.closest((tag) => tag === 'LI');
+	}
+
+	private currentCell(): HTMLElement | null {
+		return this.closest((tag) => tag === 'TH' || tag === 'TD');
+	}
+
+	private currentTable(): HTMLElement | null {
+		return this.closest((tag) => tag === 'TABLE');
 	}
 
 	private currentBlock(): EditorBlockType {
@@ -368,4 +517,4 @@ function normalizeUrl(raw: string): string | null {
 }
 
 export { EditorState, matchListMarker };
-export type { EditorBlockType, EditorLinkUi };
+export type { EditorBlockType, EditorLinkUi, TableAlign };
