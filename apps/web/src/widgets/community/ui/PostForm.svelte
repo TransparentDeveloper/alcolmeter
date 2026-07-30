@@ -15,16 +15,37 @@
 		EditorLink,
 		EditorDivider
 	} from '$shared/ui';
+	import { PostDraftService } from '$entities/post/service';
 	import type { PostFormState } from './PostFormState.svelte';
 
 	let {
 		form,
 		submitLabel,
+		draftKey,
 		onsubmit
-	}: { form: PostFormState; submitLabel: string; onsubmit: () => void } = $props();
+	}: { form: PostFormState; submitLabel: string; draftKey: string; onsubmit: () => void } =
+		$props();
 
 	// 발행 버튼이 비활성인 이유를 알려준다 (라벨은 뷰가 관리)
 	const hint = $derived(!form.hasTitle ? '제목을 입력해 주세요.' : '본문을 입력해 주세요.');
+
+	// 입력을 debounce해 초안을 보관한다. 저장에 성공하면 더 이상 쓰지 않는다.
+	$effect(() => {
+		const snapshot = { title: form.title, body: form.body };
+		if (form.saved || !form.isDirty) return;
+		const timer = setTimeout(() => PostDraftService.save(draftKey, snapshot), 600);
+		return () => clearTimeout(timer);
+	});
+
+	// 저장하지 않은 변경이 있으면 이탈을 경고한다.
+	$effect(() => {
+		function onBeforeUnload(event: BeforeUnloadEvent) {
+			if (form.saved || !form.isDirty) return;
+			event.preventDefault();
+		}
+		window.addEventListener('beforeunload', onBeforeUnload);
+		return () => window.removeEventListener('beforeunload', onBeforeUnload);
+	});
 </script>
 
 <form
