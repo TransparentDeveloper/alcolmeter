@@ -42,6 +42,14 @@ describe('PostModel.summary', () => {
 		expect(post.summary).toBe('소제목 굵게 그리고 기울임 첫째 둘째 인용');
 	});
 
+	it('에디터가 쓰는 밑줄 기울임과 겹친 강조를 걷어낸다', () => {
+		const post = PostModel.fromRow({
+			...row,
+			body: '_기울임_ 과 _**굵은 기울임**_ 과 ~~취소~~'
+		});
+		expect(post.summary).toBe('기울임 과 굵은 기울임 과 취소');
+	});
+
 	it('링크는 표시 문구만 남긴다', () => {
 		const post = PostModel.fromRow({
 			...row,
