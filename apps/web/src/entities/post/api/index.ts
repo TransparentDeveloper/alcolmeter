@@ -1,13 +1,13 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { PostModel } from '$entities/post/model';
-import type { PostBlock, PostRow } from '$entities/post/model';
+import type { PostRow } from '$entities/post/model';
 
 // posts + profiles 조인. author_id → profiles.id FK가 있어야 이 임베드가 동작한다.
-const SELECT = 'id, title, content, author_id, created_at, updated_at, profiles(display_name)';
+const SELECT = 'id, title, body, author_id, created_at, updated_at, profiles(display_name)';
 
 interface PostInput {
 	title: string;
-	blocks: PostBlock[];
+	body: string;
 }
 
 interface PostIndexEntry {
@@ -47,7 +47,7 @@ class PostAPI {
 	static async create(client: SupabaseClient, authorId: string, input: PostInput): Promise<number> {
 		const { data, error } = await client
 			.from('posts')
-			.insert({ author_id: authorId, title: input.title, content: input.blocks })
+			.insert({ author_id: authorId, title: input.title, body: input.body })
 			.select('id')
 			.single();
 		if (error) throw error;
@@ -57,7 +57,7 @@ class PostAPI {
 	static async update(client: SupabaseClient, id: number, input: PostInput): Promise<void> {
 		const { error } = await client
 			.from('posts')
-			.update({ title: input.title, content: input.blocks, updated_at: new Date().toISOString() })
+			.update({ title: input.title, body: input.body, updated_at: new Date().toISOString() })
 			.eq('id', id);
 		if (error) throw error;
 	}

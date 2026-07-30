@@ -1,16 +1,3 @@
-type BlockElementType = 'heading' | 'body' | 'image';
-
-interface BlockElement {
-	id: string;
-	type: BlockElementType;
-	value: string; // heading·body: 텍스트, image: URL (todo)
-}
-
-interface PostBlock {
-	id: string;
-	elements: BlockElement[]; // 소제목(heading)은 문단당 1개이며 맨 앞에 온다
-}
-
 interface PostAuthor {
 	id: string;
 	displayName: string;
@@ -19,13 +6,13 @@ interface PostAuthor {
 interface PostData {
 	id: number;
 	title: string;
-	blocks: PostBlock[];
+	body: string; // 마크다운
 	author: PostAuthor;
 	createdAt: string;
 	updatedAt: string;
 }
 
-// 목록·홈 피드용 경량 뷰 (blocks 대신 요약만 담는다)
+// 목록·홈 피드용 경량 뷰 (본문 대신 요약만 담는다)
 interface PostListItem {
 	id: number;
 	title: string;
@@ -38,7 +25,7 @@ interface PostListItem {
 interface PostRow {
 	id: number;
 	title: string;
-	content: PostBlock[] | null;
+	body: string | null;
 	author_id: string;
 	created_at: string;
 	updated_at: string;
@@ -46,6 +33,7 @@ interface PostRow {
 }
 
 const SUMMARY_LIMIT = 100;
+const FIRST_IMAGE = /!\[[^\]]*\]\(\s*([^)\s]+)/;
 
 class PostModel {
 	private data: PostData;
@@ -62,8 +50,8 @@ class PostModel {
 		return this.data.title;
 	}
 
-	get blocks(): PostBlock[] {
-		return this.data.blocks;
+	get body(): string {
+		return this.data.body;
 	}
 
 	get author(): PostAuthor {
@@ -78,52 +66,45 @@ class PostModel {
 		return this.data.updatedAt;
 	}
 
+	// 목록·공유 메타용 요약: 마크다운 표시 기호를 걷어낸 평문 앞 100자.
 	get summary(): string {
-		const body = this.data.blocks
-			.flatMap((b) => b.elements)
-			.find((e) => e.type === 'body' && e.value.trim().length > 0);
-		const text = body?.value ?? '';
+		const text = PostModel.toPlainText(this.data.body);
 		return text.length > SUMMARY_LIMIT ? `${text.slice(0, SUMMARY_LIMIT)}…` : text;
 	}
 
-	// 공유 카드용 대표 이미지: 본문 첫 이미지 요소. 없으면 null(커뮤니티 공통 이미지로 폴백한다).
+	// 공유 카드용 대표 이미지: 본문 첫 이미지. 없으면 null(커뮤니티 공통 이미지로 폴백한다).
 	get shareImage(): string | null {
-		const image = this.data.blocks
-			.flatMap((b) => b.elements)
-			.find((e) => e.type === 'image' && e.value.trim().length > 0);
-		return image?.value ?? null;
+		return this.data.body.match(FIRST_IMAGE)?.[1] ?? null;
 	}
 
 	toData(): PostData {
-		return {
-			...this.data,
-			blocks: this.data.blocks.map((b) => ({
-				...b,
-				elements: b.elements.map((e) => ({ ...e }))
-			})),
-			author: { ...this.data.author }
-		};
-	}
-
-	static createBlock(): PostBlock {
-		return { id: crypto.randomUUID(), elements: [PostModel.createElement('body')] };
-	}
-
-	static createElement(type: BlockElementType): BlockElement {
-		return { id: crypto.randomUUID(), type, value: '' };
+		return { ...this.data, author: { ...this.data.author } };
 	}
 
 	static fromRow(row: PostRow): PostModel {
 		return new PostModel({
 			id: row.id,
 			title: row.title,
-			blocks: row.content ?? [],
+			body: row.body ?? '',
 			author: { id: row.author_id, displayName: row.profiles?.display_name ?? '익명' },
 			createdAt: row.created_at,
 			updatedAt: row.updated_at
 		});
 	}
+
+	// 요약용 평문화. 렌더가 아니라 발췌 목적이라 완전한 마크다운 파싱은 하지 않는다.
+	private static toPlainText(markdown: string): string {
+		return markdown
+			.replace(/!\[[^\]]*\]\([^)]*\)/g, '') // 이미지
+			.replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (_m, slug, label) => label ?? slug) // 위키링크
+			.replace(/\[([^\]]*)\]\([^)]*\)/g, '$1') // 링크 → 표시 문구
+			.replace(/^\s*([-*_]\s*){3,}$/gm, '') // 구분선
+			.replace(/^\s{0,3}(#{1,6}\s+|>\s?|[-*+]\s+|\d+\.\s+)/gm, '') // 블록 마커
+			.replace(/\*\*|__|~~|[*`]/g, '') // 강조
+			.replace(/\s+/g, ' ')
+			.trim();
+	}
 }
 
 export { PostModel };
-export type { BlockElement, BlockElementType, PostBlock, PostAuthor, PostData, PostListItem, PostRow };
+export type { PostAuthor, PostData, PostListItem, PostRow };

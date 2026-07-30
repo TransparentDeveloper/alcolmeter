@@ -5,7 +5,7 @@
 	import type { PostData } from '$entities/post/model';
 	import { CommunityDetailPage } from '$pages/community/ui';
 
-	let { post }: { post: PostData } = $props();
+	let { post, bodyHtml }: { post: PostData; bodyHtml: string } = $props();
 
 	const model = $derived(new PostModel(post));
 	const description = $derived(model.summary || '알콜미터 커뮤니티에 올라온 글입니다.');
@@ -37,4 +37,4 @@
 	schemas={[schema]}
 />
 
-<CommunityDetailPage {post} />
+<CommunityDetailPage {post} {bodyHtml} />

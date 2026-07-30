@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { PostEditor, PostWriteState } from '$widgets/community/ui';
+	import { PostForm, PostWriteState } from '$widgets/community/ui';
 	import { authStore } from '$features/auth/store/index.svelte';
 
-	const state = new PostWriteState();
+	const writeState = new PostWriteState();
+	let errorMessage = $state<string | null>(null);
 
 	// 로그인 가드: 상태가 확정된 뒤 비로그인이면 로그인으로 보낸다.
 	$effect(() => {
@@ -14,18 +15,23 @@
 	async function submit() {
 		const user = authStore.value.user;
 		if (!user) return;
-		const id = await state.submit(user);
-		if (id !== null) goto(`/community/${id}`);
+		errorMessage = null;
+		try {
+			const id = await writeState.submit(user);
+			if (id !== null) goto(`/community/${id}`);
+		} catch (e) {
+			errorMessage = e instanceof Error ? e.message : '저장에 실패했어요.';
+		}
 	}
 </script>
 
 <main>
-	<PostEditor
-		editor={state.editor}
-		submitLabel={state.saving ? '저장 중…' : '발행'}
+	<PostForm
+		form={writeState.form}
+		submitLabel={writeState.saving ? '저장 중…' : '발행'}
 		onsubmit={submit}
 	/>
-	{#if state.errorMessage}<p role="alert">{state.errorMessage}</p>{/if}
+	{#if errorMessage}<p role="alert">{errorMessage}</p>{/if}
 </main>
 
 <style>

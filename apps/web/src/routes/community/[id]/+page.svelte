@@ -5,4 +5,4 @@
 	let { data }: { data: PageData } = $props();
 </script>
 
-<CommunityDetailApplication post={data.post} />
+<CommunityDetailApplication post={data.post} bodyHtml={data.bodyHtml} />
