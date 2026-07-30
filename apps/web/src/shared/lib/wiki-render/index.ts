@@ -40,8 +40,12 @@ function renderWiki(markdown: string, slugs: Set<string>): string {
 		allowedAttributes: {
 			a: ['href', 'class', 'title'],
 			span: ['class', 'title'],
-			img: ['src', 'alt']
+			img: ['src', 'alt'],
+			// 표 열 정렬은 markdown-it이 셀에 붙이는 인라인 style로 나른다
+			th: ['style'],
+			td: ['style']
 		},
+		allowedStyles: { '*': { 'text-align': [/^left$/, /^center$/, /^right$/] } },
 		allowedClasses: { a: ['wiki-link', 'wiki-video'], span: ['wiki-link', 'wiki-link--missing'] },
 		allowedSchemes: ['http', 'https'],
 		// 이미지는 우리 스토리지·유튜브 썸네일만

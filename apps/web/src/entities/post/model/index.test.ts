@@ -83,6 +83,45 @@ describe('PostModel.summary', () => {
 		expect(post.summary).toBe('쌀 씻기 고두밥 찌기');
 	});
 
+	it('표의 구분행을 지우고 셀을 공백으로 이어 붙인다', () => {
+		const post = PostModel.fromRow({
+			...row,
+			body: '| 재료 | 양 |\n| --- | --- |\n| 쌀 | 1kg |'
+		});
+		expect(post.summary).toBe('재료 양 쌀 1kg');
+	});
+
+	it('정렬 표기가 든 구분행도 지운다', () => {
+		const post = PostModel.fromRow({ ...row, body: '| 가 | 나 |\n| :---: | ---: |\n| 다 | 라 |' });
+		expect(post.summary).toBe('가 나 다 라');
+	});
+
+	it('표 앞뒤 문단과 자연스럽게 이어진다', () => {
+		const post = PostModel.fromRow({
+			...row,
+			body: '앞 문단\n\n| 가 | 나 |\n| --- | --- |\n| 다 | 라 |\n\n뒤 문단'
+		});
+		expect(post.summary).toBe('앞 문단 가 나 다 라 뒤 문단');
+	});
+
+	it('셀 안 이스케이프한 파이프를 문자로 되살린다', () => {
+		const post = PostModel.fromRow({ ...row, body: '| 기호 |\n| --- |\n| 가\\|나 |' });
+		expect(post.summary).toBe('기호 가|나');
+	});
+
+	it('셀 안 이스케이프한 백슬래시를 문자로 되살린다', () => {
+		const post = PostModel.fromRow({ ...row, body: '| 경로 |\n| --- |\n| C:\\\\굽는방 |' });
+		expect(post.summary).toBe('경로 C:\\굽는방');
+	});
+
+	it('셀 안 강조와 위키링크도 걷어낸다', () => {
+		const post = PostModel.fromRow({
+			...row,
+			body: '| 항목 | 설명 |\n| --- | --- |\n| **당화** | [[고두밥]] |'
+		});
+		expect(post.summary).toBe('항목 설명 당화 고두밥');
+	});
+
 	it('100자를 넘으면 자르고 줄임표를 붙인다', () => {
 		const post = PostModel.fromRow({ ...row, body: 'x'.repeat(150) });
 		expect(post.summary).toBe('x'.repeat(100) + '…');
