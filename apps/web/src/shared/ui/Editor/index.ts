@@ -12,3 +12,5 @@ export { default as EditorIndent } from './EditorIndent.svelte';
 export { default as EditorOutdent } from './EditorOutdent.svelte';
 export { default as EditorLink } from './EditorLink.svelte';
 export { default as EditorDivider } from './EditorDivider.svelte';
+export { default as EditorTable } from './EditorTable.svelte';
+export { default as EditorTableControls } from './EditorTableControls.svelte';

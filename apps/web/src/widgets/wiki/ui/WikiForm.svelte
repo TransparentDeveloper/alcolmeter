@@ -14,7 +14,9 @@
 		EditorOutdent,
 		EditorQuote,
 		EditorLink,
-		EditorDivider
+		EditorDivider,
+		EditorTable,
+		EditorTableControls
 	} from '$shared/ui';
 	import type { WikiFormState } from './WikiFormState.svelte';
 
@@ -141,6 +143,8 @@
 				<EditorToolbarSeparator />
 				<EditorLink />
 				<EditorDivider />
+				<EditorTable />
+				<EditorTableControls />
 			</EditorToolbar>
 		</Editor>
 	</div>

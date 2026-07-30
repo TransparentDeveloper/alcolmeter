@@ -38,6 +38,19 @@
 
 	function onKeydown(e: KeyboardEvent) {
 		if (e.key === 'Escape') editor.closeLinkPopover();
+		// 표 안에서 Tab은 셀 이동(마지막 셀이면 행 추가)이고, Enter는 막는다:
+		// GFM 셀은 인라인 한 줄만 담아서 셀 안 개행을 저장할 방법이 없다.
+		if (editor.inTable) {
+			if (e.key === 'Tab') {
+				e.preventDefault();
+				editor.moveCell(e.shiftKey ? -1 : 1);
+				return;
+			}
+			if (e.key === 'Enter') {
+				e.preventDefault();
+				return;
+			}
+		}
 		const isTab = e.key === 'Tab';
 		if (!isTab && e.key !== ' ') return;
 		// 마커('-'/숫자)만 있는 문단·목록 항목에서 Tab·Space는 그 타입의 목록(중첩) 전환이 우선.
@@ -186,5 +199,25 @@
 	}
 	.area :global(blockquote p) {
 		margin: 0;
+	}
+
+	/* 표: 조회(Prose)는 밑줄만 긋지만 편집 중에는 격자 전체를 보여야 셀 경계와 빈 셀이 보인다 */
+	.area :global(table) {
+		width: 100%;
+		border-collapse: collapse;
+		margin: var(--ds-space-md) 0;
+	}
+	.area :global(th),
+	.area :global(td) {
+		min-width: 3rem;
+		padding: var(--ds-space-xs) var(--ds-space-sm);
+		border: var(--ds-border-width) solid var(--ds-color-border-2);
+		text-align: left;
+	}
+	.area :global(th) {
+		font-family: var(--ds-font-mono);
+		font-weight: var(--ds-weight-medium);
+		color: var(--ds-color-ink-3);
+		background: var(--ds-color-hover);
 	}
 </style>

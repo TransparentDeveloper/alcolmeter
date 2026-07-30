@@ -13,7 +13,9 @@
 		EditorOutdent,
 		EditorQuote,
 		EditorLink,
-		EditorDivider
+		EditorDivider,
+		EditorTable,
+		EditorTableControls
 	} from '$shared/ui';
 	import { PostDraftService } from '$entities/post/service';
 	import type { PostFormState } from './PostFormState.svelte';
@@ -73,6 +75,8 @@
 			<EditorToolbarSeparator />
 			<EditorLink />
 			<EditorDivider />
+			<EditorTable />
+			<EditorTableControls />
 		</EditorToolbar>
 	</Editor>
 
