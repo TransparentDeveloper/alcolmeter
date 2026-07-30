@@ -12,10 +12,25 @@
 	const version = __APP_VERSION__;
 	const faviconVersion = __FAVICON_VERSION__;
 
-	// 홈·계산기·위키 목록·이용 안내는 hub 폭(1280).
-	const HUB_ROUTES = ['/', '/calculate-makgeolli', '/calculate-cider', '/privacy', '/wiki', '/wiki/guidelines'];
-	// 위키 상세·작성·수정은 넓은 데스크탑 폭(정보 테이블·본문). 이력은 기본 폭.
-	const WIDE_ROUTES = ['/wiki/[slug]', '/wiki/new', '/wiki/[slug]/edit'];
+	// 홈·계산기·위키 목록·커뮤니티 목록·이용 안내는 hub 폭(1280).
+	const HUB_ROUTES = [
+		'/',
+		'/calculate-makgeolli',
+		'/calculate-cider',
+		'/privacy',
+		'/wiki',
+		'/wiki/guidelines',
+		'/community'
+	];
+	// 위키·커뮤니티의 상세·작성·수정은 넓은 데스크탑 폭(정보 테이블·본문). 위키 이력은 기본 폭.
+	const WIDE_ROUTES = [
+		'/wiki/[slug]',
+		'/wiki/new',
+		'/wiki/[slug]/edit',
+		'/community/[id]',
+		'/community/new',
+		'/community/[id]/edit'
+	];
 
 	afterNavigate(({ from, to }) => {
 		if (from && typeof gtag !== 'undefined' && to) {

@@ -22,8 +22,6 @@
 
 <style>
 	main {
-		max-width: 44rem;
-		margin: 0 auto;
 		display: grid;
 		gap: var(--ds-space-xl);
 	}
