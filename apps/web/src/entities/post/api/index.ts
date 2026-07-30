@@ -27,7 +27,26 @@ class PostAPI {
 		return (data ?? []).map((row) => PostModel.fromRow(row as unknown as PostRow));
 	}
 
-	// 사이트맵처럼 주소와 갱신 시각만 필요한 곳을 위한 경량 조회 (본문 JSON을 끌어오지 않는다).
+	// 게시판 목록용 페이지 조회. 전체 개수를 함께 돌려 페이지 이동 가능 여부를 판단한다.
+	static async listPage(
+		client: SupabaseClient,
+		page: number,
+		size: number
+	): Promise<{ posts: PostModel[]; total: number }> {
+		const from = (page - 1) * size;
+		const { data, error, count } = await client
+			.from('posts')
+			.select(SELECT, { count: 'exact' })
+			.order('created_at', { ascending: false })
+			.range(from, from + size - 1);
+		if (error) throw error;
+		return {
+			posts: (data ?? []).map((row) => PostModel.fromRow(row as unknown as PostRow)),
+			total: count ?? 0
+		};
+	}
+
+	// 사이트맵처럼 주소와 갱신 시각만 필요한 곳을 위한 경량 조회 (본문을 끌어오지 않는다).
 	static async listIndex(client: SupabaseClient, limit = 500): Promise<PostIndexEntry[]> {
 		const { data, error } = await client
 			.from('posts')

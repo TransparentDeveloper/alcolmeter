@@ -3,7 +3,12 @@
 	import { CommunityListPage } from '$pages/community/ui';
 	import type { PostData } from '$entities/post/model';
 
-	let { posts }: { posts: PostData[] } = $props();
+	let {
+		posts,
+		page,
+		hasPrev,
+		hasNext
+	}: { posts: PostData[]; page: number; hasPrev: boolean; hasNext: boolean } = $props();
 </script>
 
 <MetaHead
@@ -13,4 +18,4 @@
 	image="/og/community.png"
 />
 
-<CommunityListPage {posts} />
+<CommunityListPage {posts} {page} {hasPrev} {hasNext} />

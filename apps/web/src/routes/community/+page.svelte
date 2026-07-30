@@ -5,4 +5,9 @@
 	let { data }: { data: PageData } = $props();
 </script>
 
-<CommunityListApplication posts={data.posts} />
+<CommunityListApplication
+	posts={data.posts}
+	page={data.page}
+	hasPrev={data.hasPrev}
+	hasNext={data.hasNext}
+/>
