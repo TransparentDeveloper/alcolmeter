@@ -186,6 +186,30 @@ describe('TableGrid.insertRowAfter', () => {
 	});
 });
 
+describe('TableGrid.canDeleteRow·canDeleteColumn', () => {
+	it('본문이 두 행 이상이면 지울 수 있다', () => {
+		const el = table(
+			'<table><tr><th>가</th></tr><tr><td>나</td></tr><tr><td>다</td></tr></table>'
+		);
+		expect(TableGrid.canDeleteRow(el, 1)).toBe(true);
+		expect(TableGrid.canDeleteRow(el, 2)).toBe(true);
+	});
+	it('헤더 행은 지울 수 없다', () => {
+		const el = table('<table><tr><th>가</th></tr><tr><td>나</td></tr><tr><td>다</td></tr></table>');
+		expect(TableGrid.canDeleteRow(el, 0)).toBe(false);
+	});
+	it('행이 둘뿐이면(헤더 + 본문 1행) 지울 수 없다', () => {
+		const el = table('<table><tr><th>가</th></tr><tr><td>나</td></tr></table>');
+		expect(TableGrid.canDeleteRow(el, 1)).toBe(false);
+	});
+	it('열이 둘 이상이면 지울 수 있고, 하나뿐이면 지울 수 없다', () => {
+		expect(TableGrid.canDeleteColumn(table('<table><tr><th>가</th><th>나</th></tr></table>'))).toBe(
+			true
+		);
+		expect(TableGrid.canDeleteColumn(table('<table><tr><th>가</th></tr></table>'))).toBe(false);
+	});
+});
+
 describe('TableGrid.deleteRow', () => {
 	it('본문 행을 지운다', () => {
 		const el = table(
@@ -195,20 +219,30 @@ describe('TableGrid.deleteRow', () => {
 		expect(texts(el)).toEqual([['가'], ['다']]);
 	});
 	it('헤더 행은 지우지 않는다 (GFM 표의 필수 구성)', () => {
-		const el = table('<table><tr><th>가</th></tr><tr><td>나</td></tr></table>');
+		const el = table(
+			'<table><tr><th>가</th></tr><tr><td>나</td></tr><tr><td>다</td></tr></table>'
+		);
 		expect(TableGrid.deleteRow(el, 0)).toBe(false);
-		expect(texts(el)).toEqual([['가'], ['나']]);
+		expect(texts(el)).toEqual([['가'], ['나'], ['다']]);
 	});
-	it('마지막 본문 행도 지울 수 있다 (헤더만 남는 표는 유효하다)', () => {
+	it('본문 마지막 한 행은 남긴다 (행 최소 2개)', () => {
 		const el = table(
 			'<table><thead><tr><th>가</th></tr></thead><tbody><tr><td>나</td></tr></tbody></table>'
 		);
-		expect(TableGrid.deleteRow(el, 1)).toBe(true);
-		expect(texts(el)).toEqual([['가']]);
+		expect(TableGrid.deleteRow(el, 1)).toBe(false);
+		expect(texts(el)).toEqual([['가'], ['나']]);
+	});
+	it('연달아 지워도 행 두 개에서 멈춘다', () => {
+		const el = table(
+			'<table><tr><th>가</th></tr><tr><td>나</td></tr><tr><td>다</td></tr></table>'
+		);
+		expect(TableGrid.deleteRow(el, 2)).toBe(true);
+		expect(TableGrid.deleteRow(el, 1)).toBe(false);
+		expect(texts(el)).toEqual([['가'], ['나']]);
 	});
 	it('없는 행은 지우지 않는다', () => {
-		const el = table('<table><tr><th>가</th></tr></table>');
-		expect(TableGrid.deleteRow(el, 3)).toBe(false);
+		const el = table('<table><tr><th>가</th></tr><tr><td>나</td></tr><tr><td>다</td></tr></table>');
+		expect(TableGrid.deleteRow(el, 7)).toBe(false);
 	});
 });
 

@@ -9,6 +9,11 @@ class TableGrid {
 	private static readonly COLUMNS = 3;
 	private static readonly BODY_ROWS = 2;
 
+	// 표가 표로 남기 위한 하한. 헤더만 있는 표는 담은 자료가 없어 헤더 + 본문 한 행은 남긴다.
+	// 열은 한 줄짜리 표도 자료로서 뜻이 있어 하한이 하나다.
+	private static readonly MIN_ROWS = 2;
+	private static readonly MIN_COLUMNS = 1;
+
 	// 빈 셀은 <br>로 채운다: 완전히 빈 td는 클릭·캐럿 진입이 브라우저마다 어긋난다.
 	private static readonly EMPTY = '<br>';
 
@@ -84,9 +89,19 @@ class TableGrid {
 		reference.parentElement?.insertBefore(inserted, reference.nextSibling);
 	}
 
-	// 헤더 행은 GFM 표의 필수 구성이라 지우지 않는다. 지웠으면 true.
+	// 헤더 행은 GFM 표의 필수 구성이라 지우지 않고, 본문 마지막 행도 남긴다.
+	// 툴바가 버튼을 비활성하는 판정과 실제 삭제가 같은 규칙을 쓰도록 밖으로 열어 둔다.
+	static canDeleteRow(table: HTMLElement, row: number): boolean {
+		return row > 0 && TableGrid.rows(table).length > TableGrid.MIN_ROWS;
+	}
+
+	static canDeleteColumn(table: HTMLElement): boolean {
+		return TableGrid.columnCount(table) > TableGrid.MIN_COLUMNS;
+	}
+
+	// 지웠으면 true.
 	static deleteRow(table: HTMLElement, row: number): boolean {
-		if (row <= 0) return false;
+		if (!TableGrid.canDeleteRow(table, row)) return false;
 		const target = TableGrid.rows(table)[row];
 		if (!target) return false;
 		target.remove();
@@ -103,9 +118,9 @@ class TableGrid {
 		}
 	}
 
-	// 마지막 남은 열은 지우지 않는다(열 없는 표는 표가 아니다). 지웠으면 true.
+	// 지웠으면 true.
 	static deleteColumn(table: HTMLElement, col: number): boolean {
-		if (TableGrid.columnCount(table) <= 1) return false;
+		if (!TableGrid.canDeleteColumn(table)) return false;
 		let removed = false;
 		for (const row of TableGrid.rows(table)) {
 			const target = TableGrid.cells(row)[col];

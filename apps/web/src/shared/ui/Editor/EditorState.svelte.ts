@@ -423,9 +423,8 @@ class EditorState {
 			return;
 		}
 		this.inTable = true;
-		// 헤더 행은 GFM 표의 필수 구성이고, 마지막 남은 열은 지울 수 없다
-		this.canDeleteTableRow = row > 0;
-		this.canDeleteTableColumn = TableGrid.columnCount(table) > 1;
+		this.canDeleteTableRow = TableGrid.canDeleteRow(table, row);
+		this.canDeleteTableColumn = TableGrid.canDeleteColumn(table);
 		this.columnAlign = TableGrid.columnAlign(table, col);
 	}
 
