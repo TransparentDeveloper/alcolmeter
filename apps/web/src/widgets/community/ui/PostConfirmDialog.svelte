@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { ConfirmDialogState } from '$shared/ui';
 
-	// 취소/확인 2버튼 확인 다이얼로그. 문구는 전부 호출처가 주입한다 (위키 지식 없음).
+	// 취소/확인 2버튼 확인 다이얼로그. 문구는 전부 호출처가 주입한다.
 	let {
 		title,
 		description,

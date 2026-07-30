@@ -2,6 +2,8 @@
 	import { LoadingDialogState } from '$shared/ui';
 
 	// 버튼 없는 진행 표시 다이얼로그. ESC로도 닫히지 않는다.
+	let { message = '저장 중이에요…' }: { message?: string } = $props();
+
 	const loading = new LoadingDialogState();
 
 	export function open(): void {
@@ -14,7 +16,7 @@
 </script>
 
 {#snippet content()}
-	<p class="loading">저장 중이에요…</p>
+	<p class="loading">{message}</p>
 {/snippet}
 
 <style>

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { NoticeDialogState, type NoticeContent } from '$shared/ui';
 
-	// 제목+본문+확인 버튼 안내 다이얼로그 (중복 안내·에러 표시 겸용).
+	// 제목+본문+확인 버튼 안내 다이얼로그 (저장·삭제 실패 안내 겸용).
 	const notice = new NoticeDialogState();
 
 	export function open(content: NoticeContent): void {

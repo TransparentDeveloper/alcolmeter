@@ -1,8 +1,8 @@
-import { DialogState, type DialogContent } from '$shared/ui';
+import { DialogState, type DialogContent } from './DialogState.svelte';
 
-// 확인 다이얼로그 뷰 상태: open()이 선택 결과를 Promise<boolean>으로 돌려준다.
-// 마크업(snippet)은 WikiConfirmDialog.svelte가 정의해 open에 넘긴다.
-class WikiConfirmDialogState {
+// 확인 다이얼로그 상태 로직: open()이 선택 결과를 Promise<boolean>으로 돌려준다.
+// 마크업(snippet)은 이 로직을 쓰는 위젯의 컴포넌트가 정의해 open에 넘긴다.
+class ConfirmDialogState {
 	private dialog = DialogState.use();
 	private resolver: ((confirmed: boolean) => void) | null = null;
 	private handle: { close: () => void } | null = null;
@@ -31,4 +31,4 @@ class WikiConfirmDialogState {
 	}
 }
 
-export { WikiConfirmDialogState };
+export { ConfirmDialogState };
