@@ -12,14 +12,15 @@
 	const version = __APP_VERSION__;
 	const faviconVersion = __FAVICON_VERSION__;
 
-	// 홈·계산기·위키 목록·커뮤니티 목록·이용 안내는 hub 폭(1280).
+	// 홈·계산기·위키 목록·커뮤니티 목록·법적 문서는 hub 폭(1280).
 	const HUB_ROUTES = [
 		'/',
 		'/calculate-makgeolli',
 		'/calculate-cider',
 		'/privacy',
+		'/terms',
+		'/policy',
 		'/wiki',
-		'/wiki/guidelines',
 		'/community'
 	];
 	// 위키·커뮤니티의 상세·작성·수정은 넓은 데스크탑 폭(정보 테이블·본문). 위키 이력은 기본 폭.
@@ -77,12 +78,13 @@
 					<a href="/calculate-cider">사이다 계산기</a>
 				</div>
 				<div class="footer-col">
-					{#if page.url.pathname === '/wiki' || page.url.pathname.startsWith('/wiki/')}
-						<a href="/wiki/guidelines">이용 안내</a>
-					{/if}
 					<a href="/faq">자주 묻는 질문</a>
-					<a href="/privacy">개인정보처리방침</a>
 					<a href="/settings">설정</a>
+				</div>
+				<div class="footer-col">
+					<a href="/terms">이용약관</a>
+					<a href="/policy">운영정책</a>
+					<a href="/privacy">개인정보처리방침</a>
 				</div>
 			</nav>
 			<span class="version">v{version}</span>

@@ -19,7 +19,7 @@
 			bind:value={state.query}
 		/>
 		<p class="add">찾는 용어가 없나요? <a href="/wiki/new">새 용어 추가 →</a></p>
-		<p class="guide-link">편집 전 <a href="/wiki/guidelines">이용 안내</a>를 읽어 주세요.</p>
+		<p class="guide-link">편집 전 <a href="/policy#wiki">편집 규칙</a>을 읽어 주세요.</p>
 	</div>
 
 	{#if state.hasQuery}

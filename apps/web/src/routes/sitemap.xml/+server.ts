@@ -19,7 +19,8 @@ const staticEntries: Entry[] = [
 	{ loc: `${SITE}/wiki`, lastmod: '2026-07-19', changefreq: 'weekly', priority: '0.7' },
 	{ loc: `${SITE}/settings`, lastmod: '2026-06-20', changefreq: 'monthly', priority: '0.3' },
 	{ loc: `${SITE}/privacy`, lastmod: '2026-07-26', changefreq: 'yearly', priority: '0.3' },
-	{ loc: `${SITE}/wiki/guidelines`, lastmod: '2026-07-25', changefreq: 'yearly', priority: '0.3' }
+	{ loc: `${SITE}/terms`, lastmod: '2026-08-01', changefreq: 'yearly', priority: '0.3' },
+	{ loc: `${SITE}/policy`, lastmod: '2026-08-01', changefreq: 'yearly', priority: '0.3' }
 ];
 
 function renderUrl(e: Entry): string {

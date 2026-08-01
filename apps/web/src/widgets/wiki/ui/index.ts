@@ -9,7 +9,6 @@ export { default as WikiLoadingDialog } from './WikiLoadingDialog.svelte';
 export { default as WikiNoticeDialog } from './WikiNoticeDialog.svelte';
 export { default as WikiHistory } from './WikiHistory.svelte';
 export { default as WikiRevisionView } from './WikiRevisionView.svelte';
-export { default as WikiGuidelines } from './WikiGuidelines.svelte';
 export { WikiFormState } from './WikiFormState.svelte';
 export { WikiIndexState } from './WikiIndexState.svelte';
 export { WikiWriteState } from './WikiWriteState.svelte';
