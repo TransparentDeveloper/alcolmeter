@@ -16,7 +16,13 @@
 	const size = $derived(SIZES[level]);
 </script>
 
-<EditorButton {label} active={editor.block === block} onclick={() => editor.toggleBlock(block)}>
+<!-- 표 셀에는 블록을 담을 수 없다(GFM 한계): 셀 안에서는 비활성 -->
+<EditorButton
+	{label}
+	active={editor.block === block}
+	disabled={editor.inTable}
+	onclick={() => editor.toggleBlock(block)}
+>
 	<span class="txt" style:font-size={size}>{label}</span>
 </EditorButton>
 

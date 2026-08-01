@@ -29,8 +29,14 @@ describe('matchListMarker', () => {
 // 표 조작은 execCommand로 표를 갈아끼운 뒤 캐럿과 툴바 상태를 다시 세우는 이음새가 핵심이다.
 // happy-dom에 execCommand가 없으므로 이 흐름에 필요한 두 명령만 최소로 세워 둔다.
 // (브라우저 구현을 모사하는 게 아니라, 갈아끼운 뒤 상태가 다시 계산되는지를 본다.)
+// 내보낸 execCommand 이름을 순서대로 담는다. 표 셀 안에서 블록 서식이 정말 막히는지는
+// DOM 변화로 볼 수 없어(세운 구현이 블록 명령을 실제로 수행하지 않는다) 명령 자체를 본다.
+let commands: string[] = [];
+
 function stubExecCommand(): void {
+	commands = [];
 	document.execCommand = ((command: string, _ui?: boolean, value?: string) => {
+		commands.push(command);
 		const sel = document.getSelection();
 		const range = sel?.rangeCount ? sel.getRangeAt(0) : null;
 		if (!range) return false;
@@ -171,6 +177,54 @@ describe('EditorState 표 상태 동기화', () => {
 		editor.deleteTable();
 		expect(root.querySelector('table')).toBeNull();
 		expect(editor.inTable).toBe(false);
+	});
+
+	it('셀 안에서는 블록 서식 명령을 내보내지 않는다 (툴바가 버튼을 비활성하는 근거)', () => {
+		const { editor, root } = mount(THREE_ROWS);
+		caretIn(TableGrid.cellAt(liveTable(root), 1, 0)!);
+		editor.syncFromSelection();
+		commands.length = 0;
+
+		editor.toggleBulletList();
+		editor.toggleOrderedList();
+		editor.toggleBlock('h2');
+		editor.toggleBlock('blockquote');
+		editor.insertDivider();
+		expect(commands).toEqual([]);
+	});
+
+	it('셀 안에서도 인라인 서식은 그대로 나간다', () => {
+		const { editor, root } = mount(THREE_ROWS);
+		caretIn(TableGrid.cellAt(liveTable(root), 1, 0)!);
+		editor.syncFromSelection();
+		commands.length = 0;
+
+		editor.toggleBold();
+		editor.toggleItalic();
+		editor.toggleStrike();
+		expect(commands).toEqual(['bold', 'italic', 'strikeThrough']);
+	});
+
+	it('셀 안에서는 마커 입력으로 목록이 열리지 않는다', () => {
+		const { editor, root } = mount('<table><tr><th>가</th></tr><tr><td>-</td></tr></table>');
+		caretIn(TableGrid.cellAt(liveTable(root), 1, 0)!);
+		editor.syncFromSelection();
+		commands.length = 0;
+
+		expect(editor.autoListFromMarker()).toBe(false);
+		expect(commands).toEqual([]);
+	});
+
+	it('표 밖에서는 같은 블록 서식이 정상으로 나간다', () => {
+		const { editor, root } = mount('<p>본문</p>');
+		caretIn(root.querySelector('p')!);
+		editor.syncFromSelection();
+		commands.length = 0;
+
+		editor.toggleBulletList();
+		editor.toggleBlock('h2');
+		editor.insertDivider();
+		expect(commands).toEqual(['insertUnorderedList', 'formatBlock', 'insertHorizontalRule']);
 	});
 
 	it('갈아끼운 표에는 내부 표식이 남지 않는다', () => {

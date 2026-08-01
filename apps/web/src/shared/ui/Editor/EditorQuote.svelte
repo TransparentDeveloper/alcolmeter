@@ -5,9 +5,11 @@
 	const editor = getEditorContext();
 </script>
 
+<!-- 표 셀에는 블록을 담을 수 없다(GFM 한계): 셀 안에서는 비활성 -->
 <EditorButton
 	label="인용구"
 	active={editor.block === 'blockquote'}
+	disabled={editor.inTable}
 	onclick={() => editor.toggleBlock('blockquote')}
 >
 	<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" fill="currentColor">
