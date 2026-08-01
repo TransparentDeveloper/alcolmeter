@@ -65,7 +65,7 @@
 	}
 	h1 {
 		font-family: var(--ds-font-display);
-		font-size: var(--ds-text-xl);
+		font-size: var(--ds-type-title);
 		margin: 0;
 	}
 </style>

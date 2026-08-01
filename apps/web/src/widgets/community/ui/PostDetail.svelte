@@ -44,7 +44,7 @@
 	}
 	h1 {
 		font-family: var(--ds-font-display);
-		font-size: var(--ds-text-3xl);
+		font-size: var(--ds-type-display);
 		letter-spacing: var(--ds-tracking-tight);
 		margin: 0 0 var(--ds-space-sm);
 	}
@@ -52,7 +52,7 @@
 		display: flex;
 		gap: var(--ds-space-md);
 		font-family: var(--ds-font-mono);
-		font-size: var(--ds-text-xs);
+		font-size: var(--ds-type-caption);
 		color: var(--ds-color-ink-3);
 	}
 	.actions {

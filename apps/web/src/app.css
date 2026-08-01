@@ -34,7 +34,7 @@
 
 body {
 	font-family: var(--ds-font-sans);
-	font-size: var(--ds-text-base);
+	font-size: var(--ds-type-body);
 	line-height: var(--ds-leading-normal);
 	color: var(--ds-color-ink-1);
 	background-color: var(--ds-color-bg);

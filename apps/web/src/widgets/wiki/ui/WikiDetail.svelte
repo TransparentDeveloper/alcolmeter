@@ -34,18 +34,18 @@
 	}
 	h1 {
 		font-family: var(--ds-font-display);
-		font-size: var(--ds-text-3xl);
+		font-size: var(--ds-type-display);
 		letter-spacing: var(--ds-tracking-tight);
 		margin: 0;
 	}
 	.summary {
-		font-size: var(--ds-text-base);
+		font-size: var(--ds-type-body);
 		color: var(--ds-color-ink-2);
 		margin: 0;
 	}
 	.meta {
 		font-family: var(--ds-font-mono);
-		font-size: var(--ds-text-xs);
+		font-size: var(--ds-type-caption);
 		color: var(--ds-color-ink-3);
 		text-align: right;
 	}

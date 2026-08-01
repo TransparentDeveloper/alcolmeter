@@ -94,7 +94,7 @@
 
 	.title {
 		font-family: var(--ds-font-display);
-		font-size: var(--ds-text-2xl);
+		font-size: var(--ds-type-display);
 		font-weight: var(--ds-weight-bold);
 		letter-spacing: var(--ds-tracking-tight);
 		color: var(--ds-color-ink-1);

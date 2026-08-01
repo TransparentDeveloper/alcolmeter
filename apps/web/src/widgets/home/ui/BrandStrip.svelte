@@ -61,7 +61,7 @@
 		position: relative;
 		display: inline-block;
 		font-family: var(--ds-font-display);
-		font-size: var(--ds-text-3xl);
+		font-size: var(--ds-type-display);
 		font-weight: var(--ds-weight-bold);
 		line-height: var(--ds-leading-tight);
 		letter-spacing: var(--ds-tracking-tight);
@@ -81,7 +81,7 @@
 
 	.brand-desc {
 		margin-top: var(--ds-space-md);
-		font-size: var(--ds-text-base);
+		font-size: var(--ds-type-body);
 		color: var(--ds-color-ink-2);
 		max-width: 48ch;
 	}
