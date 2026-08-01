@@ -8,14 +8,14 @@
 <style>
 	/* 본문(마크다운 렌더 결과)은 {@html}이라 :global 필요 */
 	.prose {
-		font-size: var(--ds-text-xs);
+		font-size: var(--ds-type-body);
 		line-height: var(--ds-leading-normal);
 		color: var(--ds-color-ink-2);
 	}
 
 	.prose :global(h2) {
 		font-family: var(--ds-font-display);
-		font-size: var(--ds-text-lg);
+		font-size: var(--ds-type-h2);
 		font-weight: var(--ds-weight-bold);
 		letter-spacing: var(--ds-tracking-tight);
 		color: var(--ds-color-ink-1);
@@ -28,7 +28,7 @@
 
 	.prose :global(h3) {
 		font-family: var(--ds-font-display);
-		font-size: var(--ds-text-base);
+		font-size: var(--ds-type-h3);
 		font-weight: var(--ds-weight-bold);
 		letter-spacing: var(--ds-tracking-tight);
 		color: var(--ds-color-ink-1);
@@ -37,7 +37,7 @@
 
 	.prose :global(h4) {
 		font-family: var(--ds-font-display);
-		font-size: var(--ds-text-sm);
+		font-size: var(--ds-type-h4);
 		font-weight: var(--ds-weight-bold);
 		letter-spacing: var(--ds-tracking-tight);
 		color: var(--ds-color-ink-1);
@@ -78,7 +78,8 @@
 		border-left: 3px solid var(--ds-color-spark);
 		border-radius: var(--ds-radius-sm);
 		color: var(--ds-color-ink-1);
-		font-size: var(--ds-text-sm);
+		/* 틴트 배경과 왼쪽 스파크 선이 이미 강조를 맡으므로 크기는 본문과 같이 둔다 */
+		font-size: var(--ds-type-body);
 	}
 
 	.prose :global(blockquote p) {
@@ -92,7 +93,7 @@
 		table-layout: fixed;
 		border-collapse: collapse;
 		margin: var(--ds-space-lg) 0;
-		font-size: var(--ds-text-xs);
+		font-size: var(--ds-type-body);
 	}
 
 	.prose :global(th),

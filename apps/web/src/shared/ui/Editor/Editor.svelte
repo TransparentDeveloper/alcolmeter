@@ -97,7 +97,7 @@
 		position: relative;
 		min-height: 24rem;
 		padding: var(--ds-space-md);
-		font-size: var(--ds-text-xs);
+		font-size: var(--ds-type-body);
 		line-height: var(--ds-leading-normal);
 		color: var(--ds-color-ink-2);
 	}
@@ -113,10 +113,12 @@
 		pointer-events: none;
 	}
 
-	/* 편집 중 타이포를 조회(WikiBody prose)와 시각적으로 맞춘다. 동적 DOM이라 :global 필요 */
+	/* 편집 중 타이포를 조회(shared/ui/Prose)와 시각적으로 맞춘다. 동적 DOM이라 :global 필요.
+	   툴바는 h2~h4만 만들지만, 마크다운 `#`을 변환해 들어온 h1이 h2보다 작아 보이지 않게
+	   문서 제목과 같은 display 역할을 준다. */
 	.area :global(h1) {
 		font-family: var(--ds-font-display);
-		font-size: var(--ds-text-xl);
+		font-size: var(--ds-type-display);
 		font-weight: var(--ds-weight-bold);
 		letter-spacing: var(--ds-tracking-tight);
 		color: var(--ds-color-ink-1);
@@ -124,7 +126,7 @@
 	}
 	.area :global(h2) {
 		font-family: var(--ds-font-display);
-		font-size: var(--ds-text-lg);
+		font-size: var(--ds-type-h2);
 		font-weight: var(--ds-weight-bold);
 		letter-spacing: var(--ds-tracking-tight);
 		color: var(--ds-color-ink-1);
@@ -132,7 +134,7 @@
 	}
 	.area :global(h3) {
 		font-family: var(--ds-font-display);
-		font-size: var(--ds-text-base);
+		font-size: var(--ds-type-h3);
 		font-weight: var(--ds-weight-bold);
 		letter-spacing: var(--ds-tracking-tight);
 		color: var(--ds-color-ink-1);
@@ -140,7 +142,7 @@
 	}
 	.area :global(h4) {
 		font-family: var(--ds-font-display);
-		font-size: var(--ds-text-sm);
+		font-size: var(--ds-type-h4);
 		font-weight: var(--ds-weight-bold);
 		letter-spacing: var(--ds-tracking-tight);
 		color: var(--ds-color-ink-1);
@@ -195,7 +197,7 @@
 		border-left: 3px solid var(--ds-color-spark);
 		border-radius: var(--ds-radius-sm);
 		color: var(--ds-color-ink-1);
-		font-size: var(--ds-text-sm);
+		font-size: var(--ds-type-body);
 	}
 	.area :global(blockquote p) {
 		margin: 0;
