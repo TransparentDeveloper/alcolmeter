@@ -1,10 +1,16 @@
 <script lang="ts">
-	import { sections } from '$entities/privacy/lib';
-
-	let { activeId }: { activeId: string } = $props();
+	let {
+		label,
+		sections,
+		activeId
+	}: {
+		label: string;
+		sections: readonly { id: string; title: string }[];
+		activeId: string;
+	} = $props();
 </script>
 
-<nav class="toc" aria-label="개인정보처리방침 목차">
+<nav class="toc" aria-label={label}>
 	<ol class="toc-list">
 		{#each sections as s, i (s.id)}
 			<li>

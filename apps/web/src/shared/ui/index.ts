@@ -4,3 +4,4 @@ export * from './EntryCard';
 export * from './Editor';
 export * from './Prose';
 export * from './Dialog';
+export * from './LegalDocument';
