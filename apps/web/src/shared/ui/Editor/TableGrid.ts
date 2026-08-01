@@ -29,8 +29,10 @@ class TableGrid {
 		return table;
 	}
 
+	// 이 표가 직접 가진 행만 센다. querySelectorAll은 자손 전체를 뒤지므로, 셀 안에 표가 끼어들면
+	// (브라우저 insertHTML이 만들 수 있다) 그 행까지 세어 행 하한 판정이 느슨해진다.
 	static rows(table: HTMLElement): HTMLElement[] {
-		return Array.from(table.querySelectorAll('tr'));
+		return Array.from(table.querySelectorAll('tr')).filter((row) => row.closest('table') === table);
 	}
 
 	static cells(row: HTMLElement): HTMLElement[] {

@@ -209,7 +209,10 @@ class MarkdownWriter {
 	// GFM 파이프 표. 첫 행이 헤더고 그 아래 구분행이 열 정렬을 싣는다.
 	// 열 수는 가장 넓은 행에 맞추고(짧은 행은 빈 셀로 채움) 행이 없으면 표를 버린다.
 	private static serializeTable(table: HTMLElement): string[] {
-		const rows = Array.from(table.querySelectorAll('tr'));
+		// 이 표가 직접 가진 행만. 셀 안에 표가 끼어들면 그 행이 바깥 표의 행으로 새어 나온다.
+		const rows = Array.from(table.querySelectorAll('tr')).filter(
+			(row) => row.closest('table') === table
+		);
 		const grid = rows.map((row) => MarkdownWriter.tableCells(row));
 		const width = Math.max(0, ...grid.map((cells) => cells.length));
 		if (!width) return [];

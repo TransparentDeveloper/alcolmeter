@@ -280,6 +280,14 @@ describe('MarkdownWriter.fromDom 표 구조', () => {
 			MarkdownWriter.fromDom(dom('<div><h3>배합</h3><table><tr><td>가</td></tr></table></div>'))
 		).toBe('### 배합\n\n| 가 |\n| --- |');
 	});
+	it('셀 안에 끼어든 표의 행이 바깥 표의 행으로 새지 않는다', () => {
+		// GFM에 중첩 표가 없어 안쪽 표는 셀 내용으로 눌리지만, 바깥 표의 행 수는 지켜야 한다
+		const md = MarkdownWriter.fromDom(
+			dom('<table><tr><th>가</th></tr><tr><td><table><tr><td>안</td></tr></table></td></tr></table>')
+		);
+		expect(md.split('\n')).toHaveLength(3);
+		expect(md.split('\n')[0]).toBe('| 가 |');
+	});
 	it('표가 연달아 있으면 각각 별개 블록으로 쓴다', () => {
 		expect(
 			MarkdownWriter.fromDom(

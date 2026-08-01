@@ -71,6 +71,13 @@ describe('TableGrid.rows·cells·columnCount', () => {
 	it('행이 없는 표의 열 수는 0', () => {
 		expect(TableGrid.columnCount(table('<table></table>'))).toBe(0);
 	});
+	it('셀 안에 끼어든 표의 행은 바깥 표의 행으로 세지 않는다', () => {
+		const el = table(
+			'<table><tr><th>가</th></tr><tr><td><table><tr><td>안1</td></tr><tr><td>안2</td></tr></table></td></tr></table>'
+		);
+		expect(TableGrid.rows(el)).toHaveLength(2);
+		expect(TableGrid.columnCount(el)).toBe(1);
+	});
 });
 
 describe('TableGrid.alignOf·columnAlign', () => {
@@ -200,6 +207,12 @@ describe('TableGrid.canDeleteRow·canDeleteColumn', () => {
 	});
 	it('행이 둘뿐이면(헤더 + 본문 1행) 지울 수 없다', () => {
 		const el = table('<table><tr><th>가</th></tr><tr><td>나</td></tr></table>');
+		expect(TableGrid.canDeleteRow(el, 1)).toBe(false);
+	});
+	it('셀 안에 끼어든 표 때문에 행 하한이 느슨해지지 않는다', () => {
+		const el = table(
+			'<table><tr><th>가</th></tr><tr><td><table><tr><td>안1</td></tr><tr><td>안2</td></tr></table></td></tr></table>'
+		);
 		expect(TableGrid.canDeleteRow(el, 1)).toBe(false);
 	});
 	it('열이 둘 이상이면 지울 수 있고, 하나뿐이면 지울 수 없다', () => {
