@@ -17,7 +17,7 @@ web 페이지별 OG(공유 미리보기) 이미지를 **손으로 디자인하�
 - 1200×630 PNG → `apps/web/static/og/{라우트}.png`
 - 각 페이지 `apps/{page}/ui/{Page}Application.svelte`의 `<MetaHead image="/og/{라우트}.png" />` (컴포넌트: `apps/web/src/shared/ui/MetaHead/MetaHead.svelte`)
 
-**파일명은 라우트를 따른다.** `/calculate-cider` → `calculate-cider.png`, `/wiki/guidelines` → `wiki-guidelines.png`. 라우트가 바뀌면 파일명도 함께 바꾸고 옛 파일은 지운다. 정적 파일은 CDN이 먼저 처리해 `hooks.server.ts` 리다이렉트가 닿지 않으니, 옛 경로를 리다이렉트로 살릴 수는 없다(이미 공유된 카드는 캐시 만료까지 이미지가 빠진 채 뜬다).
+**파일명은 라우트를 따른다.** `/calculate-cider` → `calculate-cider.png`, `/wiki/{slug}` 같은 하위 경로는 `-`로 이어 붙인다. 라우트가 바뀌면 파일명도 함께 바꾸고 옛 파일은 지운다. 정적 파일은 CDN이 먼저 처리해 `hooks.server.ts` 리다이렉트가 닿지 않으니, 옛 경로를 리다이렉트로 살릴 수는 없다(이미 공유된 카드는 캐시 만료까지 이미지가 빠진 채 뜬다).
 
 ## 디자인 — "측정 노트" 톤 (design-system 토큰)
 
@@ -59,12 +59,13 @@ web 페이지별 OG(공유 미리보기) 이미지를 **손으로 디자인하�
 | `home.png` | (없음, `label=none`) | `layout=brand`의 상표 `알콜미터.` | `*술* 즐기는 사람들의 커뮤니티` |
 | `community.png` | COMMUNITY | 커뮤니티 | 양조 기록과 후기, 질문을 나누는 자리 |
 | `wiki.png` | ALCOLWIKI | 알콜위키 | 술과 양조의 낱말을 함께 써 나가는 참여형 위키 |
-| `wiki-guidelines.png` | ALCOLWIKI | 위키 이용 안내 | 문서 라이선스와 편집 규칙, 신고와 면책 안내 |
 | `calculate-makgeolli.png` | CALCULATOR | 막걸리 계산기 | 쌀 총량과 형태를 넣으면 단·이·삼양주 배합을 계산합니다 |
 | `calculate-cider.png` | CALCULATOR | 사이다 계산기 | 사과 양과 품종을 넣으면 예상 도수와 생산량을 계산합니다 |
 | `faq.png` | HELP | 자주 묻는 질문 | 계산기와 알콜위키, 커뮤니티에 대한 질문과 답변 |
 | `settings.png` | SETTINGS | 설정 | 화면 테마 등 알콜미터 환경설정 |
 | `privacy.png` | LEGAL | 개인정보처리방침 | 무엇을 받아 적고 어디에 맡기고 언제까지 두는지 |
+| `terms.png` | LEGAL | 이용약관 | 계정과 저작물의 권리, 금지 행위와 면책의 범위 |
+| `policy.png` | LEGAL | 운영정책 | 작성 기준과 편집 규칙, 신고와 조치의 절차 |
 
 > 알콜위키 개별 용어(`/wiki/{slug}`)와 커뮤니티 글(`/community/{id}`)은 **개별 이미지를 만들지 않는다.** 등록된 대표 이미지가 있으면 그걸 쓰고, 없으면 섹션 공통 이미지(`wiki.png`·`community.png`)로 폴백한다.
 
