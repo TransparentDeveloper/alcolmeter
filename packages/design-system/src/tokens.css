@@ -25,14 +25,32 @@
 	--ds-font-sans: 'Geist', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', sans-serif;
 	--ds-font-mono: 'Geist Mono', 'Pretendard', ui-monospace, 'JetBrains Mono', 'SF Mono', Menlo, monospace;
 
-	/* scale is 1.2× the conventional ramp (base 19.2px instead of 16px) */
+	/* Primitive scale — 1.2× the conventional ramp (base 19.2px instead of 16px).
+	   These are CONSTANTS. Never redefine them per viewport or theme: a step named
+	   "3xl" must always mean 48px, or debugging a computed size becomes guesswork.
+	   `md` fills the gap between base and lg so a prose ladder still has four
+	   distinct heading steps above body once compressed on small screens. */
 	--ds-text-xs: 0.9rem; /* 14.4 */
 	--ds-text-sm: 1.05rem; /* 16.8 */
 	--ds-text-base: 1.2rem; /* 19.2 */
+	--ds-text-md: 1.35rem; /* 21.6 */
 	--ds-text-lg: 1.5rem; /* 24 */
 	--ds-text-xl: 1.8rem; /* 28.8 */
 	--ds-text-2xl: 2.4rem; /* 38.4 */
 	--ds-text-3xl: 3rem; /* 48 */
+
+	/* Semantic layer — what a piece of text IS, not how big it is.
+	   Consumers reference these; the primitives above stay internal to the system.
+	   Only the prose ladder is viewport-dependent (see the max-width block below),
+	   so a size that shifts on mobile is visible here by role rather than at the
+	   call site. `display` is deliberately fixed: it is the ceiling. */
+	--ds-type-display: var(--ds-text-3xl); /* document title (wiki term, post) */
+	--ds-type-title: var(--ds-text-2xl); /* page title */
+	--ds-type-h2: var(--ds-text-2xl); /* prose section heading */
+	--ds-type-h3: var(--ds-text-xl);
+	--ds-type-h4: var(--ds-text-lg);
+	--ds-type-body: var(--ds-text-base); /* running prose */
+	--ds-type-caption: var(--ds-text-xs); /* meta, hints, captions */
 
 	--ds-leading-tight: 1.2;
 	--ds-leading-snug: 1.4;
@@ -130,6 +148,26 @@
 	--ds-color-disabled-border: var(--ds-color-border-1);
 
 	--ds-color-focus: var(--ds-color-info); /* cool focus ring — appears often, stays out of spark */
+}
+
+/*
+ * Prose ladder below the md breakpoint (768px, see DESIGN.md § Layout).
+ * On a 375px screen a 38.4px Korean heading runs 8–9 characters per line, so the
+ * headings step down one rung each while body holds at 19.2 — the reading size is
+ * the point, and shrinking it would undo the ladder. `display` holds at 48 as the
+ * fixed ceiling. Only roles are remapped here; the primitive scale never moves.
+ *
+ *            body    h4     h3     h2    display
+ *   ≥768px   19.2    24    28.8   38.4     48
+ *   <768px   19.2   21.6    24    28.8     48
+ */
+@media (max-width: 767px) {
+	:root {
+		--ds-type-title: var(--ds-text-xl);
+		--ds-type-h2: var(--ds-text-xl);
+		--ds-type-h3: var(--ds-text-lg);
+		--ds-type-h4: var(--ds-text-md);
+	}
 }
 
 /* Dark tokens — applied automatically unless an explicit light theme is set */
