@@ -89,8 +89,17 @@
 		scroll-margin-top: var(--ds-space-xl);
 	}
 
+	/* 조항 사이 간격은 읽기 편의만이 아니라 목차 강조의 정확도에도 걸린다.
+	   간격이 좁으면 짧은 조항이 기준선을 지나는 순간 다음 조항도 함께 지나버려 건너뛰어진다. */
 	.doc-section + .doc-section {
-		margin-top: var(--ds-space-2xl);
+		margin-top: var(--ds-space-3xl);
+	}
+
+	/* 마지막 조항 뒤에 스크롤 여유를 둔다. 이게 없으면 문서 끝의 짧은 조항들이
+	   목차 기준선(뷰포트 상단 25%)까지 밀려 올라오기 전에 스크롤이 바닥에 닿아,
+	   끝에서 두세 번째 항목이 목차에서 영영 강조되지 않는다. */
+	.doc-section:last-child {
+		min-height: 60vh;
 	}
 
 	.section-header {
