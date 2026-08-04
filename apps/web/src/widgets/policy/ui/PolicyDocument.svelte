@@ -130,7 +130,7 @@
 	}
 
 	.note {
-		font-size: var(--ds-text-xs);
+		font-size: var(--ds-type-caption);
 		color: var(--ds-color-ink-4);
 	}
 </style>

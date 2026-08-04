@@ -58,7 +58,7 @@
 
 	h1 {
 		font-family: var(--ds-font-display);
-		font-size: var(--ds-text-2xl);
+		font-size: var(--ds-type-title);
 		font-weight: var(--ds-weight-bold);
 		letter-spacing: var(--ds-tracking-tight);
 		color: var(--ds-color-ink-1);
@@ -67,7 +67,7 @@
 
 	.effective {
 		font-family: var(--ds-font-mono);
-		font-size: var(--ds-text-xs);
+		font-size: var(--ds-type-caption);
 		color: var(--ds-color-ink-3);
 	}
 
@@ -121,9 +121,11 @@
 		flex-shrink: 0;
 	}
 
+	/* 문서 제목이 display가 아니라 title(한 칸 아래)이라 조항 제목도 그만큼 내려 h4를 쓴다.
+	   본문 19.2 위의 24는 조판 계단에서 바로 윗칸이라 번호 칩과 함께 조항 머리로 읽힌다. */
 	.section-header h2 {
 		font-family: var(--ds-font-display);
-		font-size: var(--ds-text-lg);
+		font-size: var(--ds-type-h4);
 		font-weight: var(--ds-weight-bold);
 		letter-spacing: var(--ds-tracking-tight);
 		color: var(--ds-color-ink-1);
@@ -134,7 +136,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: var(--ds-space-md);
-		font-size: var(--ds-text-sm);
+		font-size: var(--ds-type-body);
 		line-height: 1.8;
 		color: var(--ds-color-ink-2);
 	}
