@@ -81,6 +81,54 @@
 	animation: ds-fizz-rise 4.5s var(--ds-ease-out) infinite;
 }
 
+/* ── Page transition cover ─────────────────────────────────
+ * 라우트 전환 3박자. 커버가 오른쪽에서 밀려들어와 화면을 덮고(short) → 브랜드
+ * 마크만 남은 중립 구간에서 다음 페이지가 로딩·렌더되고 → 같은 방향으로
+ * 왼쪽으로 빠져나가며 걷힙니다(medium). 슬라이드를 한 장 넘기는 결.
+ * --ds-page-cover-direction을 -1로 주면 흐름이 뒤집힙니다(뒤로가기 등).
+ * 중립 구간의 길이는 소비처가 정합니다(다음 페이지 로딩이 길면 그만큼 늘어남).
+ * 판은 스파크(accent), 그 위 글자는 on-accent(흰색)입니다. 라이트·다크 양쪽 다
+ * 주황이라 팔레트를 따로 고정할 필요가 없습니다. 마크는 색을 상속받게 둡니다:
+ *   <div class="ds-page-cover" data-phase="covering|revealing">
+ *     <span>알콜미터.</span>
+ *   </div>
+ */
+@keyframes ds-page-cover-in {
+	from {
+		transform: translateX(calc(100% * var(--ds-page-cover-direction, 1)));
+	}
+}
+
+@keyframes ds-page-cover-out {
+	to {
+		transform: translateX(calc(-100% * var(--ds-page-cover-direction, 1)));
+	}
+}
+
+.ds-page-cover {
+	position: fixed;
+	inset: 0;
+	/* 앱 콘텐츠(최대 10)보다 위, 네이티브 <dialog> top-layer보다는 아래. */
+	z-index: 100;
+	display: grid;
+	place-items: center;
+	/* 브랜드 모먼트 — 스파크 판 + 그 위 흰 글자. */
+	background: var(--ds-color-accent);
+	color: var(--ds-color-on-accent);
+}
+
+/* 길이·방향은 소비처가 넘깁니다. 특히 길이가 전환 진행을 재는 쪽(JS)과 어긋나면
+   커버가 움직이는 중에 사라지므로, 그쪽이 타이밍 소스면 여기로 넘깁니다. */
+.ds-page-cover[data-phase='covering'] {
+	animation: ds-page-cover-in var(--ds-page-cover-in-duration, var(--ds-duration-short))
+		var(--ds-ease-out) both;
+}
+
+.ds-page-cover[data-phase='revealing'] {
+	animation: ds-page-cover-out var(--ds-page-cover-out-duration, var(--ds-duration-medium))
+		var(--ds-ease-in) both;
+}
+
 /* Accessibility — honor reduced-motion preference. */
 @media (prefers-reduced-motion: reduce) {
 	.ds-underline-draw {
@@ -101,5 +149,9 @@
 	}
 	.ds-fizz__bubble:nth-child(3n + 2) {
 		transform: translateY(-135px);
+	}
+	/* 페이지 전환 커버는 아예 띄우지 않습니다 (즉시 교체). */
+	.ds-page-cover {
+		display: none;
 	}
 }
