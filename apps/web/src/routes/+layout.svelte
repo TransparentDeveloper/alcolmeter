@@ -7,7 +7,7 @@
 	import { HeaderAuth } from '$widgets/auth/ui';
 	import { ThemeToggle } from '$features/theme/ui';
 	import { SiteMeta } from '$shared/ui';
-	import { DialogProvider, PageTransitionCover } from '$apps/root/ui';
+	import { DialogProvider, HomeRewind, PageTransitionCover } from '$apps/root/ui';
 	let { children } = $props();
 	const version = __APP_VERSION__;
 	const faviconVersion = __FAVICON_VERSION__;
@@ -50,6 +50,9 @@
 
 <!-- 라우트 전환 커버. 페이지별 설정 없이 모든 내부 이동에 자동 적용된다. -->
 <PageTransitionCover />
+
+<!-- 홈으로 가는 이동을 진입 지점으로 되감는다. 홈에서 뒤로 가면 사이트를 벗어난다. -->
+<HomeRewind />
 
 <DialogProvider>
 <div
