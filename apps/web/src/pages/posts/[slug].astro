@@ -1,0 +1,45 @@
+---
+import { getImage, Image } from 'astro:assets';
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { formatDate, getPublishedPosts } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const og = await getImage({ src: post.data.cover, width: 1200, format: 'jpeg' });
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.publishedAt.toISOString(),
+  dateModified: (post.data.updatedAt ?? post.data.publishedAt).toISOString(),
+  image: new URL(og.src, Astro.site).href,
+  mainEntityOfPage: new URL(Astro.url.pathname, Astro.site).href,
+};
+---
+
+<Base title={post.data.title} description={post.data.description} image={og.src} type="article">
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <article class="post">
+    <header>
+      <h1>{post.data.title}</h1>
+      <time datetime={post.data.publishedAt.toISOString()}>{formatDate(post.data.publishedAt)}</time>
+    </header>
+    <Image
+      src={post.data.cover}
+      alt={post.data.coverAlt}
+      widths={[720, 1440]}
+      sizes="(max-width: 720px) 100vw, 720px"
+      loading="eager"
+    />
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</Base>

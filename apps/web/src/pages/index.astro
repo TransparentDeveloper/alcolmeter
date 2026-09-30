@@ -1,0 +1,31 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import { formatDate, getPublishedPosts } from '../lib/posts';
+
+const posts = await getPublishedPosts();
+---
+
+<Base title="alcolmeter" description="술이 만들어지는 과정과 주류 정보를 정리합니다.">
+  <h1 class="visually-hidden">alcolmeter</h1>
+  <ul class="post-list">
+    {
+      posts.map((post, i) => (
+        <li>
+          <a href={`/posts/${post.id}`}>
+            <Image
+              src={post.data.cover}
+              alt={post.data.coverAlt}
+              widths={[400, 800]}
+              sizes="(max-width: 720px) 100vw, 720px"
+              loading={i < 2 ? 'eager' : 'lazy'}
+            />
+            <h2>{post.data.title}</h2>
+            <p>{post.data.description}</p>
+            <time datetime={post.data.publishedAt.toISOString()}>{formatDate(post.data.publishedAt)}</time>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</Base>
