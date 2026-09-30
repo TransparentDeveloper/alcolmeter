@@ -6,11 +6,11 @@ alcolmeter 블로그 사이트. Astro 정적 빌드로 Vercel 에 배포한다.
 
 ```
 src/
-  content/posts/{slug}/   글 하나당 폴더. index.mdx 와 이미지를 함께 둔다
+  content/posts/{id}/     글 하나당 폴더. 폴더 이름이 숫자 id 이고 index.mdx 와 이미지를 함께 둔다
   content.config.ts       글 frontmatter 스키마
   layouts/                공통 레이아웃과 메타 태그
   lib/                    글 조회와 날짜 포맷
-  pages/                  목록(/), 상세(/posts/{slug}), RSS
+  pages/                  목록(/), 상세(/posts/{id}), RSS
 ```
 
 ## 명령어

@@ -6,7 +6,11 @@ const posts = defineCollection({
   loader: glob({
     pattern: '**/index.{md,mdx}',
     base: './src/content/posts',
-    generateId: ({ entry }) => entry.split('/')[0] ?? entry,
+    generateId: ({ entry }) => {
+      const id = entry.split('/')[0] ?? '';
+      if (!/^[1-9]\d*$/.test(id)) throw new Error(`글 폴더 이름은 1 이상의 정수여야 한다: ${entry}`);
+      return id;
+    },
   }),
   schema: ({ image }) =>
     z.object({
