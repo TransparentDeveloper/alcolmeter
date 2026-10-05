@@ -6,8 +6,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/md-review-gate.mjs\" pre",
-            "statusMessage": "md 검토 게이트 확인 중"
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/commit-review-gate.mjs\" pre",
+            "statusMessage": "커밋 검토 게이트 확인 중"
           }
         ]
       }
@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/md-review-gate.mjs\" stop"
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/commit-review-gate.mjs\" stop"
           }
         ]
       }
