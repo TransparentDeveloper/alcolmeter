@@ -12,19 +12,52 @@ const REVIEWERS = [
     pathspec: ["apps/web/src/content/posts/*index.md", "apps/web/src/content/posts/*index.mdx"],
     target: "블로그 글 초안",
   },
+  {
+    agent: "fe",
+    pathspec: [
+      "apps/web",
+      "packages",
+      "package.json",
+      "pnpm-workspace.yaml",
+      ".nvmrc",
+      ":(exclude)apps/web/src/content/posts",
+      ":(exclude)*.md",
+    ],
+    target: "프런트엔드 코드와 빌드 설정",
+    includeDeleted: true,
+  },
+  {
+    agent: "designer",
+    pathspec: [
+      "apps/web/*.astro",
+      "apps/web/*.css",
+      "apps/web/*.svg",
+      "apps/web/*.png",
+      "apps/web/*.jpg",
+      "apps/web/*.jpeg",
+      "apps/web/*.webp",
+      "apps/web/*.ico",
+      "packages/*.astro",
+      "packages/*.css",
+    ],
+    target: "화면·스타일·이미지 변경",
+  },
 ];
 const GIT_PREFIX = String.raw`^git(\s+-C\s+\S+|\s+-c\s+\S+|\s+--?[\w-]+(=\S+)?)*\s+`;
 
 const git = (...args) => execFileSync("git", args, { encoding: "utf8" });
 
-const stagedFiles = (pathspec) =>
-  git("diff", "--cached", "--name-only", "--diff-filter=ACMR", "--", ...pathspec)
+const stagedFiles = ({ pathspec, includeDeleted }) =>
+  git("diff", "--cached", "--name-only", `--diff-filter=ACMR${includeDeleted ? "D" : ""}`, "--", ...pathspec)
     .split("\n")
     .filter(Boolean);
 
-// 파일 경로와 staged blob id 기준이라 스테이징 후 내용이 바뀌면 지문도 바뀐다.
+// 삭제된 파일은 ls-files 에 안 나오므로 경로 목록도 함께 해시한다.
 const fingerprint = (files) =>
-  createHash("sha256").update(git("ls-files", "--stage", "--", ...files)).digest("hex");
+  createHash("sha256")
+    .update(files.join("\n"))
+    .update(git("ls-files", "--stage", "--", ...files))
+    .digest("hex");
 
 const markerPath = (agent) => join(git("rev-parse", "--absolute-git-dir").trim(), `review-pass-${agent}`);
 
@@ -36,8 +69,9 @@ const segments = (command) =>
 
 const isGitSubcommand = (segment, name) => new RegExp(`${GIT_PREFIX}${name}\\b`).test(segment);
 
-function pendingReview({ agent, pathspec }) {
-  const files = stagedFiles(pathspec);
+function pendingReview(reviewer) {
+  const { agent } = reviewer;
+  const files = stagedFiles(reviewer);
   if (files.length === 0) return null;
   const marker = markerPath(agent);
   if (existsSync(marker) && readFileSync(marker, "utf8").trim() === fingerprint(files)) return null;
@@ -81,7 +115,7 @@ function subagentStop(payload) {
   if (!reviewer) return 0;
 
   const marker = markerPath(reviewer.agent);
-  const files = stagedFiles(reviewer.pathspec);
+  const files = stagedFiles(reviewer);
   if (lastLine(payload.last_assistant_message) === "VERDICT: PASS" && files.length > 0) {
     writeFileSync(marker, fingerprint(files));
   } else {
