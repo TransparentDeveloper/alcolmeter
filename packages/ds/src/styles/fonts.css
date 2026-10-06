@@ -1,0 +1,79 @@
+/* 서브셋 전 공식 전체 파일이다. 글꼴.md 분할 서브셋 규칙 미적용(fe 결정 기록 F-004). */
+@font-face {
+  font-family: "Paperlogy";
+  src: url("../fonts/paperlogy/Paperlogy-3Light.woff2") format("woff2");
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Paperlogy";
+  src: url("../fonts/paperlogy/Paperlogy-5Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Paperlogy";
+  src: url("../fonts/paperlogy/Paperlogy-7Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Paperlogy Fallback Apple";
+  src: local("AppleSDGothicNeo-Light"), local("Apple SD Gothic Neo Light");
+  font-weight: 300;
+  size-adjust: 100%;
+  ascent-override: 97.8%;
+  descent-override: 20%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Paperlogy Fallback Apple";
+  src: local("AppleSDGothicNeo-Medium"), local("Apple SD Gothic Neo Medium");
+  font-weight: 500;
+  size-adjust: 100%;
+  ascent-override: 97.8%;
+  descent-override: 20%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Paperlogy Fallback Apple";
+  src: local("AppleSDGothicNeo-Bold"), local("Apple SD Gothic Neo Bold");
+  font-weight: 700;
+  size-adjust: 100%;
+  ascent-override: 97.8%;
+  descent-override: 20%;
+  line-gap-override: 0%;
+}
+
+/* 맑은 고딕 폭을 아직 측정하지 못해 size-adjust 가 없다(글꼴.md 대체 글꼴 스택). */
+@font-face {
+  font-family: "Paperlogy Fallback Malgun";
+  src: local("Malgun Gothic Semilight"), local("MalgunGothic-Semilight");
+  font-weight: 300;
+  ascent-override: 97.8%;
+  descent-override: 20%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Paperlogy Fallback Malgun";
+  src: local("Malgun Gothic"), local("MalgunGothic");
+  font-weight: 500;
+  ascent-override: 97.8%;
+  descent-override: 20%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Paperlogy Fallback Malgun";
+  src: local("Malgun Gothic Bold"), local("MalgunGothicBold");
+  font-weight: 700;
+  ascent-override: 97.8%;
+  descent-override: 20%;
+  line-gap-override: 0%;
+}

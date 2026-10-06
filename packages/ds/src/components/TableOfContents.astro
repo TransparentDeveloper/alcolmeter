@@ -1,0 +1,53 @@
+---
+interface Props {
+  items: readonly { slug: string; text: string }[];
+}
+
+const { items } = Astro.props;
+const MIN_ITEMS = 3;
+---
+
+{
+  items.length >= MIN_ITEMS && (
+    <nav class="toc am-width-content" aria-labelledby="toc-label">
+      <p id="toc-label" class="label">목차</p>
+      <ol class="list">
+        {items.map((item) => (
+          <li>
+            <a href={`#${item.slug}`}>{item.text}</a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+  )
+}
+
+<style>
+  .toc {
+    margin-bottom: var(--am-dimension-x10);
+    padding-block: var(--am-dimension-x4) var(--am-dimension-x2);
+    border-block: 1px solid var(--am-color-stroke-neutral-subtle);
+  }
+
+  .label {
+    font: var(--am-text-style-meta);
+    color: var(--am-color-fg-neutral-subtle);
+  }
+
+  .list {
+    padding-inline-start: var(--am-dimension-x6);
+  }
+
+  /* 안쪽 여백 x2 로 누를 수 있는 높이를 44px 이상으로 만든다(컴포넌트.md 공통 상태 규칙). */
+  .list a {
+    display: block;
+    padding-block: var(--am-dimension-x2);
+    font: var(--am-text-style-article-body);
+    color: var(--am-color-fg-neutral);
+  }
+
+  .list a:hover {
+    text-decoration: underline 2px;
+    text-underline-offset: 3px;
+  }
+</style>

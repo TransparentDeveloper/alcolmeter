@@ -1,0 +1,127 @@
+<div class="am-prose am-width-content">
+  <slot />
+</div>
+
+<style is:global>
+  /* 마크다운이 만든 요소는 scoped 스타일이 닿지 않아 .am-prose 아래 전역 스타일로 둔다. */
+  .am-prose {
+    font: var(--am-text-style-article-body);
+    color: var(--am-color-fg-neutral);
+  }
+
+  .am-prose > * + * {
+    margin-top: var(--am-dimension-paragraph-gap);
+  }
+
+  .am-prose > * + figure,
+  .am-prose > figure + * {
+    margin-top: var(--am-dimension-figure-gap);
+  }
+
+  .am-prose > h2 + * {
+    margin-top: var(--am-dimension-heading-2-gap-bottom);
+  }
+
+  .am-prose > h3 + * {
+    margin-top: var(--am-dimension-heading-3-gap-bottom);
+  }
+
+  /* 제목 간격이 그림 간격을, 제목 위 간격이 앞 제목의 아래 간격을 이기도록 이 순서를 지킨다(D-036). */
+  .am-prose > * + h2 {
+    margin-top: var(--am-dimension-heading-2-gap-top);
+  }
+
+  .am-prose > * + h3 {
+    margin-top: var(--am-dimension-heading-3-gap-top);
+  }
+
+  .am-prose h2 {
+    font: var(--am-text-style-article-heading-2);
+  }
+
+  .am-prose h3 {
+    font: var(--am-text-style-article-heading-3);
+  }
+
+  .am-prose ul,
+  .am-prose ol {
+    padding-inline-start: var(--am-dimension-x6);
+  }
+
+  .am-prose a {
+    color: var(--am-color-fg-brand);
+    text-decoration: underline 1px;
+    text-underline-offset: 3px;
+  }
+
+  .am-prose a:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  .am-prose strong {
+    font-weight: var(--am-font-weight-medium);
+  }
+
+  .am-prose img {
+    border-radius: var(--am-radius-r3);
+    background: var(--am-color-bg-neutral-weak);
+  }
+
+  .am-prose blockquote {
+    padding-inline-start: var(--am-dimension-x5);
+    border-inline-start: 3px solid var(--am-color-stroke-neutral-subtle);
+  }
+
+  .am-prose table {
+    border-collapse: collapse;
+    font: var(--am-text-style-article-note);
+    color: var(--am-color-fg-neutral-muted);
+  }
+
+  .am-prose th,
+  .am-prose td {
+    padding: var(--am-dimension-x2) var(--am-dimension-x3);
+    border-block: 1px solid var(--am-color-stroke-neutral-subtle);
+    font-weight: inherit;
+    text-align: start;
+    overflow-wrap: break-word;
+  }
+
+  .am-prose thead th {
+    background: var(--am-color-bg-neutral-weak);
+  }
+
+  .am-prose [data-footnote-ref] {
+    font: var(--am-text-style-article-note);
+  }
+
+  /* 위첨자가 본문 줄 간격을 늘리지 않게 하는 유일한 텍스트 스타일 예외다(D-031). */
+  .am-prose sup,
+  .am-prose sup [data-footnote-ref] {
+    line-height: 0;
+  }
+
+  /* SourceList: GFM 각주가 본문 끝에 만드는 section 이다(fe 결정 기록 F-005). */
+  .am-prose > .footnotes {
+    margin-top: var(--am-dimension-heading-2-gap-top);
+  }
+
+  .am-prose > .footnotes > h2 + * {
+    margin-top: var(--am-dimension-heading-2-gap-bottom);
+  }
+
+  .am-prose > .footnotes li {
+    font: var(--am-text-style-article-note);
+    color: var(--am-color-fg-neutral-muted);
+  }
+
+  /* inline-block 이어야 행간 t1(24px)이 누를 영역 높이가 된다. */
+  .am-prose [data-footnote-backref] {
+    display: inline-block;
+    padding-inline: var(--am-dimension-x2);
+  }
+
+  .am-prose > .footnotes li + li {
+    margin-top: var(--am-dimension-x2);
+  }
+</style>

@@ -4,7 +4,7 @@ import { z } from 'astro/zod';
 
 const posts = defineCollection({
   loader: glob({
-    pattern: '**/index.{md,mdx}',
+    pattern: '**/index.mdx',
     base: './src/content/posts',
     generateId: ({ entry }) => {
       const id = entry.split('/')[0] ?? '';

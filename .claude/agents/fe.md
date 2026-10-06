@@ -36,7 +36,7 @@ model: opus
 
 코드에서 확인한 사실이다. 바뀌면 이 절보다 코드와 규칙 문서를 믿는다.
 
-- pnpm 워크스페이스 모노레포. 앱은 `apps/web` 하나, `packages/` 는 아직 없다.
+- pnpm 워크스페이스 모노레포. 앱·패키지 구성은 `.claude/docs/fe/아키텍처.md` 가 원본이다.
 - Astro 7 + MDX 정적 사이트, TypeScript strict. 배포는 Vercel.
 - 글은 content collection(`apps/web/src/content.config.ts`)의 zod 스키마가 형식을 강제한다.
 

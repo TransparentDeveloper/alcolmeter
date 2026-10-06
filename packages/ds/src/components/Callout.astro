@@ -1,0 +1,52 @@
+---
+interface Props {
+  variant?: 'note' | 'caution';
+}
+
+const { variant = 'note' } = Astro.props;
+const labels = { note: '참고', caution: '주의' } as const;
+---
+
+<aside class:list={['callout', variant]}>
+  <p class="label">{labels[variant]}</p>
+  <div class="body">
+    <slot />
+  </div>
+</aside>
+
+<style>
+  .callout {
+    padding: var(--am-dimension-x5);
+    border-radius: var(--am-radius-r3);
+  }
+
+  .note {
+    background: var(--am-color-bg-neutral-weak);
+  }
+
+  .caution {
+    background: var(--am-color-bg-critical-weak);
+  }
+
+  .label {
+    font: var(--am-text-style-meta);
+  }
+
+  .note .label {
+    color: var(--am-color-fg-neutral-muted);
+  }
+
+  .caution .label {
+    color: var(--am-color-fg-critical);
+  }
+
+  .body {
+    margin-top: var(--am-dimension-x2);
+    font: var(--am-text-style-article-body);
+    color: var(--am-color-fg-neutral);
+  }
+
+  .body > :global(* + *) {
+    margin-top: var(--am-dimension-paragraph-gap);
+  }
+</style>

@@ -1,0 +1,95 @@
+---
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import { formatDate } from '../lib/date';
+
+interface Props {
+  href: string;
+  title: string;
+  summary: string;
+  image: ImageMetadata;
+  imageAlt: string;
+  publishedAt: Date;
+  updatedAt?: Date;
+  variant?: 'feature' | 'default';
+  priority?: boolean;
+}
+
+const { href, title, summary, image, imageAlt, publishedAt, updatedAt, variant = 'default', priority = false } = Astro.props;
+
+const imageSizes = {
+  feature: { widths: [640, 1040, 1600, 2080], sizes: '(min-width: 1088px) 1040px, 100vw' },
+  default: {
+    widths: [480, 720, 960],
+    sizes: '(min-width: 1088px) 326px, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw',
+  },
+} as const;
+
+const shownDate = updatedAt ?? publishedAt;
+const titleId = `post-card-${href.replace(/[^a-zA-Z0-9]+/g, '-').replace(/^-|-$/g, '')}`;
+---
+
+<a href={href} class:list={['card', variant]} aria-labelledby={titleId}>
+  <Image
+    class="image"
+    src={image}
+    alt={imageAlt}
+    widths={[...imageSizes[variant].widths]}
+    sizes={imageSizes[variant].sizes}
+    priority={priority}
+    loading={priority ? 'eager' : 'lazy'}
+  />
+  <h2 id={titleId} class="title">{title}</h2>
+  <p class="summary">{summary}</p>
+  <time class="date" datetime={shownDate.toISOString()}>{formatDate(shownDate)}</time>
+</a>
+
+<style>
+  .card {
+    display: block;
+    border-radius: var(--am-radius-r3);
+  }
+
+  .image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: var(--am-radius-r3);
+    background: var(--am-color-bg-neutral-weak);
+  }
+
+  .title {
+    margin-top: var(--am-dimension-x4);
+    font: var(--am-text-style-card-title);
+    color: var(--am-color-fg-neutral);
+    text-decoration: underline 2px transparent;
+    text-underline-offset: 3px;
+    transition: text-decoration-color var(--am-duration-color-transition) var(--am-timing-function-easing);
+  }
+
+  .feature .title {
+    font: var(--am-text-style-card-title-feature);
+  }
+
+  .card:hover .title {
+    text-decoration-color: currentColor;
+  }
+
+  .summary {
+    display: -webkit-box;
+    margin-top: var(--am-dimension-x2);
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    font: var(--am-text-style-card-summary);
+    color: var(--am-color-fg-neutral-muted);
+  }
+
+  .date {
+    display: block;
+    margin-top: var(--am-dimension-x2);
+    font: var(--am-text-style-meta);
+    color: var(--am-color-fg-neutral-subtle);
+  }
+</style>

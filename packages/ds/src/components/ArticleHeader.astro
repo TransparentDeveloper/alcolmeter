@@ -1,0 +1,51 @@
+---
+import { formatDate } from '../lib/date';
+
+interface Props {
+  title: string;
+  summary: string;
+  publishedAt: Date;
+  updatedAt?: Date;
+}
+
+const { title, summary, publishedAt, updatedAt } = Astro.props;
+---
+
+<header class="article-header am-width-content">
+  <h1 class="title">{title}</h1>
+  <p class="summary">{summary}</p>
+  <p class="meta">
+    작성 <time datetime={publishedAt.toISOString()}>{formatDate(publishedAt)}</time>
+    {
+      updatedAt && (
+        <>
+          {' · 수정 '}
+          <time datetime={updatedAt.toISOString()}>{formatDate(updatedAt)}</time>
+        </>
+      )
+    }
+  </p>
+</header>
+
+<style>
+  .article-header {
+    margin-bottom: var(--am-dimension-x10);
+  }
+
+  .title {
+    font: var(--am-text-style-article-title);
+    color: var(--am-color-fg-neutral);
+  }
+
+  .summary {
+    margin-top: var(--am-dimension-x4);
+    font: var(--am-text-style-article-summary);
+    color: var(--am-color-fg-neutral-muted);
+  }
+
+  .meta {
+    margin-top: var(--am-dimension-x4);
+    font: var(--am-text-style-meta);
+    color: var(--am-color-fg-neutral-subtle);
+  }
+</style>

@@ -1,0 +1,122 @@
+/* 값의 원본은 .claude/docs/designer/토큰.md, 글꼴.md 다. 여기만 고치지 말고 문서와 결정 기록을 먼저 고친다. */
+:root {
+  --am-color-palette-gray-00: #ffffff;
+  --am-color-palette-gray-50: #faf8f5;
+  --am-color-palette-gray-100: #f3f0eb;
+  --am-color-palette-gray-200: #e7e2db;
+  --am-color-palette-gray-300: #d5cec5;
+  --am-color-palette-gray-400: #b3aba1;
+  --am-color-palette-gray-500: #8c847a;
+  --am-color-palette-gray-600: #6b645c;
+  --am-color-palette-gray-700: #534d47;
+  --am-color-palette-gray-800: #3b3632;
+  --am-color-palette-gray-900: #231f1c;
+  --am-color-palette-amber-50: #fcf4e8;
+  --am-color-palette-amber-100: #f7e4c7;
+  --am-color-palette-amber-200: #efcb94;
+  --am-color-palette-amber-300: #e3aa58;
+  --am-color-palette-amber-400: #d18b2c;
+  --am-color-palette-amber-500: #b8711a;
+  --am-color-palette-amber-600: #9a5a10;
+  --am-color-palette-amber-700: #7c470d;
+  --am-color-palette-amber-800: #5e360b;
+  --am-color-palette-red-50: #fdefed;
+  --am-color-palette-red-100: #f9d5d0;
+  --am-color-palette-red-600: #b42a1f;
+  --am-color-palette-red-700: #8e2018;
+
+  --am-color-fg-neutral: var(--am-color-palette-gray-900);
+  --am-color-fg-neutral-muted: var(--am-color-palette-gray-700);
+  --am-color-fg-neutral-subtle: var(--am-color-palette-gray-600);
+  --am-color-fg-brand: var(--am-color-palette-amber-700);
+  --am-color-fg-critical: var(--am-color-palette-red-700);
+  --am-color-bg-layer-default: var(--am-color-palette-gray-00);
+  --am-color-bg-neutral-weak: var(--am-color-palette-gray-50);
+  --am-color-bg-critical-weak: var(--am-color-palette-red-50);
+  --am-color-stroke-neutral-subtle: var(--am-color-palette-gray-200);
+  --am-color-stroke-focus-ring: var(--am-color-palette-amber-700);
+
+  --am-dimension-x1: 0.25rem;
+  --am-dimension-x2: 0.5rem;
+  --am-dimension-x3: 0.75rem;
+  --am-dimension-x4: 1rem;
+  --am-dimension-x5: 1.25rem;
+  --am-dimension-x6: 1.5rem;
+  --am-dimension-x8: 2rem;
+  --am-dimension-x10: 2.5rem;
+  --am-dimension-x12: 3rem;
+  --am-dimension-x14: 3.5rem;
+  --am-dimension-x16: 4rem;
+  --am-dimension-x24: 6rem;
+
+  --am-dimension-gutter: var(--am-dimension-x4);
+  --am-dimension-paragraph-gap: var(--am-dimension-x6);
+  --am-dimension-heading-2-gap-top: var(--am-dimension-x14);
+  --am-dimension-heading-2-gap-bottom: var(--am-dimension-x4);
+  --am-dimension-heading-3-gap-top: var(--am-dimension-x10);
+  --am-dimension-heading-3-gap-bottom: var(--am-dimension-x3);
+  --am-dimension-figure-gap: var(--am-dimension-x10);
+  --am-dimension-caption-gap: var(--am-dimension-x3);
+  --am-dimension-card-gap-x: var(--am-dimension-x8);
+  --am-dimension-card-gap-y: var(--am-dimension-x12);
+  --am-dimension-section-gap: var(--am-dimension-x24);
+
+  --am-size-content: 40rem;
+  --am-size-wide: 60rem;
+  --am-size-page: 65rem;
+
+  --am-radius-r3: 0.75rem;
+  --am-radius-full: 9999px;
+
+  --am-duration-d1: 100ms;
+  --am-duration-d2: 200ms;
+  --am-duration-color-transition: var(--am-duration-d1);
+  --am-timing-function-easing: ease-out;
+
+  --am-font-family: "Paperlogy", "Paperlogy Fallback Apple", "Paperlogy Fallback Malgun",
+    "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", system-ui, sans-serif;
+  --am-font-weight-light: 300;
+  --am-font-weight-medium: 500;
+  --am-font-weight-bold: 700;
+
+  --am-font-size-t1: 0.9375rem;
+  --am-font-size-t2: 1.0625rem;
+  --am-font-size-t3: 1.25rem;
+  --am-font-size-t4: 1.5rem;
+  --am-font-size-t5: 1.75rem;
+  --am-font-size-t6: 2.25rem;
+  --am-line-height-t1: 1.5rem;
+  --am-line-height-t2: 1.875rem;
+  --am-line-height-t3: 1.75rem;
+  --am-line-height-t4: 2.125rem;
+  --am-line-height-t5: 2.375rem;
+  --am-line-height-t6: 2.875rem;
+
+  /* 텍스트 스타일은 font 단축 속성 값이다. 색은 글꼴.md 표의 색 토큰을 함께 지정한다. */
+  --am-text-style-article-title: var(--am-font-weight-bold) var(--am-font-size-t5) / var(--am-line-height-t5) var(--am-font-family);
+  --am-text-style-article-heading-2: var(--am-font-weight-bold) var(--am-font-size-t4) / var(--am-line-height-t4) var(--am-font-family);
+  --am-text-style-article-heading-3: var(--am-font-weight-bold) var(--am-font-size-t3) / var(--am-line-height-t3) var(--am-font-family);
+  --am-text-style-article-body: var(--am-font-weight-light) var(--am-font-size-t2) / var(--am-line-height-t2) var(--am-font-family);
+  --am-text-style-article-summary: var(--am-font-weight-light) var(--am-font-size-t2) / var(--am-line-height-t2) var(--am-font-family);
+  --am-text-style-article-note: var(--am-font-weight-medium) var(--am-font-size-t1) / var(--am-line-height-t1) var(--am-font-family);
+  --am-text-style-meta: var(--am-font-weight-medium) var(--am-font-size-t1) / var(--am-line-height-t1) var(--am-font-family);
+  --am-text-style-card-title: var(--am-font-weight-bold) var(--am-font-size-t3) / var(--am-line-height-t3) var(--am-font-family);
+  --am-text-style-card-title-feature: var(--am-font-weight-bold) var(--am-font-size-t4) / var(--am-line-height-t4) var(--am-font-family);
+  --am-text-style-card-summary: var(--am-font-weight-medium) var(--am-font-size-t1) / var(--am-line-height-t1) var(--am-font-family);
+}
+
+/* 미디어 쿼리에는 변수를 못 쓴다. 중단점 md 768px, lg 1024px 는 토큰.md 레이아웃 값이다. */
+@media (min-width: 768px) {
+  :root {
+    --am-dimension-gutter: var(--am-dimension-x6);
+    --am-text-style-article-title: var(--am-font-weight-bold) var(--am-font-size-t6) / var(--am-line-height-t6) var(--am-font-family);
+    --am-text-style-card-title-feature: var(--am-font-weight-bold) var(--am-font-size-t5) / var(--am-line-height-t5) var(--am-font-family);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --am-duration-d1: 0ms;
+    --am-duration-d2: 0ms;
+  }
+}

@@ -1,0 +1,15 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = HTMLAttributes<'table'>;
+---
+
+<div class="scroll" tabindex="0" role="region" aria-label="표">
+  <table {...Astro.props}><slot /></table>
+</div>
+
+<style>
+  .scroll {
+    overflow-x: auto;
+  }
+</style>

@@ -1,8 +1,15 @@
 ---
-import { getImage, Image } from 'astro:assets';
+import ArticleHeader from '@alcolmeter/ds/components/ArticleHeader.astro';
+import Callout from '@alcolmeter/ds/components/Callout.astro';
+import Cover from '@alcolmeter/ds/components/Cover.astro';
+import Figure from '@alcolmeter/ds/components/Figure.astro';
+import Prose from '@alcolmeter/ds/components/Prose.astro';
+import ProseTable from '@alcolmeter/ds/components/ProseTable.astro';
+import TableOfContents from '@alcolmeter/ds/components/TableOfContents.astro';
+import { getImage } from 'astro:assets';
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import { formatDate, getPublishedPosts } from '../../lib/posts';
+import { getPublishedPosts, getTocItems } from '../../lib/posts';
 
 export async function getStaticPaths() {
   const posts = await getPublishedPosts();
@@ -10,8 +17,15 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { Content } = await render(post);
-const og = await getImage({ src: post.data.cover, width: 1200, format: 'jpeg' });
+const { Content, headings } = await render(post);
+const og = await getImage({
+  src: post.data.cover,
+  width: 1200,
+  height: 630,
+  fit: 'cover',
+  position: 'center',
+  format: 'jpeg',
+});
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Article',
@@ -26,20 +40,17 @@ const jsonLd = {
 
 <Base title={post.data.title} description={post.data.description} image={og.src} type="article">
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
-  <article class="post">
-    <header>
-      <h1>{post.data.title}</h1>
-      <time datetime={post.data.publishedAt.toISOString()}>{formatDate(post.data.publishedAt)}</time>
-    </header>
-    <Image
-      src={post.data.cover}
-      alt={post.data.coverAlt}
-      widths={[720, 1440]}
-      sizes="(max-width: 720px) 100vw, 720px"
-      loading="eager"
+  <article>
+    <ArticleHeader
+      title={post.data.title}
+      summary={post.data.description}
+      publishedAt={post.data.publishedAt}
+      updatedAt={post.data.updatedAt}
     />
-    <div class="prose">
-      <Content />
-    </div>
+    <Cover image={post.data.cover} alt={post.data.coverAlt} />
+    <TableOfContents items={getTocItems(headings)} />
+    <Prose>
+      <Content components={{ Figure, Callout, table: ProseTable }} />
+    </Prose>
   </article>
 </Base>

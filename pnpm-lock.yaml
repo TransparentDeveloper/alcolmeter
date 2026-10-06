@@ -10,6 +10,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@alcolmeter/ds':
+        specifier: workspace:*
+        version: link:../../packages/ds
       '@astrojs/mdx':
         specifier: ^8.0.2
         version: 8.0.2(@astrojs/markdown-satteri@0.4.2)(astro@7.3.5(@types/node@24.19.0))
@@ -25,6 +28,12 @@ importers:
       sharp:
         specifier: ^0.35.5
         version: 0.35.5(@types/node@24.19.0)
+
+  packages/ds:
+    dependencies:
+      astro:
+        specifier: ^7.3.5
+        version: 7.3.5(@types/node@24.19.0)
 
 packages:
 

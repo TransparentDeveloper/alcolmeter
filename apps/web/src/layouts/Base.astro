@@ -1,5 +1,7 @@
 ---
-import '../styles/global.css';
+import '@alcolmeter/ds/styles.css';
+import SiteFooter from '@alcolmeter/ds/components/SiteFooter.astro';
+import SiteHeader from '@alcolmeter/ds/components/SiteHeader.astro';
 
 interface Props {
   title: string;
@@ -35,12 +37,16 @@ const ogImage = image ? new URL(image, Astro.site).href : undefined;
     <slot name="head" />
   </head>
   <body>
-    <header class="site-header">
-      <a href="/" class="logo">alcolmeter</a>
-    </header>
+    <SiteHeader />
     <main>
       <slot />
     </main>
-    <footer class="site-footer">© alcolmeter</footer>
+    <SiteFooter>© alcolmeter</SiteFooter>
   </body>
 </html>
+
+<style>
+  main {
+    padding-top: var(--am-dimension-x6);
+  }
+</style>

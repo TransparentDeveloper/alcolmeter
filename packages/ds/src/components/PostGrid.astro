@@ -1,0 +1,25 @@
+<ul class="post-grid">
+  <slot />
+</ul>
+
+<style>
+  .post-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--am-dimension-card-gap-y) var(--am-dimension-card-gap-x);
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 768px) {
+    .post-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .post-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

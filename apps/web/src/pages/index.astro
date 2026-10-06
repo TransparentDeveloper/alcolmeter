@@ -1,31 +1,54 @@
 ---
-import { Image } from 'astro:assets';
+import PostCard from '@alcolmeter/ds/components/PostCard.astro';
+import PostGrid from '@alcolmeter/ds/components/PostGrid.astro';
 import Base from '../layouts/Base.astro';
-import { formatDate, getPublishedPosts } from '../lib/posts';
+import { getPublishedPosts } from '../lib/posts';
 
-const posts = await getPublishedPosts();
+const [featured, ...rest] = await getPublishedPosts();
 ---
 
 <Base title="alcolmeter" description="술이 만들어지는 과정과 주류 정보를 정리해요.">
   <h1 class="visually-hidden">alcolmeter</h1>
-  <ul class="post-list">
+  <div class="post-list am-width-page">
     {
-      posts.map((post, i) => (
-        <li>
-          <a href={`/posts/${post.id}`}>
-            <Image
-              src={post.data.cover}
-              alt={post.data.coverAlt}
-              widths={[400, 800]}
-              sizes="(max-width: 720px) 100vw, 720px"
-              loading={i < 2 ? 'eager' : 'lazy'}
-            />
-            <h2>{post.data.title}</h2>
-            <p>{post.data.description}</p>
-            <time datetime={post.data.publishedAt.toISOString()}>{formatDate(post.data.publishedAt)}</time>
-          </a>
-        </li>
-      ))
+      featured && (
+        <PostCard
+          variant="feature"
+          href={`/posts/${featured.id}`}
+          title={featured.data.title}
+          summary={featured.data.description}
+          image={featured.data.cover}
+          imageAlt={featured.data.coverAlt}
+          publishedAt={featured.data.publishedAt}
+          updatedAt={featured.data.updatedAt}
+          priority
+        />
+      )
     }
-  </ul>
+    {
+      rest.length > 0 && (
+        <PostGrid>
+          {rest.map((post) => (
+            <li>
+              <PostCard
+                href={`/posts/${post.id}`}
+                title={post.data.title}
+                summary={post.data.description}
+                image={post.data.cover}
+                imageAlt={post.data.coverAlt}
+                publishedAt={post.data.publishedAt}
+                updatedAt={post.data.updatedAt}
+              />
+            </li>
+          ))}
+        </PostGrid>
+      )
+    }
+  </div>
 </Base>
+
+<style>
+  .post-list > :global(* + *) {
+    margin-top: var(--am-dimension-card-gap-y);
+  }
+</style>

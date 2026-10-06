@@ -9,7 +9,7 @@ const REVIEWERS = [
   { agent: "md-reviewer", pathspec: ["*.md", "*.mdx"], target: "md/mdx 문서" },
   {
     agent: "blog-content-reviewer",
-    pathspec: ["apps/web/src/content/posts/*index.md", "apps/web/src/content/posts/*index.mdx"],
+    pathspec: ["apps/web/src/content/posts/*index.mdx"],
     target: "블로그 글 초안",
   },
   {
@@ -107,7 +107,8 @@ const lastLine = (text) =>
   (text ?? "")
     .split("\n")
     .map((l) => l.trim())
-    .filter(Boolean)
+    // 판정을 코드 블록 안에 쓰는 경우가 있어 닫는 펜스는 건너뛴다.
+    .filter((l) => l && !/^`{3,}$/.test(l))
     .at(-1) ?? "";
 
 function subagentStop(payload) {

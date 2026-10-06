@@ -1,0 +1,63 @@
+---
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  caption?: string;
+  variant?: 'content' | 'wide' | 'square';
+}
+
+const { src, alt, caption, variant = 'content' } = Astro.props;
+
+const imageSizes = {
+  content: { widths: [640, 960, 1280], sizes: '(min-width: 672px) 640px, 100vw' },
+  wide: { widths: [960, 1440, 1920], sizes: '(min-width: 1008px) 960px, 100vw' },
+  square: { widths: [480, 960], sizes: '(min-width: 512px) 480px, 100vw' },
+} as const;
+---
+
+<figure class:list={['figure', variant]}>
+  <Image
+    class="image"
+    src={src}
+    alt={alt}
+    widths={[...imageSizes[variant].widths]}
+    sizes={imageSizes[variant].sizes}
+    loading="lazy"
+  />
+  {caption && <figcaption class="caption">{caption}</figcaption>}
+</figure>
+
+<style>
+  .image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: var(--am-radius-r3);
+    background: var(--am-color-bg-neutral-weak);
+  }
+
+  .square {
+    max-width: 30rem;
+    margin-inline: auto;
+  }
+
+  .square .image {
+    aspect-ratio: 1;
+  }
+
+  /* 본문 칼럼(Prose) 안에서 칼럼 밖으로 넓힌다. 화면이 좁으면 여백만 남기고 줄어든다. */
+  .wide {
+    --wide-width: min(var(--am-size-wide), 100vw - 2 * var(--am-dimension-gutter));
+    width: var(--wide-width);
+    margin-inline: calc(50% - var(--wide-width) / 2);
+  }
+
+  .caption {
+    margin-top: var(--am-dimension-caption-gap);
+    font: var(--am-text-style-article-note);
+    color: var(--am-color-fg-neutral-muted);
+  }
+</style>
