@@ -17,8 +17,8 @@ description: lecture 스킬로 강의를 마친 주제를 블로그 글로 쓸 �
 
 1. 대상 폴더의 `research.md`, `lecture.md`, `questions.md` 와 `.claude/docs/blog-content-reviewer/글쓰기.md`, 루트 `README.md` 의 핵심 타깃을 읽는다.
 2. `index.mdx` 를 쓴다.
-   - 흐름은 `lecture.md` 의 강의 순서를 따른다.
-   - `questions.md` 에서 사용자가 막힌 곳은 독자도 막힐 곳으로 보고 더 풀어 쓴다.
+   - `lecture.md` 의 강의 내용과 `questions.md` 의 질문·답을 합쳐 `글쓰기.md` 의 글 구조에 맞게 다시 짠다. 강의 순서는 따르지 않아도 된다.
+   - 사용자가 막힌 곳은 독자도 막힐 곳으로 보고 더 풀어 쓴다.
    - 사실 문장에는 `research.md` 의 출처만 각주로 단다. 노트에 없는 사실은 쓰지 않는다.
    - "엇갈림", "못 찾음" 으로 남은 내용은 단정하지 않거나 뺀다.
    - frontmatter 는 `draft: true`, `publishedAt` 은 오늘 날짜로 둔다.
@@ -40,4 +40,4 @@ description: lecture 스킬로 강의를 마친 주제를 블로그 글로 쓸 �
 - 지적별 반영 여부와 이유
 - fact-checker 의 "확인 필요" 항목
 - 표지를 임시로 뒀다면 진짜 표지가 필요하다는 것
-- draft 해제는 Claude 에게 시켜야 커밋 게이트가 돈다는 것. 해제 전에 글을 고치지 않았다면 리뷰는 다시 돌지 않는다.
+- draft 해제는 Claude 에게 시키라는 것
