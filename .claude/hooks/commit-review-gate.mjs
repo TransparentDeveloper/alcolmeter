@@ -6,18 +6,26 @@ import { join } from "node:path";
 
 // git pathspec 의 * 는 / 도 넘어가므로 하위 폴더까지 잡힌다.
 const REVIEWERS = [
-  { agent: "md-reviewer", pathspec: ["*.md", "*.mdx"], target: "md/mdx 문서" },
+  {
+    agent: "md-reviewer",
+    pathspec: [
+      "*.md",
+      "*.mdx",
+      ":(exclude)apps/web/src/content/posts/*research.md",
+      ":(exclude)apps/web/src/content/posts/*lecture.md",
+      ":(exclude)apps/web/src/content/posts/*questions.md",
+    ],
+    target: "md/mdx 문서",
+  },
   {
     agent: "fact-checker",
     pathspec: ["apps/web/src/content/posts/*index.mdx"],
-    target: "발행할 블로그 글의 사실 검증",
-    onlyPublished: true,
+    target: "블로그 글의 사실 검증",
   },
   {
     agent: "blog-content-reviewer",
     pathspec: ["apps/web/src/content/posts/*index.mdx"],
-    target: "발행할 블로그 글의 가독성",
-    onlyPublished: true,
+    target: "블로그 글의 가독성",
     after: "fact-checker",
   },
   {
@@ -55,24 +63,24 @@ const GIT_PREFIX = String.raw`^git(\s+-C\s+\S+|\s+-c\s+\S+|\s+--?[\w-]+(=\S+)?)*
 
 const git = (...args) => execFileSync("git", args, { encoding: "utf8" });
 
-// 작업 트리가 아니라 staged 내용의 frontmatter 를 본다.
-const isPublished = (file) => {
-  const frontmatter = git("show", `:${file}`).match(/^---\n([\s\S]*?)\n---/)?.[1] ?? "";
-  return !/^draft:\s*true\s*$/m.test(frontmatter);
-};
-
-const stagedFiles = ({ pathspec, includeDeleted, onlyPublished }) =>
+const stagedFiles = ({ pathspec, includeDeleted }) =>
   git("diff", "--cached", "--name-only", `--diff-filter=ACMR${includeDeleted ? "D" : ""}`, "--", ...pathspec)
     .split("\n")
-    .filter(Boolean)
-    .filter((file) => !onlyPublished || isPublished(file));
+    .filter(Boolean);
+
+const POST = /^apps\/web\/src\/content\/posts\/.+\/index\.mdx$/;
+
+// draft 줄만 바꾸는 발행 커밋이 앞서 받은 PASS 를 그대로 쓰도록 글은 draft 줄을 뺀 내용으로 해시한다.
+const postContent = (file) => git("show", `:${file}`).replace(/^draft:.*\n/m, "");
 
 // 삭제된 파일은 ls-files 에 안 나오므로 경로 목록도 함께 해시한다.
-const fingerprint = (files) =>
-  createHash("sha256")
-    .update(files.join("\n"))
-    .update(git("ls-files", "--stage", "--", ...files))
-    .digest("hex");
+const fingerprint = (files) => {
+  const hash = createHash("sha256").update(files.join("\n"));
+  const others = files.filter((f) => !POST.test(f));
+  if (others.length) hash.update(git("ls-files", "--stage", "--", ...others));
+  for (const f of files.filter((f) => POST.test(f))) hash.update(postContent(f));
+  return hash.digest("hex");
+};
 
 const markerPath = (agent) => join(git("rev-parse", "--absolute-git-dir").trim(), `review-pass-${agent}`);
 
