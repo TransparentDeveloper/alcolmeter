@@ -27,7 +27,6 @@ const REVIEWERS = [
     agent: "blog-content-reviewer",
     pathspec: ["apps/web/src/content/posts/*index.mdx"],
     target: "블로그 글의 가독성",
-    after: "fact-checker",
     scoped: true,
   },
   {
@@ -158,9 +157,6 @@ function pendingReview(reviewer) {
   return files;
 }
 
-// 선행 검토가 아직 통과하지 않았으면 이 검토는 받을 수 없다.
-const isBlocked = ({ after }) => Boolean(after) && pendingReview(REVIEWERS.find((r) => r.agent === after)) !== null;
-
 function preToolUse(payload) {
   const parts = segments(payload.tool_input?.command ?? "");
   const commits = parts.filter((s) => isGitSubcommand(s, "commit"));
@@ -181,20 +177,15 @@ function preToolUse(payload) {
       `[${agent}] ${target}`,
       ...files.map((p) => (scoped && POST.test(p) ? `- ${p} (${reviewScope(agent, p)})` : `- ${p}`)),
     ]);
-  const blocked = pending.filter(isBlocked);
-  const ready = pending.filter((r) => !isBlocked(r));
 
   console.error(
     [
-      "커밋 검토 게이트: staged 된 파일이 아직 검토를 통과하지 않았어. 아래 서브에이전트에게 각각 파일 목록을 넘겨 검토를 받아.",
-      ...list(ready),
-      ...(blocked.length
-        ? ["아래 검토는 괄호 안 에이전트의 PASS 를 받은 뒤에 받아. 먼저 받으면 PASS 로 기록되지 않아.", ...list(blocked.map((r) => ({ ...r, target: `${r.target} (${r.after} 다음)` })))]
-        : []),
+      "커밋 검토 게이트: staged 된 파일이 아직 검토를 통과하지 않았어. 아래 서브에이전트를 한 번에 동시에 불러 각각 파일 목록을 넘겨 검토를 받아.",
+      ...list(pending),
       ...(pending.some((r) => r.scoped && r.files.some((f) => POST.test(f)))
         ? ["괄호 안의 검토 범위는 리뷰어에게 경로와 함께 그대로 넘겨."]
         : []),
-      "FAIL 이면 지적 사항을 고치고 다시 git add 한 뒤 재검토를 받아. PASS 를 받은 뒤 staged 내용이 바뀌면 다시 검토해야 해.",
+      "FAIL 이 있으면 모든 리뷰어의 지적을 모아 한 번에 고치고 다시 git add 한 뒤 재검토를 받아. PASS 를 받은 뒤 staged 내용이 바뀌면 다시 검토해야 해.",
     ].join("\n"),
   );
   return 2;
@@ -214,7 +205,7 @@ function subagentStop(payload) {
 
   const marker = markerPath(reviewer.agent);
   const files = stagedFiles(reviewer);
-  if (lastLine(payload.last_assistant_message) === "VERDICT: PASS" && files.length > 0 && !isBlocked(reviewer)) {
+  if (lastLine(payload.last_assistant_message) === "VERDICT: PASS" && files.length > 0) {
     writeFileSync(marker, fingerprint(files));
     if (reviewer.scoped) {
       const snapshot = readSnapshot(reviewer.agent);
