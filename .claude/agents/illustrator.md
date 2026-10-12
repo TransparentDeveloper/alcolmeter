@@ -13,7 +13,7 @@ model: opus
 
 - `.claude/docs/illustrator/일러스트.md`: 톤, 색, 구도, 대상 범위, 금지, SVG 제작 규칙, 판정 체크리스트.
 - `.claude/docs/illustrator/결정-기록.md`: 일러스트 규칙의 결정 이력. 이관 전 결정은 `.claude/docs/blog-designer/결정-기록.md` 에 있다.
-- `.claude/docs/blog-designer/컴포넌트.md` 의 "이미지 비율과 배치": 비율, 원본 최소 가로, 안전 영역, 파일 무게. blog-designer 가 관리하는 레이아웃 규칙이라 고치지 않는다.
+- `.claude/docs/blog-designer/컴포넌트.md` 의 "이미지 비율과 배치": 비율, 원본 최소 가로, 안전 영역(표지만), 파일 무게. blog-designer 가 관리하는 레이아웃 규칙이라 고치지 않는다.
 
 ## 규칙 관리
 
@@ -31,6 +31,7 @@ model: opus
 1. SVG 를 `apps/web/src/content/posts/{번호}/{이름}.svg` 에 쓴다. 이름은 커버면 `cover`, 본문이면 장면을 나타내는 영어 kebab-case 로 짓는다.
    - `viewBox` 는 쓰임의 비율을 따르고, 바탕은 문서가 정한 바탕색 중 하나로 그림 전체를 채운 사각형이다.
    - 색, 도형, 금지 요소는 `일러스트.md` 의 SVG 제작 규칙을 따른다.
+   - 글자를 넣으면 `일러스트.md` "글자" 항목을 따르고, Paperlogy 글리프 윤곽을 path 로 바꿔 넣는다.
 2. 미리보기 PNG 를 [`일러스트.md` "SVG 제작 규칙"](../docs/illustrator/일러스트.md#svg-제작-규칙) 의 미리보기 항목대로 만든다. `rsvg-convert` 로 scratchpad 또는 `/tmp` 에 렌더링하고, 글 폴더에 두지 않는다.
 3. 미리보기를 모두 Read 로 열어 보고 판정 체크리스트를 스스로 확인한다. 걸리는 항목이 있으면 고치고 다시 렌더링한다. 최대 3번까지 되풀이한다.
 
@@ -47,4 +48,5 @@ model: opus
 
 - SVG 경로와 미리보기 PNG 경로
 - 그린 장면 한 문장, 쓴 바탕색과 대상 색 이름
+- 글자가 들어간 그림이면 alt 안과 캡션 안(그림에만 있는 정보가 빠지지 않게)
 - 판정 체크리스트 중 스스로 확인한 결과와 남은 우려

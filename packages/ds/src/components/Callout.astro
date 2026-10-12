@@ -1,22 +1,42 @@
 ---
-interface Props {
-  variant?: 'note' | 'caution';
-}
+type Props = { variant?: 'note'; title: string } | { variant: 'caution'; title?: never };
 
-const { variant = 'note' } = Astro.props;
-const labels = { note: '참고', caution: '주의' } as const;
+const { variant = 'note', title } = Astro.props;
+
+// MDX 는 props 타입을 검사하지 않으므로 빌드 시점에 직접 막는다.
+if (variant === 'note' && (typeof title !== 'string' || title.trim() === '')) {
+  throw new Error('Callout note 에는 비어 있지 않은 title 이 필요하다.');
+}
+if (variant === 'caution' && title !== undefined) {
+  throw new Error('Callout caution 에는 title 을 줄 수 없다.');
+}
 ---
 
-<aside class:list={['callout', variant]}>
-  <p class="label">{labels[variant]}</p>
-  <div class="body">
-    <slot />
-  </div>
-</aside>
+{
+  variant === 'note' ? (
+    <details class="callout note">
+      <summary>
+        <span class="text">
+          <span class="label">참고:</span>{' '}{title}
+        </span>
+        <span class="arrow" aria-hidden="true">↓</span>
+      </summary>
+      <div class="body">
+        <slot />
+      </div>
+    </details>
+  ) : (
+    <aside class="callout caution">
+      <p class="label">주의</p>
+      <div class="body">
+        <slot />
+      </div>
+    </aside>
+  )
+}
 
 <style>
   .callout {
-    padding: var(--am-dimension-x5);
     border-radius: var(--am-radius-r3);
   }
 
@@ -25,7 +45,48 @@ const labels = { note: '참고', caution: '주의' } as const;
   }
 
   .caution {
+    padding: var(--am-dimension-x5);
     background: var(--am-color-bg-critical-weak);
+  }
+
+  summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--am-dimension-x3);
+    padding: var(--am-dimension-x5);
+    border-radius: var(--am-radius-r3);
+    font: var(--am-text-style-meta);
+    color: var(--am-color-fg-neutral);
+    list-style: none;
+    cursor: pointer;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .note[open] > summary {
+    padding-bottom: var(--am-dimension-x2);
+  }
+
+  .text {
+    text-decoration: underline 2px transparent;
+    text-underline-offset: 3px;
+    transition: text-decoration-color var(--am-duration-color-transition) var(--am-timing-function-easing);
+  }
+
+  summary:hover .text {
+    text-decoration-color: currentColor;
+  }
+
+  .arrow {
+    display: inline-block;
+    flex-shrink: 0;
+  }
+
+  .note[open] .arrow {
+    transform: rotate(180deg);
   }
 
   .label {
@@ -41,9 +102,16 @@ const labels = { note: '참고', caution: '주의' } as const;
   }
 
   .body {
-    margin-top: var(--am-dimension-x2);
     font: var(--am-text-style-article-body);
     color: var(--am-color-fg-neutral);
+  }
+
+  .note .body {
+    padding: 0 var(--am-dimension-x5) var(--am-dimension-x5);
+  }
+
+  .caution .body {
+    margin-top: var(--am-dimension-x2);
   }
 
   .body > :global(* + *) {

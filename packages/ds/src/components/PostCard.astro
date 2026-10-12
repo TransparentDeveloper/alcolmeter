@@ -18,10 +18,10 @@ interface Props {
 const { href, title, summary, image, imageAlt, publishedAt, updatedAt, variant = 'default', priority = false } = Astro.props;
 
 const imageSizes = {
-  feature: { widths: [640, 1040, 1600, 2080], sizes: '(min-width: 1088px) 1040px, 100vw' },
+  feature: { widths: [640, 1184, 1600, 2368], sizes: '(min-width: 1232px) 1184px, 100vw' },
   default: {
     widths: [480, 720, 960],
-    sizes: '(min-width: 1088px) 326px, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw',
+    sizes: '(min-width: 1232px) 373px, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw',
   },
 } as const;
 

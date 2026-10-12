@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <defs>
+    <clipPath id="apple"><path d="M960 372C1040 312 1200 312 1272 398C1340 480 1336 660 1270 776C1222 862 1140 920 1062 916C1012 914 988 898 960 898C932 898 908 914 858 916C780 920 698 862 650 776C584 660 580 480 648 398C720 312 880 312 960 372Z"/></clipPath>
+    <clipPath id="leaf"><path d="M1008 274C1048 202 1128 172 1208 188C1178 258 1098 296 1008 274Z"/></clipPath>
+  </defs>
+  <rect width="1920" height="1080" fill="#E3E8DC"/>
+  <rect x="948" y="216" width="26" height="224" rx="13" fill="#5E360B" transform="rotate(14 961 440)"/>
+  <g clip-path="url(#apple)">
+    <rect width="1920" height="1080" fill="#B5653A"/>
+    <path fill-rule="evenodd" fill="#8A4526" d="M-300 -300H2220V1380H-300ZM870 282C950 222 1110 222 1182 308C1250 390 1246 570 1180 686C1132 772 1050 830 972 826C922 824 898 808 870 808C842 808 818 824 768 826C690 830 608 772 560 686C494 570 490 390 558 308C630 222 790 222 870 282Z"/>
+  </g>
+  <g clip-path="url(#leaf)">
+    <rect width="1920" height="1080" fill="#7F9470"/>
+    <path fill-rule="evenodd" fill="#5F7353" d="M-300 -300H2220V1380H-300ZM994 260C1034 188 1114 158 1194 174C1164 244 1084 282 994 260Z"/>
+  </g>
+</svg>

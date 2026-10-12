@@ -50,7 +50,7 @@
   line-gap-override: 0%;
 }
 
-/* 맑은 고딕 폭을 아직 측정하지 못해 size-adjust 가 없다(글꼴.md 대체 글꼴 스택). */
+/* 맑은 고딕은 폭 보정(size-adjust) 없이 둔다(blog-designer D-062). */
 @font-face {
   font-family: "Paperlogy Fallback Malgun";
   src: local("Malgun Gothic Semilight"), local("MalgunGothic-Semilight");
