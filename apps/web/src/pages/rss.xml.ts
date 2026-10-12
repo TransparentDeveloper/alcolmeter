@@ -6,7 +6,7 @@ export async function GET(context: APIContext) {
   const posts = await getPublishedPosts();
   return rss({
     title: 'alcolmeter',
-    description: '술이 만들어지는 과정과 주류 정보를 정리해요.',
+    description: '술이 무엇이고 어떻게 다른지, 고르는 데 필요한 것을 정리해요.',
     site: context.site ?? 'https://alcolmeter.kr',
     items: posts.map((post) => ({
       title: post.data.title,
