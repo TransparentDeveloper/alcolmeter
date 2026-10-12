@@ -8,6 +8,8 @@ import { fileURLToPath } from "node:url";
 
 const HOOK = fileURLToPath(new URL("./commit-review-gate.mjs", import.meta.url));
 const POST = "apps/web/src/content/posts/9/index.mdx";
+// GIT_DIR 같은 값을 물려받으면 임시 저장소 대신 실제 저장소를 건드린다.
+const ENV = Object.fromEntries(Object.entries(process.env).filter(([key]) => !key.startsWith("GIT_")));
 
 const post = ({ apple = "사과 술 설명", abv = "도수 설명", draft = true, extra = "" } = {}) =>
   [
@@ -32,7 +34,7 @@ const post = ({ apple = "사과 술 설명", abv = "도수 설명", draft = true
 function setup(t) {
   const dir = mkdtempSync(join(tmpdir(), "commit-gate-"));
   t.after(() => rmSync(dir, { recursive: true, force: true }));
-  const git = (...args) => execFileSync("git", args, { cwd: dir, encoding: "utf8" });
+  const git = (...args) => execFileSync("git", args, { cwd: dir, env: ENV, encoding: "utf8" });
   const write = (path, text) => {
     mkdirSync(dirname(join(dir, path)), { recursive: true });
     writeFileSync(join(dir, path), text);
@@ -40,7 +42,7 @@ function setup(t) {
   const run = (mode, payload) =>
     spawnSync("node", [HOOK, mode], {
       input: JSON.stringify(payload),
-      env: { ...process.env, CLAUDE_PROJECT_DIR: dir },
+      env: { ...ENV, CLAUDE_PROJECT_DIR: dir },
       encoding: "utf8",
     });
   const check = (command = "git commit -m x") => run("pre", { tool_input: { command } });
