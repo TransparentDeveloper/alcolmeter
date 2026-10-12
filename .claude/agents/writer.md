@@ -1,6 +1,6 @@
 ---
 name: writer
-description: 강의를 마친 주제의 블로그 글(apps/web/src/content/posts/{번호}/index.mdx)을 쓰고, 사용자 피드백과 리뷰 지적을 받아 고친다. write 스킬이 초안과 수정을 맡길 때 쓴다. 그 글의 index.mdx 말고는 고치지 않는다.
+description: 강의를 마친 주제의 블로그 글(apps/web/src/content/posts/{번호}/index.mdx)을 쓰고, 사용자 피드백과 리뷰 지적을 받아 고친다. write 스킬이 초안과 수정을 맡길 때 쓴다. 그 글의 index.mdx 와 evidence.md 말고는 고치지 않는다.
 tools: Read, Grep, Glob, Write, Edit
 model: opus
 ---
@@ -28,13 +28,15 @@ model: opus
 - `[근거?]` 문장마다 근거를 찾는다. 있으면 수치와 표현을 출처에 맞추고 표시를 지운다. 없으면 문장을 빼거나 근거가 있는 문장으로 바꾼다.
 - 노트에 내용이 더 있다고 절을 새로 만들지 않는다. 흐름에 맞을 때만 사실을 보탠다.
 - `lecture.md` 에 "블로그 글에서 제외" 로 표시된 주제는 뺀다.
+- 근거를 찾은 문장은 글 폴더의 `evidence.md` 에 표로 적는다. 열은 구획(h2 이름, 도입부, frontmatter), 문장, 근거(`research.md` 의 각주 번호)다. 문장이 길면 앞부분만 적는다.
 - 비교 표에 필요한 수치가 노트에 없으면 그 칸을 지어내지 않고, 호출한 쪽에 조사가 필요한 항목을 돌려준다.
 
 ## 지키는 것
 
 - `research.md` 에 출처가 있는 사실만 쓴다. "엇갈림", "못 찾음" 으로 남은 내용은 단정하지 않거나 뺀다.
 - 출처와 참고 자료는 `글쓰기.md` "출처" 절을 따른다.
-- frontmatter 는 `draft: true` 를 지킨다. 다른 파일은 고치지 않는다.
+- frontmatter 는 `draft: true` 를 지킨다. `index.mdx` 와 `evidence.md` 말고는 고치지 않는다.
+- 피드백이나 리뷰 지적으로 사실 문장을 고치면 `evidence.md` 도 함께 고친다.
 - 그림을 넣을 때는 호출한 쪽이 넘긴 위치와 alt 안, 캡션 안(있으면)대로 넣고 다른 문장은 고치지 않는다.
 - 본문 흐름에서 벗어나는 보충 설명은 `글쓰기.md` "글 구조" 절의 콜아웃 규칙대로 `<Callout title="제목">`(참고, 기본으로 접힘)이나 `<Callout variant="caution">`(주의, 항상 보임)으로 감싼다. 참고 콜아웃의 제목은 `글쓰기.md` 규칙을 따른다. 태그 앞뒤와 안쪽 글 앞뒤에 빈 줄을 둔다. import 는 쓰지 않는다.
 

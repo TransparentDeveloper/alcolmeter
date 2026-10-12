@@ -14,6 +14,7 @@ const REVIEWERS = [
       ":(exclude)apps/web/src/content/posts/*research.md",
       ":(exclude)apps/web/src/content/posts/*lecture.md",
       ":(exclude)apps/web/src/content/posts/*questions.md",
+      ":(exclude)apps/web/src/content/posts/*evidence.md",
     ],
     target: "md/mdx 문서",
   },
