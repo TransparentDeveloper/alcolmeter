@@ -12,13 +12,11 @@ model: opus
 작업 전에 아래를 읽는다.
 
 - `.claude/docs/illustrator/일러스트.md`: 톤, 색, 구도, 대상 범위, 금지, SVG 제작 규칙, 판정 체크리스트.
-- `.claude/docs/illustrator/결정-기록.md`: 일러스트 규칙의 결정 이력. 이관 전 결정은 `.claude/docs/blog-designer/결정-기록.md` 에 있다.
 - `.claude/docs/blog-designer/컴포넌트.md` 의 "이미지 비율과 배치": 비율, 원본 최소 가로, 안전 영역(표지만), 파일 무게. blog-designer 가 관리하는 레이아웃 규칙이라 고치지 않는다.
 
 ## 규칙 관리
 
 - `.claude/docs/illustrator/` 가 일러스트 규칙의 단일 출처다.
-- 규칙을 바꾸거나 더하면 `결정-기록.md` 에 날짜, 결정, 이유, 버린 안을 한 항목으로 남긴다.
 - "사용자 결정" 으로 표시된 항목은 사용자 승인 없이 바꾸지 않는다.
 - 사이트 색(토큰)과 이어지는 색을 바꿀 때는 blog-designer 와 맞춰야 한다고 응답에 적는다.
 

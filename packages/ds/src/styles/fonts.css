@@ -1,4 +1,4 @@
-/* 서브셋 전 공식 전체 파일이다. 글꼴.md 분할 서브셋 규칙 미적용(fe 결정 기록 F-004). */
+/* 서브셋 전 공식 전체 파일이다. 글꼴.md 분할 서브셋 규칙 미적용. */
 @font-face {
   font-family: "Paperlogy";
   src: url("../fonts/paperlogy/Paperlogy-3Light.woff2") format("woff2");
@@ -50,7 +50,7 @@
   line-gap-override: 0%;
 }
 
-/* 맑은 고딕은 폭 보정(size-adjust) 없이 둔다(blog-designer D-062). */
+/* 맑은 고딕은 폭 보정(size-adjust) 없이 둔다. */
 @font-face {
   font-family: "Paperlogy Fallback Malgun";
   src: local("Malgun Gothic Semilight"), local("MalgunGothic-Semilight");

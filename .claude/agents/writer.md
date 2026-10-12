@@ -13,7 +13,7 @@ model: opus
 
 ## 쓰는 법
 
-두 단계로 쓴다. 순서를 바꾸지 않는다(`.claude/docs/blog-content-reviewer/결정-기록.md` W-011).
+두 단계로 쓴다. 순서를 바꾸지 않는다.
 
 ### 1단계: 노트 없이 초안
 

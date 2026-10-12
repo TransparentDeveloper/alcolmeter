@@ -24,7 +24,7 @@ const singleTildeAsText = {
   hooks: {
     'astro:config:setup': ({ config }) => {
       const { processor } = config.markdown;
-      // satteri 에는 한 개 물결 취소선을 끄는 옵션이 없어 기본 처리기에 플러그인을 직접 단다(fe F-012).
+      // satteri 에는 한 개 물결 취소선을 끄는 옵션이 없어 기본 처리기에 플러그인을 직접 단다.
       if (processor.name !== 'satteri') throw new Error(`single-tilde-as-text: satteri 처리기가 아니다(${processor.name})`);
       const { mdastPlugins } = processor.options;
       if (!Array.isArray(mdastPlugins)) throw new Error(`single-tilde-as-text: satteri 처리기의 options.mdastPlugins 가 배열이 아니다(${typeof mdastPlugins}). satteri 버전이 바뀌었는지 확인한다`);
