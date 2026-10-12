@@ -21,12 +21,14 @@ const REVIEWERS = [
     agent: "fact-checker",
     pathspec: ["apps/web/src/content/posts/*index.mdx"],
     target: "블로그 글의 사실 검증",
+    scoped: true,
   },
   {
     agent: "blog-content-reviewer",
     pathspec: ["apps/web/src/content/posts/*index.mdx"],
     target: "블로그 글의 가독성",
     after: "fact-checker",
+    scoped: true,
   },
   {
     agent: "fe",
@@ -82,7 +84,45 @@ const fingerprint = (files) => {
   return hash.digest("hex");
 };
 
-const markerPath = (agent) => join(git("rev-parse", "--absolute-git-dir").trim(), `review-pass-${agent}`);
+const gitDir = () => git("rev-parse", "--absolute-git-dir").trim();
+const markerPath = (agent) => join(gitDir(), `review-pass-${agent}`);
+const snapshotPath = (agent) => join(gitDir(), `review-snapshot-${agent}.json`);
+
+const readSnapshot = (agent) => {
+  try {
+    return JSON.parse(readFileSync(snapshotPath(agent), "utf8"));
+  } catch {
+    return {};
+  }
+};
+
+// 기준본은 이 리뷰어가 마지막으로 PASS 한 내용, 없으면 HEAD 의 내용이다. 커밋된 글은 모두 게이트를 통과했다.
+const baseline = (agent, file) => {
+  const snapshot = readSnapshot(agent)[file];
+  if (snapshot !== undefined) return snapshot;
+  try {
+    return git("show", `HEAD:${file}`).replace(/^draft:.*\n/m, "");
+  } catch {
+    return undefined;
+  }
+};
+
+const sections = (content) => {
+  const [, front = "", body = content] = content.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/) ?? [];
+  const parts = body.split(/^(?=## )/m);
+  const intro = parts[0].startsWith("## ") ? "" : parts.shift();
+  return [["frontmatter", front], ["도입부", intro], ...parts.map((p) => [p.split("\n")[0].slice(3).trim(), p])];
+};
+
+// 구획을 더하거나 빼거나 옮기면 다른 구획의 전제가 깨질 수 있어 전체를 다시 본다.
+function reviewScope(agent, file) {
+  const before = baseline(agent, file);
+  if (before === undefined) return "전체: 첫 검토";
+  const [a, b] = [sections(before), sections(postContent(file))];
+  if (a.map(([h]) => h).join("\n") !== b.map(([h]) => h).join("\n")) return "전체: h2 구성 변경";
+  const changed = b.filter(([, text], i) => a[i][1] !== text).map(([h]) => h);
+  return changed.length ? `바뀐 구획: ${changed.join(", ")}` : "전체: 바뀐 구획을 찾지 못함";
+}
 
 const segments = (command) =>
   command
@@ -120,7 +160,10 @@ function preToolUse(payload) {
   if (pending.length === 0) return 0;
 
   const list = (reviewers) =>
-    reviewers.flatMap(({ agent, target, files }) => [`[${agent}] ${target}`, ...files.map((p) => `- ${p}`)]);
+    reviewers.flatMap(({ agent, target, files, scoped }) => [
+      `[${agent}] ${target}`,
+      ...files.map((p) => (scoped && POST.test(p) ? `- ${p} (${reviewScope(agent, p)})` : `- ${p}`)),
+    ]);
   const blocked = pending.filter(isBlocked);
   const ready = pending.filter((r) => !isBlocked(r));
 
@@ -130,6 +173,9 @@ function preToolUse(payload) {
       ...list(ready),
       ...(blocked.length
         ? ["아래 검토는 괄호 안 에이전트의 PASS 를 받은 뒤에 받아. 먼저 받으면 PASS 로 기록되지 않아.", ...list(blocked.map((r) => ({ ...r, target: `${r.target} (${r.after} 다음)` })))]
+        : []),
+      ...(pending.some((r) => r.scoped && r.files.some((f) => POST.test(f)))
+        ? ["괄호 안의 검토 범위는 리뷰어에게 경로와 함께 그대로 넘겨."]
         : []),
       "FAIL 이면 지적 사항을 고치고 다시 git add 한 뒤 재검토를 받아. PASS 를 받은 뒤 staged 내용이 바뀌면 다시 검토해야 해.",
     ].join("\n"),
@@ -153,6 +199,11 @@ function subagentStop(payload) {
   const files = stagedFiles(reviewer);
   if (lastLine(payload.last_assistant_message) === "VERDICT: PASS" && files.length > 0 && !isBlocked(reviewer)) {
     writeFileSync(marker, fingerprint(files));
+    if (reviewer.scoped) {
+      const snapshot = readSnapshot(reviewer.agent);
+      for (const f of files.filter((f) => POST.test(f))) snapshot[f] = postContent(f);
+      writeFileSync(snapshotPath(reviewer.agent), JSON.stringify(snapshot));
+    }
   } else {
     rmSync(marker, { force: true });
   }
