@@ -146,9 +146,49 @@ function reviewScope(agent, file) {
   return changed.length ? `바뀐 구획: ${changed.join(", ")}` : "전체: 바뀐 구획을 찾지 못함";
 }
 
-// heredoc 본문은 명령이 아니라 글이므로 여는 줄의 나머지만 남기고 지운다.
-const stripHeredocs = (command) =>
-  command.replace(/<<-?[ \t]*(['"]?)(\w+)\1([^\n]*)\n[\s\S]*?^[ \t]*\2[ \t]*$/gm, (_, quote, tag, rest) => rest);
+// heredoc 본문은 명령이 아니라 글이므로 지운다. 따옴표 안의 << 까지 heredoc 으로 보면 뒤 줄의 커밋이 게이트를 빠져나가므로 따옴표와 $( 중첩을 따라간다.
+function stripHeredocs(command) {
+  let s = command;
+  const stack = [];
+  for (let i = 0; i < s.length; i++) {
+    const ch = s[i];
+    const top = stack.at(-1);
+    if (top === "'") {
+      if (ch === "'") stack.pop();
+      continue;
+    }
+    if (ch === "\\") {
+      i++;
+      continue;
+    }
+    if (s.startsWith("$(", i)) {
+      stack.push("$(");
+      i++;
+      continue;
+    }
+    if (top === '"') {
+      if (ch === '"') stack.pop();
+      continue;
+    }
+    if (ch === "'" || ch === '"') {
+      stack.push(ch);
+      continue;
+    }
+    if (ch === ")" && top === "$(") {
+      stack.pop();
+      continue;
+    }
+    const opener = /^<<-?[ \t]*(['"]?)(\w+)\1/.exec(s.slice(i));
+    if (!opener) continue;
+    const bodyStart = s.indexOf("\n", i) + 1;
+    if (bodyStart === 0) break;
+    const close = new RegExp(`^[ \\t]*${opener[2]}[ \\t]*$`, "m").exec(s.slice(bodyStart));
+    if (!close) break;
+    s = s.slice(0, i) + s.slice(i + opener[0].length, bodyStart) + s.slice(bodyStart + close.index + close[0].length);
+    i--;
+  }
+  return s;
+}
 
 const segments = (command) =>
   stripHeredocs(command)

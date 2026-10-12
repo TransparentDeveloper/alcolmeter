@@ -324,6 +324,29 @@ test("heredoc 을 여는 줄이나 닫은 뒤에 이어진 커밋은 막는다",
   assert.equal(check('git commit -m "$(cat <<\'EOF\'\n메시지\nEOF\n)"').status, 2);
 });
 
+test("따옴표 안의 << 나 닫히지 않은 heredoc 뒤의 커밋은 막는다", (t) => {
+  const { check, write, git } = setup(t);
+  write("README.md", "# 바뀜\n");
+  git("add", "README.md");
+  for (const command of [
+    'echo "<<EOF"\ngit commit -m x\nEOF',
+    "echo '<<EOF'\ngit commit -m x\nEOF",
+    'echo "\\"<<EOF"\ngit commit -m x\nEOF',
+    'echo "$(echo \')\')" "<<EOF"\ngit commit -m x\nEOF',
+    "cat <<EOF > a.sh\ngit commit -m x",
+  ]) {
+    assert.equal(check(command).status, 2, command);
+  }
+});
+
+test("$( 안의 heredoc 본문은 지운다", (t) => {
+  const { check, write, git } = setup(t);
+  write("README.md", "# 바뀜\n");
+  git("add", "README.md");
+  assert.equal(check('echo "$(cat <<\'EOF\'\ngit commit -m x\nEOF\n)"').status, 0);
+  assert.equal(check('cat <<"EOF" > a.sh\ngit commit -m x\nEOF').status, 0);
+});
+
 test("a 가 든 다른 옵션은 한 번에 모두 커밋하는 것으로 보지 않는다", (t) => {
   const { check } = setup(t);
   assert.equal(check("git commit --amend -m x").status, 0);
