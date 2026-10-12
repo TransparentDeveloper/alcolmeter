@@ -185,7 +185,7 @@ function preToolUse(payload) {
       ...(pending.some((r) => r.scoped && r.files.some((f) => POST.test(f)))
         ? ["괄호 안의 검토 범위는 리뷰어에게 경로와 함께 그대로 넘겨."]
         : []),
-      "FAIL 이 있으면 모든 리뷰어의 지적을 모아 한 번에 고치고 다시 git add 한 뒤 재검토를 받아. PASS 를 받은 뒤 staged 내용이 바뀌면 다시 검토해야 해.",
+      "FAIL 이 있으면 모든 리뷰어의 FAIL 사유를 모아 한 번에 고치고 다시 git add 한 뒤 재검토를 받아. PASS 를 받은 뒤 staged 내용이 바뀌면 다시 검토해야 해.",
     ].join("\n"),
   );
   return 2;

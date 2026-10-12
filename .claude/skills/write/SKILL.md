@@ -46,6 +46,7 @@ description: lecture 스킬로 강의를 마친 주제를 블로그 글로 쓸 �
 
 - 커밋 해시와 글 경로
 - 지적별 반영 여부와 이유
+- 반영하지 않고 모아 둔 제안
 - fact-checker 의 "확인 필요" 항목
 - illustrator 가 그린 그림 목록
 - draft 해제와 push 는 사용자가 지시하면 한다는 것
