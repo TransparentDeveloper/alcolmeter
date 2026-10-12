@@ -6,7 +6,7 @@ import { formatDate } from '../lib/date';
 interface Props {
   href: string;
   title: string;
-  summary: string;
+  summary?: string;
   image: ImageMetadata;
   imageAlt: string;
   publishedAt: Date;
@@ -40,7 +40,7 @@ const titleId = `post-card-${href.replace(/[^a-zA-Z0-9]+/g, '-').replace(/^-|-$/
     loading={priority ? 'eager' : 'lazy'}
   />
   <h2 id={titleId} class="title">{title}</h2>
-  <p class="summary">{summary}</p>
+  {summary && <p class="summary">{summary}</p>}
   <time class="date" datetime={shownDate.toISOString()}>{formatDate(shownDate)}</time>
 </a>
 
