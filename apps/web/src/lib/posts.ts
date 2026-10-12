@@ -6,9 +6,18 @@ export async function getPublishedPosts() {
   return posts.sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
 }
 
-// GFM 각주 목록(SourceList)의 제목도 h2 로 나와서 목차에서 뺀다.
-const FOOTNOTE_LABEL_SLUG = 'footnote-label';
+interface TocItem {
+  slug: string;
+  text: string;
+  children: { slug: string; text: string }[];
+}
 
-export function getTocItems(headings: MarkdownHeading[]) {
-  return headings.filter((heading) => heading.depth === 2 && heading.slug !== FOOTNOTE_LABEL_SLUG);
+// 첫 h2 앞의 h3 는 글 구조 규칙상 없다고 보고 버린다.
+export function getTocItems(headings: MarkdownHeading[]): TocItem[] {
+  const items: TocItem[] = [];
+  for (const { depth, slug, text } of headings) {
+    if (depth === 2) items.push({ slug, text, children: [] });
+    else if (depth === 3) items.at(-1)?.children.push({ slug, text });
+  }
+  return items;
 }

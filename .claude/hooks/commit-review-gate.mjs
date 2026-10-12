@@ -43,7 +43,7 @@ const REVIEWERS = [
     includeDeleted: true,
   },
   {
-    agent: "designer",
+    agent: "blog-designer",
     pathspec: [
       "apps/web/*.astro",
       "apps/web/*.css",

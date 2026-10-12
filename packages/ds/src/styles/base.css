@@ -51,9 +51,7 @@ em {
   outline-offset: 2px;
 }
 
-/* sr-only 는 마크다운 처리기가 각주 제목에 붙이는 클래스라 같은 규칙으로 둔다. */
-.visually-hidden,
-.sr-only {
+.visually-hidden {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -62,20 +60,7 @@ em {
   white-space: nowrap;
 }
 
-.am-width-content,
-.am-width-wide,
 .am-width-page {
   margin-inline: auto;
-}
-
-.am-width-content {
-  width: min(100% - 2 * var(--am-dimension-gutter), var(--am-size-content));
-}
-
-.am-width-wide {
-  width: min(100% - 2 * var(--am-dimension-gutter), var(--am-size-wide));
-}
-
-.am-width-page {
   width: min(100% - 2 * var(--am-dimension-gutter), var(--am-size-page));
 }

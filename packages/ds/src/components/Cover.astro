@@ -1,6 +1,7 @@
 ---
 import type { ImageMetadata } from 'astro';
 import { Image } from 'astro:assets';
+import { contentImage } from '../lib/image';
 
 interface Props {
   image: ImageMetadata;
@@ -10,17 +11,11 @@ interface Props {
 const { image, alt } = Astro.props;
 ---
 
-<Image
-  class="cover am-width-wide"
-  src={image}
-  alt={alt}
-  widths={[960, 1440, 1920]}
-  sizes="(min-width: 1008px) 960px, 100vw"
-  priority
-/>
+<Image class="cover" src={image} alt={alt} widths={contentImage.widths} sizes={contentImage.sizes} priority />
 
 <style>
   .cover {
+    width: 100%;
     aspect-ratio: 16 / 9;
     object-fit: cover;
     border-radius: var(--am-radius-r3);

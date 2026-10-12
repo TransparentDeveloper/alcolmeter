@@ -1,0 +1,87 @@
+---
+interface Props {
+  items: readonly { text: string; url?: string }[];
+}
+
+const { items } = Astro.props;
+---
+
+{
+  items.length > 0 && (
+    <details class="sources">
+      <summary>
+        <span class="label">참고 자료 {items.length}개</span>
+        <span class="arrow" aria-hidden="true">↓</span>
+      </summary>
+      <ul class="list">
+        {items.map((item) => (
+          <li>
+            {item.url ? (
+              <>
+                {`${item.text}, `}
+                <a href={item.url}>{item.url}</a>
+              </>
+            ) : (
+              item.text
+            )}
+          </li>
+        ))}
+      </ul>
+    </details>
+  )
+}
+
+<style>
+  .sources {
+    border-block: 1px solid var(--am-color-stroke-neutral-subtle);
+  }
+
+  summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-block: var(--am-dimension-x2);
+    font: var(--am-text-style-article-body);
+    color: var(--am-color-fg-neutral);
+    list-style: none;
+    cursor: pointer;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary:hover .label {
+    text-decoration: underline 2px;
+    text-underline-offset: 3px;
+  }
+
+  .arrow {
+    display: inline-block;
+  }
+
+  .sources[open] .arrow {
+    transform: rotate(180deg);
+  }
+
+  .list {
+    padding-inline-start: var(--am-dimension-x6);
+    padding-bottom: var(--am-dimension-x4);
+    font: var(--am-text-style-article-note);
+    color: var(--am-color-fg-neutral-muted);
+  }
+
+  .list li + li {
+    margin-top: var(--am-dimension-x2);
+  }
+
+  .list a {
+    color: var(--am-color-fg-brand);
+    text-decoration: underline 1px;
+    text-underline-offset: 3px;
+  }
+
+  .list a:hover {
+    text-decoration-thickness: 2px;
+  }
+</style>

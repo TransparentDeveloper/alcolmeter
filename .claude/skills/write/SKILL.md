@@ -15,22 +15,22 @@ description: lecture 스킬로 강의를 마친 주제를 블로그 글로 쓸 �
 
 ## 초안
 
-1. 대상 폴더의 `research.md`, `lecture.md`, `questions.md` 와 `.claude/docs/blog-content-reviewer/글쓰기.md`, 루트 `README.md` 의 핵심 타깃을 읽는다.
-2. `index.mdx` 를 쓴다.
-   - `lecture.md` 의 강의 내용과 `questions.md` 의 질문·답을 합쳐 `글쓰기.md` 의 글 구조에 맞게 다시 짠다. 강의 순서는 따르지 않아도 된다.
-   - 사용자가 막힌 곳은 독자도 막힐 곳으로 보고 더 풀어 쓴다.
-   - 사실 문장에는 `research.md` 의 출처만 각주로 단다. 노트에 없는 사실은 쓰지 않는다.
-   - "엇갈림", "못 찾음" 으로 남은 내용은 단정하지 않거나 뺀다.
-   - frontmatter 는 `draft: true`, `publishedAt` 은 오늘 날짜로 둔다.
-   - 표지가 아직 없으면 `글쓰기.md` 의 alt 절에 있는 임시 표지 예외를 따른다.
+글은 writer 에이전트가 쓴다. 메인 에이전트는 글을 직접 쓰거나 고치지 않는다.
+
+1. 비교 표에 쓸 수치(독자가 아는 술의 도수 등)가 대상 폴더의 `research.md` 에 있는지 본다. 없으면 researcher 에이전트에게 그 항목만 넘겨 노트를 보태게 한다.
+2. writer 에이전트에게 대상 글 폴더 경로를 넘겨 `index.mdx` 를 쓰게 한다. writer 가 조사가 더 필요하다고 돌려주면 1로 돌아간다.
 3. `.nvmrc` 의 Node 버전으로 `pnpm -F @alcolmeter/web build` 를 실행해 글이 빌드되는지 확인한다.
 
 ## 리뷰
 
 1. 대상 폴더의 파일을 `git add` 하고, 따로 `git commit` 을 실행한다.
 2. 커밋 게이트가 요구하는 리뷰어를 게이트가 안내한 순서대로 부른다.
-3. 지적은 루트 `AGENTS.md` 의 "리뷰 지적 처리" 를 따라 반영 여부를 정한다. 고친 뒤 다시 `git add` 하고 커밋을 다시 실행한다.
+3. 지적은 루트 `AGENTS.md` 의 "리뷰 지적 처리" 를 따라 반영 여부를 정한다. 반영할 지적과 결정을 같은 writer 에이전트에게 넘겨 고치게 하고, 다시 `git add` 한 뒤 커밋을 다시 실행한다.
 4. 커밋이 통과할 때까지 2~3을 되풀이한다. push 는 하지 않는다.
+
+## 그림
+
+커밋이 통과하면 illustrator 에이전트에게 글 경로를 넘겨 `.claude/docs/blog-designer/아이덴티티.md` 원칙 3 에 맞는 그림 초안을 만들게 한다. 초안을 사용자에게 보여 주고 승인을 받는다. 표지는 illustrator 가 frontmatter 에 넣고, 본문 그림은 illustrator 가 돌려준 위치와 alt 안을 writer 에게 넘겨 넣게 한다. 그림을 넣은 뒤에는 위 리뷰 절차를 다시 거쳐 커밋한다.
 
 ## 끝
 
@@ -39,5 +39,5 @@ description: lecture 스킬로 강의를 마친 주제를 블로그 글로 쓸 �
 - 커밋 해시와 글 경로
 - 지적별 반영 여부와 이유
 - fact-checker 의 "확인 필요" 항목
-- 표지를 임시로 뒀다면 진짜 표지가 필요하다는 것
+- illustrator 가 그린 그림 목록
 - draft 해제는 Claude 에게 시키라는 것

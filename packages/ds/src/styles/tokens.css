@@ -1,4 +1,4 @@
-/* 값의 원본은 .claude/docs/designer/토큰.md, 글꼴.md 다. 여기만 고치지 말고 문서와 결정 기록을 먼저 고친다. */
+/* 값의 원본은 .claude/docs/blog-designer/토큰.md, 글꼴.md 다. 여기만 고치지 말고 문서와 결정 기록을 먼저 고친다. */
 :root {
   --am-color-palette-gray-00: #ffffff;
   --am-color-palette-gray-50: #faf8f5;
@@ -51,7 +51,8 @@
 
   --am-dimension-gutter: var(--am-dimension-x4);
   --am-dimension-paragraph-gap: var(--am-dimension-x6);
-  --am-dimension-heading-2-gap-top: var(--am-dimension-x14);
+  --am-dimension-heading-2-gap-top: var(--am-dimension-x12);
+  --am-dimension-heading-2-gap-rule: var(--am-dimension-x6);
   --am-dimension-heading-2-gap-bottom: var(--am-dimension-x4);
   --am-dimension-heading-3-gap-top: var(--am-dimension-x10);
   --am-dimension-heading-3-gap-bottom: var(--am-dimension-x3);
@@ -62,7 +63,6 @@
   --am-dimension-section-gap: var(--am-dimension-x24);
 
   --am-size-content: 40rem;
-  --am-size-wide: 60rem;
   --am-size-page: 65rem;
 
   --am-radius-r3: 0.75rem;
@@ -95,9 +95,8 @@
   /* 텍스트 스타일은 font 단축 속성 값이다. 색은 글꼴.md 표의 색 토큰을 함께 지정한다. */
   --am-text-style-article-title: var(--am-font-weight-bold) var(--am-font-size-t5) / var(--am-line-height-t5) var(--am-font-family);
   --am-text-style-article-heading-2: var(--am-font-weight-bold) var(--am-font-size-t4) / var(--am-line-height-t4) var(--am-font-family);
-  --am-text-style-article-heading-3: var(--am-font-weight-bold) var(--am-font-size-t3) / var(--am-line-height-t3) var(--am-font-family);
+  --am-text-style-article-heading-3: var(--am-font-weight-bold) var(--am-font-size-t2) / var(--am-line-height-t2) var(--am-font-family);
   --am-text-style-article-body: var(--am-font-weight-light) var(--am-font-size-t2) / var(--am-line-height-t2) var(--am-font-family);
-  --am-text-style-article-summary: var(--am-font-weight-light) var(--am-font-size-t2) / var(--am-line-height-t2) var(--am-font-family);
   --am-text-style-article-note: var(--am-font-weight-medium) var(--am-font-size-t1) / var(--am-line-height-t1) var(--am-font-family);
   --am-text-style-meta: var(--am-font-weight-medium) var(--am-font-size-t1) / var(--am-line-height-t1) var(--am-font-family);
   --am-text-style-card-title: var(--am-font-weight-bold) var(--am-font-size-t3) / var(--am-line-height-t3) var(--am-font-family);

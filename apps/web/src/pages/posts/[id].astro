@@ -5,6 +5,7 @@ import Cover from '@alcolmeter/ds/components/Cover.astro';
 import Figure from '@alcolmeter/ds/components/Figure.astro';
 import Prose from '@alcolmeter/ds/components/Prose.astro';
 import ProseTable from '@alcolmeter/ds/components/ProseTable.astro';
+import SourceList from '@alcolmeter/ds/components/SourceList.astro';
 import TableOfContents from '@alcolmeter/ds/components/TableOfContents.astro';
 import { getImage } from 'astro:assets';
 import { render } from 'astro:content';
@@ -40,17 +41,50 @@ const jsonLd = {
 
 <Base title={post.data.title} description={post.data.description} image={og.src} type="article">
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
-  <article>
+  <article class="article am-width-page">
     <ArticleHeader
       title={post.data.title}
-      summary={post.data.description}
       publishedAt={post.data.publishedAt}
       updatedAt={post.data.updatedAt}
     />
     <Cover image={post.data.cover} alt={post.data.coverAlt} />
-    <TableOfContents items={getTocItems(headings)} />
+    <div class="toc-area">
+      <TableOfContents items={getTocItems(headings)} />
+    </div>
     <Prose>
       <Content components={{ Figure, Callout, table: ProseTable }} />
     </Prose>
+    <div class="source-list">
+      <SourceList items={post.data.sources} />
+    </div>
   </article>
 </Base>
+
+<style>
+  /* 본문 칼럼은 lg 미만에서 min(화면 - 여백, size.content), lg 이상에서 size.content 다. */
+  .article {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, var(--am-size-content)) minmax(0, 1fr);
+  }
+
+  .article > :global(*) {
+    grid-column: 2;
+  }
+
+  .source-list {
+    margin-top: var(--am-dimension-section-gap);
+  }
+
+  @media (min-width: 1024px) {
+    .article {
+      grid-template-columns: minmax(0, 1fr) var(--am-size-content) minmax(0, 1fr);
+      column-gap: var(--am-dimension-x8);
+    }
+
+    /* 목차는 Prose 행부터 SourceList 행까지 걸쳐 article 끝에서 따라오기를 멈춘다. */
+    .article > .toc-area {
+      grid-column: 1;
+      grid-row: 3 / span 2;
+    }
+  }
+</style>

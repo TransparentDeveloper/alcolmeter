@@ -1,4 +1,4 @@
-<div class="am-prose am-width-content">
+<div class="am-prose">
   <slot />
 </div>
 
@@ -27,8 +27,11 @@
   }
 
   /* 제목 간격이 그림 간격을, 제목 위 간격이 앞 제목의 아래 간격을 이기도록 이 순서를 지킨다(D-036). */
+  /* 첫 요소인 h2 는 목차 아래 선과 겹치므로 구획 선을 * + h2 에만 둔다(D-049). */
   .am-prose > * + h2 {
     margin-top: var(--am-dimension-heading-2-gap-top);
+    padding-top: var(--am-dimension-heading-2-gap-rule);
+    border-top: 1px solid var(--am-color-stroke-neutral-subtle);
   }
 
   .am-prose > * + h3 {
@@ -63,6 +66,7 @@
   }
 
   .am-prose img {
+    width: 100%;
     border-radius: var(--am-radius-r3);
     background: var(--am-color-bg-neutral-weak);
   }
@@ -73,6 +77,7 @@
   }
 
   .am-prose table {
+    width: 100%;
     border-collapse: collapse;
     font: var(--am-text-style-article-note);
     color: var(--am-color-fg-neutral-muted);
@@ -87,41 +92,12 @@
     overflow-wrap: break-word;
   }
 
+  /* 숫자 열은 마크다운 열 정렬(---:)로 표시한다. 처리기가 정렬을 인라인 style 로만 내보내 속성으로 고른다. */
+  .am-prose :is(th, td)[style*='right'] {
+    white-space: nowrap;
+  }
+
   .am-prose thead th {
     background: var(--am-color-bg-neutral-weak);
-  }
-
-  .am-prose [data-footnote-ref] {
-    font: var(--am-text-style-article-note);
-  }
-
-  /* 위첨자가 본문 줄 간격을 늘리지 않게 하는 유일한 텍스트 스타일 예외다(D-031). */
-  .am-prose sup,
-  .am-prose sup [data-footnote-ref] {
-    line-height: 0;
-  }
-
-  /* SourceList: GFM 각주가 본문 끝에 만드는 section 이다(fe 결정 기록 F-005). */
-  .am-prose > .footnotes {
-    margin-top: var(--am-dimension-heading-2-gap-top);
-  }
-
-  .am-prose > .footnotes > h2 + * {
-    margin-top: var(--am-dimension-heading-2-gap-bottom);
-  }
-
-  .am-prose > .footnotes li {
-    font: var(--am-text-style-article-note);
-    color: var(--am-color-fg-neutral-muted);
-  }
-
-  /* inline-block 이어야 행간 t1(24px)이 누를 영역 높이가 된다. */
-  .am-prose [data-footnote-backref] {
-    display: inline-block;
-    padding-inline: var(--am-dimension-x2);
-  }
-
-  .am-prose > .footnotes li + li {
-    margin-top: var(--am-dimension-x2);
   }
 </style>

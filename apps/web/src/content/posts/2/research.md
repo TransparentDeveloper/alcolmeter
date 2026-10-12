@@ -9,6 +9,8 @@
 - 유럽 사이다·과실주 협회(AICV)는 사이다를 신선한 사과즙이나 사과 농축즙을 되살린 즙을 완전히 또는 부분적으로 발효한 알코올 음료로 정의한다. [^1]
 - AICV 2025 자료는 사이다에 증류 알코올을 더하는 것을 금지한다고 적는다. [^2]
 - 미국 BJCP 사이다 가이드라인(2025)은 사이다를 "으깬 사과의 즙을 발효한 것"으로 정의한다. [^4]
+- BJCP는 미국 단체로, 미국 뉴욕주에서 법인으로 등록됐다. [^96]
+- BJCP는 1985년 미국 홈브루어 협회(American Homebrewers Association)와 Home Wine and Beer Trade Association 의 공동 사업으로 세워졌다. (독립 출처 1개, 역사 기준 미충족) [^96]
 - 사이다용 사과는 산도와 타닌으로 4가지로 나눈다: 샤프(산 0.45% 초과, 타닌 0.2% 미만), 비터샤프(산 0.45% 초과, 타닌 0.2% 초과), 비터스위트(산 0.45% 미만, 타닌 0.2% 초과), 스위트(둘 다 미만). [^5] [^6]
 - 이 분류는 1903년 롱애쉬턴 연구소의 바커(B.T.P. Barker)가 세웠다. (독립 출처 1개, 역사 기준 미충족) [^5]
 - 사과 한 품종의 즙에서 알맞은 산도와 타닌을 함께 얻는 일이 드물어 대부분의 사이다는 여러 품종을 섞어 만든다. [^6]
@@ -73,6 +75,9 @@
 - 한국 주세법은 맥주를 발아된 맥류, 홉, 물을 원료로 한 술로, 과실주를 과실을 원료로 한 술로 나눈다. [^12]
 - 맥주는 몰팅(malting)과 당화(mashing)로 곡물의 녹말을 효모가 발효할 수 있는 당으로 바꾼 뒤 발효한다. [^13] [^14]
 - 사이다는 과즙에 원래 들어 있는 당을 효모가 발효한다. [^1]
+- 효모는 출아나 분열로 무성 생식하는 단세포 균류(미생물)다. [^95]
+- 과즙의 주된 탄수화물은 물에 녹는 당이고 곡물의 주된 탄수화물은 녹말이다. 알코올 발효를 하는 효모는 녹말을 분해하는 효소를 만들지 못하므로, 와인은 원료를 바로 발효해 만들고 맥주는 녹말을 먼저 분해해 당을 얻어야 한다. [^95]
+- 포도즙의 주성분은 포도당(75~150g/L)과 과당(75~150g/L)이다. [^95]
 - 미국 TTB 는 사이다를 와인의 한 종류(과실 와인)로 분류한다. [^9]
 - BJCP는 사이다와 페리의 바디감이 가벼운 와인에 가깝고, 대부분의 사이다 스타일은 대부분의 맥주보다 바디감이 훨씬 가볍다고 적는다. [^4]
 - 와인은 포도로, 사이다는 사과(페리는 배)로 만든다는 점이 AICV 정의에서 갈린다: AICV는 포도를 뺀 과일 술을 과실 와인으로 묶고, 사과·배 술을 사이다·페리로 따로 둔다. [^1]
@@ -151,7 +156,7 @@
 - 표준국어대사전은 "사이다(cider)" 를 설탕물에 탄산나트륨과 향료를 섞어 만든 청량음료로 풀이한다. [^30]
 - 영어 cider 는 원래 사과즙이나 사과술을 뜻한다. [^23]
 - 일본에서는 메이지 초기부터 사과 계열 향료를 쓴 탄산음료를 "샴페인 사이다" 라고 불렀다. [^24]
-- 1868년 영국인이 요코하마 외국인 거류지에 세운 상회가 사과·파인애플 향을 더한 탄산음료 "샴페인 사이다" 를 팔았고, 사과주가 아닌 탄산음료로서의 사이다는 일본에서 생겼다. (인천시립박물관 자료, 독립 출처 1개) [^25]
+- 1868년 영국인이 요코하마 외국인 거류지에 세운 상회가 사과·파인애플 향을 더한 탄산음료 "샴페인 사이다" 를 팔았고, 사과주가 아닌 탄산음료로서의 사이다는 일본에서 생겼다. (메이지 초기 샴페인 사이다는 독립 출처 2개: 세계대백과사전 "메이지 초년 이래" [^24], 인천시립박물관 1868년 요코하마 [^25]) [^24] [^25]
 - 일본에서 요코하마의 아키모토 미노스케가 "긴센(金線) 사이다" 를 팔았다. [^23] [^24]
 - 일본대백과전서는 아키모토가 라무네를 만들면서 "긴센 사이다" 라는 이름으로 판 것을 일본 사이다 제조의 시작으로 본다. [^23]
 - 엇갈림(긴센 사이다 출시 연도): 일본대백과전서는 1887년 무렵 [^23] / 세계대백과사전은 1899년 [^24]
@@ -467,6 +472,63 @@
 - 방병호 외(2017)는 국산 홍로로 양조한 사과와인의 청징 처리를 연구했다. 품종의 원료 적합성 평가는 아니다. [^79]
 - 못 찾음: 홍로, 아리수, 감홍, 황옥, 쓰가루를 사이다 원료로서 비교 평가하거나 4분류에 넣은 한국 연구, 그리고 농촌진흥청의 사이다용 품종 평가 자료.
 
+## 14. 한국 독자가 아는 술(맥주, 희석식 소주, 막걸리, 와인)의 도수는 얼마야? (사이다와 같은 표에 놓기 위해)
+
+조사일: 2026-10-11. 도수는 모두 % (v/v), 즉 주세법의 "알코올분 도"와 같은 단위다. [^93]
+
+### 맥주 (국내 대형 제조사 대표 제품)
+
+- 하이트진로 테라: 4.6%. (제조사 브랜드 페이지, 확인일 2026-10-11) [^80]
+- 하이트진로 켈리: 4.5%. (제조사 브랜드 페이지, 확인일 2026-10-11) [^81]
+- 오비맥주 카스: 4.5%. (오비맥주 브루마스터 발언을 옮긴 2025년 기사, 제조사 페이지 미확인) [^86]
+- 롯데칠성음료 클라우드: 5%. (2026년 5월 리뉴얼 기사, 제조사 페이지 미확인) [^87]
+- 정리: 국내 대형 3사 대표 맥주 4종 기준 4.5~5%.
+
+### 희석식 소주 (국내 대형 제조사 대표 제품)
+
+- 하이트진로 참이슬 fresh: 15.7%. (제조사 브랜드 페이지, 확인일 2026-10-11) [^82]
+- 하이트진로 진로(올뉴 진로): 15.7%. (제조사 브랜드 페이지, 확인일 2026-10-11) [^84]
+- 하이트진로 참이슬 오리지널: 20.1%. (제조사 브랜드 페이지, 확인일 2026-10-11) [^83]
+- 롯데칠성음료 처음처럼: 2026년 9월 1일 16% 에서 15.7% 로 낮춘다고 발표했고, 새 제품은 기존 재고 소진 뒤 9월 중순부터 순차 판매된다. (기사, 제조사 페이지 미확인) [^88]
+- 같은 기사는 하이트진로가 2026년 2월 진로를 16% 에서 15.7% 로 내렸다고 적는다. [^88]
+- 정리: 국내 대형 2사 대표 소주 4종 기준 15.7~20.1%. 판매 시점에 따라 처음처럼은 16% 제품이 남아 있을 수 있다.
+
+### 막걸리
+
+- 서울장수 장수 생막걸리(750mL): 주류의 종류 탁주, "알코올 6도 기준". (제조사 서울탁주제조협회 홈페이지, 2011년 저작권 표기 페이지라 현재 제품과 같은지 미확인) [^89]
+- 지윤정·정해정(2012)이 경기 북부 대형마트에서 산 시판 생막걸리 6종의 표시 도수는 모두 6% 였다. [^90]
+- 같은 연구에서 실측 도수는 냉장(4±1°C) 보관 시작 때 5.90~6.10%, 30일 뒤 6.30~7.35% 로 올랐다. [^90]
+- 지평주조는 2015년 주력 제품 지평생쌀막걸리의 도수를 5도로 낮췄다. (2021년 기사, 제조사 페이지 미확인) [^91]
+- 정리: 대표 생막걸리 기준 5~6%. 다만 6% 값의 출처가 2011~2012년 자료다.
+- 못 찾음: 장수 생막걸리, 국순당 생막걸리, 지평생쌀막걸리의 현재 도수를 적은 제조사 페이지. 국순당 홈페이지 막걸리 페이지에는 도수 표시가 없었고, 지평주조 사이트는 인증서 오류로 열리지 않았다.
+
+### 와인
+
+- 하이트진로 진로 레드와인(이탈리아 시칠리아산): 14%. (제조사 브랜드 페이지, 확인일 2026-10-11) [^85]
+- Lee 외(2022)가 한국 시중에서 산 과실 와인 289종의 도수(표의 "Alcohol contents (%)", 라벨값인지 실측값인지 미기재, 구입 연도 미기재)는 다음과 같다. [^92]
+  - 수입 포도 와인: 칠레 37종 12.0~15.0%, 프랑스 18종 12.0~13.0%, 미국 12종 11.0~15.0%, 호주 8종 13.0~15.0%, 스페인 42종 7.0~14.5%, 이탈리아 19종 5.0~17.0%. [^92]
+  - 국산 포도 와인 23종 12.0~14.0%, 국산 사과 와인 10종 11.0~16.0%. [^92]
+- 정리: 한국에서 파는 포도 와인은 대체로 11~15% 이고, 국가별로 5~17% 까지 넓게 걸친다.
+- 못 찾음: 한국 시판 와인 도수 분포를 집계한 공공기관 통계.
+
+### 법령이 정한 도수 기준
+
+- 주세법은 알코올분 1도 이상의 음료를 주류로 정의하고, 알코올분은 전체 용량에 든 에틸알코올(15°C 기준)이다. [^93]
+- 주세법 별표는 주정을 알코올분 85도 이상으로 증류한 것으로 정한다. [^93]
+- 주세법 시행령은 주정의 도수를 95도 이상(곡물주정은 85도 이상 90도 이하)으로 정한다. [^94]
+- 주세법 시행령은 주류의 도수를 최종 제품 표시 도수의 ±0.5도까지 허용하고, 살균하지 않은 탁주·약주 등은 0.5도를 더 늘릴 수 있게 한다. [^94]
+- 약주·청주·맥주·과실주에 다른 주류나 재료를 섞어 만든 것(법 별표 2호 나목4, 다목2, 라목3, 마목5)은 알코올분 25도 미만이어야 한다. [^94]
+- 법령은 희석식 소주(법 별표 3호 가목 5~9)에 도수 범위를 두지 않고 불휘발분 2도 미만만 요구한다. [^93] [^94]
+- 못 찾음: 탁주(막걸리), 맥주, 과실주(사이다 포함)의 기본형에 도수 상·하한을 둔 국내 법령 조항. 식품공전의 주류 도수 기준은 조회하지 못했다.
+
+### 사이다 상품 값과 같은 기준인지
+
+- 써머스비 4.5%: 재확인(2026-10-11) 결과 애플, 망고&라임 모두 4.5% 다. 출처가 하이트진로 브랜드 페이지라 테라·켈리·참이슬·진로·진로 레드와인과 같은 페이지 형식의 제조(수입)사 표시값이다. [^31]
+- 댄싱사이더 4.3~5.9%: 재확인(2026-10-11) 결과 330mL 4종이 4.3%, 5.9%, 5.0%, 4.4% 다. 제조사 공식 몰의 상품 정보 표시값이라 위 제조사 페이지 값과 같은 기준(라벨 표시 도수)이다. [^32]
+- 범위 주의: 4.3~5.9% 는 330mL 4종만의 범위다. 같은 회사 750mL 제품은 요새로제 6.7%, 허니문배 6.2% 다. [^33]
+- 기준이 다른 값: 카스·클라우드·처음처럼·지평생쌀막걸리는 기사, 장수 생막걸리는 2011년 페이지, 와인 범위는 논문 표(라벨값·실측값 미구분)라 사이다 값과 기준이 같지 않다. [^86] [^87] [^88] [^89] [^91] [^92]
+- 모든 표시 도수는 법적으로 ±0.5도 오차가 허용된다. [^94]
+
 ## 참고 자료
 
 [^1]: European Cider and Fruit Wine Association(AICV), Voluntary Ingredient Listing & Nutrition Information: Production Process for Cider and Fruit Wine, European Commission DG SANTE 게재, 2018, https://food.ec.europa.eu/system/files/2018-03/fs_labelling-nutrition_legis_alcohol-self-regulatory-proposal_cider_en.pdf. 확인일 2026-10-08. 근거 문장: "The European Cider and Fruit Wine Association (AICV) define cider and perry as alcoholic beverages, with a %abv, of between 1.2% and 8.5%abv, obtained by the complete or partial fermentation of the juice of fresh apples or reconstituted concentrated apple juice, with or without the addition of sugars and/or water. In the case of perry the fruit is mainly pear." / "The first yet principal stage of making cider/perry and fruit wine is the fermentation of the naturally occurring sugars in the juices (and any additional sugars introduced) by yeast." / "After the fermented base has been completed 'racking' takes place – this is where the alcohol produced is pumped/syphoned away from the residual yeast and transferred to a clean container for further storage at which place further maturation can occur or where additional fermented juices are blended." / "Blending/fining/filtration; With or without the addition of sugars and sweeteners as appropriate to establish a 'dry' or 'sweet' product; Addition of preservatives e.g. sulphites; With or without carbonation at the appropriate level to establish a 'still' or 'sparkling' product; Addition of flavours or colours if required – balancing or enhancement; Pasteurization." / "Fruit wine is defined by AICV as an alcoholic beverage, with an %abv, of between 1.2% and 16% abv (with fortified fruit wines between 8.5%abv and 22% abv), obtained by the complete or partial fermentation of the juice or the pulp of fresh fruits, except grapes, or reconstituted concentrated fruit juice."
@@ -626,3 +688,37 @@
 [^78]: 김동현, 이새벽, 박희동, 내당성 효모 Saccharomyces cerevisiae SS89에 의한 늦수확 후지 사과의 사과주 발효 특성(Fermentation characteristics of cider from late harvest Fuji apples by a sugar tolerant yeast, Saccharomyces cerevisiae SS89), 한국식품저장유통학회지(Food Science and Preservation) 21(6):917-924, 2014, https://www.koreascience.or.kr/article/JAKO201403460492524.page. 확인일 2026-10-10. 근거 문장: "늦수확 사과주는 향에 있어서는 유사한 값을, 색에 있어서는 낮은 점수를 받았으며 맛에 있어서 정상수확 사과주보다 높은 점수를 얻었으나 유의적인 차이는 없었다." 비고: 요약 도구가 인용으로 돌려준 문장이다.
 
 [^79]: 방병호, 정은자, 강혜란, 이문수, 이동희, 백진경, Effects of Fining Treatments on Color and Clearness of Apple Wine, 한국식품영양과학회지 46(3), 2017, https://koreascience.or.kr/article/JAKO201713647762835.do. 확인일 2026-10-10. 근거 문장: "본 연구에서는 국산 홍로품종을 원료로 양조한 사과와인에 PVPP와 벤토나이트를 이용하여" 비고: 요약 도구가 인용으로 돌려준 문장이다.
+
+[^80]: 하이트진로, TERRA 브랜드 페이지, 하이트진로, 확인 시점 게시본, https://www.hitejinro.com/brand/view.asp?brandcd2=A10. 확인일 2026-10-11. 근거 문장: "알코올" "4.6%" / 용량 병 "330 mL", "500 mL", 캔 "250 mL" ~ "500 mL", 페트 "1,000 mL" ~ "1,900 mL". 비고: 제품 정보 표를 요약 도구가 정리해 돌려준 값이다.
+
+[^81]: 하이트진로, Kelly 브랜드 페이지, 하이트진로, 확인 시점 게시본, https://www.hitejinro.com/brand/view.asp?brandcd2=A11. 확인일 2026-10-11. 근거 문장: "알코올" "4.5%" / 병 "330 mL" / "500 mL". 비고: 제품 정보 표를 요약 도구가 정리해 돌려준 값이다.
+
+[^82]: 하이트진로, 참이슬 fresh 브랜드 페이지, 하이트진로, 확인 시점 게시본, https://www.hitejinro.com/brand/view.asp?brandcd2=B01. 확인일 2026-10-11. 근거 문장: "알코올" "15.7%" / "병 360 mL" / "포켓 200 mL" / "페트 400 mL / 500 mL / 640 mL / 1,800 mL". 비고: 제품 정보 표를 요약 도구가 정리해 돌려준 값이다.
+
+[^83]: 하이트진로, 참이슬 오리지널 브랜드 페이지, 하이트진로, 확인 시점 게시본, https://www.hitejinro.com/brand/view.asp?brandcd2=B02. 확인일 2026-10-11. 근거 문장: "알코올" "20.1%" / 병 360 mL, 팩 200 mL, 페트 640 mL, 1,800 mL. 비고: 제품 정보 표를 요약 도구가 정리해 돌려준 값이다.
+
+[^84]: 하이트진로, 진로 브랜드 페이지, 하이트진로, 확인 시점 게시본, https://www.hitejinro.com/brand/view.asp?brandcd2=B11. 확인일 2026-10-11. 근거 문장: 제품명 "올뉴 진로" / "알코올" "15.7%" / "병 360 mL" / "팩 160 mL" / "페트 400 mL", "640 mL". 비고: 제품 정보 표를 요약 도구가 정리해 돌려준 값이다.
+
+[^85]: 하이트진로, 진로 레드와인 브랜드 페이지, 하이트진로, 확인 시점 게시본, https://www.hitejinro.com/brand/view.asp?brandcd2=D15. 확인일 2026-10-11. 근거 문장: 제품명 "진로 레드와인" / "알코올" "14%" / 원산지 "Italy, Sicilia". 비고: 페이지에 용량 정보가 없다.
+
+[^86]: 정진우, "톡 쏘는 맛" 술집서 가장 많이 찾는 한국맥주…신선함의 비밀[리얼로그M], 머니투데이, 2025-05-31, https://www.mt.co.kr/living/2025/05/31/2025053107104258123. 확인일 2026-10-11. 근거 문장: (오비맥주 윤정훈 브루마스터 상무, 2025 비어마스터 클래스) "알코올 도수 4.5도, 바디감은 낮게 등 까다로운 기준에 맞춰 신선함과 톡 쏘는 청량감과 함께 가벼우면서도 산뜻한 과일향이 끝에 살짝 느껴지는 향을 살린 최상의 라거 맥주다". 비고: 오비맥주·카스 공식 사이트에서는 도수 표시를 찾지 못했다.
+
+[^87]: 백지영, "맥주다운 맛 살렸다"…롯데칠성 '클라우드' 전면 리뉴얼, 디지털데일리, 2026-05-20, https://www.ddaily.co.kr/page/view/2026052020412693287. 확인일 2026-10-11. 근거 문장: "발효원액에 물을 추가로 섞지 않아 발효 순간의 풍미와 알코올 도수(5도)를 그대로 유지한다." 비고: 롯데칠성음료 사이트는 인증서 오류로 열리지 않았다.
+
+[^88]: 신채연, 소주 마의 16도 벽 깨졌다…순하디 순한 '처음처럼', SBS Biz, 2026-09-01, https://biz.sbs.co.kr/amp/article/20000332061. 확인일 2026-10-11. 근거 문장: "롯데칠성은 처음처럼의 알코올 도수를 16도에서 15.7도로 변경한다고 오늘(1일) 밝혔습니다." / "도수가 조정된 '처음처럼'은 기존 재고 소진 후 이르면 이달 중순부터 식당, 술집 및 할인점과 편의점 등 모든 채널에서 순차적으로 구매할 수 있습니다." / "앞서 하이트진로도 지난 2월 '진로'의 알코올 도수를 16도에서 15.7도로 내린 바 있습니다."
+
+[^89]: (주)서울탁주제조협회, 장수 생막걸리 제품소개, 서울탁주 홈페이지, 2011(저작권 표기), http://www.koreawine.co.kr/2011/c1/page1.php. 확인일 2026-10-11. 근거 문장: "주류의 종류 : 탁주" / "주정도수 : 알코올 6도 기준" / "사용원료 : 백미 90%, 이소말토올리고당 10%" / "용량 및 포장 : 750㎖ 녹색의 PET" / "Copyright 2011 (주)서울탁주제조협회 All Rights Reserved."
+
+[^90]: 지윤정, 정해정, 일부 시판 생막걸리 제품의 저장기간에 따른 품질 특성 변화(Changes in Quality Characteristics of Makgeolli during Storage Time), 한국식생활문화학회지 27(4):383-390, 2012, https://doi.org/10.7318/KJFC/2012.27.4.383 (https://koreascience.or.kr/article/JAKO201225150622898.pdf). 확인일 2026-10-11. 근거 문장: "본 실험에서는 경기 북부의 중ㆍ대형마트에서 판매되고 있는 생막걸리 6 종류를" / "(제조일로부터 0~2일의 제품)" / "<Table 1> Description of 6 samples of commercial Makgeolli", 열 "Alcohol content (%)" A~F 모두 "6%" / "1. 막걸리 제품의 표시사항 본 실험에 사용된 시판 생막걸리의 표시사항 중" / "The alcohol content increased from beginning values of 5.90~6.10% to ending values of 6.30~7.35% at the end of storage" / 보관 조건 "4±1°C에서 30일간". 비고: 제조사명은 논문에서 가렸다.
+
+[^91]: 송병기, (지평주조 기사), 쿠키뉴스, 2021-01-23, https://www.kukinews.com/article/view/kuk202101230031. 확인일 2026-10-11. 근거 문장: "지난 2015년 주력제품 '지평생쌀막걸리'의 알코올 도수를 5도로 낮춰 리뉴얼하면서 국내 막걸리 업계의 저도주 트렌드를 선도해왔다." 비고: 기사 제목은 요약 도구가 돌려주지 않아 적지 못했다. 지평주조 사이트는 인증서 오류로 열리지 않았다.
+
+[^92]: Seung-Mi Lee, Yeong-Kyeong Pyeon, Mi-Suk Chŏng, Young-Suk Kim, Determination of methanol and fusel oils in various types of wines distributed in Korea, Food Science and Biotechnology 31(2):203-209, 2022, https://doi.org/10.1007/s10068-021-01026-3 (https://pmc.ncbi.nlm.nih.gov/articles/PMC8818071/). 확인일 2026-10-11. 근거 문장: "Commercial fruit wines were purchased from local markets in Korea." / Table 1 "Fruit wine samples used in this study", 열 "Alcohol contents (%)": Chile grape wine 37 "12.0–15.0", France grape wine 18 "12.0–13.0", USA grape wine 12 "11.0–15.0", Australia grape wine 8 "13.0–15.0", Spain grape wine 42 "7.0–14.5", Italy grape wine 19 "5.0–17.0", South Africa grape wine 6 "5.0–14.5", Argentine grape wine 3 "12.05–14.5", China grape wine 3 "5.6–20.0", Germany grape wine 2 "10.0–11.5", Korean grape wine 23 "12.0–14.0", Korean apple wine 10 "11.0–16.0", Korean black raspberry wine 80 "7.5–18.0", Korean plum wine 15 "4.5–16.0", Korean wild grape wine 11 "12.0–14.0". 비고: 도수가 라벨값인지 실측값인지, 구입 시기는 본문에 없다. 저자 이름 표기는 Europe PMC/AGRIS 서지 기준이다.
+
+[^93]: 대한민국, 주세법 제2조(정의) 및 [별표] 주류의 종류별 세부 내용 제1호·제3호가목, 법률 제20618호(2024-12-31 공포, 2025-01-01 시행), 국가법령정보센터, https://www.law.go.kr/법령/주세법/제2조. 확인일 2026-10-11(`.claude/scripts/law.mjs` 조회). 근거 문장: (제2조1호나목) "알코올분 1도 이상의 음료" / (제2조2호) "\"알코올분\"이란 전체용량에 포함되어 있는 에틸알코올(섭씨 15도에서 0.7947의 비중을 가진 것을 말한다)을 말한다." / (별표 1.가) "녹말 또는 당분이 포함된 재료를 발효시켜 알코올분 85도 이상으로 증류한 것" / (별표 1.나) "알코올분이 포함된 재료를 알코올분 85도 이상으로 증류한 것" / (별표 3.가) "소주(불휘발분이 2도 미만이어야 한다)" / (별표 3.가.5) "주정 또는 곡물주정을 물로 희석한 것". 비고: 별표는 [^12] 와 같은 문서이고, 여기에는 [^12] 에 없는 조항의 근거 문장만 적었다.
+
+[^94]: 대한민국, 주세법 시행령 제3조(주류의 규격 등) 및 [별표 2] 주류의 알코올분 도수(2025-02-28 개정), 대통령령 제36136호(2026-02-27 공포·시행), 국가법령정보센터, https://www.law.go.kr/법령/주세법 시행령/제3조. 확인일 2026-10-11(`.claude/scripts/law.mjs` 조회). 근거 문장: (제3조②) "법 제5조, 제6조 및 별표에 따른 주류의 종류별 알코올분 도수는 별표 2와 같다." / (별표 2, 1.가) "법 제6조 및 별표에 따라 주정의 알코올분 도수는 95도 이상이어야 한다. 다만, 법 별표 제3호가목3)에 따른 곡물주정은 곡류를 원료로 한 주정으로서 알코올분 도수는 85도 이상 90도 이하여야 한다." / (별표 2, 1.나) "주류의 알코올분 도수는 최종제품에 표시된 알코올분 도수의 0.5도까지 그 증감을 허용한다. 다만, 다음의 주류는 추가로 0.5도까지 증가를 허용한다. 1) 살균하지 않은 탁주ㆍ약주" / (별표 2, 2) "법 별표 제2호나목4)", "법 별표 제2호다목2)", "법 별표 제2호라목3)", "법 별표 제2호마목5)" → "알코올분 25도 미만". 비고: 별표 2 에는 소주(법 별표 제3호가목) 항목이 없다.
+
+[^95]: Mike Battcock, Sue Azam-Ali, Fermented fruits and vegetables: A global perspective, Chapter 3 Yeast fermentations, FAO Agricultural Services Bulletin No. 134, Food and Agriculture Organization of the United Nations, 1998, https://www.fao.org/4/x0560E/x0560e08.htm. 확인일 2026-10-11. 근거 문장: "A yeast is a unicellular fungus which reproduces asexually by budding or division" / "The principal carbohydrates in fruit juices are soluble sugars" / "the principal carbohydrate in grains is starch, an insoluble polysaccharide" / "The yeasts that bring about alcoholic fermentation can attack soluble sugars but do not produce starch-splitting enzymes" / "Wines can therefore be made by the direct fermentation of the raw material" / "the production of beer requires the hydrolysis of starch to yield sugars" / "The main constituents of grape juice are glucose (75 to 150 g/l), fructose (75 to 150 g/l)". 비고: 저자·총서·연도는 같은 자료의 표지 페이지(https://www.fao.org/4/x0560E/x0560e00.htm)에서 확인했다. 요약 도구의 인용 길이 제한으로 문장 일부만 옮겼다.
+
+[^96]: Beer Judge Certification Program, Origins, BJCP, 연도 표기 없음(사이트 저작권 표기 1999-2026), https://www.bjcp.org/about/history/. 확인일 2026-10-11. 근거 문장: "The BJCP was founded in 1985 as a joint venture between the American Homebrewers Association (AHA)" (같은 문장에서 Home Wine and Beer Trade Association 을 다른 공동 주체로 든다) / "The organization was incorporated in the State of New York." 비고: 페이지에 "미국 단체" 라는 표현은 직접 없고, 뉴욕주 법인 등록을 근거로 적었다. 뉴욕주 법인 등록은 1996년 사건으로 서술된다.
