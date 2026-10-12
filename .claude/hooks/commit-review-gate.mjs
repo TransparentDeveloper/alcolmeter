@@ -146,8 +146,12 @@ function reviewScope(agent, file) {
   return changed.length ? `바뀐 구획: ${changed.join(", ")}` : "전체: 바뀐 구획을 찾지 못함";
 }
 
+// heredoc 본문은 명령이 아니라 글이므로 여는 줄의 나머지만 남기고 지운다.
+const stripHeredocs = (command) =>
+  command.replace(/<<-?[ \t]*(['"]?)(\w+)\1([^\n]*)\n[\s\S]*?^[ \t]*\2[ \t]*$/gm, (_, quote, tag, rest) => rest);
+
 const segments = (command) =>
-  command
+  stripHeredocs(command)
     .split(/&&|\|\||[;|\n]/)
     .map((s) => s.trim())
     .filter(Boolean);

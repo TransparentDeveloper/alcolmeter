@@ -307,6 +307,23 @@ test("어떤 구분자로 이어도 스테이징과 커밋을 묶으면 막는�
   }
 });
 
+test("heredoc 본문에 든 커밋 명령은 커밋으로 보지 않는다", (t) => {
+  const { check, write, git } = setup(t);
+  write("README.md", "# 바뀜\n");
+  git("add", "README.md");
+  assert.equal(check("cat <<'EOF' > a.sh\ngit add .\ngit commit -m x\nEOF").status, 0);
+  assert.equal(check("cat <<-EOF > a.sh\n\tgit commit -m x\n\tEOF").status, 0);
+});
+
+test("heredoc 을 여는 줄이나 닫은 뒤에 이어진 커밋은 막는다", (t) => {
+  const { check, write, git } = setup(t);
+  write("README.md", "# 바뀜\n");
+  git("add", "README.md");
+  assert.equal(check("cat <<EOF > a.txt && git commit -m x\n본문\nEOF").status, 2);
+  assert.equal(check("cat <<EOF > a.txt\n본문\nEOF\ngit commit -m x").status, 2);
+  assert.equal(check('git commit -m "$(cat <<\'EOF\'\n메시지\nEOF\n)"').status, 2);
+});
+
 test("a 가 든 다른 옵션은 한 번에 모두 커밋하는 것으로 보지 않는다", (t) => {
   const { check } = setup(t);
   assert.equal(check("git commit --amend -m x").status, 0);
