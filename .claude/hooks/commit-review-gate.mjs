@@ -61,6 +61,11 @@ const REVIEWERS = [
     ],
     target: "화면·스타일·이미지 변경",
   },
+  {
+    agent: "test-reviewer",
+    pathspec: ["*.test.mjs", "*.test.js", "*.test.ts", "*.test.tsx"],
+    target: "테스트",
+  },
 ];
 const GIT_PREFIX = String.raw`^git(\s+-C\s+\S+|\s+-c\s+\S+|\s+--?[\w-]+(=\S+)?)*\s+`;
 
