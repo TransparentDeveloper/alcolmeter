@@ -57,6 +57,7 @@ const REVIEWERS = [
       "apps/web/*.ico",
       "packages/*.astro",
       "packages/*.css",
+      ":(exclude)apps/web/src/content/posts",
     ],
     target: "화면·스타일·이미지 변경",
   },
@@ -65,15 +66,29 @@ const GIT_PREFIX = String.raw`^git(\s+-C\s+\S+|\s+-c\s+\S+|\s+--?[\w-]+(=\S+)?)*
 
 const git = (...args) => execFileSync("git", args, { encoding: "utf8" });
 
-const stagedFiles = ({ pathspec, includeDeleted }) =>
-  git("diff", "--cached", "--name-only", `--diff-filter=ACMR${includeDeleted ? "D" : ""}`, "--", ...pathspec)
-    .split("\n")
-    .filter(Boolean);
-
 const POST = /^apps\/web\/src\/content\/posts\/.+\/index\.mdx$/;
 
-// draft 줄만 바꾸는 발행 커밋이 앞서 받은 PASS 를 그대로 쓰도록 글은 draft 줄을 뺀 내용으로 해시한다.
-const postContent = (file) => git("show", `:${file}`).replace(/^draft:.*\n/m, "");
+// 그림 넣기와 draft 해제는 리뷰 대상이 아니므로 draft 줄, 표지 줄, 그림 줄을 뺀 글로 비교한다.
+const reviewedText = (text) =>
+  text
+    .replace(/^draft:.*\n/m, "")
+    .replace(/^(cover|coverAlt):.*\n/gm, "")
+    .replace(/^!\[.*\]\(.*\)[ \t]*$/gm, "")
+    .replace(/^<Figure\b[\s\S]*?\/>[ \t]*$/gm, "")
+    .replace(/\n{3,}/g, "\n\n");
+
+const postContent = (file) => reviewedText(git("show", `:${file}`));
+
+const headContent = (file) => {
+  try {
+    return reviewedText(git("show", `HEAD:${file}`));
+  } catch {
+    return undefined;
+  }
+};
+
+// 커밋된 글은 모두 게이트를 통과했으므로 HEAD 와 같은 글은 다시 보지 않는다.
+const changedSinceHead = (file) => !POST.test(file) || postContent(file) !== headContent(file);
 
 // 삭제된 파일은 ls-files 에 안 나오므로 경로 목록도 함께 해시한다.
 const fingerprint = (files) => {
@@ -83,6 +98,12 @@ const fingerprint = (files) => {
   for (const f of files.filter((f) => POST.test(f))) hash.update(postContent(f));
   return hash.digest("hex");
 };
+
+const stagedFiles = ({ pathspec, includeDeleted }) =>
+  git("diff", "--cached", "--name-only", `--diff-filter=ACMR${includeDeleted ? "D" : ""}`, "--", ...pathspec)
+    .split("\n")
+    .filter(Boolean)
+    .filter(changedSinceHead);
 
 const gitDir = () => git("rev-parse", "--absolute-git-dir").trim();
 const markerPath = (agent) => join(gitDir(), `review-pass-${agent}`);
@@ -96,15 +117,11 @@ const readSnapshot = (agent) => {
   }
 };
 
-// 기준본은 이 리뷰어가 마지막으로 PASS 한 내용, 없으면 HEAD 의 내용이다. 커밋된 글은 모두 게이트를 통과했다.
+// 기준본은 이 리뷰어가 마지막으로 PASS 한 내용, 없으면 HEAD 의 내용이다.
 const baseline = (agent, file) => {
   const snapshot = readSnapshot(agent)[file];
   if (snapshot !== undefined) return snapshot;
-  try {
-    return git("show", `HEAD:${file}`).replace(/^draft:.*\n/m, "");
-  } catch {
-    return undefined;
-  }
+  return headContent(file);
 };
 
 const sections = (content) => {
