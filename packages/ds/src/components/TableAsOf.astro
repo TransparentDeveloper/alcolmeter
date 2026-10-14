@@ -1,0 +1,39 @@
+---
+import { createHash } from 'node:crypto';
+import { formatYearMonth } from '../lib/date';
+
+interface Props {
+  date: string;
+}
+
+const { date } = Astro.props;
+
+// MDX 는 props 타입을 검사하지 않으므로 빌드 시점에 직접 막는다.
+const label = typeof date === 'string' ? formatYearMonth(date) : undefined;
+if (!label) {
+  throw new Error(`TableAsOf date 는 "2026-10" 같은 YYYY-MM 이어야 한다: ${String(date)}`);
+}
+
+const table = Astro.slots.has('default') ? await Astro.slots.render('default') : '';
+const tableCount = table.match(/<table\b/g)?.length ?? 0;
+if (tableCount !== 1) {
+  throw new Error(`TableAsOf 는 마크다운 표 하나를 감싸야 한다(감싼 표 ${tableCount}개).`);
+}
+
+// 한 페이지에 표 내용과 시점이 모두 같은 TableAsOf 가 둘 있으면 id 가 겹친다.
+const id = `table-as-of-${createHash('sha256').update(date + table).digest('hex').slice(0, 8)}`;
+const describedTable = table.replace(/<table\b/, `<table aria-describedby="${id}"`);
+---
+
+<Fragment set:html={describedTable} />
+<p class="as-of" id={id}><time datetime={date}>{label}</time> 기준</p>
+
+<style>
+  .as-of {
+    margin-top: var(--am-dimension-x2);
+    font: var(--am-text-style-table-as-of);
+    color: var(--am-color-fg-neutral-subtle);
+    text-align: end;
+    white-space: nowrap;
+  }
+</style>

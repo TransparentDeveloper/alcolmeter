@@ -6,6 +6,7 @@ import Figure from '@alcolmeter/ds/components/Figure.astro';
 import Prose from '@alcolmeter/ds/components/Prose.astro';
 import ProseTable from '@alcolmeter/ds/components/ProseTable.astro';
 import SourceList from '@alcolmeter/ds/components/SourceList.astro';
+import TableAsOf from '@alcolmeter/ds/components/TableAsOf.astro';
 import TableOfContents from '@alcolmeter/ds/components/TableOfContents.astro';
 import { getImage } from 'astro:assets';
 import { render } from 'astro:content';
@@ -52,7 +53,7 @@ const jsonLd = {
       <TableOfContents items={getTocItems(headings)} />
     </div>
     <Prose>
-      <Content components={{ Figure, Callout, table: ProseTable }} />
+      <Content components={{ Figure, Callout, TableAsOf, table: ProseTable }} />
     </Prose>
     <div class="source-list">
       <SourceList items={post.data.sources} />

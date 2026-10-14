@@ -79,12 +79,14 @@
   --am-font-weight-medium: 500;
   --am-font-weight-bold: 700;
 
+  --am-font-size-t0: 0.8125rem;
   --am-font-size-t1: 0.9375rem;
   --am-font-size-t2: 1.0625rem;
   --am-font-size-t3: 1.25rem;
   --am-font-size-t4: 1.5rem;
   --am-font-size-t5: 1.75rem;
   --am-font-size-t6: 2.25rem;
+  --am-line-height-t0: 1.25rem;
   --am-line-height-t1: 1.5rem;
   --am-line-height-t2: 1.875rem;
   --am-line-height-t3: 1.75rem;
@@ -99,6 +101,7 @@
   --am-text-style-article-body: var(--am-font-weight-light) var(--am-font-size-t2) / var(--am-line-height-t2) var(--am-font-family);
   --am-text-style-article-note: var(--am-font-weight-medium) var(--am-font-size-t1) / var(--am-line-height-t1) var(--am-font-family);
   --am-text-style-meta: var(--am-font-weight-medium) var(--am-font-size-t1) / var(--am-line-height-t1) var(--am-font-family);
+  --am-text-style-table-as-of: var(--am-font-weight-medium) var(--am-font-size-t0) / var(--am-line-height-t0) var(--am-font-family);
   --am-text-style-card-title: var(--am-font-weight-bold) var(--am-font-size-t3) / var(--am-line-height-t3) var(--am-font-family);
   --am-text-style-card-title-feature: var(--am-font-weight-bold) var(--am-font-size-t4) / var(--am-line-height-t4) var(--am-font-family);
   --am-text-style-card-summary: var(--am-font-weight-medium) var(--am-font-size-t1) / var(--am-line-height-t1) var(--am-font-family);
