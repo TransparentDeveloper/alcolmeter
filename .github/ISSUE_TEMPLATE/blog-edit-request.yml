@@ -1,0 +1,34 @@
+name: 블로그 글 수정 요청
+description: 블로그 글의 사실 오류, 오탈자, 표현 수정
+labels: ["blog/edit-request"]
+body:
+  - type: input
+    id: post
+    attributes:
+      label: 글 주소
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: 종류
+      options:
+        - 사실 오류
+        - 오탈자
+        - 표현
+    validations:
+      required: true
+  - type: textarea
+    id: sentence
+    attributes:
+      label: 고칠 부분
+      description: 글의 문장을 그대로 옮긴다
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: 고칠 내용과 근거
+      description: 사실 오류면 출처를 함께 적는다
+    validations:
+      required: false

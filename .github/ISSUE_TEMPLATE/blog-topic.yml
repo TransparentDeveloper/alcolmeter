@@ -1,0 +1,11 @@
+name: 블로그 주제
+description: 블로그 글로 쓸 주제나 아이디어
+labels: ["blog/topic"]
+body:
+  - type: textarea
+    id: memo
+    attributes:
+      label: 메모
+      description: 떠오른 계기나 궁금한 점. 비워도 된다. 글의 범위는 강의 시점에 정한다.
+    validations:
+      required: false

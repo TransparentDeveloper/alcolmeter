@@ -1,0 +1,25 @@
+name: 블로그 오류
+description: 블로그 사이트의 기능 오류(링크, 화면, 빌드)
+labels: ["blog/error"]
+body:
+  - type: input
+    id: where
+    attributes:
+      label: 위치
+      description: 오류가 난 주소나 화면
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: 무엇이 잘못됐나
+      description: 기대한 동작과 실제 동작
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: 환경
+      description: 기기와 브라우저
+    validations:
+      required: false
