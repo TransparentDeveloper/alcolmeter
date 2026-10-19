@@ -41,7 +41,7 @@ const jsonLd = {
 
 <Base title={post.data.title} description={post.data.description} image={og.src} type="article">
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
-  <article class="article am-width-page">
+  <article class="article">
     <ArticleHeader
       title={post.data.title}
       publishedAt={post.data.publishedAt}
@@ -58,11 +58,9 @@ const jsonLd = {
 </Base>
 
 <style>
-  /* 본문 칼럼은 min(화면 - 여백, size.content) 다. */
   .article {
-    display: grid;
-    grid-template-columns: minmax(0, var(--am-size-content));
-    justify-content: center;
+    margin-inline: auto;
+    width: min(100% - 2 * var(--am-dimension-gutter), var(--am-size-content));
   }
 
   .source-list {
