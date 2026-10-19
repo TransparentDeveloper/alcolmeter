@@ -15,7 +15,7 @@ const post = ({ apple = "사과 술 설명", abv = "도수 설명", draft = true
   [
     "---",
     "title: 테스트",
-    ...(draft ? ["status: draft"] : ["status: published", "publishedAt: 2026-10-12", "readyAt: 2026-10-11"]),
+    ...(draft ? ["status: draft"] : ["status: published", "publishedAt: 2026-10-12", "readyAt: 2026-10-11T09:00+09:00"]),
     "---",
     "",
     "도입 문단",
