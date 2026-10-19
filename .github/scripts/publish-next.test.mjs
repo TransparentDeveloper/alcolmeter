@@ -29,6 +29,26 @@ test("readyAt 이 같으면 폴더 번호가 작은 글을 고른다", () => {
   assert.deepEqual(readyPosts(posts).map((p) => p.id), ["9", "10"]);
 });
 
+test("줄 끝 주석은 값에서 뺀다", () => {
+  const posts = [
+    { id: "1", text: post("ready # 검수 끝", "readyAt: 2026-10-20 # 오후\n") },
+    { id: "2", text: post('"ready" # 검수 끝', 'readyAt: "2026-10-19" # 오전\n') },
+    { id: "3", text: post("draft # ready 아님", "readyAt: 2026-10-18\n") },
+    { id: "4", text: post('"ready # 따옴표 안"', "readyAt: 2026-10-17\n") },
+    { id: "5", text: post("ready#1", "readyAt: 2026-10-16\n") },
+  ];
+  assert.deepEqual(readyPosts(posts).map((p) => [p.id, p.readyAt.toISOString()]), [
+    ["2", "2026-10-19T00:00:00.000Z"],
+    ["1", "2026-10-20T00:00:00.000Z"],
+  ]);
+});
+
+test("주석이 붙은 status 줄도 published 로 바꾼다", () => {
+  const out = publish(post("ready # 검수 끝", "readyAt: 2026-10-19\n"), "2026-10-20");
+  assert.match(out, /^status: published\npublishedAt: 2026-10-20$/m);
+  assert.doesNotMatch(out, /검수 끝/);
+});
+
 test("readyAt 이 없거나 틀린 ready 글이 있으면 멈춘다", () => {
   assert.throws(() => readyPosts([{ id: "2", text: post("ready") }]), /2번 글/);
   assert.throws(() => readyPosts([{ id: "2", text: post("ready", "readyAt: 어제\n") }]), /2번 글/);

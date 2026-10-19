@@ -5,9 +5,13 @@ import { pathToFileURL } from "node:url";
 
 const POSTS = "apps/web/src/content/posts";
 
+// YAML 처럼 따옴표 밖의 " #" 뒤는 주석으로 본다.
 const field = (text, name) => {
   const front = text.match(/^---\n([\s\S]*?)\n---\n/)?.[1] ?? "";
-  return front.match(new RegExp(`^${name}:\\s*(.*)$`, "m"))?.[1].trim().replace(/^(["'])(.*)\1$/, "$2");
+  const raw = front.match(new RegExp(`^${name}:\\s*(.*)$`, "m"))?.[1];
+  if (raw === undefined) return undefined;
+  const quoted = raw.match(/^(["'])(.*?)\1/);
+  return quoted ? quoted[2] : raw.replace(/(^|\s)#.*$/, "").trim();
 };
 
 // 발행일은 한국 날짜다. 러너 시간대는 UTC 라서 직접 바꾼다.
