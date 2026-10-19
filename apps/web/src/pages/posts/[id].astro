@@ -7,11 +7,10 @@ import Prose from '@alcolmeter/ds/components/Prose.astro';
 import ProseTable from '@alcolmeter/ds/components/ProseTable.astro';
 import SourceList from '@alcolmeter/ds/components/SourceList.astro';
 import TableAsOf from '@alcolmeter/ds/components/TableAsOf.astro';
-import TableOfContents from '@alcolmeter/ds/components/TableOfContents.astro';
 import { getImage } from 'astro:assets';
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import { getPublishedPosts, getTocItems } from '../../lib/posts';
+import { getPublishedPosts } from '../../lib/posts';
 
 export async function getStaticPaths() {
   const posts = await getPublishedPosts();
@@ -19,7 +18,7 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { Content, headings } = await render(post);
+const { Content } = await render(post);
 const og = await getImage({
   src: post.data.cover,
   width: 1200,
@@ -49,9 +48,6 @@ const jsonLd = {
       updatedAt={post.data.updatedAt}
     />
     <Cover image={post.data.cover} alt={post.data.coverAlt} />
-    <div class="toc-area">
-      <TableOfContents items={getTocItems(headings)} />
-    </div>
     <Prose>
       <Content components={{ Figure, Callout, TableAsOf, table: ProseTable }} />
     </Prose>
@@ -62,30 +58,14 @@ const jsonLd = {
 </Base>
 
 <style>
-  /* 본문 칼럼은 lg 미만에서 min(화면 - 여백, size.content), lg 이상에서 size.content 다. */
+  /* 본문 칼럼은 min(화면 - 여백, size.content) 다. */
   .article {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, var(--am-size-content)) minmax(0, 1fr);
-  }
-
-  .article > :global(*) {
-    grid-column: 2;
+    grid-template-columns: minmax(0, var(--am-size-content));
+    justify-content: center;
   }
 
   .source-list {
     margin-top: var(--am-dimension-section-gap);
-  }
-
-  @media (min-width: 1024px) {
-    .article {
-      grid-template-columns: minmax(0, 1fr) var(--am-size-content) minmax(0, 1fr);
-      column-gap: var(--am-dimension-x8);
-    }
-
-    /* 목차는 Prose 행부터 SourceList 행까지 걸쳐 article 끝에서 따라오기를 멈춘다. */
-    .article > .toc-area {
-      grid-column: 1;
-      grid-row: 3 / span 2;
-    }
   }
 </style>

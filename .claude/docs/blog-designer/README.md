@@ -24,12 +24,12 @@
 ## 레퍼런스 역할 (사용자 결정)
 
 - 당근 SEED Design: ds 구조의 레퍼런스. 토큰 층위(팔레트·스케일 → 역할), 이름 규칙(`$color.fg.neutral-muted` 형식), 텍스트 스타일을 스케일과 역할로 나누는 방식, 컴포넌트 문서 형식(해부·속성·상태·가이드라인), 글쓰기 가이드 형식을 가져왔다. 색 값, 당근 브랜드, 글꼴, 이징 곡선 값은 가져오지 않았다.
-- 토스피드: 콘텐츠 페이지와 글·이미지 구성의 레퍼런스. 좁은 단일 본문 칼럼(관찰값: 상세 본문 최대 폭 700px. 채택값은 `토큰.md` 의 `$size.content` 640px), 17px 본문, 글 목차(처음엔 글 상단, 2026-10-10 사용자 결정으로 lg 이상은 본문 왼쪽 고정 목차), 목록의 큰 글 1개와 카드 격자를 가져왔다. 글꼴(Toss Product Sans)과 글 속 상품 권유 배너("토스에서 카드 알아보기")는 가져오지 않았다. 관찰: 2026-09-30, https://toss.im/tossfeed 와 https://toss.im/tossfeed/article/installment_payments 의 HTML·CSS.
+- 토스피드: 콘텐츠 페이지와 글·이미지 구성의 레퍼런스. 좁은 단일 본문 칼럼(관찰값: 상세 본문 최대 폭 700px. 채택값은 `토큰.md` 의 `$size.content` 640px), 17px 본문, 목록의 큰 글 1개와 카드 격자를 가져왔다. 글꼴(Toss Product Sans)과 글 속 상품 권유 배너("토스에서 카드 알아보기")는 가져오지 않았다. 관찰: 2026-09-30, https://toss.im/tossfeed 와 https://toss.im/tossfeed/article/installment_payments 의 HTML·CSS.
 - SEED 확인 출처: 2026-09-30 GitHub daangn/seed-design 저장소의 `docs/content/foundations/*.mdx` 와 `packages/rootage/*.yaml`.
 
 ## 현재 코드와 규칙의 차이 (구현 시 고칠 목록)
 
-2026-10-11 `packages/ds`, `apps/web` 코드 기준. SourceList 아코디언, h2 구획 선·h3 t2, 목차 h3, 표 기준 시점(TableAsOf, 2026-10-14, 13px·간격 8px 2026-10-15), 글 1 커버 2400px(2026-10-15)은 구현돼 닫았다. 이전 뼈대 `apps/web/src/styles/global.css` 는 삭제돼 그 차이 목록은 닫았다.
+2026-10-11 `packages/ds`, `apps/web` 코드 기준. SourceList 아코디언, h2 구획 선·h3 t2, 표 기준 시점(TableAsOf, 2026-10-14, 13px·간격 8px 2026-10-15), 글 1 커버 2400px(2026-10-15)은 구현돼 닫았다. 이전 뼈대 `apps/web/src/styles/global.css` 는 삭제돼 그 차이 목록은 닫았다.
 
 - 글꼴이 공식 전체 woff2(굵기당 434~440KB, 2026-10-05 저장소 파일)이고 분할 서브셋과 본문 첫 조각 preload 가 없다(`글꼴.md` 웹폰트 파일과 로딩).
 
