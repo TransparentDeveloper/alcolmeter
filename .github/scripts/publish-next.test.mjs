@@ -93,6 +93,25 @@ test("고른 글 하나만 발행하고 번호와 남은 수를 출력한다", (
   assert.equal(output(), "post=1\nremaining=1\n");
 });
 
+test("고른 글이 임시 표지를 쓰면 실패하고 아무 글도 바꾸지 않는다", (t) => {
+  const draftCover = post("ready", "readyAt: 2026-10-19\n").replace("cover: ./cover.png", "cover: ../../../assets/draft-cover.png");
+  const later = post("ready", "readyAt: 2026-10-20\n");
+  const { status, read, output } = run(t, { 1: draftCover, 2: later });
+  assert.equal(status, 1);
+  assert.equal(read("1"), draftCover);
+  assert.equal(read("2"), later);
+  assert.equal(output(), "");
+});
+
+test("임시 표지는 다음 차례 글에만 있으면 막지 않는다", (t) => {
+  const draftCover = post("ready", "readyAt: 2026-10-20\n").replace("cover: ./cover.png", "cover: ../../../assets/draft-cover.png");
+  const { status, read, output } = run(t, { 1: post("ready", "readyAt: 2026-10-19\n"), 2: draftCover });
+  assert.equal(status, 0);
+  assert.match(read("1"), /^status: published$/m);
+  assert.equal(read("2"), draftCover);
+  assert.equal(output(), "post=1\nremaining=1\n");
+});
+
 test("글 번호가 아닌 폴더는 보지 않는다", (t) => {
   const ready = post("ready", "readyAt: 2026-10-19\n");
   const { status, read, output } = run(t, { 0: ready, abc: ready, 3: post("ready", "readyAt: 2026-10-20\n") });

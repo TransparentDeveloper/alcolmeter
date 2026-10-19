@@ -43,6 +43,10 @@ function main() {
     console.error("발행할 ready 글이 없다.");
     process.exit(1);
   }
+  if (field(next.text, "cover")?.includes("draft-cover")) {
+    console.error(`${next.id}번 글이 아직 임시 표지를 쓴다. 진짜 표지로 바꾼 뒤 다시 실행한다.`);
+    process.exit(1);
+  }
   writeFileSync(join(POSTS, next.id, "index.mdx"), publish(next.text, kstDate(new Date())));
   console.log(`${next.id}번 글을 발행했다. 남은 ready 글: ${rest.length}개`);
   if (process.env.GITHUB_OUTPUT) appendFileSync(process.env.GITHUB_OUTPUT, `post=${next.id}\nremaining=${rest.length}\n`);

@@ -19,7 +19,7 @@ alcolmeter 블로그 사이트다. 글 목록, 글 상세, RSS 를 제공하고 
 `.github/workflows/publish.yml` 이 화·목·토 21:00(KST)에 `ready` 글 1개를 발행한다. `readyAt` 이 가장 이른 글을 고르고, 같으면 폴더 번호가 작은 글을 고른다. 고른 글을 `status: published` 로 바꾸고 `publishedAt` 에 그날 날짜(KST)를 넣은 다음, 빌드가 통과하면 main 에 push 한다. Vercel 은 이 push 로 배포한다.
 
 - GitHub 의 예약 실행은 정각보다 늦을 수 있다.
-- `ready` 글이 없으면 워크플로가 실패해 알림이 간다. 발행 뒤 남은 `ready` 글이 없으면 경고를 남긴다.
+- `ready` 글이 없거나, 고른 글의 `cover` 가 아직 임시 표지(`draft-cover`)면 워크플로가 실패해 알림이 간다. 이때는 아무 글도 발행하지 않는다. 발행 뒤 남은 `ready` 글이 없으면 경고를 남긴다.
 - Actions 탭에서 손으로 실행(`workflow_dispatch`)하면 바로 1개를 발행한다.
 
 ## 실행
