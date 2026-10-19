@@ -4,6 +4,14 @@ import { z } from 'astro/zod';
 
 const MAX_SOURCES = 5;
 const TRAILING_URL = /^(.+?),\s*(https?:\/\/\S+)$/;
+const READY_AT_FORMAT = '2026-10-19T14:30+09:00';
+
+// 날짜만 쓰면 그날 09:00(KST)로 읽혀 발행 순서가 헷갈리므로 시각과 시간대까지 받는다.
+// 초를 붙이면 YAML 이 Date 로 바꿔 날짜만 쓴 값과 구분할 수 없어 초 없는 문자열 하나로 정한다.
+const readyAt = z
+  .string({ error: `readyAt 은 ${READY_AT_FORMAT} 형식으로 쓴다.` })
+  .regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(Z|[+-]\d{2}:\d{2})$/, `readyAt 은 ${READY_AT_FORMAT} 형식으로 쓴다.`)
+  .pipe(z.coerce.date());
 
 // 항목 형식: "저자(또는 기관), 제목, 발행처, 연도, URL". URL 은 있으면 맨 끝에 한 번만 쓴다.
 const source = z
@@ -37,7 +45,7 @@ const posts = defineCollection({
         title: z.string(),
         description: z.string().trim().min(1).optional(),
         status: z.enum(['draft', 'ready', 'published']),
-        readyAt: z.coerce.date().optional(),
+        readyAt: readyAt.optional(),
         publishedAt: z.coerce.date().optional(),
         updatedAt: z.coerce.date().optional(),
         cover: image(),
