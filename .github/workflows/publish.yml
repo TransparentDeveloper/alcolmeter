@@ -1,0 +1,37 @@
+name: 글 발행
+
+on:
+  schedule:
+    # 화·목·토 21:00 KST. GitHub 은 정각보다 늦게 실행할 수 있다.
+    - cron: "0 12 * * 2,4,6"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency: publish
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      # ready 글이 없으면 실패해 저장소 주인에게 알림이 간다.
+      - id: next
+        run: node .github/scripts/publish-next.mjs
+      - run: pnpm install --frozen-lockfile
+      # 빌드가 깨지는 글은 main 에 올리지 않는다.
+      - run: pnpm build
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "feat: ${{ steps.next.outputs.post }}번 글을 발행한다"
+          git pull --rebase
+          git push
+      - if: steps.next.outputs.remaining == '0'
+        run: echo "::warning::다음 발행에 쓸 ready 글이 없다."

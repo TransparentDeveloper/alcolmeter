@@ -1,11 +1,11 @@
 ---
 name: write
-description: lecture 스킬로 강의를 마친 주제를 블로그 글로 쓸 때 쓴다. 강의 자료·강의 내용·질문 파일로 초안을 쓰고, 사용자 피드백과 커밋 리뷰를 거쳐 그림까지 넣은 draft 글로 만든다.
+description: lecture 스킬로 강의를 마친 주제를 블로그 글로 쓸 때 쓴다. 강의 자료·강의 내용·질문 파일로 초안을 쓰고, 사용자 피드백과 커밋 리뷰를 거쳐 그림까지 넣은 `status: draft` 글로 만든다.
 ---
 
 # 글쓰기
 
-강의 파일을 바탕으로 글을 쓰고, 사용자 피드백 → 커밋 리뷰 → 그림 순서로 `draft: true` 글을 완성한다. draft 해제와 push 는 하지 않는다.
+강의 파일을 바탕으로 글을 쓰고, 사용자 피드백 → 커밋 리뷰 → 그림 순서로 `status: draft` 글을 완성한다. ready 전환과 push 는 하지 않는다.
 
 ## 대상 찾기
 
@@ -49,4 +49,4 @@ description: lecture 스킬로 강의를 마친 주제를 블로그 글로 쓸 �
 - 반영하지 않고 모아 둔 제안
 - fact-checker 의 "확인 필요" 항목
 - illustrator 가 그린 그림 목록
-- draft 해제와 push 는 사용자가 지시하면 한다는 것
+- ready 전환(`status: ready`, `readyAt`)과 push 는 사용자가 지시하면 한다는 것. 발행은 예약 워크플로가 한다(`apps/web/README.md` 예약 발행)

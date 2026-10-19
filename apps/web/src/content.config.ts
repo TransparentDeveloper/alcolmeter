@@ -36,16 +36,29 @@ const posts = defineCollection({
       .object({
         title: z.string(),
         description: z.string().trim().min(1).optional(),
-        publishedAt: z.coerce.date(),
+        status: z.enum(['draft', 'ready', 'published']),
+        readyAt: z.coerce.date().optional(),
+        publishedAt: z.coerce.date().optional(),
         updatedAt: z.coerce.date().optional(),
         cover: image(),
         coverAlt: z.string().min(1),
-        draft: z.boolean().default(false),
         sources: z.array(source).max(MAX_SOURCES).default([]),
       })
-      .refine((data) => data.draft || data.sources.length > 0, {
-        message: '공개 글에는 참고 자료(sources)가 1개 이상 있어야 한다.',
+      .refine((data) => data.status !== 'ready' || data.readyAt !== undefined, {
+        message: 'ready 글에는 readyAt 이 있어야 한다.',
+        path: ['readyAt'],
+      })
+      .refine((data) => data.status !== 'published' || data.publishedAt !== undefined, {
+        message: 'published 글에는 publishedAt 이 있어야 한다.',
+        path: ['publishedAt'],
+      })
+      .refine((data) => data.status === 'draft' || data.sources.length > 0, {
+        message: 'ready·published 글에는 참고 자료(sources)가 1개 이상 있어야 한다.',
         path: ['sources'],
+      })
+      .refine((data) => data.status === 'draft' || data.coverAlt !== '임시 표지', {
+        message: 'ready·published 글에는 임시 표지를 쓸 수 없다.',
+        path: ['coverAlt'],
       }),
 });
 

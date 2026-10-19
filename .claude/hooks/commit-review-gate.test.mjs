@@ -15,8 +15,7 @@ const post = ({ apple = "사과 술 설명", abv = "도수 설명", draft = true
   [
     "---",
     "title: 테스트",
-    "publishedAt: 2026-10-12",
-    ...(draft ? ["draft: true"] : []),
+    ...(draft ? ["status: draft"] : ["status: published", "publishedAt: 2026-10-12", "readyAt: 2026-10-11"]),
     "---",
     "",
     "도입 문단",
@@ -192,7 +191,7 @@ test("리뷰어마다 자기가 마지막으로 PASS 한 내용을 기준으로 
   assert.match(scopeOf("blog-content-reviewer"), /\(전체: 첫 검토\)/);
 });
 
-test("그림 넣기와 draft 해제만 바꾼 커밋은 검토하지 않는다", (t) => {
+test("그림 넣기와 발행 상태 변경만 한 커밋은 검토하지 않는다", (t) => {
   const { check, write, git, commit } = setup(t);
   write(POST, post());
   commit(POST);
@@ -206,7 +205,7 @@ test("표지 줄만 바꾼 커밋은 검토하지 않는다", (t) => {
   const { check, write, git, commit } = setup(t);
   write(POST, post());
   commit(POST);
-  write(POST, post().replace("draft: true\n", "draft: true\ncover: ./cover.png\ncoverAlt: 사과\n"));
+  write(POST, post().replace("status: draft\n", "status: draft\ncover: ./cover.png\ncoverAlt: 사과\n"));
   git("add", POST);
   assert.equal(check().status, 0);
 });
@@ -250,7 +249,7 @@ test("git 앞 옵션이 붙은 커밋도 막는다", (t) => {
   assert.equal(check("git --git-dir=.git commit -m x").status, 2);
 });
 
-test("글이 PASS 를 받으면 통과하고, 그 뒤 그림·표지·draft 줄만 바꿔도 통과한다", (t) => {
+test("글이 PASS 를 받으면 통과하고, 그 뒤 그림·표지·발행 상태 줄만 바꿔도 통과한다", (t) => {
   const { check, write, git, verdict } = setup(t);
   write(POST, post());
   git("add", POST);
