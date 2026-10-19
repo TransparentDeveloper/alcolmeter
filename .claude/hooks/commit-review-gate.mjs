@@ -73,11 +73,10 @@ const git = (...args) => execFileSync("git", args, { encoding: "utf8" });
 
 const POST = /^apps\/web\/src\/content\/posts\/.+\/index\.mdx$/;
 
-// 그림 넣기와 발행 상태 변경은 리뷰 대상이 아니므로 상태·날짜 줄, 표지 줄, 그림 줄을 뺀 글로 비교한다.
+// 그림 넣기와 발행 상태 변경은 리뷰 대상이 아니므로 frontmatter 의 상태·날짜 줄, 표지 줄과 본문 그림 줄을 뺀 글로 비교한다.
 const reviewedText = (text) =>
   text
-    .replace(/^(status|readyAt|publishedAt):.*\n/gm, "")
-    .replace(/^(cover|coverAlt):.*\n/gm, "")
+    .replace(/^---\n[\s\S]*?\n---\n/, (front) => front.replace(/^(status|readyAt|publishedAt|cover|coverAlt):.*\n/gm, ""))
     .replace(/^!\[.*\]\(.*\)[ \t]*$/gm, "")
     .replace(/^<Figure\b[\s\S]*?\/>[ \t]*$/gm, "")
     .replace(/\n{3,}/g, "\n\n");

@@ -210,6 +210,17 @@ test("표지 줄만 바꾼 커밋은 검토하지 않는다", (t) => {
   assert.equal(check().status, 0);
 });
 
+test("본문의 상태·날짜·표지 줄을 바꾼 커밋은 검토한다", (t) => {
+  const { check, write, git, commit } = setup(t);
+  for (const line of ["status: 주의", "readyAt: 오늘", "publishedAt: 오늘", "cover: 표지", "coverAlt: 표지"]) {
+    write(POST, post({ apple: line }));
+    commit(POST);
+    write(POST, post({ apple: `${line} 고침` }));
+    git("add", POST);
+    assert.ok(check().stderr.includes(`${POST} (바뀐 구획: 사과)`), line);
+  }
+});
+
 test("PASS 한 글이 그대로면 범위를 전체로 안내한다", (t) => {
   const { check, write, git, verdict } = setup(t);
   const other = "apps/web/src/content/posts/8/index.mdx";
