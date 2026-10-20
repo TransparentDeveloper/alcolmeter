@@ -41,6 +41,7 @@
 - 미국 규정에서 프루프(proof)는 60°F 에서 잰 알코올 부피 백분율의 2배다. 예를 들어 40%는 80 프루프다. [^18] [^19]
 - 미국 와인 라벨은 도수를 부피 백분율로만 적고 "Alcohol __% by volume" 같은 문구를 쓰며, alc. 와 vol. 로 줄여 쓸 수 있다. 14%를 넘는 와인은 도수 표시가 의무다. [^20]
 - 미국 규정상 위스키는 40%(80 프루프) 이상으로 병입해야 한다. [^19]
+- 미국 증류주 라벨은 도수를 부피 백분율로 반드시 적어야 하고, 여기에 더해 프루프를 적을 수 있다. 프루프를 적으면 의무 도수 표시와 같은 시야(field of vision) 안에 둬야 한다. 그 밖의 프루프 표시는 다른 곳에 더 둘 수 있다. [^147]
 - EU 규정상 진의 최저 도수는 37.5%다. [^8]
 - 국제포도와인기구(OIV) 정의상 와인의 실제 알코올 도수는 8.5% 이상이어야 하고, 지역 법령으로 7%까지 낮출 수 있다. [^21]
 - 사케는 보통 15~16%이며, 일본 국세청 5년 평균은 보통주 15.39%, 음양주 15.91%였다. 저장 중인 사케는 약 20%이고 병입 전에 물을 타서 약 15%로 낮춘다. [^5] [^6]
@@ -538,3 +539,4 @@
 [^144]: 식품의약품안전처, 무알코올? 비알코올? 맥주 맛 음료에도 알코올이 있을 수 있어요!, 대한민국 정책브리핑, 2021, https://www.korea.kr/news/policyNewsView.do?newsId=148889933. 확인일 2026-10-15. 근거 문장: "알코올 함량 1% 이상이면 ‘주류’" / "알코올 함량 1% 미만이면 ‘음료’" / "알코올 프리(Alcohol free)" / "알코올 1%미만 논 알코올릭(Non Alcohol)" / "무알코올·비알코올 모두 성인용!" / "어린이·청소년들이 술에 대한 호기심으로 구매하는 일이 없도록 주의가 필요합니다."
 [^145]: National Center for Biotechnology Information(NCBI, 미국 국립보건원 국립의학도서관), PubChem Compound Summary for CID 702, Ethanol, Solubility 항목, PubChem, https://pubchem.ncbi.nlm.nih.gov/compound/702 (확인은 PUG-View JSON: https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/702/JSON?heading=Solubility). 확인일 2026-10-15. 근거 문장: "In water, miscible /1X10+6 mg/L/ at 25 °C"(출처 Hazardous Substances Data Bank) / "Solubility in water: miscible"(출처 ILO-WHO International Chemical Safety Cards)
 [^146]: Centers for Disease Control and Prevention, National Institute for Occupational Safety and Health(NIOSH), NIOSH Pocket Guide to Chemical Hazards - Ethyl alcohol, CDC, https://www.cdc.gov/niosh/npg/npgd0262.html. 확인일 2026-10-15. 근거 문장: Solubility "Miscible". 비고: 이 안내서의 Solubility 칸은 물에 대한 용해도를 적는 칸이지만, 페이지 문장 자체에 'water' 는 없다.
+[^147]: U.S. Code of Federal Regulations, 27 CFR § 5.65 Alcohol content, Legal Information Institute(Cornell Law School), https://www.law.cornell.edu/cfr/text/27/5.65 (eCFR 원문 대조: https://www.ecfr.gov/current/title-27/chapter-I/subchapter-A/part-5/subpart-E/section-5.65). 확인일 2026-10-21. 근거 문장: "The alcohol content for distilled spirits must be stated on the label as a percentage of alcohol by volume." / (b)(1)(i) "In addition, the alcohol content in degrees of proof may be stated on a label as long as it appears in the same field of vision as the mandatory statement of alcohol content as a percentage of alcohol by volume. Additional statements of proof may appear on the label without being in the same field of vision as the mandatory alcohol by volume statement."
