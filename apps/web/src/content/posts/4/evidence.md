@@ -13,7 +13,7 @@
 | 원래 있던 효모(참고 콜아웃) | 이산화탄소만 내며 제 수를 불립니다 | [^18] ("biomass and carbon dioxide are the sole products"). biomass 를 "제 수를 불린다" 로 풂 |
 | 원래 있던 효모: 양조장과 누룩 | 술을 빚는 효모는 따로 넣지 않아도 양조장과 누룩에 이미 있어요 | 구획 줄기 문장. 뒤 문장들의 근거를 묶음: [^5] (양조장 표면과 설비의 효모) [^6] [^7] (람빅, 효모를 넣지 않음) [^9] (누룩에 저절로 생김) |
 | 원래 있던 효모: 양조장과 누룩 | 양조장에서는 표면과 설비에 이런 효모가 삽니다 | [^5] |
-| 원래 있던 효모: 양조장과 누룩 | 그래서 와인 발효 초기 포도즙에는 양조장에서 온 효모도 섞여요 | [^5] (포도즙 효모의 출처 가운데 하나가 양조장 표면과 설비) |
+| 원래 있던 효모: 양조장과 누룩 | 그래서 와인 발효 초기 포도즙에는 양조장에서 온 효모가 섞여요 | [^5] (포도즙 효모의 출처 가운데 하나가 양조장 표면과 설비) |
 | 원래 있던 효모: 양조장과 누룩 | 벨기에 람빅(lambic) 맥주는 아예 효모를 넣지 않습니다 | [^6] ("not initiated through the inoculation") [^7] |
 | 원래 있던 효모: 양조장과 누룩 | 끓인 맥즙(당이 든 맥주 원료액)을 뚜껑 없는 통에서 하룻밤 식히는데, 그동안 들어온 미생물로 발효해요 | [^6] ("overnight cooling of the cooked wort in a shallow open vessel") [^7]. 맥즙 풀이는 [^2] ("wort sugars"). 미생물이 공기에서 온다는 말은 엇갈림이라 쓰지 않음 |
 | 원래 있던 효모: 양조장과 누룩 | 누룩(곡물에 곰팡이를 번식시킨 발효제)에도 곰팡이와 함께 효모와 젖산균이 이미 불어나 있어요 | [^3] (국 정의: 곰팡이류 번식) [^9] (야생 곰팡이, 효모, 젖산균이 자연적으로 생겨 불어남) |
@@ -30,4 +30,4 @@
 | 배양 효모: 세포 하나에서 기른 요즘 방식 | 이런 효모 모음이나 그 모음을 가진 기관을 효모 은행(yeast bank)이라고 부릅니다 | [^13] |
 | 배양 효모: 세포 하나에서 기른 요즘 방식 | 요즘 맥주 양조장은 효모를 정해진 횟수만큼 다시 쓰고 나면 새 효모로 바꿉니다 | [^2] ("After a determined number of repitchings, new yeast should be used") |
 | 배양 효모: 세포 하나에서 기른 요즘 방식 | 새 효모는 업체에서 말린 효모나 배양한 효모를 사거나, 양조장 안에서 직접 배양해요 | [^2] ("obtained in a dry form or propagated by a third party or in-house") |
-| 배양 효모: 세포 하나에서 기른 요즘 방식 | 규모 있는 와인 생산시설에서도 골라 낸 특정 효모를 넣어 발효시키는데, 말린 효모를 넣는 것이 가장 흔한 방법의 하나예요 | [^5] (active dry yeasts 를 앞 문단 용어에 맞춰 "말린 효모" 로 씀. "Industrial wine fermentations are currently conducted by starters of selected wine yeast strains", "active dry yeasts is one of the most common practices") |
+| 배양 효모: 세포 하나에서 기른 요즘 방식 | 큰 와인 양조장에서도 골라 낸 효모를 넣어 발효시키는데, 가장 흔한 방법 가운데 하나가 말린 효모를 넣는 거예요 | [^5] (Industrial 을 "큰 와인 양조장" 으로, active dry yeasts 를 앞 문단 용어에 맞춰 "말린 효모" 로 씀. "Industrial wine fermentations are currently conducted by starters of selected wine yeast strains", "active dry yeasts is one of the most common practices") |
