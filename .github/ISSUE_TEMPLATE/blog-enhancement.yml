@@ -1,0 +1,25 @@
+name: 사이트 개선
+description: 블로그 사이트에 더하거나 미뤄 둔 기능·자산 작업
+labels: ["blog/enhancement"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: 할 일
+      description: 더하거나 바꿀 것
+    validations:
+      required: true
+  - type: textarea
+    id: background
+    attributes:
+      label: 배경
+      description: 왜 필요한지, 지금 상태, 관련 문서나 커밋
+    validations:
+      required: true
+  - type: textarea
+    id: decision
+    attributes:
+      label: 결정할 것
+      description: 작업 전에 정해야 하는 것
+    validations:
+      required: false
