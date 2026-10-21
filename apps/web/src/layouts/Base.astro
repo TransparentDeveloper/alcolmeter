@@ -24,6 +24,7 @@ const ogImage = image ? new URL(image, Astro.site).href : undefined;
     <title>{pageTitle}</title>
     {description && <meta name="description" content={description} />}
     <link rel="canonical" href={canonical} />
+    {/* ico 의 sizes 를 빼거나 any 로 두면 Chrome 이 svg 대신 ico 를 고른다. */}
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
