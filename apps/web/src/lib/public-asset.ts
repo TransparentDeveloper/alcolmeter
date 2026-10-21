@@ -9,7 +9,8 @@ const versioned = new Map<string, string>();
 export function withContentHash(path: `/${string}`) {
   let href = versioned.get(path);
   if (!href) {
-    const hash = createHash('sha256').update(readFileSync(new URL(`.${path}`, publicDir))).digest('hex').slice(0, 8);
+    const file = readFileSync(new URL(`.${path}`, publicDir));
+    const hash = createHash('sha256').update(file).digest('hex').slice(0, 8);
     href = `${path}?v=${hash}`;
     versioned.set(path, href);
   }
