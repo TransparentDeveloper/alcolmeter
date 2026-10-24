@@ -2,8 +2,8 @@ name: 글 발행
 
 on:
   schedule:
-    # 화·목·토 20:47 KST. GitHub 은 예약 시각보다 늦게 돌거나 건너뛸 수 있어서, 붐비는 정각을 피하고 늦게 도는 만큼 일찍 건다.
-    - cron: "47 11 * * 2,4,6"
+    # 매일 20:47 KST. GitHub 은 예약 시각보다 늦게 돌거나 건너뛸 수 있어서, 붐비는 정각을 피하고 늦게 도는 만큼 일찍 건다.
+    - cron: "47 11 * * *"
   workflow_dispatch:
 
 permissions:
