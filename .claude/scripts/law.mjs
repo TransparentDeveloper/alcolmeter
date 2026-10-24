@@ -1,16 +1,32 @@
 #!/usr/bin/env node
+import { execFileSync } from "node:child_process";
 import { existsSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join, resolve } from "node:path";
 
 const USAGE = `사용법:
   node .claude/scripts/law.mjs search <법령명>
   node .claude/scripts/law.mjs article <법령명> <조번호>   예: 5, 5의2
   node .claude/scripts/law.mjs annex <법령명> [별표번호]`;
 
-const envPath = join(import.meta.dirname, "../../.env");
-if (existsSync(envPath)) process.loadEnvFile(envPath);
+// 워크트리에는 .env 가 없으므로 메인 체크아웃의 .env 도 찾는다.
+function mainCheckoutEnv() {
+  try {
+    const commonDir = execFileSync("git", ["rev-parse", "--git-common-dir"], {
+      cwd: import.meta.dirname,
+      encoding: "utf8",
+    }).trim();
+    return join(dirname(resolve(import.meta.dirname, commonDir)), ".env");
+  } catch {
+    return null;
+  }
+}
+
+const envPath = [join(import.meta.dirname, "../../.env"), mainCheckoutEnv()].find(
+  (path) => path && existsSync(path),
+);
+if (envPath) process.loadEnvFile(envPath);
 const OC = process.env.LAW_OC;
-if (!OC) fail("LAW_OC 가 .env 에 없다.");
+if (!OC) fail("LAW_OC 가 .env 에 없다. 메인 체크아웃 루트의 .env 에 넣는다.");
 
 const list = (v) => (v == null ? [] : [].concat(v));
 
