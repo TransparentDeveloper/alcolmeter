@@ -1,5 +1,5 @@
-name: 사이트 개선
-description: 블로그 사이트에 더하거나 미뤄 둔 기능·자산 작업
+name: 사이트·작업 도구 개선
+description: 블로그 사이트와 작업 도구(에이전트, 스킬, 규칙 문서)에 더하거나 미뤄 둔 기능·자산 작업
 labels: ["blog/enhancement"]
 body:
   - type: textarea
@@ -13,13 +13,20 @@ body:
     id: background
     attributes:
       label: 배경
-      description: 왜 필요한지, 지금 상태, 관련 문서나 커밋
+      description: 왜 필요한지, 지금 상태, 지금까지 나온 의견
+    validations:
+      required: true
+  - type: textarea
+    id: references
+    attributes:
+      label: 관련 파일·커밋
+      description: 관련 문서, 소스 경로, 커밋 해시. 없으면 `없음`
     validations:
       required: true
   - type: textarea
     id: decision
     attributes:
       label: 결정할 것
-      description: 작업 전에 정해야 하는 것
+      description: 작업 전에 정해야 하는 것. 없으면 `없음`
     validations:
-      required: false
+      required: true

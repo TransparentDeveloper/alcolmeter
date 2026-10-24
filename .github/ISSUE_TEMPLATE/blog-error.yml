@@ -6,20 +6,34 @@ body:
     id: where
     attributes:
       label: 위치
-      description: 오류가 난 주소나 화면
+      description: 오류가 난 주소나 화면. 빌드 오류면 명령과 단계
     validations:
       required: true
   - type: textarea
-    id: what
+    id: expected
     attributes:
-      label: 무엇이 잘못됐나
-      description: 기대한 동작과 실제 동작
+      label: 기대한 동작
+      description: 원래 일어나야 하는 일
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: 실제 동작
+      description: 실제로 일어난 일. 오류 메시지는 그대로 옮긴다.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 재현 방법
+      description: 오류를 다시 내는 순서. 모르면 `없음`
     validations:
       required: true
   - type: input
     id: environment
     attributes:
       label: 환경
-      description: 기기와 브라우저
+      description: 기기와 브라우저. 관계없으면 `없음`
     validations:
-      required: false
+      required: true

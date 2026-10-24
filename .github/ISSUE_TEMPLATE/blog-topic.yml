@@ -2,10 +2,20 @@ name: 블로그 주제
 description: 블로그 글로 쓸 주제나 아이디어
 labels: ["blog/topic"]
 body:
-  - type: textarea
-    id: memo
+  - type: markdown
     attributes:
-      label: 메모
-      description: 떠오른 계기나 궁금한 점. 비워도 된다. 글의 범위는 강의 시점에 정한다.
+      value: 글의 범위, 관점, 질문 목록은 강의 시작 때 사용자가 정한다. 여기 적지 않는다.
+  - type: textarea
+    id: question
+    attributes:
+      label: 궁금한 점
+      description: 이 주제에서 궁금한 것. 한 말을 그대로 적는다.
     validations:
-      required: false
+      required: true
+  - type: textarea
+    id: trigger
+    attributes:
+      label: 계기
+      description: 주제가 떠오른 상황. 없으면 `없음`
+    validations:
+      required: true

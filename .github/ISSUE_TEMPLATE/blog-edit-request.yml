@@ -28,7 +28,14 @@ body:
   - type: textarea
     id: suggestion
     attributes:
-      label: 고칠 내용과 근거
-      description: 사실 오류면 출처를 함께 적는다
+      label: 고칠 내용
+      description: 바꿀 문장이나 바꿀 방향
     validations:
-      required: false
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 근거
+      description: 사실 오류면 출처를 적는다. 오탈자와 표현은 `없음` 을 쓸 수 있다.
+    validations:
+      required: true
