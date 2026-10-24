@@ -9,7 +9,7 @@ body:
     id: question
     attributes:
       label: 궁금한 점
-      description: 이 주제에서 궁금한 것. 한 말을 그대로 적는다.
+      description: 이 주제에서 궁금한 것
     validations:
       required: true
   - type: textarea
