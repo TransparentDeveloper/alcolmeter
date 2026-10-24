@@ -4,7 +4,7 @@ labels: ["blog/topic"]
 body:
   - type: markdown
     attributes:
-      value: 글의 범위, 관점, 질문 목록은 강의 시작 때 사용자가 정한다. 여기 적지 않는다.
+      value: 제목은 "라거와 에일의 차이"처럼 명사형으로 쓴다. 글의 범위, 관점, 질문 목록은 강의 시작 때 사용자가 정한다. 여기 적지 않는다.
   - type: textarea
     id: question
     attributes:
