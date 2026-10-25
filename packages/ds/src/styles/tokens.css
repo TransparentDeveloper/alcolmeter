@@ -34,7 +34,13 @@
   --am-color-bg-neutral-weak: var(--am-color-palette-gray-50);
   --am-color-bg-critical-weak: var(--am-color-palette-red-50);
   --am-color-stroke-neutral-subtle: var(--am-color-palette-gray-200);
+  --am-color-stroke-neutral-muted: var(--am-color-palette-gray-500);
   --am-color-stroke-focus-ring: var(--am-color-palette-amber-700);
+
+  /* 색 견본 색은 대상의 실제 색이라 테마별 값을 두지 않는다. 다크 테마에서도 여기 값을 바꾸지 않는다. ColorSwatch 만 쓴다. */
+  --am-color-swatch-pale-yellow: #f0d56b;
+  --am-color-swatch-dark-brown: #5e360b;
+  --am-color-swatch-black: #2a2521;
 
   --am-dimension-x1: 0.25rem;
   --am-dimension-x2: 0.5rem;

@@ -1,6 +1,7 @@
 ---
 import ArticleHeader from '@alcolmeter/ds/components/ArticleHeader.astro';
 import Callout from '@alcolmeter/ds/components/Callout.astro';
+import ColorSwatch from '@alcolmeter/ds/components/ColorSwatch.astro';
 import Cover from '@alcolmeter/ds/components/Cover.astro';
 import Figure from '@alcolmeter/ds/components/Figure.astro';
 import Prose from '@alcolmeter/ds/components/Prose.astro';
@@ -49,7 +50,7 @@ const jsonLd = {
     />
     <Cover image={post.data.cover} alt={post.data.coverAlt} />
     <Prose>
-      <Content components={{ Figure, Callout, TableAsOf, table: ProseTable }} />
+      <Content components={{ Figure, Callout, ColorSwatch, TableAsOf, table: ProseTable }} />
     </Prose>
     <div class="source-list">
       <SourceList items={post.data.sources} />

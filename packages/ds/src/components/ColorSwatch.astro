@@ -1,0 +1,46 @@
+---
+// 이름 목록은 blog-designer/토큰.md "색 견본 색" 표와 tokens.css 의 --am-color-swatch-* 와 같아야 한다.
+const swatchColors = ['pale-yellow', 'dark-brown', 'black'] as const;
+type SwatchColor = (typeof swatchColors)[number];
+
+interface Props {
+  color: SwatchColor;
+}
+
+const { color } = Astro.props;
+
+const isSwatchColor = (value: unknown): value is SwatchColor =>
+  typeof value === 'string' && (swatchColors as readonly string[]).includes(value);
+
+// MDX 는 props 타입을 검사하지 않으므로 빌드 시점에 직접 막는다.
+if (!isSwatchColor(color)) {
+  throw new Error(`ColorSwatch color 는 ${swatchColors.join(', ')} 중 하나여야 한다: ${String(color)}`);
+}
+
+const label = Astro.slots.has('default') ? (await Astro.slots.render('default')).trim() : '';
+if (label === '') {
+  throw new Error(`ColorSwatch(${color}) 에는 색 이름 글자가 필요하다.`);
+}
+---
+
+<span class="swatch"><span class="dot" style={`background-color: var(--am-color-swatch-${color})`} aria-hidden="true"></span><Fragment set:html={label} /></span>
+
+<style>
+  .swatch {
+    white-space: nowrap;
+  }
+
+  .dot {
+    display: inline-block;
+    box-sizing: border-box;
+    width: var(--am-dimension-x3);
+    height: var(--am-dimension-x3);
+    margin-inline-end: var(--am-dimension-x1);
+    border: 1px solid var(--am-color-stroke-neutral-muted);
+    border-radius: var(--am-radius-full);
+    /* 0.39em 은 Paperlogy 글자 상자의 세로 가운데다(blog-designer/컴포넌트.md ColorSwatch). middle 은 라틴 x-height 기준이라 쓰지 않는다. */
+    vertical-align: calc(0.39em - var(--am-dimension-x3) / 2);
+    /* 강제 색 모드에서 칠이 지워져 빈 고리만 남지 않게 원에만 준다. */
+    forced-color-adjust: none;
+  }
+</style>
