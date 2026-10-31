@@ -1,8 +1,8 @@
 ---
 import PostCard from '@alcolmeter/ds/components/PostCard.astro';
 import PostGrid from '@alcolmeter/ds/components/PostGrid.astro';
-import Base from '../layouts/Base.astro';
-import { getPublishedPosts } from '../lib/posts';
+import Base from '../../layouts/Base.astro';
+import { getPublishedPosts } from '../../lib/posts';
 
 const [featured, ...rest] = await getPublishedPosts();
 ---

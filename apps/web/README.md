@@ -2,6 +2,10 @@
 
 alcolmeter 블로그 사이트다. 글 목록, 글 상세, RSS 를 제공하고 정적 페이지로 만들어 Vercel 에 배포한다.
 
+## 주소
+
+주소와 리다이렉트는 `.claude/docs/fe/아키텍처.md` "라우트" 절이 원본이다.
+
 ## 글 상태
 
 글 frontmatter 의 `status` 가 공개 여부를 정한다. 배포에는 `published` 글만 나가고, 개발 서버에는 모든 글이 보인다.

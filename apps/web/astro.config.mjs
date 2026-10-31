@@ -36,5 +36,7 @@ const singleTildeAsText = {
 export default defineConfig({
   site: 'https://alcolmeter.kr',
   trailingSlash: 'never',
+  // 배포의 HTTP 302 는 vercel.json 이 낸다. 이 설정은 개발 서버의 302 와 정적 출력의 대체 페이지(meta refresh)를 만든다.
+  redirects: { '/': { status: 302, destination: '/posts' } },
   integrations: [singleTildeAsText, mdx(), sitemap()],
 });
