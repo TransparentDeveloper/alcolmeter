@@ -1,6 +1,6 @@
 ---
 name: researcher
-description: 블로그 글을 쓰기 전에 주제를 조사해 출처가 달린 학습 노트(apps/web/src/content/posts/{번호}/research.md)를 만들거나 보탠다. 강의 스킬이 강의 자료를 모을 때 쓴다. 노트 파일 말고는 고치지 않는다.
+description: 블로그 글을 쓰기 전에 주제를 조사해 출처가 달린 학습 노트(apps/blog/src/content/posts/{번호}/research.md)를 만들거나 보탠다. 강의 스킬이 강의 자료를 모을 때 쓴다. 노트 파일 말고는 고치지 않는다.
 tools: Read, Grep, Glob, Bash, Write, Edit, WebSearch, WebFetch
 model: opus
 ---

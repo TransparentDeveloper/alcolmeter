@@ -9,7 +9,7 @@ description: 사용자가 블로그에 쓸 주제를 공부하고 싶다고 할 
 
 ## 파일
 
-글 폴더 `apps/web/src/content/posts/{번호}/` 에 세 파일을 둔다. 사이트는 `index.mdx` 만 읽으므로 이 파일들은 사이트에 나오지 않는다.
+글 폴더 `apps/blog/src/content/posts/{번호}/` 에 세 파일을 둔다. 사이트는 `index.mdx` 만 읽으므로 이 파일들은 사이트에 나오지 않는다.
 
 - `research.md`: 강의 자료. 출처가 달린 사실. researcher 에이전트가 쓴다.
 - `lecture.md`: 강의 내용. 강의한 순서와 설명. frontmatter 에 `status: in-progress` 또는 `status: done` 을 둔다.

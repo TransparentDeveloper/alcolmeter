@@ -1,6 +1,6 @@
 ---
 name: fact-checker
-description: 블로그 글(apps/web/src/content/posts/**/index.mdx)에서 검증 가능한 주장을 모두 뽑고, 주장마다 출처를 찾아 사실인지 판정한다. 파일을 고치지 않고 판정과 근거만 돌려준다.
+description: 블로그 글(apps/blog/src/content/posts/**/index.mdx)에서 검증 가능한 주장을 모두 뽑고, 주장마다 출처를 찾아 사실인지 판정한다. 파일을 고치지 않고 판정과 근거만 돌려준다.
 tools: Read, Grep, Glob, Bash, WebSearch, WebFetch
 model: opus
 ---

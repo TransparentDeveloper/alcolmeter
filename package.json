@@ -7,8 +7,8 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "pnpm -F @alcolmeter/web dev",
+    "dev": "pnpm -F @alcolmeter/blog dev",
     "build": "pnpm -r build",
-    "test": "node --test .claude/hooks/*.test.mjs .github/scripts/*.test.mjs apps/web/src/lib/*.test.ts"
+    "test": "node --test .claude/hooks/*.test.mjs apps/blog/scripts/*.test.mjs apps/blog/src/lib/*.test.ts"
   }
 }

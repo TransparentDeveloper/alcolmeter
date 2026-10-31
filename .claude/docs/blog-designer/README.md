@@ -29,7 +29,7 @@
 
 ## 현재 코드와 규칙의 차이 (구현 시 고칠 목록)
 
-2026-10-11 `packages/ds`, `apps/web` 코드 기준. SourceList 아코디언, h2 구획 선·h3 t2, 표 기준 시점(TableAsOf, 2026-10-14, 13px·간격 8px 2026-10-15), 글 1 커버 2400px(2026-10-15), ColorSwatch 와 토큰 `stroke.neutral-muted`·`$color.swatch.*`(2026-10-25)은 구현돼 닫았다. 이전 뼈대 `apps/web/src/styles/global.css` 는 삭제돼 그 차이 목록은 닫았다.
+2026-10-11 `packages/ds`, `apps/blog` 코드 기준. SourceList 아코디언, h2 구획 선·h3 t2, 표 기준 시점(TableAsOf, 2026-10-14, 13px·간격 8px 2026-10-15), 글 1 커버 2400px(2026-10-15), ColorSwatch 와 토큰 `stroke.neutral-muted`·`$color.swatch.*`(2026-10-25)은 구현돼 닫았다. 이전 뼈대 `apps/blog/src/styles/global.css` 는 삭제돼 그 차이 목록은 닫았다.
 
 - 글꼴이 공식 전체 woff2(굵기당 434~440KB, 2026-10-05 저장소 파일)이고 분할 서브셋과 본문 첫 조각 preload 가 없다(`글꼴.md` 웹폰트 파일과 로딩).
 

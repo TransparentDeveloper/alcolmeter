@@ -1,6 +1,6 @@
 ---
 name: blog-content-reviewer
-description: 커밋 전에 staged 된 블로그 글(apps/web/src/content/posts/**/index.mdx)을 읽고, 핵심 타깃 독자가 읽기 좋은 구성인지 리뷰한다. 커밋 게이트 훅이 검토를 요구할 때 쓴다. 파일을 고치지 않고 판정과 제안만 돌려준다.
+description: 커밋 전에 staged 된 블로그 글(apps/blog/src/content/posts/**/index.mdx)을 읽고, 핵심 타깃 독자가 읽기 좋은 구성인지 리뷰한다. 커밋 게이트 훅이 검토를 요구할 때 쓴다. 파일을 고치지 않고 판정과 제안만 돌려준다.
 tools: Read, Grep, Glob
 model: opus
 ---

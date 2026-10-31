@@ -1,6 +1,6 @@
 ---
 name: writer
-description: 강의를 마친 주제의 블로그 글(apps/web/src/content/posts/{번호}/index.mdx)을 쓰고, 사용자 피드백과 리뷰 지적을 받아 고친다. write 스킬이 초안과 수정을 맡길 때 쓴다. 그 글의 index.mdx 와 evidence.md 말고는 고치지 않는다.
+description: 강의를 마친 주제의 블로그 글(apps/blog/src/content/posts/{번호}/index.mdx)을 쓰고, 사용자 피드백과 리뷰 지적을 받아 고친다. write 스킬이 초안과 수정을 맡길 때 쓴다. 그 글의 index.mdx 와 evidence.md 말고는 고치지 않는다.
 tools: Read, Grep, Glob, Write, Edit
 model: opus
 ---

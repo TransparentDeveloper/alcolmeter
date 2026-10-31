@@ -7,7 +7,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const HOOK = fileURLToPath(new URL("./commit-review-gate.mjs", import.meta.url));
-const POST = "apps/web/src/content/posts/9/index.mdx";
+const POST = "apps/blog/src/content/posts/9/index.mdx";
 // GIT_DIR 같은 값을 물려받으면 임시 저장소 대신 실제 저장소를 건드린다.
 const ENV = Object.fromEntries(Object.entries(process.env).filter(([key]) => !key.startsWith("GIT_")));
 
@@ -123,8 +123,8 @@ test("PASS 뒤 staged 내용이 바뀌면 다시 막는다", (t) => {
 test("여러 리뷰어가 필요하면 한 번에 모두 안내한다", (t) => {
   const { check, write, git } = setup(t);
   write("README.md", "# 바뀜\n");
-  write("apps/web/src/lib/a.ts", "export const a = 1;\n");
-  write("apps/web/src/layouts/Base.astro", "<html></html>\n");
+  write("apps/blog/src/lib/a.ts", "export const a = 1;\n");
+  write("apps/blog/src/layouts/Base.astro", "<html></html>\n");
   write(".claude/hooks/a.test.mjs", "// 테스트\n");
   git("add", ".");
   const { stderr } = check();
@@ -133,16 +133,16 @@ test("여러 리뷰어가 필요하면 한 번에 모두 안내한다", (t) => {
 
 test("fe 는 삭제된 파일도 검토한다", (t) => {
   const { check, write, git, commit } = setup(t);
-  write("apps/web/src/lib/a.ts", "export const a = 1;\n");
-  commit("apps/web/src/lib/a.ts");
-  git("rm", "-q", "apps/web/src/lib/a.ts");
+  write("apps/blog/src/lib/a.ts", "export const a = 1;\n");
+  commit("apps/blog/src/lib/a.ts");
+  git("rm", "-q", "apps/blog/src/lib/a.ts");
   assert.match(check().stderr, /\[fe\]/);
 });
 
 test("글 폴더의 노트, 근거 표, 이미지는 검토하지 않는다", (t) => {
   const { check, write, git } = setup(t);
   for (const name of ["research.md", "lecture.md", "questions.md", "evidence.md", "cover.png"]) {
-    write(`apps/web/src/content/posts/9/${name}`, "x");
+    write(`apps/blog/src/content/posts/9/${name}`, "x");
   }
   git("add", ".");
   assert.equal(check().status, 0);
@@ -196,7 +196,7 @@ test("그림 넣기와 발행 상태 변경만 한 커밋은 검토하지 않는
   write(POST, post());
   commit(POST);
   write(POST, post({ draft: false, extra: '\n![그림](./a.png)\n\n<Figure src={a} alt="그림" />\n' }));
-  write("apps/web/src/content/posts/9/a.png", "x");
+  write("apps/blog/src/content/posts/9/a.png", "x");
   git("add", ".");
   assert.equal(check().status, 0);
 });
@@ -223,7 +223,7 @@ test("본문의 상태·날짜·표지 줄을 바꾼 커밋은 검토한다", (t
 
 test("PASS 한 글이 그대로면 범위를 전체로 안내한다", (t) => {
   const { check, write, git, verdict } = setup(t);
-  const other = "apps/web/src/content/posts/8/index.mdx";
+  const other = "apps/blog/src/content/posts/8/index.mdx";
   write(POST, post());
   git("add", POST);
   verdict("fact-checker");
@@ -303,8 +303,8 @@ test("검토 범위 안내 줄은 글이 staged 됐을 때만 붙는다", (t) =>
 
 test("앱 폴더의 md 파일은 fe 가 아니라 md-reviewer 가 검토한다", (t) => {
   const { check, write, git } = setup(t);
-  write("apps/web/README.md", "# 앱\n");
-  git("add", "apps/web/README.md");
+  write("apps/blog/README.md", "# 앱\n");
+  git("add", "apps/blog/README.md");
   const { stderr } = check();
   assert.match(stderr, /\[md-reviewer\]/);
   assert.doesNotMatch(stderr, /\[fe\]/);

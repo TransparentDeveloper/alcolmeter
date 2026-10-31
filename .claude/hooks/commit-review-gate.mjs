@@ -11,34 +11,34 @@ const REVIEWERS = [
     pathspec: [
       "*.md",
       "*.mdx",
-      ":(exclude)apps/web/src/content/posts/*research.md",
-      ":(exclude)apps/web/src/content/posts/*lecture.md",
-      ":(exclude)apps/web/src/content/posts/*questions.md",
-      ":(exclude)apps/web/src/content/posts/*evidence.md",
+      ":(exclude)apps/blog/src/content/posts/*research.md",
+      ":(exclude)apps/blog/src/content/posts/*lecture.md",
+      ":(exclude)apps/blog/src/content/posts/*questions.md",
+      ":(exclude)apps/blog/src/content/posts/*evidence.md",
     ],
     target: "md/mdx 문서",
   },
   {
     agent: "fact-checker",
-    pathspec: ["apps/web/src/content/posts/*index.mdx"],
+    pathspec: ["apps/blog/src/content/posts/*index.mdx"],
     target: "블로그 글의 사실 검증",
     scoped: true,
   },
   {
     agent: "blog-content-reviewer",
-    pathspec: ["apps/web/src/content/posts/*index.mdx"],
+    pathspec: ["apps/blog/src/content/posts/*index.mdx"],
     target: "블로그 글의 가독성",
     scoped: true,
   },
   {
     agent: "fe",
     pathspec: [
-      "apps/web",
+      "apps/blog",
       "packages",
       "package.json",
       "pnpm-workspace.yaml",
       ".nvmrc",
-      ":(exclude)apps/web/src/content/posts",
+      ":(exclude)apps/blog/src/content/posts",
       ":(exclude)*.md",
     ],
     target: "프런트엔드 코드와 빌드 설정",
@@ -47,17 +47,17 @@ const REVIEWERS = [
   {
     agent: "blog-designer",
     pathspec: [
-      "apps/web/*.astro",
-      "apps/web/*.css",
-      "apps/web/*.svg",
-      "apps/web/*.png",
-      "apps/web/*.jpg",
-      "apps/web/*.jpeg",
-      "apps/web/*.webp",
-      "apps/web/*.ico",
+      "apps/blog/*.astro",
+      "apps/blog/*.css",
+      "apps/blog/*.svg",
+      "apps/blog/*.png",
+      "apps/blog/*.jpg",
+      "apps/blog/*.jpeg",
+      "apps/blog/*.webp",
+      "apps/blog/*.ico",
       "packages/*.astro",
       "packages/*.css",
-      ":(exclude)apps/web/src/content/posts",
+      ":(exclude)apps/blog/src/content/posts",
     ],
     target: "화면·스타일·이미지 변경",
   },
@@ -71,7 +71,7 @@ const GIT_PREFIX = String.raw`^git(\s+-C\s+\S+|\s+-c\s+\S+|\s+--?[\w-]+(=\S+)?)*
 
 const git = (...args) => execFileSync("git", args, { encoding: "utf8" });
 
-const POST = /^apps\/web\/src\/content\/posts\/.+\/index\.mdx$/;
+const POST = /^apps\/blog\/src\/content\/posts\/.+\/index\.mdx$/;
 
 // 그림 넣기와 발행 상태 변경은 리뷰 대상이 아니므로 frontmatter 의 상태·날짜 줄, 표지 줄과 본문 그림 줄을 뺀 글로 비교한다.
 const reviewedText = (text) =>

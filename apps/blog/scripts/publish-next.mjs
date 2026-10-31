@@ -3,7 +3,8 @@ import { appendFileSync, readdirSync, readFileSync, writeFileSync } from "node:f
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 
-const POSTS = "apps/web/src/content/posts";
+// 앱 디렉터리(apps/blog)에서 실행한다.
+const POSTS = "src/content/posts";
 
 // YAML 처럼 따옴표 밖의 " #" 뒤는 주석으로 본다.
 const field = (text, name) => {

@@ -26,7 +26,7 @@ model: opus
 
 ## 할 일
 
-1. SVG 를 `apps/web/src/content/posts/{번호}/{이름}.svg` 에 쓴다. 이름은 커버면 `cover`, 본문이면 장면을 나타내는 영어 kebab-case 로 짓는다.
+1. SVG 를 `apps/blog/src/content/posts/{번호}/{이름}.svg` 에 쓴다. 이름은 커버면 `cover`, 본문이면 장면을 나타내는 영어 kebab-case 로 짓는다.
    - `viewBox` 는 쓰임의 비율을 따르고, 바탕은 문서가 정한 바탕색 중 하나로 그림 전체를 채운 사각형이다.
    - 색, 도형, 금지 요소는 `일러스트.md` 의 SVG 제작 규칙을 따른다.
    - 글자를 넣으면 `일러스트.md` "글자" 항목을 따르고, Paperlogy 글리프 윤곽을 path 로 바꿔 넣는다.
@@ -39,7 +39,7 @@ model: opus
 
 호출한 쪽이 사용자가 승인했다고 알리면:
 
-1. `rsvg-convert -w {원본 최소 가로} {svg} -o apps/web/src/content/posts/{번호}/{이름}.png` 로 원본 PNG 를 만든다. 화면용 WebP 변환은 빌드가 한다.
+1. `rsvg-convert -w {원본 최소 가로} {svg} -o apps/blog/src/content/posts/{번호}/{이름}.png` 로 원본 PNG 를 만든다. 화면용 WebP 변환은 빌드가 한다.
 2. 커버면 `index.mdx` frontmatter 의 `cover` 를 `./cover.png` 로, `coverAlt` 를 `.claude/docs/blog-content-reviewer/글쓰기.md` 의 alt 규칙에 맞게 바꾼다. 본문 그림이면 넣을 위치와 alt 안, 캡션 안(있으면)만 돌려주고 본문은 고치지 않는다.
 
 ## 출력

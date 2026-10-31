@@ -9,7 +9,7 @@ description: lecture 스킬로 강의를 마친 주제를 블로그 글로 쓸 �
 
 ## 대상 찾기
 
-- 인자로 번호를 받으면 `apps/web/src/content/posts/{번호}/` 를 쓴다.
+- 인자로 번호를 받으면 `apps/blog/src/content/posts/{번호}/` 를 쓴다.
 - 번호가 없으면 `lecture.md` 가 `status: done` 이고 `index.mdx` 가 없는 폴더를 찾는다. 여럿이면 어느 것을 쓸지 묻는다.
 - 대상 폴더의 `lecture.md` 가 `status: done` 이 아니면 쓰지 않고 lecture 스킬로 강의를 먼저 마치라고 안내한다.
 
@@ -19,7 +19,7 @@ description: lecture 스킬로 강의를 마친 주제를 블로그 글로 쓸 �
 
 1. 비교 표에 쓸 수치(독자가 아는 술의 도수 등)가 대상 폴더의 `research.md` 에 있는지 본다. 없으면 researcher 에이전트에게 그 항목만 넘겨 노트를 보태게 한다.
 2. writer 에이전트에게 대상 글 폴더 경로와 주제를 넘겨 `index.mdx` 를 쓰게 한다. writer 는 노트 없이 초안을 쓴 뒤 근거를 대조한다. 메인 에이전트는 강의 내용이나 질문을 writer 에게 요약해 넘기지 않는다. writer 가 조사가 더 필요하다고 돌려주면 1로 돌아간다.
-3. `.nvmrc` 의 Node 버전으로 `pnpm -F @alcolmeter/web build` 를 실행해 글이 빌드되는지 확인한다.
+3. `.nvmrc` 의 Node 버전으로 `pnpm -F @alcolmeter/blog build` 를 실행해 글이 빌드되는지 확인한다.
 
 ## 사용자 피드백
 
@@ -49,4 +49,4 @@ description: lecture 스킬로 강의를 마친 주제를 블로그 글로 쓸 �
 - 반영하지 않고 모아 둔 제안
 - fact-checker 의 "확인 필요" 항목
 - illustrator 가 그린 그림 목록
-- ready 전환(`status: ready`, `readyAt`)과 push 는 사용자가 지시하면 한다는 것. 발행은 예약 워크플로가 한다(`apps/web/README.md` 예약 발행)
+- ready 전환(`status: ready`, `readyAt`)과 push 는 사용자가 지시하면 한다는 것. 발행은 예약 워크플로가 한다(`apps/blog/README.md` 예약 발행)

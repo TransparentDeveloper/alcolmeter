@@ -85,7 +85,7 @@ test("발행일은 한국 날짜다", () => {
 function run(t, posts) {
   const dir = mkdtempSync(join(tmpdir(), "publish-next-"));
   t.after(() => rmSync(dir, { recursive: true, force: true }));
-  const path = (id) => join(dir, "apps/web/src/content/posts", id, "index.mdx");
+  const path = (id) => join(dir, "src/content/posts", id, "index.mdx");
   for (const [id, text] of Object.entries(posts)) {
     mkdirSync(join(path(id), ".."), { recursive: true });
     writeFileSync(path(id), text);

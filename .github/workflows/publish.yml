@@ -23,7 +23,8 @@ jobs:
           cache: pnpm
       # ready 글이 없으면 실패해 저장소 주인에게 알림이 간다.
       - id: next
-        run: node .github/scripts/publish-next.mjs
+        working-directory: apps/blog
+        run: node scripts/publish-next.mjs
       - run: pnpm install --frozen-lockfile
       # 빌드가 깨지는 글은 main 에 올리지 않는다.
       - run: pnpm build
