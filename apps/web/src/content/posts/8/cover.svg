@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2400 1350" width="2400" height="1350">
+<defs>
+<clipPath id="o1"><path d="M680.0 175H1080.0Q1100.0 175 1099.0 195L1052.5 1125Q1050.0 1175 1000.0 1175H760.0Q710.0 1175 707.5 1125L661.0 195Q660.0 175 680.0 175Z"/></clipPath>
+<clipPath id="o2"><path d="M707.9 232H1052.2Q1072.2 232 1071.2 252L1066.2 352Q1066.2 352 1066.2 352H693.9Q693.9 352 693.9 352L688.9 252Q687.9 232 707.9 232Z"/></clipPath>
+<clipPath id="o3"><path d="M693.9 352H1066.2L1027.5 1125Q1026.2 1150 1001.2 1150H758.8Q733.8 1150 732.5 1125L693.9 352Z"/></clipPath>
+<clipPath id="o4"><path d="M1320.0 175H1720.0Q1740.0 175 1739.0 195L1692.5 1125Q1690.0 1175 1640.0 1175H1400.0Q1350.0 1175 1347.5 1125L1301.0 195Q1300.0 175 1320.0 175Z"/></clipPath>
+<clipPath id="o5"><path d="M1347.8 232H1692.2Q1712.2 232 1711.2 252L1706.2 352Q1706.2 352 1706.2 352H1333.8Q1333.8 352 1333.8 352L1328.8 252Q1327.8 232 1347.8 232Z"/></clipPath>
+</defs>
+<rect width="2400" height="1350" fill="#F7E4C7"/>
+<g clip-path="url(#o1)"><rect x="-10" y="-10" width="5000" height="5000" fill="#D5E0E1"/><path transform="translate(-51 -51)" fill-rule="evenodd" fill="#AFC0C3" d="M-5000 -5000H9000V9000H-5000ZM680.0 175H1080.0Q1100.0 175 1099.0 195L1052.5 1125Q1050.0 1175 1000.0 1175H760.0Q710.0 1175 707.5 1125L661.0 195Q660.0 175 680.0 175Z"/></g>
+<g clip-path="url(#o2)"><rect x="-10" y="-10" width="5000" height="5000" fill="#FBF8F1"/><path transform="translate(-18 -18)" fill-rule="evenodd" fill="#E4DCCB" d="M-5000 -5000H9000V9000H-5000ZM707.9 232H1052.2Q1072.2 232 1071.2 252L1066.2 352Q1066.2 352 1066.2 352H693.9Q693.9 352 693.9 352L688.9 252Q687.9 232 707.9 232Z"/></g>
+<g clip-path="url(#o3)"><rect x="-10" y="-10" width="5000" height="5000" fill="#5E360B"/><path transform="translate(-44 -44)" fill-rule="evenodd" fill="#3F2308" d="M-5000 -5000H9000V9000H-5000ZM693.9 352H1066.2L1027.5 1125Q1026.2 1150 1001.2 1150H758.8Q733.8 1150 732.5 1125L693.9 352Z"/></g>
+<circle cx="790" cy="990" r="10" fill="#FBF8F1"/>
+<circle cx="810" cy="860" r="14" fill="#FBF8F1"/>
+<circle cx="785" cy="700" r="10" fill="#FBF8F1"/>
+<circle cx="920" cy="610" r="10" fill="#FBF8F1"/>
+<g clip-path="url(#o4)"><rect x="-10" y="-10" width="5000" height="5000" fill="#D5E0E1"/><path transform="translate(-51 -51)" fill-rule="evenodd" fill="#AFC0C3" d="M-5000 -5000H9000V9000H-5000ZM1320.0 175H1720.0Q1740.0 175 1739.0 195L1692.5 1125Q1690.0 1175 1640.0 1175H1400.0Q1350.0 1175 1347.5 1125L1301.0 195Q1300.0 175 1320.0 175Z"/></g>
+<g clip-path="url(#o5)"><rect x="-10" y="-10" width="5000" height="5000" fill="#FBF8F1"/><path transform="translate(-18 -18)" fill-rule="evenodd" fill="#E4DCCB" d="M-5000 -5000H9000V9000H-5000ZM1347.8 232H1692.2Q1712.2 232 1711.2 252L1706.2 352Q1706.2 352 1706.2 352H1333.8Q1333.8 352 1333.8 352L1328.8 252Q1327.8 232 1347.8 232Z"/></g>
+<path fill="#2A2521" d="M1333.8 352H1706.2L1667.5 1125Q1666.2 1150 1641.2 1150H1398.8Q1373.8 1150 1372.5 1125L1333.8 352Z"/>
+<circle cx="1580" cy="1010" r="10" fill="#FBF8F1"/>
+<circle cx="1480" cy="900" r="10" fill="#FBF8F1"/>
+<circle cx="1550" cy="760" r="14" fill="#FBF8F1"/>
+<circle cx="1460" cy="620" r="10" fill="#FBF8F1"/>
+</svg>
