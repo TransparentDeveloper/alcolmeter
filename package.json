@@ -9,6 +9,6 @@
   "scripts": {
     "dev": "pnpm -F @alcolmeter/blog dev",
     "build": "pnpm -r build",
-    "test": "node --test .claude/hooks/*.test.mjs apps/blog/scripts/*.test.mjs apps/blog/src/lib/*.test.ts"
+    "test": "node --test apps/blog/scripts/*.test.mjs apps/blog/src/lib/*.test.ts"
   }
 }
