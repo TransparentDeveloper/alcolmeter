@@ -218,6 +218,19 @@ describe("커밋 게이트(preCommit)", () => {
     review(root, "md-reviewer", "a2", "VERDICT: PASS");
     expect(preCommit(root, {}).code).toBe(0);
   });
+
+  it("ASK 판정은 커밋을 통과시키고 사용자에게 물을 내용을 남긴다", () => {
+    const root = repo();
+    stage(root, { "apps/api/a.ts": "1\n", "README.md": "x\n" });
+    review(root, "be-reviewer", "a1", "a.ts:1 의도한 값인가\nVERDICT: ASK");
+    review(root, "md-reviewer", "a2", "VERDICT: PASS");
+    const { code, message } = preCommit(root, {});
+    expect(code).toBe(0);
+    expect(message).toContain("사용자에게 물어라");
+    expect(message).toContain("- be-reviewer:");
+    expect(message).toContain("a.ts:1 의도한 값인가");
+    expect(message).not.toContain("- md-reviewer:");
+  });
 });
 
 describe("리뷰 흐름", () => {
@@ -231,6 +244,7 @@ describe("리뷰 흐름", () => {
     const context = start?.hookSpecificOutput.additionalContext ?? "";
     expect(context).toContain("git diff --cached -- 'apps/api/a.ts'");
     expect(context).toContain("VERDICT: PASS");
+    expect(context).toContain("VERDICT: ASK");
   });
 
   it("관할 파일이 없으면 리뷰어 실행에 끼어들지 않는다", () => {

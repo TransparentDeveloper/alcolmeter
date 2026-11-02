@@ -25,7 +25,13 @@ const AGENTS = ".claude/agents/pre-commit";
 const SUFFIX = "-reviewer";
 const PASS = "PASS";
 const REJECT = "FAIL";
-const VERDICT_RE = new RegExp(`^VERDICT:\\s*(${PASS}|${REJECT})\\s*$`, "gm");
+// ASK 는 커밋을 통과시키되, 커밋 뒤 메인 에이전트가 사용자에게 의도와 맞는지 묻게 한다.
+const ASK = "ASK";
+const VERDICT_RE = new RegExp(
+  `^VERDICT:\\s*(${PASS}|${REJECT}|${ASK})\\s*$`,
+  "gm",
+);
+const VERDICT_FORMAT = `\`VERDICT: ${PASS}\`, \`VERDICT: ${REJECT}\`, \`VERDICT: ${ASK}\` 중 하나`;
 const WRITE_TOOLS = new Set(["Edit", "Write", "MultiEdit", "NotebookEdit"]);
 const AGENT_TOOLS = new Set(["Agent", "Task"]);
 const REVIEW_PROMPT =
@@ -320,7 +326,9 @@ export function reviewStatus(root, env = process.env) {
     }
     const fp = fingerprint(files);
     const last = lastVerdict(root, reviewer.agent);
-    const passed = last?.verdict === PASS && last.fingerprint === fp;
+    const passed =
+      (last?.verdict === PASS || last?.verdict === ASK) &&
+      last.fingerprint === fp;
     return [{ agent: reviewer.agent, files, fingerprint: fp, last, passed }];
   });
 }
@@ -335,9 +343,20 @@ function describe(s) {
 }
 
 export function preCommit(root, env = process.env) {
-  const needed = reviewStatus(root, env).filter((s) => !s.passed);
+  const status = reviewStatus(root, env);
+  const needed = status.filter((s) => !s.passed);
   if (needed.length === 0) {
-    return { code: 0, message: "" };
+    const asked = status.filter((s) => s.last.verdict === ASK);
+    if (asked.length === 0) {
+      return { code: 0, message: "" };
+    }
+    const lines = [
+      `${ASK} 판정이 있어 커밋은 통과시켰다. 아래 내용이 의도와 맞는지 사용자에게 물어라. 고치기로 하면 추가 커밋으로 고친다.`,
+    ];
+    for (const s of asked) {
+      lines.push("", `- ${s.agent}:`, s.last.reason);
+    }
+    return { code: 0, message: lines.join("\n") };
   }
   const lines = [
     "리뷰어 판정이 없어 커밋을 막았다. 아래 리뷰어를 Agent 도구로 한 메시지에서 함께 불러 병렬로 검토받아라.",
@@ -400,7 +419,8 @@ export function subagentStart(input, root) {
     lines.push(`변경은 git diff --cached -- ${files} 로 본다.`);
   }
   lines.push(
-    `마지막 줄에 \`VERDICT: ${PASS}\` 또는 \`VERDICT: ${REJECT}\` 를 쓴다. ${REJECT}이면 그 위에 고칠 점을 파일:줄과 함께 쓴다.`,
+    `마지막 줄에 ${VERDICT_FORMAT}를 쓴다. ${REJECT}이면 그 위에 고칠 점을 파일:줄과 함께 쓴다.`,
+    `${ASK} 는 파일과 규칙 문서만으로는 판정할 수 없고 작성자의 의도에 달린 지적이 있을 때만 쓴다. 그 위에 사용자에게 물을 점을 파일:줄과 함께 쓴다. 확인할 수 있는 지적이 하나라도 ${REJECT} 감이면 ${REJECT} 를 쓴다.`,
   );
   return {
     hookSpecificOutput: {
@@ -457,7 +477,7 @@ export function subagentStop(input, root) {
     if (!input.stop_hook_active) {
       return {
         decision: "block",
-        reason: `판정이 없다. 마지막 줄에 \`VERDICT: ${PASS}\` 또는 \`VERDICT: ${REJECT}\` 를 써라.`,
+        reason: `판정이 없다. 마지막 줄에 ${VERDICT_FORMAT}를 써라.`,
       };
     }
     done();
@@ -473,7 +493,7 @@ export function subagentStop(input, root) {
   recordVerdict(root, pending.tree, agent, {
     verdict,
     fingerprint: pending.fingerprint,
-    reason: verdict === REJECT ? message.slice(-REASON_LIMIT) : null,
+    reason: verdict === PASS ? null : message.slice(-REASON_LIMIT),
   });
   return null;
 }
