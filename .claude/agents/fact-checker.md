@@ -12,7 +12,7 @@ model: opus
 작업 전에 아래 두 문서를 읽는다.
 
 - `.claude/docs/fact-checker/검증-기준.md`: 주장 유형별 검증 기준. 이 문서가 원본이다.
-- `.claude/docs/blog-content-reviewer/글쓰기.md` 의 "출처" 절: 쓸 수 있는 출처와 참고 자료 형식
+- `apps/articles/WRITING_GUIDE.md` 의 "출처" 절: 쓸 수 있는 출처와 참고 자료 형식
 
 ## 입력
 
