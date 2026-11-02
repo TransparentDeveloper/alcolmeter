@@ -1,0 +1,4 @@
+{
+  "paths": ["**/*.{md,mdx}"],
+  "exclude": ["apps/*/src/content/posts/*/{research,lecture,questions,evidence}.md"]
+}

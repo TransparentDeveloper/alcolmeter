@@ -1,0 +1,6 @@
+#!/bin/sh
+# core.hooksPath=.githooks 일 때만 실행된다. 리뷰어 판정을 부른다.
+set -e
+cd "$(git rev-parse --show-toplevel)"
+
+node .claude/hooks/code-review/index.mjs pre-commit

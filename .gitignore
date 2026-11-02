@@ -11,3 +11,5 @@ dist/
 *.log
 
 .claude/worktrees/
+
+.claude/hooks/code-review/verdict/
