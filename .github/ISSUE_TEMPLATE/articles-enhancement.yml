@@ -1,6 +1,6 @@
-name: 사이트·작업 도구 개선
-description: 블로그 사이트와 작업 도구(에이전트, 스킬, 규칙 문서)에 더하거나 미뤄 둔 기능·자산 작업
-labels: ["blog/enhancement"]
+name: 알콜피드 개선
+description: 알콜피드(articles)에 더하거나 미뤄 둔 기능·자산 작업
+labels: ["articles/enhancement"]
 body:
   - type: textarea
     id: what

@@ -1,6 +1,6 @@
-name: 블로그 글 수정 요청
-description: 블로그 글의 사실 오류, 오탈자, 표현 수정
-labels: ["blog/edit-request"]
+name: 알콜피드 글 수정 요청
+description: 알콜피드 글의 사실 오류, 오탈자, 표현 수정
+labels: ["articles/edit-request"]
 body:
   - type: input
     id: post

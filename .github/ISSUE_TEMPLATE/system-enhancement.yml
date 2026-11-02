@@ -1,0 +1,32 @@
+name: 시스템 개선
+description: "특정 서비스에 속하지 않는 작업: 통합홈(web), 앱 간 라우팅, 배포·인프라, 모노레포 구조, 작업 도구(에이전트·스킬·규칙 문서)"
+labels: ["system/enhancement"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: 할 일
+      description: 더하거나 바꿀 것
+    validations:
+      required: true
+  - type: textarea
+    id: background
+    attributes:
+      label: 배경
+      description: 왜 필요한지, 지금 상태, 지금까지 나온 의견
+    validations:
+      required: true
+  - type: textarea
+    id: references
+    attributes:
+      label: 관련 파일·커밋
+      description: 관련 문서, 소스 경로, 커밋 해시. 없으면 `없음`
+    validations:
+      required: true
+  - type: textarea
+    id: decision
+    attributes:
+      label: 결정할 것
+      description: 작업 전에 정해야 하는 것. 없으면 `없음`
+    validations:
+      required: true
