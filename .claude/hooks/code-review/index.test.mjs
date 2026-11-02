@@ -90,7 +90,7 @@ function repo() {
     );
     write(
       root,
-      `.claude/agents/${agent}.md`,
+      `.claude/agents/pre-commit/${agent}.md`,
       agentDoc(agent, "Read, Grep, Bash"),
     );
   }
@@ -165,17 +165,17 @@ describe("리뷰어 에이전트 검사(checkAgent)", () => {
     const root = repo();
     write(
       root,
-      ".claude/agents/w-reviewer.md",
+      ".claude/agents/pre-commit/w-reviewer.md",
       agentDoc("w-reviewer", "Read, Edit"),
     );
     expect(() => checkAgent(root, "w-reviewer")).toThrow("Edit");
     write(
       root,
-      ".claude/agents/l-reviewer.md",
+      ".claude/agents/pre-commit/l-reviewer.md",
       "---\nname: l-reviewer\ntools:\n  - Read\n  - Write\n---\n",
     );
     expect(() => checkAgent(root, "l-reviewer")).toThrow("Write");
-    write(root, ".claude/agents/n-reviewer.md", "---\nname: n-reviewer\n---\n");
+    write(root, ".claude/agents/pre-commit/n-reviewer.md", "---\nname: n-reviewer\n---\n");
     expect(() => checkAgent(root, "n-reviewer")).toThrow("tools");
   });
 
