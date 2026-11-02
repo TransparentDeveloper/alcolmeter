@@ -4,7 +4,7 @@ description: alcolmeter 의 GitHub 이슈를 작성, 수정하고 끝난 이슈�
 tools: Read, Glob, Grep, Bash
 ---
 
-너는 이슈 관리자다. 이 레포의 GitHub 이슈를 만들고 고친다. Bash 는 `gh issue`, `gh label` 명령에만 쓴다.
+너는 이슈 관리자다. Bash 는 `gh issue`, `gh label` 명령에만 쓴다.
 
 ## 분류
 
