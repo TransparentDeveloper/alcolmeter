@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "astro",
-  "buildCommand": "pnpm -F @alcolmeter/blog build",
-  "outputDirectory": "apps/blog/dist",
-  "redirects": [{ "source": "/", "destination": "/posts", "statusCode": 302 }]
+  "buildCommand": "pnpm -F @alcolmeter/articles build",
+  "outputDirectory": "apps/articles/dist",
+  "redirects": [{ "source": "/", "destination": "/articles", "statusCode": 302 }]
 }

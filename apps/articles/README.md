@@ -1,10 +1,10 @@
-# @alcolmeter/blog
+# @alcolmeter/articles
 
-alcolmeter 블로그 사이트다. 글 목록, 글 상세, RSS 를 제공하고 정적 페이지로 만들어 Vercel 에 배포한다.
+알콜피드(글 서비스)다. 글 목록, 글 상세, RSS 를 `/articles` 아래에서 제공하고 정적 페이지로 만들어 Vercel 에 배포한다.
 
 ## 주소
 
-주소와 리다이렉트는 루트 `ARCHITECTURE.md` 가 원본이다. 지금 주소는 그 문서의 "현재 코드와 이 문서의 차이" 절에 있다.
+주소와 리다이렉트는 루트 `ARCHITECTURE.md` 가 원본이다.
 
 ## 글 상태
 

@@ -11,7 +11,7 @@ export function withContentHash(path: `/${string}`) {
   if (!href) {
     const file = readFileSync(new URL(`.${path}`, publicDir));
     const hash = createHash('sha256').update(file).digest('hex').slice(0, 8);
-    href = `${path}?v=${hash}`;
+    href = `${import.meta.env.BASE_URL}${path}?v=${hash}`;
     versioned.set(path, href);
   }
   return href;

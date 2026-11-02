@@ -7,12 +7,12 @@ export async function GET(context: APIContext) {
   return rss({
     title: 'alcolmeter',
     description: '술이 무엇이고 어떻게 다른지, 고르는 데 필요한 것을 정리해요.',
-    site: context.site ?? 'https://alcolmeter.kr',
+    site: new URL(import.meta.env.BASE_URL, context.site ?? 'https://alcolmeter.kr').href,
     items: posts.map((post) => ({
       title: post.data.title,
       description: post.data.description,
       pubDate: post.data.publishedAt,
-      link: `/posts/${post.id}`,
+      link: `${import.meta.env.BASE_URL}/${post.id}`,
     })),
   });
 }

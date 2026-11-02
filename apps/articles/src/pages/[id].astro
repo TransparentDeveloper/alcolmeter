@@ -10,8 +10,8 @@ import SourceList from '@alcolmeter/ds/components/SourceList.astro';
 import TableAsOf from '@alcolmeter/ds/components/TableAsOf.astro';
 import { getImage } from 'astro:assets';
 import { render } from 'astro:content';
-import Base from '../../layouts/Base.astro';
-import { getPublishedPosts } from '../../lib/posts';
+import Base from '../layouts/Base.astro';
+import { getPublishedPosts } from '../lib/posts';
 
 export async function getStaticPaths() {
   const posts = await getPublishedPosts();

@@ -1,8 +1,8 @@
 ---
 import PostCard from '@alcolmeter/ds/components/PostCard.astro';
 import PostGrid from '@alcolmeter/ds/components/PostGrid.astro';
-import Base from '../../layouts/Base.astro';
-import { getPublishedPosts } from '../../lib/posts';
+import Base from '../layouts/Base.astro';
+import { getPublishedPosts } from '../lib/posts';
 
 const [featured, ...rest] = await getPublishedPosts();
 ---
@@ -14,7 +14,7 @@ const [featured, ...rest] = await getPublishedPosts();
       featured && (
         <PostCard
           variant="feature"
-          href={`/posts/${featured.id}`}
+          href={`${import.meta.env.BASE_URL}/${featured.id}`}
           title={featured.data.title}
           summary={featured.data.description}
           image={featured.data.cover}
@@ -31,7 +31,7 @@ const [featured, ...rest] = await getPublishedPosts();
           {rest.map((post) => (
             <li>
               <PostCard
-                href={`/posts/${post.id}`}
+                href={`${import.meta.env.BASE_URL}/${post.id}`}
                 title={post.data.title}
                 summary={post.data.description}
                 image={post.data.cover}

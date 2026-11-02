@@ -8,8 +8,8 @@
   },
   "scripts": {
     "prepare": "node .githooks/setup.mjs",
-    "dev": "pnpm -F @alcolmeter/blog dev",
+    "dev": "pnpm -F @alcolmeter/articles dev",
     "build": "pnpm -r build",
-    "test": "node --test apps/blog/scripts/*.test.mjs apps/blog/src/lib/*.test.ts .claude/hooks/code-review/*.test.mjs"
+    "test": "node --test apps/articles/scripts/*.test.mjs apps/articles/src/lib/*.test.ts .claude/hooks/code-review/*.test.mjs"
   }
 }

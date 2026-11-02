@@ -48,15 +48,7 @@ alcolmeter.kr 의 서비스 구성, 앱 경계, 주소, 배포 구조를 다룬�
 
 지금 코드는 아래 상태다. 항목마다 옮기는 이슈를 적는다. 옮기면 그 항목을 지운다.
 
-- 앱은 `apps/blog`(`@alcolmeter/blog`) 하나다. `apps/web`, `apps/calculators` 는 없다. 이슈 "apps/blog 를 apps/articles 로 옮기기", "apps/web 통합홈 만들기".
-- `apps/blog` 의 주소는 아래와 같다. `base` 가 없어 favicon, `robots.txt`, `sitemap-index.xml` 도 사이트 루트에 나간다. 이슈 "apps/blog 를 apps/articles 로 옮기기".
-
-  | 주소 | 파일 | 내용 |
-  | --- | --- | --- |
-  | `/` | 없음 | `/posts` 로 302 리다이렉트 |
-  | `/posts` | `src/pages/posts/index.astro` | 글 목록 |
-  | `/posts/{id}` | `src/pages/posts/[id].astro` | 글 상세. `id` 는 글 폴더 번호 |
-  | `/rss.xml` | `src/pages/rss.xml.ts` | RSS |
-
-- `/` 는 통합홈이 생기기 전까지 `/posts` 로 302(임시) 리다이렉트한다. 배포의 HTTP 302 는 루트 `vercel.json` 의 `redirects`(`statusCode: 302`)가 낸다. `apps/blog/astro.config.mjs` 의 `redirects` 는 개발 서버의 302 와, 정적 출력에 남는 `dist/index.html`(meta refresh 대체 페이지)을 만든다. 두 곳은 함께 고친다. 글 목록을 가리키는 링크는 `/posts` 를 쓴다. 이슈 "apps/web 통합홈 만들기".
+- 앱은 `apps/articles` 하나다. `apps/web`, `apps/calculators` 는 없다. 이슈 "apps/web 통합홈 만들기".
+- 사이트 루트에 robots.txt 가 없다. 이슈 "apps/web 통합홈 만들기".
+- `/` 는 통합홈이 생기기 전까지 루트 `vercel.json` 의 `redirects` 로 `/articles` 에 302(임시) 리다이렉트한다. 이슈 "apps/web 통합홈 만들기".
 - 배포는 루트 `vercel.json` 하나로 하는 Vercel 프로젝트 하나다. 도메인도 이 프로젝트가 갖는다. 이슈 "Vercel 프로젝트 3개 설정과 도메인을 web 으로 옮기기".

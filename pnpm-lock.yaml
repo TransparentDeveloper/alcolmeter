@@ -8,7 +8,7 @@ importers:
 
   .: {}
 
-  apps/blog:
+  apps/articles:
     dependencies:
       '@alcolmeter/ds':
         specifier: workspace:*
