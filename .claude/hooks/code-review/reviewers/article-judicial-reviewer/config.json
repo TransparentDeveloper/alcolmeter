@@ -1,0 +1,3 @@
+{
+  "paths": ["apps/articles/src/content/posts/*/index.mdx"]
+}
