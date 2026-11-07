@@ -1,0 +1,4 @@
+{
+  "content": ["^status:\\s*ready\\s*$"],
+  "exclude": ["**/*.md"]
+}

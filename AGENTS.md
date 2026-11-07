@@ -15,7 +15,6 @@
 | --- | --- |
 | blog-designer | 디자인 시스템, 화면·컴포넌트 디자인 리뷰, 서비스 화면 문구 |
 | illustrator | 일러스트 기준, 표지·본문 일러스트 제작 |
-| fact-checker | 블로그 글의 주장별 사실 검증, 유형별 검증 기준 |
 | researcher | 글 주제 조사와 출처가 달린 학습 노트 작성 |
 | writer | 강의를 마친 주제의 블로그 글 작성과 리뷰 지적 반영 |
 | github-issue-manager | GitHub 이슈 작성·수정·닫기, 이슈 분류와 본문 형식 규칙 |
