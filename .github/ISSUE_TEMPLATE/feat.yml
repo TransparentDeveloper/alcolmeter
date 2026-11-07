@@ -1,6 +1,6 @@
-name: 알콜피드 개선
-description: 알콜피드(articles)에 더하거나 미뤄 둔 기능·자산 작업
-labels: ["articles/enhancement"]
+name: 기능
+description: 더하거나 미뤄 둔 기능·자산·인프라·문서 작업
+labels: ["type:feat"]
 body:
   - type: textarea
     id: what

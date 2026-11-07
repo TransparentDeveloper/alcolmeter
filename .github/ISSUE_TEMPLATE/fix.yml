@@ -1,0 +1,31 @@
+name: 수정
+description: 동작 오류, 글·계산값의 사실 오류, 오탈자, 표현
+labels: ["type:fix"]
+body:
+  - type: input
+    id: where
+    attributes:
+      label: 나타난 곳
+      description: 주소, 화면, 명령, 글의 문장
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: 지금 상태
+      description: 오류 메시지나 글의 문장은 그대로 옮긴다
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 바른 상태
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 근거
+      description: 동작 오류면 재현 방법, 사실 오류면 출처. 오탈자와 표현은 `없음` 을 쓸 수 있다.
+    validations:
+      required: true

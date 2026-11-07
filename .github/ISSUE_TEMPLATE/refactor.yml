@@ -1,19 +1,18 @@
-name: 시스템 개선
-description: "특정 서비스에 속하지 않는 작업: 통합홈(web), 앱 간 라우팅, 배포·인프라, 모노레포 구조, 작업 도구(에이전트·스킬·규칙 문서)"
-labels: ["system/enhancement"]
+name: 리팩터링
+description: 동작은 그대로 두고 구조를 바꾸는 작업
+labels: ["type:refactor"]
 body:
   - type: textarea
     id: what
     attributes:
-      label: 할 일
-      description: 더하거나 바꿀 것
+      label: 바꿀 것
     validations:
       required: true
   - type: textarea
-    id: background
+    id: reason
     attributes:
-      label: 배경
-      description: 왜 필요한지, 지금 상태, 지금까지 나온 의견
+      label: 이유
+      description: 왜 바꾸는지, 지금 구조의 문제
     validations:
       required: true
   - type: textarea
